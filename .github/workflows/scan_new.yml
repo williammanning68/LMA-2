@@ -1,0 +1,62 @@
+name: Scan new Hansard transcripts (by current year)
+
+on:
+  # Run manually when you want to test
+  workflow_dispatch: {}
+  # Run daily 5pm Hobart (AEST=UTC+10 → 07:00 UTC). Adjust as needed.
+  schedule:
+    - cron: "0 7 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hansard-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m playwright install chromium
+
+      - name: Scan & download any new transcripts for current year
+        env:
+          WAIT_BEFORE_DOWNLOAD_SECONDS: "15"
+          MAX_PAGES: "1"
+          HOUSE_PREFIX: "House of Assembly"
+        run: python scan_new_transcripts.py
+
+      - name: Commit new transcripts (if any)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add transcripts/*.txt || echo "No transcripts"
+          git commit -m "New transcripts (auto)" || echo "No changes"
+          git push
+
+      - name: Send keyword digest email
+        env:
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_TO:   ${{ secrets.EMAIL_TO }}
+        run: python send_email.py
+
+      - name: Commit sent log
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add sent.log || echo "No log"
+          git commit -m "Update sent log (auto)" || echo "No changes"
+          git push
