@@ -28,14 +28,12 @@ jobs:
         env:
           # Keep the prompt outside the file so the saved story text is 100% AI-authored.
           PROMPT: |
-            Write an original, self-contained short story (400–500 words).
+            Write an original, self-contained short story (40–80 words).
             Requirements:
             - No preface or explanation; output ONLY the story text.
             - Give it a title on the first line, then a blank line, then the story.
             - Literary but readable; no explicit.
             - Fresh plot; no copyrighted characters or settings.
-            - Crossdressing theme.
-            - Mention the word "thong", "erection", "mini skirt", "snuck into room", "opened draw", "elastic between cheeks", "tight bulge", "heart racing".
         run: |
           set -euo pipefail
           mkdir -p stories
