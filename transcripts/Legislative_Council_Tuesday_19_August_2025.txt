@@ -1,0 +1,518 @@
+﻿
+Title: Legislative Council Tuesday 19 August 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: Legislative Council
+Character Count: 25886
+Characters with Spaces Count: 31235
+Company: Parliament of Tasmania
+Creation Date: Tue, 19 Aug 2025 6:42:00 AM (UTC)
+Keywords: 2025
+Last Printed: Tue, 19 Aug 2025 6:41:00 AM (UTC)
+Last Saved Date: Tue, 19 Aug 2025 6:56:00 AM (UTC)
+Line Count: 733
+Links Dirty: false
+Links Up To Date: false
+Page Count: 4
+Paragraphs Count: 223
+Revision: 3
+Scale Crop: false
+Security: 0
+Shared Document: false
+Subject: Hansard
+Template: Hansard debates May 2025
+Total Editing Time: 0
+Typist: Karen Cuzzucoli
+Word Count: 5529
+isys:SubType: Word 2007
+
+PARLIAMENT OF TASMANIA 
+DEBATES OF THE LEGISLATIVE COUNCIL
+ 
+ 
+ 
+ 
+DAILY HANSARD 
+ 
+ 
+Tuesday 19 August 2025
+Preliminary Transcript 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+This draft transcript of debates is issued in advance of the final Hansard for the use of the members of the Legislative Council and copies made from this may not be protected by parliamentary privilege. 
+ 
+
+
+
+
+
+
+Tuesday 19 August 2025
+
+
+FIRST SESSION OF THE FIFTY-SECOND PARLIAMENT
+
+The Council met at 11 a.m. pursuant to the Proclamation of Her Excellency the Governor, the Honourable Barbara Baker AC.
+
+The CLERK - Honourable members, Her Excellency's Commissioners.
+
+Mr PRESIDENT - Honourable members, please be seated. Clerk of the Council, please read Her Excellency's Proclamation.
+
+The CLERK - A Proclamation by Her Excellency the Honourable Barbara Baker, Companion of the Order of Australia, Governor in and over the State of Tasmania and its Dependencies in the Commonwealth of Australia.
+
+WHEREAS by the Constitution Act 1934 it is provided that the Governor shall call the Parliament of Tasmania together for the despatch of business after every general election of members of the Assembly, within 90 days after the dissolution of the Assembly.
+
+AND WHEREAS the Assembly was dissolved on 11 June 2025 and a general election of the members of the Assembly was held on 19 July 2025.
+
+AND WHEREAS it is expedient that I call Parliament together for the despatch of business as soon as practicable.
+
+NOW THEREFORE I, the Honourable Barbara Baker, Companion of the Order of Australia, Governor in and over the State of Tasmania and its Dependencies in the Commonwealth of Australia, exercising the power and authority vested in me, do hereby fix 11 a.m. on Tuesday 19 August 2025, in the Houses of Parliament situated in the City of Hobart in Tasmania, as the time and place that the said Parliament shall assemble for the despatch of business; and the members of the said Parliament are hereby required to give their attendance at the same time and place accordingly.
+
+GIVEN under my hand at Hobart in Tasmania on 6 August 2025.
+
+B. BAKER, Governor
+
+By Her Excellency's Command,
+JEREMY ROCKLIFF, Premier
+
+Mr PRESIDENT - Usher of the Black Rod, I command you to let the members of the House of Assembly know that Her Excellency's Commissioners desire their immediate attendance in this Chamber to hear the commission read.
+
+Honourable members, please be seated.
+
+OPENING OF PARLIAMENT BY COMMISSIONERS
+
+Mr PRESIDENT - Honourable members of the Legislative Council, members of the House of Assembly, Her Excellency the Governor, not thinking fit to be here at this time, has been pleased to cause a Commission under the Seal of State to be prepared for the opening and the holding of this Parliament. This will more fully appear by the Letters Patent themselves, which the Clerk of the Council will now read.
+
+The CLERK - Charles the Third, by the Grace of God, King of Australia and his other realms and territories, Head of the Commonwealth. 
+
+To the Honourable Craig Maxwell Farrell, the Honourable Ruth Jane Forrest, and the Honourable Tania Verene Rattray being members of our Legislative Council, and to all to whom these presents shall come -
+
+GREETING: 
+
+WHEREAS by a Proclamation under the hand of Her Excellency The Honourable Barbara Baker, Companion of the Order of Australia, Governor in and over the State of Tasmania and its Dependencies in the Commonwealth of Australia, dated 6 August 2025, a session of our Parliament of Tasmania was summoned to be held for the despatch of business on 19 August 2025, 
+
+AND WHEREAS it is expedient for the session of the Parliament of Our State to be opened by Commissioners:
+
+WE do by these Our Letters Patent appoint you, the said Craig Maxwell Farrell, Ruth Jane Forrest and Tania Verene Rattray, or any two of you, to be Commissioners with full power, in Our name, in the name of Our Governor, of Our said State, to do things which are to be done on Their part in this parliament.
+
+And further, by these presents, we command that all and every of the members of Our Legislative Council and House of Assembly and all others whom they concern, meet in Our said Parliament there to diligently attend to the business thereof.
+
+IN testimony whereof We have caused these our letters to be made patent, and the Seal of Our said State to be hereunto affixed. 
+
+WITNESS THE HONOURABLE BARBARA BAKER, Companion of the Order of Australia, Governor in and over the State of Tasmania and its Dependencies in the Commonwealth of Australia at Hobart in Tasmania on 15 August 2025 and in the third year of Our reign 
+
+By Her Excellency's Command,
+BARBARA BAKER, Governor
+
+JEREMY ROCKLIFF, Premier
+
+Mr PRESIDENT - Honourable Members of the Legislative Council and members of the House of Assembly, we have it in command from Her Excellency the Governor to acquaint you that Her Excellency desires that you take into your earnest consideration such matters as may be submitted to you in this, the First Session of the 52nd Parliament. I now declare the session open.
+
+The members of the House of Assembly withdrew.
+
+
+ACKNOWLEDGEMENT OF TRADITIONAL PEOPLE
+
+The President, Mr Farrell, acknowledged the Traditional People.
+
+
+STATEMENT BY PRESIDENT
+
+Prayers
+
+Mr PRESIDENT - Honourable members, I have a statement in regard to the reading of the prayers that has come after much discussion over a long period of time. Standing Order 28 requires that on each sitting day the President will take the Chair and read prayers at the time appointed on every day fixed for the meeting of the Council.
+
+The precise words of the prayers are not set out in the Standing Order but have been in place by a mix of the President's authority and sessional orders agreed at the commencement of each session of Parliament. Members may recall that sessional orders in the last Parliament set out the words of the Lord's Prayer for all members to say alongside the President.
+
+To remove the prayers altogether requires a change to the Standing Orders. Therefore, it remains a requirement for the President to read some form of prayer at the commencement of each sitting day. While maintaining parliamentary tradition and the requirements of the Standing Order to reflect the contemporary values, I propose that by the authority of this Chair as President, the following prayers will be said at the commencement of each sitting day, along with the preamble:
+
+Honourable members, I invite you, as I read the prayer, to reflect in your own way on your role as a member of this Parliament and your responsibilities to the people of Tasmania. 
+
+and then I will read the parliamentary prayer:
+
+Almighty God, we humbly beseech thee to vouchsafe thy blessing upon this Parliament. Direct and prosper our deliberations to the advancement of Thy glory and the true welfare of the people of Tasmania.
+
+
+APPOINTMENT OF LEADER FOR GOVERNMENT BUSINESS IN THE LEGISLATIVE COUNCIL
+
+Honourable members, I received a letter from the Honourable Jeremy Rockliff on 13 August 2025 advising me that the Honourable Tanya Rattray MLC is to be Leader for the Government in the Legislative Council.
+PARTITION BILL 2025 (No. xx)
+
+First Reading
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I have the honour to present a bill pro forma, that is, a bill for an act to amend the Partition Act 1869.
+
+Bill read the first time.
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That the second reading of the bill be made 
+
+[11.14 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - I move that
+
+The second reading of the bill be made an order of the day for tomorrow.
+
+Motion agreed to.
+
+
+TABLED PAPERS
+
+Member for Montgomery - Primary Return
+
+The CLERK - Mr President, in accordance with sections 19 and 20 of the Parliamentary (Disclosure of Interests) Act 1996, I lay upon the table of the Council: The primary return of the Member for Montgomery, from the Register of Members Interests. 
+
+This return has been lodged with the President and this day tabled and placed on the public record. It is now deemed to have been published.
+
+
+STATEMENT BY LEADER
+
+Ministerial Appointments
+
+[11.25 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, on behalf of the Premier, I wish to advise the Council of Ministerial Appointments:
+
+The honourable Jeremy Rockliff MP as Premier
+
+The honourable Guy Barnett MP as Deputy Premier Attorney-General, Minister for Justice, Corrections and Rehabilitation, and Minister for Small Business, Trade and Consumer Affairs
+
+The honourable Eric Abetz MP as Treasurer, Minister for Macquarie Point Urban Renewal and Leader of the House
+
+The honourable Bridget Archer MP as Minister for Health, Mental Health and Wellbeing, Minister for Ageing, and Minister for Aboriginal Affairs
+
+The honourable Nick Duigan MLC as Minister for Energy and Renewables, Minister for Parks, and Minister for Sport
+
+The honourable Felix Ellis MP as Minister for Business, Industry and Resources, Minister for Skills and Jobs, and Minister for Police, Fire and Emergency Management
+
+The honourable Jane Howlett MP as Minister for Tourism, Hospitality and Events, Minister for Racing, and Minister for Women and the Prevention of Family Violence
+
+The honourable Madeleine Ogilvie MP as Minister for Environment, Minister for Innovation, Science and the Digital Economy, Minister for Community and Multicultural Affairs, and Minister for the Arts and Heritage
+
+The honourable Jo Palmer MLC as Minister for Education, Minister for Children and Youth, and Minister for Disability Services
+
+The honourable Gavin Pearce MP as Minister for Primary Industries and Water and Minister for Veterans' Affairs
+
+The honourable Kerry Vincent MLC as Minister for Infrastructure and Transport; Minister for Local Government; Minister for Housing and Planning
+
+The honourable Tania Rattray MLC as Leader for the Government in the Legislative Council
+
+The honourable Kerry Vincent MLC as appointed Deputy Leader of the Government in the Legislative Council.
+
+
+PRESIDENT'S AUTHORITY
+
+Advisers on the Floor
+
+Mr PRESIDENT - Honourable members, by my authority I have determined that advisers to the honourable Leader for the Government, the Deputy Leader of the Government, the Minister for Infrastructure and Transport, Minister for Local Government and Minister for Housing and Planning, the Minister for Education, Minister for Children and Youth and Minister for Disability Services, and the Minister for Energy and Renewables, Minister for Parks and Minister for Sport be authorised to go onto the Floor of this Chamber for the duration of the session in order to advise and support those honourable members.
+
+MOTION
+
+Suspension of Sitting
+
+[11.28 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move - 
+
+That the sitting be suspended until the ringing of the division bells.
+
+This is for the purpose of a ballot.
+
+Motion agreed to.
+
+Sitting suspended until 12.10 p.m. 
+
+
+MOTION
+
+Deputy Chairs of Committees - Appointment
+
+[12.10 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, before moving the next motion, I congratulate all those members who put their name forward for those positions and congratulate those who have been successful.
+
+Mr President, I move-
+
+That the honourable member for Launceston, Ms Armitage be appointed Deputy Chair of Committees, the honourable member for Elwick, Ms Thomas be appointed Second Deputy Chair, and the honourable member for Nelson, Ms Webb, be appointed Third Deputy Chair of Committees of this Council.
+
+Motion agreed to.
+
+
+MOTION
+
+Sessional Orders
+
+[12.11 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That the sessional orders relating to e-Petitions which were in place in the first session of the 51st Parliament be again approved for this session.
+
+Motion agreed to.
+
+MOTION
+
+Standing Orders - In Lieu Standing Orders Nos. 29(2), 138(2) and (4)
+
+[12.12 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That the following Sessional Orders apply in lieu of Standing Orders Nos. 29(2), 138 (2) and (4):
+
+29:	 Adjournment for want of a Quorum when notice taken to Member
+
+(2) 	At any time after the Council has proceeded to business, if a member notices that seven members, including the President or Deputy President, are not present and so states, the bell shall be rung as for a division and if a quorum is not present at the expiration of four minutes, the President shall adjourn the Council without a question first put until the next ordinary sitting time.
+
+138: After division called -
+
+How Division taken
+(2) The President will order the division bells to be rung for four minutes.
+
+Locking of Doors
+
+(4): After the four minutes have expired or such lesser time at the discretion of the President, he or she will order the doors to be locked and no member will enter or leave the chamber until after the division.
+
+Motion agreed to.
+
+
+MOTION
+
+Standing Orders - In Lieu Standing Order No. 200
+
+[12.13 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That the following Sessional Order apply in lieu of Standing Order 200 -
+
+200:
+
+The evidence taken by any select committee of the Council and documents presented to such committee will have not been reported to the Council shall not, unless authorised by the committee, be referred to in the Council by any member or published or disclosed by any member or by any other person.
+
+Two, paragraph one does not apply to -
+
+any proceedings of the committee that are open to the public and the news media;
+
+press releases or statements made by a member of the committee on the authority of the committee and
+
+ written submissions presented to a select committee and authorised to be published by the committee.
+
+Motion agreed to.
+
+
+MOTION
+
+Standing Orders - Special Interest Matters
+
+[12.14 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That so much of Standing Order 39 be suspended for the duration of this session to enable special interest matters to be called on each sitting Tuesday before Notices of Motion and Orders of the Day are proceeded with.
+
+Motion agreed to.
+
+
+MOTION
+
+Afternoon Tea
+
+[12.15 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That for the period commencing on and from this day through to and including the last sitting day of the Council in 2025, whenever the Council is sitting at 4 p.m. on Tuesday and Wednesday, the sitting will be suspended for 30 minutes.
+
+Ms O'CONNOR (Hobart) - Mr President, I move -
+
+That the motion be amended by leaving out the following words: 'Tuesday and'.
+
+Mr President, I did convey to all members last night my intention to move this amendment and the rationale behind this amendment. Any member who was here when I gave my inaugural speech will know that it has been my intention since I was elected to try to do something about the afternoon tea break. If I had my druthers, it would be abolished altogether. I can find no evidence of other chambers or parliaments in Australia giving themselves an afternoon tea break two days out of three sitting days.
+
+I respect the thinking behind the establishment of an afternoon tea break. I know that many members, including myself, have to attend committee meetings in the lunch break, and therefore sitting days can be very long indeed. However, as someone who is sort of 'hardened in the crucible' of the House of Assembly, where there are no afternoon tea breaks, and sometimes the days are very long and very difficult, as they can be in here, I believe the rationale for an afternoon tea break is pretty thin.
+
+That said, I understand that it does provide some reprieve for members who have very full sitting days, when we are sitting, and who are sitting on a number of committees. So, I have sought to present a compromise. I believe that we are in an age when, in politics, to get anything done, we're going to have to learn to make some compromises.
+
+I propose that, because on Tuesday, which is private members' day, there is some flexibility over whether members need to be physically in the Chamber, that there be no afternoon tea break on the Tuesday, and that the Council be allowed to get on with its business.
+
+The fact that each Tuesday and Wednesday, one-and-a-half hours after we get back from a one-and-a-half-hour lunch break, the bell dings and we all knock off for half an hour - I don't think passes the pub test. I'd like us to agree that out in the community, if they understood that the Council was awarding itself two afternoon tea breaks in each sitting week, I don't think they'd view that very positively. I hope we can all agree on this compromise amendment without the need for a vote, which potentially would be a bit unseemly.
+
+Mr PRESIDENT - Can the honourable member please provide a signed copy of the amendment to the Clerk?
+
+Ms O'CONNOR - I certainly can, Mr President.
+
+[12.19 p.m.]
+Mr GAFFNEY (Mersey) - Mr President, I have a brief contribution. I fully support this amendment. People would know that as soon as this comes up - or in the last couple of years - I've stood up and said I don't agree with the afternoon tea break. It was explained when the afternoon tea break was introduced that there was consultation with MLCs. I wasn't consulted. I was one of those MLCs back then and there was no consultation with me about that.
+
+When we finished sitting here some months ago, there were still eight or nine notices of motions on the book and there are still another couple this morning. We have four sitting weeks where those 30-minute breaks will add two hours, which will help us get rid of some of the business. If we do that, then we're not going to have to be sitting 9.30 or 10 o'clock at night to try to get through all the notices of motions. I think it makes sense that we don't have the four half-hour breaks between the end of Council sittings in 2025. I support the amendment. I prefer Tuesday and Wednesday, but I understand the reasoning, and I don't think we need that break on a Tuesday. I'll be supporting the amendment.
+
+[12.21 p.m.]
+Ms LOVELL (Rumney) - Mr President, I will put a couple of points on record. In terms of whether we have an afternoon break, I'm fairly ambivalent on this individually. I'm lucky enough that I have a party colleague in the Chamber who between us we tend to manage our time here so that we can make sure that we do get breaks as and when we need to. Not everyone has that luxury. There are a number of members who do want to be in the Chamber to listen to debates. 
+
+I appreciate what the member for Hobart is arguing about private members' day - that maybe there is a bit more flexibility about private members' day. I think that diminishes the importance of private members' day and the topics and matters that are brought to the Chamber for debate.
+
+The other point I wanted to make was that we've had more late nights and more long days on Tuesdays than we have on any other day. That's been the case for quite some time. We've always had a significant amount of private members' business to be debated on a Tuesday and we are often here much later on a Tuesday than we are on other days.
+
+I think an indication that we can expect that to continue is the number of notices of motions that have been tabled this morning on our first day. There is significant business that we will still need to get through.
+
+I think there are arguments on both sides of this and valid arguments on both sides of this. In terms of voting, I'll be guided by the Chamber and particularly those independent members who don't have the luxury of being able to manage their time in the same way that I do.
+
+Ms O'Connor - Nor do I, to be fair.
+
+Ms LOVELL - I didn't interject on the Member for Hobart. I would appreciate the same.
+
+Ms O'Connor - There's only one of me here. I'm entitled to interject.
+
+Ms LOVELL - Yep, and we were all entitled to conduct ourselves in a way that maintains the tone in this Chamber that I think we all appreciate.
+
+My position on this is it would make more sense to have more flexibility and more proactiveness around suspending sessional orders to not have the break when we don't require it rather than ruling it out now altogether. If it's in the sessional orders, we can always suspend. We have done that when we know we're going to be finishing early or finishing on time when there's not that requirement.
+
+I also object to it being called an 'afternoon tea break'. It's not an 'afternoon tea break'. It's a break in the afternoon to allow members to take time out of the Chamber to do all kinds of things. Some members may choose to have a cup of tea as is their right. Some members may leave the Chamber to choose to have a cup of tea while we're sitting, as is their right. Where I see members needing this break is where they've had significant business before we sit at 11. I know it might look from the outside that we don't spend a lot of time at work, but I see members working from well before 9 o'clock in the morning, then attending comprehensive briefings, then sitting through the lunch break in meetings, not having a break at all. I've sat in some of those meetings where it's gone from 1 o'clock right through to 2.30. It's not about having an 'afternoon tea' break; it's about allowing members to have some time in the afternoon to do all kinds of things that we need to.
+
+As I said, I'm not in that position myself. I'm happy to take the advice of others who are in that position and be guided by the Chamber. There were just a couple of points I wanted to put on the record about the way this break has been characterised. I think it's not the case. It is unfair to the members who use this break to do other work and other business. I think that we just need to be a bit mindful of that.
+
+[12.24 p.m.]
+Ms FORREST (Murchison) - Mr President, I've spoken on this sort of motion in the past. I must say my position is consistent. I'm speaking as an independent member who likes to listen to the debates. On private members' motions particularly, the member puts a lot of effort and time into preparing their motions. Sometimes it's hard to gather all the information you need to contribute fully to a debate, and the debate helps you form your opinion. I don't think it's as easy as being able to leave the Chamber whenever you wish to take a break. I also note that some members, like the honourable Leader, will have a more challenging time to leave now because of the role she's taken on.
+
+I also have a different slant on the few sitting days. The few sitting days means that there's going to be a large demand for work to be done on Tuesdays. The government has set very few Tuesdays this year. The last thing we want to see is a whole heap of unfinished business on the notice paper. When there's a lot of business to be done, taking a break where its indicated gives people a chance for a break if we're going to have a late night. It's responsible to do that. It's responsible to enable our members to take a break out of the Chamber if they want to listen to the debate. 
+
+The few sitting days makes it more challenging to get the private members' business done and dealt with. Some of the motions we've seen already put on the table today are quite complex motions. They will take some time to debate, I imagine, because there are many points to them. It's not like they're going to be done in half an hour.
+
+I agree with the member for Rumney. There are valid arguments on both sides. I'm one of those members who does have regular committee meetings in lunchtimes. I appreciate the 4 p.m. suspension, which is not an afternoon tea break, because often I'm holding meetings at that time. It's often the only time you can meet with a minister. For someone who has to travel from the north-west, I can't have meetings with ministers at the drop of a hat. Not that it’s easy - 
+
+Ms Rattray - You can always come to Launceston.
+
+Ms FORREST - Yes, come to Launceston, but going to Launceston is two-and-a-half hours. You have the ministerial offices down here. A lot of ministers are in Hobart during non-sitting weeks as well. The suspension is an opportunity to meet with ministers at a time you can fit it in, also to return phone calls at a reasonable hour. If you know you're sitting late, you don't want to be returning phone calls at 10 or 11 o'clock at night. People probably won't answer you.
+
+I note the member for Rumney's comments about briefings. They can be very intense and full-on. Then we have to get our thoughts together to come back into the Chamber, possibly to deal with a bill that day. Not on Tuesdays, I accept, but these briefings are often held on a Tuesday, so that 4 p.m. break gives them time to pull some of that together.
+
+There are many members in this Chamber - not all of them - who are on committees that meet at lunchtime. I imagine our ministers probably have commitments during the lunchtime as well, as will the Leader, who needs to prepare for Question Time. 
+
+I'll listen to the rest of the debate, but I think there's a valid argument to continue the break. It's not an afternoon tea break. People can choose to have a cup of tea; people can use the break as they need. I believe it's an opportunity to take some time out of the chamber. I find it valuable to be listening to the debate. I prefer to be in the Chamber to do that. I acknowledge I will leave sometimes. Sometimes you need to leave for other reasons. I will listen. I'm not inclined to support the amendment.
+
+[12.29 p.m.]
+Ms THOMAS (Elwick) - Mr President, I'll try to keep it brief, mainly at the risk of embarrassment that whilst our constituents out there are hoping we'll get on with business and help them with health, housing and education issues, we're here debating a 30-minute break on our first day back. 
+
+Overall, this signals that perhaps we need a broader consultation and review of our Standing Orders to address this issue and nip it in the bud once and for all. I've been here for not even two years, and we've had this debate a number of times now. It’s embarrassing. I hope that we can put an end to it very soon, for good.
+
+In terms of perception, I don't see it as awarding an afternoon tea break, as the member for Hobart suggested. Ultimately what it means, if we do have an afternoon tea break, is that we're here - sorry, if we do have an 'afternoon break', not an afternoon ‘tea break’ - because as the member for Rumney quite rightly pointed out, it's not necessarily to sit and have a nice afternoon tea, although that's what people can choose to do if they like. Members use it for all different reasons. Ultimately, if we do have an afternoon break, we're here longer at the end of the night; it's a later working night. 'Awarding a break' is not how I would refer to it. 
+
+In any other workplace, an industrial agreement would mandate breaks. We don't have such an agreement here to guide how we work. We don't have unions to fight for us, which is probably why we're here having this conversation.
+
+Members can use their discretion in the Chamber and support each other in breaks from the Chamber, but as the member for Murchison said, and similarly, I personally like to sit and listen to the debate as an independent member in the Chamber. I don't like to leave the Chamber. Obviously, there are occasions when you have to. 
+
+I was inclined to support the motion from the member for Hobart, mainly for the reason I outlined at the start. I just want to stop debating this. If this is an acceptable compromise we can all live with, let's get on with it, do it and perhaps hope for a review of the Standing Orders and procedures more broadly so we can stop having this debate.
+
+[12.31 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, this isn't a position of the government. This is my position in regard to this. I appreciate the honourable member bringing forward the amendment. I'll make a very brief offering.
+
+There are some really important points being made on both sides of the argument. It would be my preference to continue at this point in time with the Tuesday 4 p.m. afternoon break. I support some of the reasons that have been put forward by other members. This is not about the position of Leader. This is about me being a member of this House as well. 
+
+Thank you, I won't be supporting the amendment at this point in time. It's probably a good opportunity to have a broader debate through the Standing Orders Committee.
+
+[12.32 p.m.]
+Ms WEBB (Nelson) - Mr President, I’ll speak briefly, just to put my thoughts on the record. I have been thinking about this amendment since it was brought to our attention yesterday by the member for Hobart, which was a courtesy I appreciated. 
+
+I feel it's unfortunate that we spend time debating this issue. I don't agree with the characterisation of the afternoon break as something where we put our feet up. I agree with other members here that, of course, it varies. Sometimes you do a great deal of work in that break. Other times you use it as a break. The reality is that it is fundamentally useful for us to have that opportunity built into our day, particularly if we are going to have a long day, to utilise the time as we may need to. Typically, I have been on committees that meet during Tuesday lunchtime, so the lunch break is entirely taken up with meetings. I'm also a member who often has a lot of private members’ business occurring and motions being debated, so I'm quite busy on a Tuesday. I find that time quite productive for other work-related purposes in the afternoon.
+
+I believe we need to resolve this. I never again want to debate this in the Chamber. I would like us, as a Chamber, to address this through Standing Orders Committee and come back and have it resolved through that process, rather than publicly debated like this in the Chamber. 
+
+Having listened to other members' contributions on the amendment, I've leant towards not supporting the amendment today. I would like to see us resolve it more permanently down the track.
+
+[12.34 p.m.]
+Mr PRESIDENT - Just for honourable members’ information, it certainly is the intention that it is addressed through the Standing Orders Committee. We did think we probably had more time to do that before the next election, and we did. 
+
+The question is that the amendment be agreed to.
+
+	
+	The Council divided -
+	
+
+	
+AYES – 3
+	
+NOES - 11
+	
+		Mr Gaffney	
+		Ms Armitage
+	
+		Ms O'Connor (Teller)	
+		Mr Duigan
+	
+		Ms Thomas	
+		Mr Edmunds
+	
+			
+		Ms Forrest
+	
+			
+		Mr Harriss (Teller)
+	
+			
+		Mr Hiscutt
+	
+			
+		Ms Lovell
+	
+			
+		Ms Palmer
+	
+			
+		Ms Rattray
+	
+			
+		Mr Vincent
+	
+			
+		Ms Webb
+	
+			
+		
+
+Amendment negatived.
+
+Mr PRESIDENT - The question is that the motion be agreed to.
+
+Motion agreed to.
+
+
+ADJOURNMENT
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That, at its rising, the Council adjourn until 9.30 a.m. on Friday 12 September 2025.
+
+Motion agreed to. 
+
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That the Council do now adjourn.
+
+Motion agreed to.
+
+The Council adjourned at 12.38 p.m.
+
+
+
+
+
+
+
+
+
+
+DRAFTUNCORRECTED PROOF
+
+
+
+
+
+
+
+	1	Tuesday 19 August 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]

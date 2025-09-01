@@ -1,0 +1,985 @@
+﻿
+Title: Legislative Council Thursday 5 June 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: Legislative Council
+Character Count: 109448
+Characters with Spaces Count: 132173
+Company: Parliament of Tasmania
+Creation Date: Thu, 19 Jun 2025 6:43:00 AM (UTC)
+Keywords: 2025
+Last Printed: Thu, 19 Jun 2025 6:43:00 AM (UTC)
+Last Saved Date: Thu, 19 Jun 2025 6:47:00 AM (UTC)
+Line Count: 2174
+Links Dirty: false
+Links Up To Date: false
+Page Count: 4
+Paragraphs Count: 460
+Revision: 3
+Scale Crop: false
+Security: 0
+Shared Document: false
+Subject: Hansard
+Template: Hansard debates May 2025
+Total Editing Time: 0
+Typist: Karen Cuzzucoli
+Word Count: 23143
+isys:SubType: Word 2007
+
+
+
+
+
+
+
+
+
+
+
+PARLIAMENT OF TASMANIA
+
+
+
+
+LEGISLATIVE COUNCIL
+
+
+
+
+
+
+
+
+
+
+REPORT OF DEBATES
+
+
+
+
+
+
+
+Thursday 5 June 2025
+
+
+
+
+
+
+
+
+REVISED EDITION
+
+
+
+Contents
+	 <LINK> Thursday 5 June 2025	1
+	 <LINK> YOUTH JUSTICE FACILITY DEVELOPMENT BILL 2025 (No. 19)	1
+	 <LINK> Second Reading	1
+	 <LINK> Recognition of Visitors	7
+	 <LINK> Recognition of Visitors	12
+	 <LINK> QUESTIONS	26
+	 <LINK> Hawthorn Football Club - Partnership Extension	26
+	 <LINK> Reserve Forest Plans - Status	27
+	 <LINK> Reserve Forest Plans - Status	27
+	 <LINK> Greyhound Racing Stakes 2024-25	28
+	 <LINK> UTAS Stadium - Classification	28
+	 <LINK> High-Performance Training Centres - Access for TIS Athletes	30
+	 <LINK> Supplementary Question	30
+	 <LINK> Dial Park - Funding Withdrawal	31
+	 <LINK> Supplementary Question	32
+	 <LINK> River Tamar Bridge - Progress	32
+	 <LINK> Montrose Bay Intersection - Progress	33
+	 <LINK> Dial Park - Changeroom Facilities	34
+	 <LINK> YOUTH JUSTICE FACILITY DEVELOPMENT BILL 2025 (No. 19)	34
+	 <LINK> Second Reading	34
+	 <LINK> SUSPENSION OF SITTING	41
+	 <LINK> MOTIONS	41
+	 <LINK> Varying Orders Regarding Estimates Committees of Council	41
+	 <LINK> SUSPENSION OF STANDING AND SESSIONAL ORDERS	42
+	 <LINK> Precedence of Government Business	42
+	 <LINK> ADJOURNMENT	42
+	 <LINK> Appendix 1	43
+
+
+
+Thursday 5 June 2025
+
+The President, Mr Farrell, took the Chair at 11.00 a.m., acknowledged the Traditional People and read Prayers.
+
+
+YOUTH JUSTICE FACILITY DEVELOPMENT BILL 2025 (No. 19)
+
+Second Reading
+
+Continued from 4 June 2025 (page 58).
+
+[11.02 a.m.]
+Ms THOMAS (Elwick) - Mr President, having a bit more time overnight to think about this bill and to have discussions with the Southern Midlands Council and others, I will continue my contribution, continuing, though, to express my concerns and questions, ultimately, about those old questions I always ask myself when we are presented with a bill, which are:
+
+What is the problem we are trying to solve here or avoid, perhaps, in this case?
+
+Will this bill solve that problem or avoid that problem occurring?
+
+What, if any, are the unintended consequences or problems that the bill may create?
+
+What is the likelihood of these problems or consequences occurring?
+
+I will try to frame my contribution here, as I weigh up whether or not I support this bill as I go through. In terms of the problem, we have heard through our briefings and from the minister, Mr Jaensch, who has been very generous with his time. I acknowledge him in the Chamber here today. He has told us that we want to close Ashley Youth Detention Centre as soon as possible. Absolutely we do.
+
+This bill aims to avoid further delays. It has already been delayed beyond the expectations of people in the community and this parliament. We want to avoid any further delays, by constructing and opening a new youth detention centre as soon as possible. I understand that the problem we are trying to avoid is potential further delays by coming in and making provisions in this bill that require the Southern Midlands Council to issue a permit for use and development of a youth detention centre in the rural zone, which is a discretionary use, and remove appeal rights and remove the oversight of the Public Works Committee because there is a concern there may be appeals, and appeals could mean the project is delayed. But how likely are there to be appeals and what is, as the member for Murchison said, the evidence that appeals will cause lengthy delays? As I mentioned yesterday, the average length of time for decisions to be made in TASCAT is 80 days, so how much impact will that have given a DA is not necessarily - and I hope the Acting Leader can respond to this in summing up - the DA is not yet totally ready for submission?
+
+What is the likelihood of appeal? The government has undertaken consultation on the master plan for this project. The government has opened up the opportunity for members of the community to have their say on the proposed facility. How much opposition has there been to date? What indication do we have that there are people who are unhappy with this proposed project?
+
+Ms Forrest - And on top of that, through you Mr President, if there is a fear of going to appeal, some members of the committee have indicated that they could be looking at court action as well as TASCAT.
+
+Ms THOMAS - That is right, yes. I will come to that. Thank you, member for Murchison. What is the likelihood, how many people are upset about this proposed facility? I know I have not had any emails or contact from anyone in the community who is concerned about what he has proposed here. Certainly I have on a number of other matters and developments, and certainly when I was mayor and chair of a planning authority, you would know about it if people were unhappy with a proposed development. I know it is not at that DA stage yet, and perhaps that is when it is expected that people will be voicing their opposition because they will be able to under this bill. They will still be able to make a representation and express their concern or support for the project. However, beyond that, if their concerns are not listened to or responded to, there will be no right to appeal. 
+
+I understand the problem we are trying to avoid here. I do not have any evidence that the problem is likely to occur because I have not heard from anyone concerned about the project. I have not heard that there are people who are upset about this and are likely to appeal a DA that would be issued under the normal LUPAA process. I would like to hear a bit more about the likelihood and whether people have expressed opposition in the consultation to date.
+
+The other concern that I touched on yesterday was, what are the development discretions in the DA? We have talked a lot about the permitted use, but this is effectively directing Southern Midlands Council to issue a development permit for use and development. We have heard a lot about making it permitted use for a correctional facility in the rural zone, which is discretionary. What we have not heard about and what I need to hear about is what other discretions are in relation to the actual development, the construction and the building.
+
+What are the discretions that will be in the DA? We have not seen the DA. We do not know what those discretions are, so we do not know what people would be able to make representations on in terms of the actual development. It is very hard for me to approve waiving people's appeal rights when I do not know what the things are that they could actually have grounds for appeal on. Is it reasonable that they are not able to make appeals when they may have relevant discretions under the Land Use Planning and Approvals Act in relation to the development, that they have that good cause for concern? That ought to be addressed.
+
+The other concern, which I sought a bit more advice on overnight, was in relation to the unintended consequences or the problems that this bill may create. I had serious concern about the potential legal risk to the Southern Midlands Council in waiving appeal rights through this bill. If a representor does not have their typical right to appeal through the usual processes under LUPAA, through TASCAT, they may be so aggrieved by this that they may seek to take action directly through the Supreme Court. In fact, what I have learned is that under the Judicial Review Act 2000, someone who is aggrieved by a decision may bring action through the Supreme Court, under section 17 of the act.
+
+One of these grounds is natural justice and if someone feels like they have not had the right to public participation through the planning process, this could in fact be a ground for an appeal to the Supreme Court, which potentially could be very costly and burdensome on the Southern Midlands Council and its ratepayers. I have concern about that. Again, I do not know what the likelihood of that occurring is, but it is a real concern. The question I have is, will the government indemnify the council from proceedings if this were to occur? It would be very unfair for the Southern Midlands Council to be negatively impacted in that way if someone did appeal directly to the Supreme Court and they were subject to legal action because they will be the decision-maker here, not the government or we as a parliament. This bill is leaving the Southern Midlands Council as the decision-maker. 
+
+That is a significant concern I have and yes, it may be unlikely, but when people feel like their rights have been taken away, that can make them feel even more aggrieved. It will provoke them, if you like, or motivate them to take action through any avenues that are available to them because they feel like it is simply not fair that they have not had the usual processes to pursue. We heard from the mayor of the Southern Midlands Council yesterday, that he did express some concerns initially to the government about waiving appeal rights. We have heard from the legal experts who presented to us yesterday that they have concern about this and the member for Murchison relayed those concerns at the higher level. One of their concerns, which goes to the mayor of the Southern Midlands' point, is that removing of the rights could in fact undermine the likelihood of a social licence, as well as that legal certainty that I referred to. We do not want that unintended consequence either, of undermining the likelihood of a social licence for this facility in removing these appeal rights.
+
+Those are my key concerns with this bill and certainly sleeping on it did not change my mind. I hope the Acting Leader can address those concerns and questions in summing up. As it stands, those concerns are enough for me to err on the side of caution and not support this bill. That in is in no way an indication that I do not support closing Ashley Youth Detention Centre as soon as possible. I am not convinced that there will be the problem of delays caused by going through the typical planning process and allowing people to have appeal rights and even the Public Works Committee process standing. These are important mechanisms that are in place for good reason and there has to be a very good reason and a real problem before us, if we are to interfere with the functioning of our planning system and our planning frameworks. There has to be a really good reason for that, and I am not convinced at this point that the problem exists that warrants a bill like this to address it. I have real concern with undermining our planning system and the democracy, the law and the right to representation in this current bill. I will listen to other members' contributions and the response from the Acting Leader's office before making up my mind.
+
+[11.14 a.m.]
+Ms RATTRAY (McIntyre) - Mr President, as always, I appreciate contributions from other members on this particular bill that we have before us. This is certainly one of those bills that presents a difficulty. I intend to share with members of the House and for the government's information some of the concerns that my community have with what is being proposed here. That is aside from the Southern Midlands community and the matters that have been outlined very well by the member for Elwick and the member for Murchison in their contributions on bypassing parts of the planning scheme.
+
+It is certainly well known, but I cannot say that everyone agrees the Ashley Detention Centre should close immediately. That is not what the people who I represent, absolutely everybody, thinks. I need to be able to stand here and represent those people also. The community has a number of questions about what happens to the people who are part of that centre once the facility is relocated. What happens to the people who work there? Where do they go? What happens to the community around them? What do they expect to see for their future?
+
+There is more than just one community affected here. I want to be able to reflect their concerns. Obviously, we have a bill before us that the government anticipates significant delays or, ultimately, opposition to the proposed project. In the north of the state, we have a facility. Now, I am not going to say it is a perfect facility, it has been very clear it is not perfect, but we do not live in a perfect world. We certainly do not live in one at the moment.
+
+I acknowledge the minister has made numerous calls and the minister is here in the Chamber. I always welcome ministers to come and listen to debate, especially when it relates to bills that they have presented to the parliament. I acknowledge Mr Jaensch in the Chamber. As for the updated information presented or provided to us on Monday, it went from a 23-page document to a 46-page document answering lots of questions about the new facility. Again, there are no answers to the questions on the current facility.
+
+When we had our briefing yesterday, the minister said we need a therapeutic model. I do not disagree, and we need to be able to have services within 30 minutes of major centres. Well, the Ashley Detention Centre in its current location is about 30 minutes from the Launceston centre. Yes, people from the southern part of the state do have to travel up to that centre if there is a detention order put on them or remand order. I think there are some issues with remanding young people in detention centres; there perhaps should be another option for that. But, again, if we put the services into that facility that is already there, that has had millions of dollars spent on it. They have a basketball court, a swimming pool, a teaching centre, they have all those aspects.
+
+Yes, they are not as modern as what a new centre would have, but they still have all those parts of that centre identified as being a therapeutic model. It is the services that are lacking. Is it going to have any more services delivered from out of Hobart as what it could have out of Launceston? There are a lot of excellent services in the north of the state. Why cannot those services be built up? We already have a centre that is accepted by the community. It is accepted.
+
+Yes, it is not perfect, but I am sure that there could be some work undertaken at that centre and that would already be starting to happen. We would not be waiting for a new building, absolutely, to put some wraparound support services in place. If we are, we are in a really bad space. If we are waiting for a new building to deliver those support services, then that is not ideal and is not what we need.
+
+It has been expressed to me by the people who I represent that taking away this facility with no indication of what might come into it or what the future of it will be - whether it will sit idle, we do not know; we have no idea what the plans are for that. The people who I represent say without those future plans, they support keeping the centre for young people and building up the wraparound services that are required to deliver a therapeutic model of care for young people under the justice system who have been declared they need to be in a safe place for their and for the community's protection.
+
+If we take this facility away and put it somewhere else, does that completely change the function of the facility? I have to be absolutely assured that is the case, and I do not know how that can be assured.
+Of the people who I represent, some will say, 'Yes, close it, get rid of it', but are we only moving the issue to a new $155 million facility budget line item that we have? Is it not the model of care and support that we should be looking at and not necessarily the bricks and mortar of a facility?
+
+As I have said, the Ashley Youth Detention Centre has been in the Deloraine community for decades. It would be their preference for that facility to stay there at this point in time. It was really important to put that on the public record.
+
+I want to make a couple of other points in regard to the process we have before us with the Southern Midlands Council being the planning authority and being asked to use the development application process for approving the new proposed facility at Pontville.
+
+I recall, and I am sure that if I have got this wrong somebody will remind me very quickly, that the mayor and those two other gentlemen, Tim Kirkwood and the planning officer from Southern Midlands, who made the video presentation yesterday, said that they were not aware of any concerns so far. It has also been acknowledged that those concerns might only be generated once the DA is submitted to the council, should this bill proceed.
+
+I expect it possibly will proceed. I can usually read the room pretty well in this place. Again, it is important that people have an understanding that there are some very nervous and disappointed people in and around the Deloraine community and the Meander Valley community about what has been proposed here, with no future plans and not much detail for what is proposed in the future.
+
+I note that the member for Mersey has proposed an amendment to include the Public Works Committee in the process and not delete that, and I believe that is a really positive amendment in my view, because at least there would be an opportunity for community people to be part of the public works assessment process, to make representation.
+
+The Public Works Committee always undertakes a site visit. We have whatever is put in front of us in documentation form and then we go through the site visit, ask as many questions as we possibly can in regard to any proposal and then take the opportunity to go back and have a hearing. That is put on the public record, ask for more information before a decision might need to be made, then make a decision and a report is produced and then presented to the parliament.
+
+It is a tried and trusted process and even received some very positive comments from the two legal experts yesterday around the role and function of the Public Works Committee, and that is not just because I myself and the member for Huon are on the Public Works Committee, it is because of the work that has been done for decades by previous members who thoroughly scrutinised projects on behalf of the parliament.
+
+I have every intention, if we proceed with this bill, to support that amendment and at the very least, as I have said, have that opportunity for the community to bring forward any concerns because the committee, while they either accept or reject, can certainly make recommendations to the government of the day around some matters that might be raised with the committee through that process. Just for members' information, I know that the minister talked about the project already meeting the expectations of the Public Works Committee, the objectives.
+Ms O'Connor - The need for it, the necessity question. 
+
+Ms RATTRAY - The need for it, and I acknowledge the commission of inquiry report. There has been a long-standing commitment. I believe it was something like four years ago - I remember it clearly - I was walking into a Subordinate Legislation Committee meeting four years ago and I was just at the bottom of the stairs as you go into the committee rooms, and the announcement was made that the Ashley Youth Detention Centre would be closed.
+
+Ms O'Connor - September 2021.
+
+Ms RATTRAY - There you go; it must have been a Thursday. Not even a phone call to the local member to say this announcement is coming in two minutes. I was knocked off my feet nearly. I do remember it well, and there has been a lot of discussion in my community since.
+
+The minister has indicated on the government's behalf that he feels that the proposed works do meet identified needs to solve a recognised problem. That is his view, but the committee also asks whether the works are the best solution to meet identified needs and to solve the recognised problem within the allocated budget.
+
+The committee goes on to ask, 'Are the proposed works fit for purpose?' Again, having the design, the location, having the opportunity to assess, who lives around, who works around or what other aspects there are close to them. We have heard there is a rifle range and a marijuana -
+
+Ms Forrest - Medicinal cannabis.
+
+Ms RATTRAY - Medicinal cannabis. That is right; they grow marijuana elsewhere, apparently.
+
+Ms O'Connor - Well, you are a child of the '70s, honourable member.
+
+Ms RATTRAY - Yes, but I am not one of those. I mean, everyone makes their own choices. It was not one of mine, though.
+
+It goes on: do the proposed works provide value for money and are the proposed works a good use of public funds? Twelve months ago, $7.5 million was spent at the Ashley Youth Detention Centre on a new entrance, with some security upgrades. That is a lot of money to be spent on a facility that we are going to throw out - or are we going to throw it out?
+
+Ms O'Connor - Through you, Mr President, the government has also paid $75 million in redress payments to former detainees of Ashley.
+
+Ms RATTRAY - Is that the bricks and mortar issue? That is my question: is it the bricks and mortar issue? Other people may have a different view. I am sure they do; I have heard it plenty of times here. Again, is it a bricks and mortar issue? Is it the layout?
+
+As I have said, is there another way of better meeting the therapeutic model needs of young people who are required to be in detention? I absolutely acknowledge that the remand issue is a really big issue. There should be some other way of remanding. I absolutely acknowledge that you should not necessarily have sentenced detainees in a facility with people on remand, who are taking a long time to get to whether they should be in detention or not, because effectively they are in detention.
+
+In my mind, it is not clear to me, and it is certainly not clear to the community that I represent, that this is the best use of public money at this time. We have heard about possible issues with timeframes, with the greatest of respect, the minister having to continue to tell people there is no time frame. We have heard very clearly that time frames are really difficult to meet, in any circumstances, for whatever reason. As we do not necessarily have a firm design, we cannot know at this point in time whether the use of the materials is easy to source, or whatever it may take.
+
+I need to say that the fact that there was a horse wandering up to the window in the design, I just cannot really see that you will have a horse looking in the window of a detainee unit. There may be one over in a paddock somewhere, but I am not sure you will have one walking up to the window. There were aspects of the mock-up design that I wondered whether we would necessarily see into the future.
+
+———————————————————
+Recognition of Visitors
+
+Mr PRESIDENT - While the honourable member is finding her notes, I welcome to the Chamber the years 4 and 5 students from Dunalley Primary School, which is in the Legislative Council division of Prosser. Your local Legislative Council member is the honourable Kerry Vincent MLC [Bookmark: Phr2_O=29.9_D=11.4_C=0.83] , and he joins the other 14 members of the Chamber representing different parts of Tasmania. 
+
+We are currently [Bookmark: Phr3_O=43.2_D=3.1_C=0.85]  debating a bill that has been sent from the House of Assembly for [Bookmark: Phr4_O=48.3_D=10.6_C=0.75]  the Legislative Council to look at, and we are in the stage called the second reading; honourable members have the opportunity to rise and speak [Bookmark: Phr5_O=59.7_D=26.9_C=0.80]  their thoughts about the bill. Then if people are generally happy with it and there is a majority, it goes into a Committee stage where the bill is examined in more detail. If it passes through that, it is read a third time and then sent to Government House for the Governor to sign. That is where a bill becomes law. 
+
+We are currently going through the early stages of the bill.  [Bookmark: Phr6_O=88.4_D=5.2_C=0.76] Some honourable members have spoken and some will speak soon.
+
+I know that all the members in here [Bookmark: Phr7_O=94.3_D=21.2_C=0.89]  will join me in welcoming you to the Legislative Council and thank you for spending time in the Parliament of Tasmania. It is good to see that you are having civic education and learning how the whole system works, because when you are a little bit older it will become very important. Welcome to the Legislative Council.
+
+Members - Hear, hear.
+———————————————————
+
+Ms RATTRAY -  [Bookmark: Phr8_O=117.4_D=11.8_C=0.64] Mr President, it is lovely to see the Dunalley Primary School students here. I recall the former member for Hobart would speak fondly of his time as a Dunalley  [Bookmark: Phr9_O=130.1_D=10.6_C=0.82] Primary School student, a few years ago now, the honourable Rob Valentine. He said it was a wonderful school, and I am sure it still is.
+ [Bookmark: Phr10_O=142.4_D=1.2_C=0.97] As I said,  [Bookmark: Phr11_O=145.7_D=2.2_C=0.88] we do not live in a perfect world [Bookmark: Phr12_O=150.2_D=0.6_C=0.81] . [Bookmark: Phr13_O=153.0_D=25.7_C=0.85]  I am not convinced at this point in time that building a new facility- we do not know yet whether it is a welcoming community or not. We do not know that, because it has not been through the process where people that live in and around that Southern Midlands community [Bookmark: Phr14_O=180.1_D=2.4_C=0.92]  have decided whether they want to welcome [Bookmark: Phr15_O=183.4_D=23.9_C=0.81]  a detention facility with the process that has been put to the parliament. It bypasses some of those opportunities. 
+
+I do feel that it is a pretty tough one for me in this regard because I have to always be mindful [Bookmark: Phr16_O=208.4_D=5.6_C=0.69]  of those people whom I represent, particularly when you know [Bookmark: Phr17_O=215.0_D=5.3_C=0.91]  well the people who live in and around the current facility [Bookmark: Phr18_O=221.1_D=29.0_C=0.84] , and you know and have met with a number of staff - former staff, current staff and staff who have been stood down with no case to answer - but three years on and they still have not had a resolution for what has been suggested, so alleged. 
+
+I feel [Bookmark: Phr19_O=251.0_D=2.2_C=0.57]  a weight of responsibility here [Bookmark: Phr20_O=254.1_D=1.8_C=0.93]  to represent those people [Bookmark: Phr21_O=257.4_D=0.6_C=0.76] .  [Bookmark: Phr22_O=260.2_D=12.0_C=0.79] I can understand that the government feel that they need to reflect the recommendations of the commission of inquiry. I understand that, but I also feel that there is a community [Bookmark: Phr23_O=272.9_D=19.4_C=0.82] , or two communities that are affected here, one in the north and one in the south. We need to also have some consideration for those as well. At this point in time I am going to be like others: I will certainly be listening to the debate, but it is [Bookmark: Phr24_O=293.7_D=11.2_C=0.88]  potentially not my intention to vote for this at this point in time. As I have said, I am happy to consider and have indicated that I would be of a mind to support the member for Mersey's amendment to include the Public Works Committee scrutiny process in the proposal, should it see favour in this House moving forward.
+
+So, that is my offering, perhaps somewhat disjointed, but it has been a disjointed week; that is all there is about it. Even though I am not in the other House, you feel it around this place.
+
+[11.40 a.m.]
+Ms ARMITAGE (Launceston) - Mr President, I was not going to rise to speak, but having heard some of the contributions, I thought I would make a short contribution. I support the comments by the member for McIntyre in a manner. I have been to Ashley on a number of occasions and, as I think is well known here, I have been working with Tasmania Police, supporting our vulnerable youth for over 30 years, going into the police station when they have committed crimes. I have gone in the middle of the night, I have gone in on Saturdays, weekends, sometimes I have gone in two or three times a week, sometimes it might be once a month. I have had a variety of people from as young as 10 to 16 and 17, I have seen all sorts of crimes committed and I have seen all sorts of things happen and all sorts of people from all sorts of backgrounds, so I understand the situation really well. 
+
+Is Ashley perfect? No, it is not. I appreciate the minister being here. The minister and I have had discussions about the situation, particularly the fact that, in the past, we have heard from the government, and I know it is changed now, minister, that they were going to build a facility in the north so that prisoners from the north could be close to their families. From my perspective, I think that is especially important for children and youth from the north, to be close to their families, and I appreciate that I have been told that it needs to be in the south because that is where most of the programs, the facilities, the psychiatrists and the people who might be needed are. But what I would actually like to see, and my understanding is that we do not know what we are going to do with Ashley, is why can we not keep both facilities?
+
+I am hearing people say what a terrible place Ashley is, but as the member for McIntyre says, it is bricks and mortar. Can it have some renovations, can it have a few more changes to maybe make it a bit softer, a bit more of a friendly place? My understanding with Pontville is that it is going to be a different type of place. It is going to be maybe little houses with bedrooms for some of the lower security, where they will be working together. They will do their own cooking, they will do their own washing and some of the people will learn how to manage in a household.
+
+I recently went to Western Australia for a variety of reasons and one of the people I met with was the assistant commissioner of corrections for youth and justice. It is quite amazing what they are doing and talking to him, the changes that they have made with their youth justice and what they are doing over there and the less recidivism they are getting, a totally different system. Still, obviously, remand and some people have the need to be in a facility where they are kept away from the public, but a lot of the things they are doing and the minister did say - and I do not want to put the minister on the spot, seeing as he cannot respond from where he is sitting - but they have looked at some of these other models. Listening to the director, to Rick, there and what they are doing in Western Australia and the limited number that they then have to keep in a locked-up security system is quite amazing and I would hope that we are looking to some other jurisdictions as to what is actually working.
+
+The only thing is that it needs a lot of money on the other end to make sure that we have more people mentoring and being with these people. So, it is not just a matter of building another facility at Pontville that fewer people are in there, but there is a lot of money that needs to be spent in other areas to make sure that it is covered off, that they are not just left to their own devices out in the community or in places where they are taken care of and allowed to go out during the day and basically have someone with them.
+
+I think the member for McIntyre makes a really good point: no-one knows what is happening with Ashley. Why do we have to close it? Why can we not have two? Why can we not have a facility in the north, where some people might require services that we have available in the north? They might not need all the services that are in Hobart. That some of these young people can be close to their families surely is just as important as psychiatrists or some of the wraparound care we have in the south. I still fail to see how that is any different to the argument put up by the government about the reason we needed to have a northern prison facility. It just does not make sense to me.
+
+The other question I have with Pontville is, are youths coming to the station? When I go to the station, maybe it is 7.00 at night. A youth has been charged. Depending on the seriousness of the charges, they may not be bailed because it might be fairly serious. It might be too late for court that night and they might go to court the next day. Often on those occasions they will go at the moment to Ashley, rather than being in a jailhouse or staying at the station.
+
+What is actually going to happen? Just a scenario: you are at the station, there is someone under 18, obviously when I am there because they do not have a guardian or a parent or someone who can come in there. They could be homeless, couch surfing, which is often the situation. They have committed something fairly serious, maybe they have stabbed someone because many of them carry knives and they tell me it is for their protection. Unfortunately, knives for your protection are often used against you. Maybe they have stabbed someone, they got caught the next day, they cannot go to the court that night, that is already closed. Will they have to go to Pontville? That is a long way to go.
+Will all of a sudden youth justice not be seen in the north? We will not be using our courts in the north, they will actually all be going south because Pontville obviously is closer to Hobart than it is to Launceston. Or will that person then have to stay basically in a bail house or a jailhouse, whatever you might like to call it, at the station because it is too far to go to the south, but then the next morning to decide what is going to happen to them, they need to go before a magistrate?
+
+I am wondering where the situation is, whereas if we would retain Ashley to keep both facilities and for all common sense. I cannot see the sense, the money that has been spent on it if it needs a little bit of renovation to make it a bit softer, a bit friendlier, but to actually have a northern facility as well for those people who do need to be locked in a facility, but do not need some of the services in Hobart.
+
+I will not go any further about that. I fail to see the benefits in closing it permanently, when it could be an adjunct to Pontville. I have mentioned the Deputy Commissioner and fabulous work they are doing in Western Australia. I spent over an hour, probably closer to two hours, talking to him and it is just amazing the things they are actually doing.
+
+It is a different state with a lot of money, but they are putting their money not into lock-up facilities, but into people, so that the people are there to support the young people. They are basically with them on a full-time basis to make sure they do not commit crimes, that they go to school, that they learn. I was quite amazed at the results they are getting. Very few recidivisms; obviously, they still get some but compared to other states and what is happening here. I have to admit Western Australia is a state that is really going ahead.
+
+The other concern I have, and I agree with a couple of the members who have spoken, is about removing appeal rights. Coming from a local council background, I have always believed that community have the right to appeal. Not indefinitely and not continually about the same thing, but they do have the right to appeal, and neighbours do have the right to appeal.
+
+I would like to know, is there a problem that has been identified in this case as a reason to take appeal rights away? And also, when we were listening yesterday in the briefings, and I really appreciate the briefing, Acting Leader; it was really good to hear from so many different aspects there that if appeal goes, obviously you can still appeal, you can appeal to the Supreme Court, but then that would take longer.
+
+The other concern with appealing to the Supreme Court is the cost. That some people who may really feel the need to appeal and unless there is a group of them together, it prohibits people appealing if they are genuine appellants. I have a concern there: has there been a problem identified we have not heard about, maybe is there something they are expecting? Otherwise, we really do not want people saying, 'Well, do not worry about it, it is the government, they can do what they like, everybody else has to jump through these hoops, but they do not.' It is an issue.
+
+Public works scrutiny is one of the most important committees in my understanding in the parliament. How can we explain to our constituents, to our community that do not worry about it, this is something that does not have to go through the Public Works Committee.
+
+There is a timeframe; well, everything has a timeframe. It does not matter what it is. No-one really expects time frames to be kept. It has been several years already and what is a little bit longer, if it takes a bit longer to do it properly?
+
+It was one of the things, in many discussions I had in Western Australia, that was said to me about a couple of different issues we were discussing: if you cannot do it properly, do not do it at all. That applies to many things. Let us do it properly if we are going to do it, and try not to rush something through with inappropriate scrutiny.
+
+Therapeutic model, future use. I have been told that Ashley is too small to be a prison farm, so it cannot go there. Unfortunately, in the past, I think it might have been the member for Hobart's party at the time, sold Hayes Prison Farm.
+
+Ms O'Connor - We did not sell any GBEs.
+
+Ms ARMITAGE - I have not sold any GBEs either.
+
+Ms O'Connor - There was a global financial crisis; we had to sell something.
+
+Ms ARMITAGE - Unfortunately, I think you chose the wrong thing. As I said, I have not sold any GBEs. From my perspective, we need to have some vision here and that is why I am concerned.
+
+Ms O'Connor - We need a strategy.
+
+Ms ARMITAGE - Well, it is long-term vision, short-term gain and that is the thing with Ashley.
+
+We talk about selling - let us get rid of it and get some money for it. I think the vision needs to be to let us keep two facilities. Let us have one in the south and one in the north. If it needs some work, let us do it. I agree with the member for McIntyre, I totally support her there.
+
+I am not going to go on, as most has been said. I really appreciated the long contribution, particularly by the member for Murchison. I really did not feel I had a need to speak because that covered most things.
+
+Ms Forrest - Thanks for that; it was completely unprepared, so there you go.
+
+Ms ARMITAGE - Mine is not prepared either, I just felt the need after having heard members speak. It is probably better to speak off the cuff rather than having a written speech. Sometimes we forget things, I must say.
+
+In closing, I have concerns about lack of appeal rights. I have always had concerns about not allowing people to express the concerns or worries they have when something is going on nearby. With the medicinal cannabis plant nearby and the gun range, I am not sure how that will affect it. We heard yesterday they are dealing with those issues. Pontville was back in 2013 when it was open before as a detention centre. There were all sorts of concerns about Pontville.
+
+I am listening to any other contributions at the moment. Unless there are some changes and amendments, I am not sure I could support it as it is. I certainly will support the member for Mersey, in that it is important that the Public Works Committee goes through that process. I believe the community are quite happy for the time frame to be stretched out a little bit to do due process and make sure things are done properly.
+
+———————————————————
+Recognition of Visitors
+
+[11.53 a.m.]
+Mr PRESIDENT - Before I call the member for Hobart, I would like to welcome the second group of students from years 4 and 5 from Dunalley Primary School. We are currently debating a bill that is about a proposed new centre to replace the Ashley Youth Detention Centre. As you can see, members have different views on what should be done. The bill has come from the House of Assembly to us and members will get the opportunity to debate the bill.
+
+It may be amended, which is where members of the Council suggest changes to a bill and that will be done in the Committee stage, which we will go to after members have made their contributions.
+
+There are 15 Legislative Council divisions and the person who represents your division called Prosser is the honourable Kerry Vincent MLC. He is your local member in the Legislative Council. If you have any concerns about anything, do knock on his door at his office and I am sure he will make you most welcome, as will all the other members of the Legislative Council. Thank you for visiting us today. I hope your tour through parliament is very enjoyable.
+
+Members - Hear, hear.
+———————————————————
+
+[11.55 a.m.]
+Ms O'CONNOR (Hobart) - Mr President, thank you. Hello kids. It is good to have you here today. I think most Tasmanians recognise the need to close Ashley Youth Detention Centre. Most Tasmanians are aware of the evidence, the findings and the recommendations of the commission of inquiry. What we are being asked to do here today is to rush the declaration of a new youth detention facility at Pontville, removing public appeal rights and removing the oversight of the Public Works Committee.
+
+This government, on its record, requires oversight. We are talking about a project here which will be in the order of $150 million. We cannot be exactly sure what it will cost because it is still in the design development phase and we certainly have not seen a development application, the development application that presumably would be submitted to the Southern Midlands Council, which will have its discretionary capacity removed and be required by this legislation to permit the project, albeit potentially with conditions.
+
+The Greens did not support this bill in the other place and we will not support it up here. That is for a range of reasons which I will outline, but which have also been articulated by other members. I want to take colleagues back to 2016, when the government commissioned the Noetic report, which was looking at alternatives in youth justice and detention and, ironically, member for Launceston, the Noetic report recommended the construction of two youth justice facilities, one in the north and one in the south, and recommended that an early intervention and therapeutic approach be applied to these facilities.
+
+Ms Armitage - Sounds good.
+
+Ms O'CONNOR - Yes. So, in 2016, nine years ago, government, that is, the Liberals in government, were provided with a thoroughly researched report which recommended Ashley close and it recommended it close because it found, essentially, that the facility is unsuitable and not scalable for its needs and because of where it is and how it is built, it is very difficult to provide the necessary throughcare for young people who find their way into youth detention.
+
+The Noetic report also strongly recommended that government invest in bail options, other early intervention and therapeutic supports, and that government be mindful of the housing needs of young people who are exiting that facility because, too often, these kids have nowhere to go and at times that has been part of the reason that they have remained being detained in the Ashley Youth Detention Centre.
+
+After the release of the Noetic report and not long after I became leader of the Greens, we developed a policy paper called Alternatives to Ashley, and it applied the principles of the Noetic report based on what was, at the time, known as the Missouri Model. The Missouri model recognised that if you want to make the community safer and deliver better outcomes for children and young people who find their way into the criminal justice system, you need to create an environment that is more homelike, that does not alienate and brutalise children and young people in detention. We released that policy initiative in 2016 [Bookmark: Phr2_O=15.6_D=14.0_C=0.85] , setting out the case for two smaller therapeutic facilities in the north and south of the state. I am taking members through this timeline because I think it is important honourable members understand how long government has been dithering [Bookmark: Phr3_O=30.4_D=4.0_C=0.78]  on this.
+
+Ms Webb -  [Bookmark: Phr4_O=36.4_D=6.5_C=0.75] Under the same minister.
+
+Ms O'CONNOR - All under the same minister, who I acknowledge the presence of in the Chamber today. [Bookmark: Phr5_O=43.9_D=5.8_C=0.93]  In budget Estimates of 27 June 2018 [Bookmark: Phr6_O=53.4_D=1.3_C=0.81]  the minister and I had [Bookmark: Phr7_O=62.2_D=3.6_C=0.88]  an exchange across the table because at that point [Bookmark: Phr8_O=67.9_D=14.7_C=0.82]  advocates for children and young people, the Commissioner for Children and Young people, whistleblowers and former detainees had all been crying out for the closure of Ashley Youth Detention Centre, as had the Greens. [Bookmark: Phr9_O=83.5_D=29.3_C=0.81]  We asked the minister if a decision had been made to keep Ashley open based on the politics of retaining jobs in and around Deloraine, because it was pretty obvious to the Greens that that was the case. From the Hansard at the time, I asked: 
+
+Given that at Ashley Youth Detention Centre the ratio of staff to detainees is on average, I would say [Bookmark: Phr10_O=113.1_D=29.7_C=0.76] , about 10 to 1, can you confirm that the decision to keep Ashley open was actually based on political imperatives and the desire to shore up the seat in the north, and that the therapeutic approach to youth detention has been ditched, in effect, by your Government in favour of the jobs involved in Ashley? Given that the jobs at Ashley outnumber the detainees by about 10 to 1?
+
+Well, regrettably, I am not sure, given that the population of Ashley Youth Detention Centre keeps [Bookmark: Phr11_O=142.9_D=15.8_C=0.91]  increasing, what the ratio of staff is at this day. The minister pointed out that at that point $300,000 had been invested in the therapeutic approach. An absolute pittance [Bookmark: Phr12_O=161.2_D=10.8_C=0.85] . He said: 
+
+In line with community expectations this Government is committed to providing a stronger and more therapeutic rehabilitation justice system.
+
+Remembering that this is seven years ago,  [Bookmark: Phr13_O=172.9_D=6.7_C=0.84] I reminded the minister of the advice of the Children's Commissioner that Ashley needs to be closed [Bookmark: Phr14_O=181.8_D=22.4_C=0.80]  and the minister said:
+
+While the detention of young people is a last resort, it is an unfortunate reality that some young people do need to be detained in a youth justice facility if they commit serious offences and receive a custodial sentence. 
+
+Well, obviously, but he goes on to say:
+
+The Tasmanian Government has a responsibility to ensure the best opportunities and [Bookmark: Phr15_O=204.3_D=10.7_C=0.86]  outcomes for young people who enter our youth justice system. That's why we have committed to keeping the Ashley Youth Detention Centre open on its current site.
+
+ [Bookmark: Phr16_O=217.3_D=20.9_C=0.88] And he goes on to say, and this has been referred to by other members:
+
+We've invested $7.3 million into a major redesign and upgrade of the facility, which will make it fit for purpose and continue to improve the model of care as part of a modern, integrated, statewide therapeutic youth justice model.
+
+ [Bookmark: Phr17_O=239.6_D=24.9_C=0.88] Seven years ago, two years after Noetic handed down its report, we had government digging in, keeping Ashley open; and, I might say, the Labor opposition held the same position at the time, and both the Liberal and Labor parties went to the 2021 state election holding to that policy of keeping [Bookmark: Phr18_O=265.3_D=4.1_C=0.67]  Ashley open. That position became utterly  [Bookmark: Phr19_O=270.4_D=22.6_C=0.78] untenable, and I want to take this opportunity to thank the whistleblowers who have come forward, to thank Alysha for her courage and acknowledge what she went through in shining that light into the house horrors that is Ashley Youth Detention Centre [Bookmark: Phr20_O=294.6_D=10.4_C=0.76] . 
+
+I note other members who have said, why can we not just keep Ashley open and make that the northern facility? Well, the Noetic report did deal with that in part.
+
+ [Bookmark: Phr3_O=13.7_D=9.3_C=0.90] Some places are cursed; some places have such a history and a darkness attached to them that  [Bookmark: Phr4_O=25.0_D=6.0_C=0.65] they are unresolvable. I take members to  [Bookmark: Phr5_O=33.2_D=5.0_C=0.79] the commission of inquiry report of August 2023,  [Bookmark: Phr6_O=39.4_D=4.8_C=0.88] remembering that there were two catalytic  [Bookmark: Phr7_O=45.3_D=6.2_C=0.78] and devastating sets of circumstances that effectively led to the commission of inquiry.  [Bookmark: Phr8_O=53.8_D=3.7_C=0.77] One was at the Launceston General Hospital [Bookmark: Phr9_O=58.5_D=0.8_C=0.89] : that  [Bookmark: Phr10_O=63.2_D=3.4_C=0.86] tragic and, I would argue, unforgivable failure  [Bookmark: Phr11_O=67.4_D=11.2_C=0.87] to protect children in that hospital. The second was what we were learning about what was happening to children and young people inside the Ashley Youth Detention Centre. [Bookmark: Phr12_O=80.0_D=4.8_C=0.71]  The commission of inquiry says about Ashley [Bookmark: Phr13_O=86.2_D=20.6_C=0.84] : 
+
+An assessment of the Centre commissioned by the Tasmanian Government in 2016 concluded that the location of Ashley Youth Detention Centre 'makes it difficult to deliver a throughcare approach, which builds on pro-social relationships with a young person's family, community and service providers'.
+This paragraph goes to the history and why  [Bookmark: Phr14_O=108.5_D=28.7_C=0.81] some of us believe the place is cursed:
+
+Ashley Youth Detention Centre operates on the site of the previous institution known as the Ashley Home for Boys. Ashley Home for Boys transitioned to a secure youth detention centre for males and females aged between 10 and 18 years on 28 June 2000. Allegations of physical, sexual and emotional abuse made by former residents of Ashley Home for Boys have been the subject of a Tasmanian Ombudsman review, resulting in compensation  [Bookmark: Phr15_O=138.1_D=2.5_C=0.75] and a State Government apology in 2005  [Bookmark: Phr16_O=141.1_D=29.5_C=0.77] to former wards of the state abused in care. Some staff from Ashley Home for Boys continued to work at Ashley Youth Detention Centre once it opened and remained working there for many years. Also, several current staff [and that is current as at August 2023] have been working in Ashley Youth Detention Centre since the early 2000s. We discuss concerns about the culture and operations of  [Bookmark: Phr17_O=170.9_D=6.3_C=0.76] Ashley Youth Detention Centre over the past two decades in Section 6 and throughout Volume 5.  [Bookmark: Phr18_O=178.4_D=8.9_C=0.78] 
+
+Mr Morrissey, the former Commissioner for Children and Young People, observed that children and young people detained at Ashley Youth Detention  [Bookmark: Phr19_O=187.8_D=15.3_C=0.87] Centre
+
+… often have serious psychological or emotional damage and issues, brain injury due to childhood trauma or conditions such as fetal alcohol spectrum disorder (FASD), family violence, chronic neglect, failed attachment and developmental delay. [Bookmark: Phr20_O=203.6_D=28.3_C=0.85]  
+
+…
+
+Although the Tasmanian Youth Custodial Information System does not capture information about young people with disabilities in detention, broader data suggests that adults and young people with mental and cognitive disabilities are over-represented in detention settings. We heard that 'significant mental health problems' and previously unknown or unaddressed disability-related need are often not identified until children are in detention.
+ [Bookmark: Phr21_O=232.5_D=27.0_C=0.82] 
+The commission of inquiry report goes on:
+
+There are significant behaviour and learning challenges in the cohort of young people at Ashley Youth Detention Centre. The Ashley School Principal, Samuel Baker, told us that the literacy and numeracy skills of students at the school are, in general, 'many years behind their peers in the community', predominantly due to socioeconomic disadvantage and having missed significant amounts of schooling. [Bookmark: Phr22_O=260.1_D=5.0_C=0.84] 
+
+Data provided by the former Department of Communities indicates that 43 per cent  [Bookmark: Phr23_O=265.8_D=7.1_C=0.85] of all young people in detention in Tasmania in 2020-21 had been in out of home care.  [Bookmark: Phr24_O=275.1_D=18.8_C=0.83] 
+
+The commission of inquiry heard what we know: that a high number of children cycle in and out of Ashley Youth Detention Centre in a relatively short period. More than 50 per cent of children aged between 10 and 16 years return to the centre within 12 months of their release.  [Bookmark: Phr25_O=295.6_D=8.2_C=0.85] For some kids, it was observed that Ashley felt a safer place to them than their own home and community environments.
+
+The recommendation of the commission of inquiry in 2023 was that Ashley Youth Detention Centre be closed as soon as possible.
+
+Before that, in September 2021, six months after the state election that was called a year early when Peter Gutwein was premier, the Greens continued to relentlessly question government about what was happening to children and young people inside Ashley Youth Detention Centre. He stunned and delighted certainly the Greens when he made a commitment that Ashley Youth Detention Centre would be closed by September 2024: within two years. I acknowledge that the former premier could get very enthusiastic about big projects, and he did not mind making a big promise, promoting a big idea. In fact, the first premier to promote the stadium as a big idea, of course, was Peter Gutwein. 
+
+I understand that a two-year timeframe for the closure is pretty tight because there are a whole lot of processes, obviously, the government would need to go through in order to have developed its model of care: selected a site or sites; consulted with the community; prepared, for example, a development application to go through normal council processes; or potentially even declare it a project of regional significance. The government did not meet that deadline of September 2024, and it was very hard to understand what was happening during that period, but three-and-a half years later, we are being told this bill is urgent. 
+
+We have not had an adequate explanation for the nine years of heel-dragging on the part of government, when they knew Ashley Youth Detention Centre was not fit for purpose and it was harming children and young people. They had independent verification of that: they had their own Commissioner for Children and Young People calling on them to close Ashley - this began nine years ago - and yet we are being asked today, in fact, that is what is happening, we have interrupted debate on the Budget to rush through this legislation.
+
+It feels like there was all this dithering, inertia and then this bill gets cobbled together because the dithering was such that it has delayed the process, and the minister is tired of being asked when Ashley will close and the new youth detention facility will be open. It is not a good enough reason for honourable members to deal with this bill in haste. We are not here to mitigate the effect of the minister and the department's sluggishness.
+
+The basics of the bill before us today provide a framework to declare the project. It needs to meet the following conditions in order to be eligible to be declared a project for the purposes of the act: it must be a youth justice facility proposed by the state; it must have a floor area not exceeding 8875 square metres, which can be changed by the minister, although it is a disallowable instrument; it must not have an onsite wastewater management system involving the treatment of more than 100 kilolitres, which also can be changed through disallowable instrument by the minister. It must be set back from boundaries by at least 20 metres [Bookmark: Phr2_O=15.6_D=12.4_C=0.79] ; also can be omitted or varied by disallowable instruments. At least 80 per cent of the site does not meet an average height of 15 metres [Bookmark: Phr3_O=29.3_D=16.4_C=0.77] . Whatever this means in building terms, I am not sure what relevance and average height in building terms means. Does that mean that some things can be a metre tall and some things can be 50 metres tall? I do not know. Maths is not my strong point.
+
+ [Bookmark: Phr4_O=48.4_D=8.6_C=0.87] The work is to commence on the site by 1 December of this year and the site is not intended to be used for any commercial purposes operated by the state. [Bookmark: Phr5_O=58.0_D=10.2_C=0.84]  The bill provides that the Aboriginal Heritage Act 1975 applies to an object or relic and that works are to be undertaken in a way that minimises impacts on Aboriginal heritag [Bookmark: Phr6_O=70.0_D=5.0_C=0.92] e. That provision relates to an object or relic that was unexpected to be found [Bookmark: Phr7_O=76.9_D=3.1_C=0.83]  or not expected to be found. [Bookmark: Phr8_O=82.1_D=6.2_C=0.87]  It is unclear to what extent, if any, of the Aboriginal Heritage Act requirements would be obstructed by the act [Bookmark: Phr9_O=89.7_D=7.2_C=0.94]  and we remain uncertain about the need for this provision.
+
+ [Bookmark: Phr10_O=98.1_D=27.0_C=0.87] The bill also allows for the minister to direct the recorder of titles to create, amend, rearrange or extinguish a portfolio in respect of land that relates to the project. The bill provides that the declared project is taken to be a discretionary use and a planning authority assessing a declared project must approve the development with or without conditions. We heard in the briefing the other day from the Southern Midlands [Bookmark: Phr11_O=126.0_D=3.1_C=0.90]  Council. This bill provides that nobody can appeal [Bookmark: Phr12_O=131.0_D=7.6_C=0.80]  this project, that appeal rights are extinguished. I thought the member for Elwick yesterday in really clear term [Bookmark: Phr13_O=140.3_D=0.5_C=0.96] s highlighted [Bookmark: Phr14_O=142.9_D=13.0_C=0.82]  the concerns with this provision and the potential unknown or unintended consequences. The bill also waives several protection works [Bookmark: Phr15_O=157.1_D=15.9_C=0.87]  requirements under the Building Act 2016 including notification of adjoining landowners, the rights of adjoining landowners from commenting on, disagreeing to, or requesting additional information on protection works. [Bookmark: Phr16_O=174.4_D=1.9_C=0.93] 
+
+As I said before [Bookmark: Phr17_O=178.7_D=7.2_C=0.81] , we are being rushed. This is overreach on the part of government. [Bookmark: Phr18_O=189.3_D=1.4_C=0.93]   [Bookmark: Phr19_O=192.7_D=10.8_C=0.78] The issue we have here, and it is the same with the proposed Macquarie Point stadium, is that as the proponent, this government is in the habit of writing its own rules [Bookmark: Phr20_O=206.5_D=4.0_C=0.76] , of making itself proponent [Bookmark: Phr21_O=212.6_D=22.2_C=0.79] , regulator, planning authority. That is certainly what the stadium enabling bill does, but the government is the proponent of this proposed youth detention facility at Pontville and it does not want to have to deal with people exercising their democratic right to appeal through TASCAT [Bookmark: Phr22_O=236.0_D=14.0_C=0.85] . As we know, the government has no capacity to extinguish judicial review rights, which are protected in the Constitution, but I will bet you if they were not protected in the Constitution they would have had a crack at it.
+
+We are not going to be supporting this legislation, although we have been in political terms, the most consistent and fierce advocate in the House of Assembly for those children and young people going back a decade. We have helped push [Bookmark: Phr25_O=278.4_D=4.7_C=0.76]  government into announcing that Ashley Youth Detention Centre would close. [Bookmark: Phr26_O=284.2_D=4.3_C=0.86]  We have advocated for those kids in there for the longest time [Bookmark: Phr27_O=289.6_D=4.8_C=0.86]  and it feels a bit like this bill is  [Bookmark: Phr28_O=296.1_D=8.8_C=0.74] quite manipulative, isn't it, given what we know about what happens to kids in Ashley Youth Detention Centre, given how clear the need is to end the suffering of that place. To be told that you have to pass this bill, and in so doing, remove your own capacity through the Public Works Committee to oversight and deny your own constituents their right to appeal.
+
+It is interesting, isn't it? Nine years the government has had on this, dragging their heels election after election, promises, two years then maybe by 2028 under this bill. The inertia here, it is telling, when you compare it with the Macquarie Point stadium plan.
+
+The machinery of government, when it points towards something that government wants to deliver, can work surprisingly fast and efficiently.
+
+Since the Premier announced there would be an enabling bill for the stadium and had it whipped up in three weeks, we have had it put out for consultation and dumped on the table anyway, during the consultation period. The government has been able to write up a draft permit, which in legal terms is meaningless, for the stadium enabling bill.
+
+All that machinery of government pointed towards a stadium and yet, this issue and those kids at Ashley Youth Detention Centre, have been made to wait. They have been de-prioritised. It is at the point for government where it has clearly become untenable because this minister and this government were put on notice by the commission of inquiry.
+
+We can achieve the construction and development of a therapeutic youth justice facility at Pontville without robbing parliament of its responsibility to oversight. Or, robbing everyday Tasmanians of their right to take issue with and appeal planning decisions.
+
+It is telling, I will simply say this one final time, that when the government is the proponent, it does not want to deal with people exercising their democratic rights. Interesting.
+
+We all know the population at Ashley Youth Detention Centre has been steadily increasing in recent years. We know that. That is, in part, undeniably as a result of the government's tough on crime policies and now we have a feral and out-of-control minister for police who is threatening children and young people with 'adult crime, adult time' laws.
+
+We have an excellent Youth Justice Blueprint. It is excellent and is best practice. We have the commission of inquiry recommendations, which are very clear about the need for therapeutic response. Then, we have this other arm of government rounding up kids, putting them in Ashley on remand, putting them in adult detention facilities. I refer members to the paper that was tabled today, by the Custodial Inspector. I have not had an opportunity to read it all yet.
+
+Ms Forrest - It is shocking. He has put a media release out about it.
+
+Ms O'CONNOR - Has he? Of course, it is shocking. It would align with the evidence we have heard come before parliamentary committees that it is becoming a fairly standard practice for children young as 10 to be sent into adult remand facilities. [Bookmark: Phr2_O=15.4_D=4.7_C=0.90]  I hope the government and the Acting Leader of the Government [Bookmark: Phr3_O=21.9_D=7.6_C=0.79]  can address that question that has been raised by members in a number of forums, about the collision [Bookmark: Phr4_O=30.7_D=16.0_C=0.84]  between these two policy objectives, keeping our community safer by having a therapeutic approach to youth justice and brutalising children and young people with [Bookmark: Phr5_O=48.4_D=8.5_C=0.87]  a 'tough on crime' approach that has a criminogenic effect on children and young people.
+
+ [Bookmark: Phr6_O=59.0_D=4.6_C=0.81] I will close with a little bit from today's Custodial Inspector's report. [Bookmark: Phr7_O=65.6_D=1.2_C=0.61]  He says:
+
+ [Bookmark: Phr8_O=69.6_D=11.8_C=0.91] Given the current debate in the community about youth crime, including the prospect of 'adult time for adult crime', it is timely to reflect on the realities of adult prison and whether, as a community, we actually want children in such an environment. [Bookmark: Phr9_O=81.7_D=9.6_C=0.84]  This report demonstrates we should not. Too often in our inspection work we have spoken to children in AYDC only to later speak with them in prison. [Bookmark: Phr10_O=92.2_D=29.0_C=0.87]  The trajectory is rarely positive, for the child or the community more broadly. Youth crime can lead to adult crime unless therapeutic strategies are effectively implemented. Keeping children out of prison watch-houses is an important element of a therapeutic approach to youth justice, yet these spaces are the entry point for almost every child that is taken into custody (and not eligible for police bail or unconditionally released). This needs to change.
+
+ [Bookmark: Phr11_O=122.0_D=29.4_C=0.87] He goes on:
+
+Implementing 'adult time for adult crime', apart from being inconsistent with the commitment [to a therapeutic approach], would also mean that children would be more likely to end up in prison to serve sentences - but to an extent they are already there. Clear strategies are required to address community concerns about youth crime along with information about why those strategies work in the long term. This report strongly suggests the Tasmanian government should maintain the course of seeking to [Bookmark: Phr12_O=151.5_D=7.9_C=0.83]  implement a therapeutic approach to youth justice for all children.
+
+I certainly hope [Bookmark: Phr13_O=159.9_D=4.0_C=0.84]  that the more thoughtful and progressive [Bookmark: Phr14_O=165.6_D=5.7_C=0.83]  people in government, and within that frame I would include the minister [Bookmark: Phr15_O=173.4_D=3.4_C=0.88] , prevail on this issue. We cannot let [Bookmark: Phr16_O=178.8_D=10.6_C=0.77]  government reverse all the work of the commission of inquiry or the courage of the whistleblowers and the victim/survivors who have come forward and take us backwards into the dark ages of our colonial penal past. We have to stay the course on a therapeutic approach. We do need a new therapeutic youth justice facility [Bookmark: Phr19_O=216.2_D=5.4_C=0.90] , but this bill is not the way to achiev [Bookmark: Phr20_O=222.2_D=3.7_C=0.68] e it because it demands of us [Bookmark: Phr21_O=227.7_D=13.7_C=0.65]  to rob oversight, to take away oversight and rob people of their appeal rights and it is significantly on that basis that the Greens cannot and will not support this bill.
+
+[12.28 p.m.]
+Ms WEBB (Nelson) -  [Bookmark: Phr22_O=252.7_D=8.9_C=0.87] Mr President, I rise to speak on this bill. I do not have formal remarks prepared and I do not intend to speak on it for too long. [Bookmark: Phr23_O=263.8_D=25.4_C=0.87]  It is not an easy topic to speak on at any stage, the things this bill relates to. I also would like to acknowledge that and whenever in this place we speak about matters that flow on from the commission of inquiry and more broadly about child sexual abuse in this state, it can be difficult. It can be difficult for people here in this place. It can be difficult for people watching or reading later. [Bookmark: Phr24_O=290.2_D=14.8_C=0.86]  I like to note that and there are support services available. I do not have the details of those support services here in front of me to rattle off, but certainly Lifeline 13 11 14 is always a straight go-to place.
+
+ [Bookmark: Phr2_O=10.8_D=21.9_C=0.86] Having said that, I appreciate that while my remarks are brief and relatively informal, I appreciate the remarks from other members that have drilled into this bill and the matters that it relates to in more detail, particularly the member for Murchison. I very much appreciate the member for Elwick  [Bookmark: Phr3_O=33.6_D=8.2_C=0.84] and the analysis that she brought to it with her local government background and experience. That is not my background and experience, so I am always interested to hear from  [Bookmark: Phr4_O=42.5_D=22.4_C=0.86] members who can bring that analysis forward.
+
+I note the concerns in the areas of particular interest raised by the member for Elwick. I thank the member for Hobart for her thoughtful contribution as well that covered a lot of historic matters relating to why we have arrived here.  [Bookmark: Phr5_O=66.9_D=1.4_C=0.63] There are certainly matters that  [Bookmark: Phr6_O=70.6_D=1.9_C=0.93] I would cover as well  [Bookmark: Phr7_O=72.9_D=9.2_C=0.79] in a more detailed contribution. I am just going to emphasise a few things here. Straight up, off the bat, this is not a bill I can support.  [Bookmark: Phr8_O=83.3_D=1.2_C=0.86] It  [Bookmark: Phr9_O=85.8_D=3.4_C=0.64] fundamentally trades off the community's rights  [Bookmark: Phr10_O=90.3_D=1.6_C=0.91] within our planning system,  [Bookmark: Phr11_O=93.1_D=1.1_C=0.86] for convenience.  [Bookmark: Phr12_O=95.2_D=3.4_C=0.81] That is unacceptable.  [Bookmark: Phr13_O=99.3_D=29.4_C=0.85] The government has the gall to bring this to us and suggest that somehow if we do not pass it we would be holding things up, when it, in fact, has held things up, not just these past few years since the commission of inquiry made it clear AYDC would have to close. Not just the dithering and delay during those few years, but as the member for Hobart pointed out, since at least 2016 when we had the very explicitly clear Noetic report. [Bookmark: Phr14_O=129.0_D=5.6_C=0.89]  At that time I was in the community sector working in these sorts of policy areas and it was clear to all of us.
+
+ [Bookmark: Phr15_O=135.8_D=2.6_C=0.83] The government at that time turned its back  [Bookmark: Phr16_O=139.2_D=14.2_C=0.83] on the advice it received, that it is an institution that must close because children were being abused and harmed. I recognise the minister is here in the Chamber with us today, but this minister turned his back on that advice.  [Bookmark: Phr17_O=154.1_D=9.7_C=0.88] This government turned its back on that advice and instead said they would invest in therapeutic adjustments to the AYDC physical facility.  [Bookmark: Phr18_O=165.0_D=22.4_C=0.85] That was a load of rubbish. It was about $7 million from memory in the first Budget that came after that, turning the back on the advice to close it. There were some nice bits of painting and things done around the facility and small changes made and the abuse continued. We know it did. We know it did because we heard it in the commission of inquiry.
+
+ [Bookmark: Phr19_O=189.3_D=3.2_C=0.91] I would also like to add here as well,  [Bookmark: Phr20_O=194.3_D=12.2_C=0.78] and I will always add, when we are speaking about topics that relate to the commission of inquiry, my absolute heartfelt gratitude to those people who brought that commission of inquiry about.  [Bookmark: Phr21_O=207.4_D=13.2_C=0.81] They did that through their own trauma and their own damage and harm and at the cost to their own lives and their families' lives and the continuing cost to them.  [Bookmark: Phr22_O=222.7_D=11.2_C=0.78] It is the most important piece of work that has been done in this state in living memory. We are now in the process of putting into effect the recommendations that it furnished us.
+
+ [Bookmark: Phr23_O=236.7_D=16.3_C=0.86] The recommendation to close Ashley Youth Detention Centre as soon as possible as a matter of urgency is absolutely fundamental in that commission of inquiry report; it is fundamental. There is no other area  [Bookmark: Phr24_O=253.8_D=24.2_C=0.81] in that commission of inquiry that looked at institutional child sex abuse in institutions in the state. There is no other area that was given as much detailed attention as our youth justice system in that report. It was horrifically detailed. That is why that recommendation was made and was central, actually.  [Bookmark: Phr25_O=280.0_D=5.4_C=0.77] Of course it was not going to be an easy recommendation to give effect to and to implement.  [Bookmark: Phr26_O=287.0_D=5.3_C=0.84] But, as so rightly pointed out by the member for Hobart in her contribution,  [Bookmark: Phr27_O=293.4_D=9.4_C=0.89] if a government wants to make something happen because it has prioritised it, it can do it in an incredibly short period of time [Bookmark: Phr28_O=304.5_D=0.2_C=0.80] , if the priority is given to it and there is a genuine commitment and will to do it. 
+
+The member for Hobart mentioned the recent activity around bringing a stadium to fruition here. I would point in a perhaps less immediately controversial way to what happened when we had COVID hit this state and in this place we managed to be dealing with legislation [Bookmark: Phr3_O=29.9_D=20.6_C=0.82]  to manage that situation so quickly, incredibly quickly. We managed to stand up responses through all our systems of government to that huge challenge that hit us when COVID came. We managed to do that on a dime because we had to do that.  [Bookmark: Phr4_O=52.7_D=25.4_C=0.85] That same sort of urgency is not and has not at any point by this government been given to shutting this institution in which children are raped and harmed and continue apparently to be harmed because there continue to be allegations of abuse from this centre, regardless of the shifting the deck-chair efforts that are happening. [Bookmark: Phr5_O=79.5_D=1.2_C=0.96]  We know this [Bookmark: Phr6_O=81.2_D=15.6_C=0.82] . We know it from the commission of inquiry. The commission of inquiry is not about ancient history; it is about things that were happening right up into the 2020s; when it was occurring, the commission was already undertaking its work. It was receiving disclosures then about current matters.
+
+ [Bookmark: Phr7_O=99.5_D=25.9_C=0.84] This is current. That is why it has to stop. You cannot fix it and with the greatest respect to the member for McIntyre, who I know comes here in good faith to represent her community, and I understand why she does that and that she does it in good faith, but it is absolutely unacceptable to ever contemplate that that facility should stay open. The commission of inquiry spoke about the need to make it a place of conscience [Bookmark: Phr8_O=126.2_D=2.3_C=0.91] , basically a place of memorial [Bookmark: Phr9_O=129.1_D=7.3_C=0.73]  to the extreme abuse and trauma that was caused there over generations right through into the current day. [Bookmark: Phr10_O=137.8_D=13.3_C=0.89]  There is, in their view, no option to repurpose that site because of the intensity of harm that was caused there right up until now, potentially still continuing right now.
+
+ [Bookmark: Phr11_O=155.9_D=1.2_C=0.76] It does not matter [Bookmark: Phr12_O=157.8_D=25.2_C=0.83]  what we have done to pretty it up, it does not matter that it might have some sporting facilities or some nice new curvy corridors or whatever it might be, or even some more CCTV or even some more body-worn cameras or a body scanner, all of these things. The thing that it came down to that the commission of inquiry made clear about AYDC is that it had a culture of abuse built into its workplace. [Bookmark: Phr13_O=183.8_D=1.9_C=0.94]  It had a culture of abuse [Bookmark: Phr14_O=188.5_D=23.3_C=0.91]  and that is the reason we have to fundamentally close it. It should be closed already and we should be operating under a different model which we have clarity about what that model should be. 
+
+We know we need a new facility for it and the new facility, yes, it does need to be closer to services and supports in the capital city, but it also needs to be  [Bookmark: Phr15_O=212.9_D=1.1_C=0.56] not AYDC [Bookmark: Phr16_O=215.8_D=9.3_C=0.71]  and not away in a place that had become such an insular, inward-looking [Bookmark: Phr17_O=227.6_D=24.6_C=0.82] , festering sore of abuse in our state. We know this even more since the commission of inquiry, with work undertaken, contracted by DPAC, as part of developing their child sexual abuse reform strategy and action plan for which the requirement was that that should be informed by the voices of children and young people and adult victim/survivors of sexual abuse [Bookmark: Phr18_O=252.7_D=9.4_C=0.80] . 
+
+To be really clear, this piece of work that was contracted is called Expertise by Experience: what we can learn from the Commission of Inquiry Case Studies [Bookmark: Phr19_O=262.7_D=7.8_C=0.49] , done by Dr Morag MacSween, Maha Melhem and Tunya Petridis. It was published in June 2024 [Bookmark: Phr20_O=271.4_D=2.8_C=0.81] , around a year ago. [Bookmark: Phr21_O=277.0_D=10.0_C=0.84]  As part of that work, they analysed the case studies that are in the commission of inquiry reports to see what we can learn from the lived experiences [Bookmark: Phr22_O=287.9_D=4.8_C=0.84]  of people who experienced abuse at Ashley Youth Detention Centre. They came up with nine key themes, and I am going to point to the ninth of those themes: Theme 9 was that within the closed institution of Ashley Youth Detention Centre, abuse was organised, collective and collaborative.  [Bookmark: Phr2_O=12.5_D=10.4_C=0.81] That tells us that we had a paedophile ring operating in Ashley Youth Detention Centre and quite possibly some of the people involved in that still work there now.  [Bookmark: Phr3_O=24.2_D=11.0_C=0.82] Quite possibly some of the people involved in that are people who have been stood down subsequently and are now being investigated. We have had one of those investigations recently come to fruition with a conviction.  [Bookmark: Phr4_O=37.0_D=3.8_C=0.87] That related to a case study that is in our commission of inquiry report.  [Bookmark: Phr5_O=41.8_D=16.8_C=0.82] It might have been some time since people have read the commission of inquiry volumes that relate to Ashley Youth Detention Centre and over time things can fade. The horror of what is in that should not fade from any of our memories. If people need to have another read, I suggest they do.
+
+ [Bookmark: Phr6_O=60.7_D=4.8_C=0.87] One of the observations made in this report that was commissioned by DPAC,  [Bookmark: Phr7_O=66.6_D=21.0_C=0.88] one of four observations, was that it has been our experience that adult attention commonly gravitates towards other adults and away from children, even in child-focused work such as child protection casework. In child sexual abuse this tendency is compounded by the wish to turn away from disowned truths.  [Bookmark: Phr8_O=88.5_D=10.9_C=0.89] I think that this is often what happens. It is much easier for us and more comfortable for us to turn away because of these absolutely abhorrent truths.  [Bookmark: Phr9_O=100.9_D=2.1_C=0.90] Nobody wants to think about  [Bookmark: Phr10_O=104.2_D=10.3_C=0.84] children under the care of this state, in an institution run by this state, staffed by people who were selected and trained by this state  [Bookmark: Phr11_O=115.3_D=7.0_C=0.88] being the centre of child sexual abuse for year after year.
+
+ [Bookmark: Phr12_O=126.2_D=29.5_C=0.82] I am going to read from page 25 of this report, commissioned by DPAC Experts by Experience. Under theme 9, which was that:
+
+Within the closed institution of Ashley Youth Detention Centre, abuse was organised, collective and collaborative.
+
+Just the first two couple of paragraphs says this:
+
+In our view, child sexual abuse perpetrated in AYDC is markedly distinct from child sexual abuse in other institutions in Tasmania, both quantitively  [Bookmark: Phr13_O=156.4_D=26.8_C=0.85] and qualitatively.
+
+The abuse was physical, sexual and psychological. It was continuous, direct and indirect. It included significant elements of coercive control: isolation; surveillance; reward and punishment. It reminded us of Salter and Woodlock's research into organised abuse, both in its perpetration over time by groups,  [Bookmark: Phr14_O=183.6_D=2.5_C=0.85] and in the ignorance, exploitation [Bookmark: Phr15_O=186.6_D=2.5_C=0.69]  … (and) inaction which occurred in response.
+
+ [Bookmark: Phr16_O=190.3_D=28.6_C=0.86] The Commission observed that the Royal Commission's consideration of total/closed institutions was relevant to AYDC. Children and young people in AYDC were closed off from the outside world. They were imprisoned in an alternative moral universe, unable and fearful to report their experiences of abuse to the outside world. Staff exercised power to abuse children and young people with impunity,  [Bookmark: Phr17_O=219.5_D=28.6_C=0.86] to promote abuse of younger vulnerable children by older children, and to enforce inculturation of new staff and children and young people into violence and abuse. The Commission continued to hold concerns about the safety and wellbeing of children and young people at AYDC at the close of their deliberations.
+
+We know that to be true, and that is why they made the recommendation that as a matter of urgency  [Bookmark: Phr18_O=248.2_D=3.4_C=0.69] AYDC should be closed.
+
+Yet here we are,  [Bookmark: Phr19_O=252.6_D=4.1_C=0.94] nearly two years since that report came down,  [Bookmark: Phr20_O=257.9_D=14.2_C=0.90] many years since it was promised it would be closed. While we can stand up a COVID-19 response in a matter of days and weeks, and while we can bring a stadium to fruition apparently within a matter of months, we have  [Bookmark: Phr21_O=272.9_D=14.7_C=0.79] a centre of abuse of children where collective and collaborative abuse of children occurred and may be continuing to occur. Still open, still with children in it, under our name as a state.
+
+ [Bookmark: Phr22_O=289.7_D=15.3_C=0.81] Now, as I said, I cannot support this bill. I know that the government is keen to paint anyone who might not support this bill as somehow having a lack of commitment to seeing Ashley Youth Detention Centre closed in a timely way as a matter of urgency. I dare the government, I dare the minister, who has returned to the Chamber here now, to say I am one of those people who lack commitment to seeing that outcome.
+
+That is utterly abhorrent to suggest that now we have to trade off an abandonment of proper process in our planning system and trade off throwing out rights of Tasmanian community members to participate in a planning system fully in order to somehow expedite an outcome which the government itself has been absolutely negligent in delivering for this state. Utter rubbish.
+
+Guess what? If we were to pass this bill in this place today - I vehemently hope we do not - but if we were, you know what the government will turn around and do? I can bet my bottom dollar they will turn around and use it as a precedent when they want to bring on legislation to pass a stadium at Macquarie Point; or the next time they try to undermine our planning system with another purpose-built piece of legislation to pull something out of it and give it a special treatment on the way through.
+
+This is a pattern of behaviour from this government and every time they are successful in doing it, it becomes another precedent they can point to, to justify doing it again. This is a self-fulfilling prophecy here, of eroding our democratic planning system. What we are talking about is eroding the rights of the Tasmanian community. Taking the inconvenient people of Tasmania out of approving developments in this state.
+
+Whether it is for special mates who donate to their parties, like the Stony Rise bill. Whether it is the Macquarie Point stadium being proposed because we have been blackmailed by the AFL. Whether it is this bill, which is to save the minister the embarrassment of the effect of his continued inaction on closing Ashley. By somehow expediting it marginally at this point in time, not even proven that it will expedite it necessarily. Absolutely ridiculous.
+
+You will note I feel strongly on this topic. We should always deal with this topic with the utmost seriousness. When it comes to protecting Tasmanian children when we have this roadmap from the commission of inquiry in so much detail laid out for us, so many people in this state are working in good faith and with a passion to see those recommendations implemented and alive, not just on paper and ticked off on a box, but actually delivering the outcome, which is that children are safe here.
+
+We have people working for that, but I do not think we are seeing a government that is giving it the priority, particularly on this matter of the closure of AYDC - a government giving it the priority that it absolutely demands; that the commission of inquiry has demanded, that the community has demanded, that people in this place have demanded and that, quite frankly, basic humanity demands.
+
+If they were giving it that priority, the place would be closed right now. We would not even be here debating this bill, talking about it yet again.
+
+I have not gone to the detail of the bill to any great degree in my contribution. I thank other members, as I said at the outset, for doing that in more detail. I concur with many of the issues raised, many of the questions asked. I thank members who have brought their expertise and background to those questions and issues.
+
+If we pass this, it may be that we get a new youth justice facility ever so slightly faster, maybe. Maybe we will not, because maybe we would not have encountered the potential barriers that the minister says this bill is designed to address.
+
+What I can guarantee we will have done, though, is set another precedent for kicking the Tasmanian people out of decision-making in our planning system and undermining their rights. It will be a precedent that gets pointed to by this government in future.
+
+Ms O'Connor - DAPs - Development Assessment Panels are coming back.
+
+Ms WEBB - Absolutely correct, member for Hobart. This government has form; it has a pattern. It is now bringing us bills that undermine our planning system, and when I say that I mean undermining the democratic participation of the Tasmanian people in our planning system. They are bringing us bills on a regular basis to do that; either in small ways, tailored ways, or big overarching ways like the DAPs. We will continue to see it if we allow it to be done, in our name, in this place.
+
+I am thoroughly of the view that this is not warranted. What we are being asked to trade off for what we may apparently gain is not balanced, is not warranted, and it really is to save a minister face for a situation that he has failed to deliver on. Not just these past couple of years, since we knew it from the commission of inquiry; but actually since he knew it from at least 2016. Shame on him. I cannot support the bill.
+
+[12.51 p.m.]
+Ms LOVELL (Rumney) - Mr President, I will make a short contribution on this bill and say from the outset, as we have said in the other place, that Labor supports this bill and will support it through this place. Other members have spoken at length, and particularly outlined the history of where we have ended up or how we have ended up here, the history of this process. Touching on that, we had a commitment from the former premier, Mr Gutwein, in 2021 of closing Ashley Youth Detention Centre within three years. In hindsight, I think we can all recognise that that was an unrealistic commitment to make, that that probably was never going to be achieved within three years.
+
+Since then, we have also had the commission of inquiry. Other members, and the member for Nelson in particular, went into some detail about the recommendation that came from the commission of inquiry. While I recognise and acknowledge that the recommendation does fall into phase 3 of those timelines, the commission made it very clear that they thought Ashley should be closed as soon as possible, but I know that there are a number of valid concerns with this bill, and they are valid concerns, and I know members do hold concerns and I share many of those concerns. 
+
+It is a difficult position for the government to put members of this place and the other place in, where we have to make a decision where we are almost stuck between a rock and a hard place. We are looking at a bill that may go some way towards achieving an outcome that we all support but also contains a number of provisions that cause serious, and quite valid, concerns. The way that I approach this bill and that certainly the Labor caucus approached this bill is to really come back to the question of priorities: and our number one priority is, and has been for some time, to build this new facility as soon as we can.
+
+We know this is not ideal. This is far from an ideal situation, and we know that there are significant problems with the planning system. We have had commitments from this government to reform planning that are yet to be delivered. I believe that is largely part of the problem as to why we are in the situation that we are in. It is absolutely not something that we should be doing lightly or often at all; but in extraordinary circumstances, I believe it is reasonable to consider extraordinary courses of action.
+
+I am comforted by the fact that the government amended the bill in the other place to make it very clear that the development application still needs to meet the requirements of the planning scheme, that the council would not be required to approve a project that does not meet those requirements. I am still comforted by the fact that there is a public consultation process, and while I accept that it is not perfect and it is not the normal process, there is an opportunity for the public to have their say and for that to be taken into account with the approval, and the conditions that can be placed on that approval.
+
+I am interested, particularly, to find out more about the conversations that I know have been happening with the surrounding land users. I know there have been a number of concerns raised about the types of use, and the impact those might have on the facility; but I know from the briefing that there are conversations underway, and they perhaps are still underway, so it is something I will be watching closely to see how those matters are addressed.
+
+Is this best practice? No, far from it. Is this how I would prefer to be doing this? No, not at all, but I keep coming back to my top priority, and I will not go into all the reasons for it because other members have done that, and I do not think we need to re-prosecute arguments that have been made, and particularly when we are talking about such distressing content. [Bookmark: Phr3_O=29.1_D=22.0_C=0.82]  My top priority is to close Ashley as soon as possible and to replace it with a new, contemporary, fit-for-purpose facility, with a therapeutic model of care, providing those young people who will end up in that facility with the best possible chance of some kind of reform,  [Bookmark: Phr4_O=52.8_D=9.2_C=0.70] or the right kind of support, so that they are not trapped in a youth and then adult justice system the way we see them trapped now.
+
+ [Bookmark: Phr5_O=64.1_D=15.2_C=0.87] As the member for McIntyre raised, one of the really critical gaps in this whole conversation is, what happens for that community in Deloraine? I do not think the facility should stay open [Bookmark: Phr6_O=83.1_D=0.9_C=0.83]  at all. That is outdated. [Bookmark: Phr7_O=86.0_D=16.2_C=0.89]  It is cold. It is hot. It is completely unsuitable for what it has been put to use, but there also have been recommendations made through the commission of inquiry about what should and should not happen on that site, but I know it is an important part of that community. There is a lot of history there and there is a lot of current [Bookmark: Phr8_O=103.6_D=22.9_C=0.84]  impact of that facility and removing that facility from that community. 
+
+I believe the government needs to be clearer with the community about what the plan is moving forward. I especially believe they need to be clearer with the staff, and this is something we have been calling for from the very first day that Peter Gutwein announced that Ashley would close: what is the plan for the staff? What is the plan for [Bookmark: Phr9_O=128.2_D=5.0_C=0.83]  staffing the new facility? What is the plan for the workers who are in that facility currently? What happens to them [Bookmark: Phr10_O=133.9_D=19.4_C=0.88]  when that facility is no longer operational? That is important. There are workers there and there are very good people who work in that system. There are people who care a lot about the young people they work with, and they want to do the best they can. They know they can only do so much in a facility that is so old and outdated.
+
+ [Bookmark: Phr11_O=155.7_D=11.8_C=0.80] I am always very mindful of the staff because given the conversations around Ashley that have taken place in the last few years, and certainly longer than that, but particularly in the last few years with the commission of inquiry [Bookmark: Phr12_O=168.1_D=25.0_C=0.86] , I know the impact that those conversations that we have publicly have on those staff. There are some very, very good people working in that facility who are doing the best they can for the young people in their care.
+
+Ms Rattray - And feel very unsupported through this entire journey, and unfairly unsupported. 
+
+Ms LOVELL – Yes, they do. It is important that we do not underestimate the impact that our words in this place can have [Bookmark: Phr13_O=193.9_D=2.2_C=0.84]  on those good people who are trying to do the best they can. [Bookmark: Phr14_O=197.6_D=8.3_C=0.75]  I am keen to hear from the Acting Leader around what conversations are happening with staff and the community.
+
+ [Bookmark: Phr15_O=208.3_D=5.0_C=0.90] In summary, for me this is a question of priorities. [Bookmark: Phr16_O=215.3_D=10.8_C=0.85]  I know this is far from ideal and I know there are valid concerns, but when my top priority is getting that facility closed and getting a new facility built [Bookmark: Phr17_O=227.3_D=9.3_C=0.87] , I cannot not support this bill. We will support the bill, but I am interested to hear and will consider amendments that come through the committee stage.
+
+[12.59 p.m.]
+Ms PALMER (Rosevears - Acting Leader of the Government in the Legislative Council) -  [Bookmark: Phr18_O=238.2_D=6.3_C=0.65]  [Bookmark: Phr19_O=251.3_D=15.7_C=0.89] Mr President, I thank all members for their contribution, and I thank the minister for being here in the Chamber today, and very much those from the department who have, I believe, done a great job in trying to answer [Bookmark: Phr20_O=267.6_D=29.0_C=0.87]  as many of the questions in quite a comprehensive way.
+
+I will begin with questions from the honourable member for Murchison: Does the project assurance framework come into effect on 1 July 2025? The Tasmanian government endorsed the Infrastructure Tasmania project assurance framework in 2022 and it has been in operation since then. Application of the framework has been optional, however, will become mandatory for all infrastructure projects -
+
+Sitting suspended from 1.00 p.m. to 2.30 p.m.
+
+
+QUESTIONS
+
+Hawthorn Football Club - Partnership Extension
+
+Ms ARMITAGE question to the MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+[2.31 p.m.]
+As many in our community are very interested, can you please advise of details of the partnership extension with the Hawthorn Football Club for a further two years, given the benefits provided to the state, the cost of the partnership and whether any bonuses exist for making the finals as has occurred in the past?
+
+ANSWER
+
+Mr President, I appreciate the question as it certainly cuts across my responsibilities as Minister for Sport and Events, but also of great interest as UTAS Stadium is in beautiful downtown Windermere. As the member has indicated, the Tasmanian government has reaffirmed our strong support for AFL and for the Hawthorn Football Club by finalising a renewed $9.1 million sponsorship agreement with Hawthorn for 2026-27 AFL seasons.
+
+This, of course, comes off the back of what has been a fantastic 25-year-long partnership with the Hawthorn footy club. It was interesting to go to the football the other day and listen to the president of Hawthorn Football Club talk. They are in their centenary year this year. For a quarter of its life, Hawthorn football has been playing games in Launceston, Tasmania. We are a big part of that story. Through that long and ongoing partnership, we have seen great results for both Tasmania and the club with more than 10,000 Tasmanians currently active members of Hawthorn. It has been a great partnership not only for the state and to have elite AFL played in Tasmania, but also for the club.
+
+In the new agreement, Tasmania will continue as naming rights partner for 2026 and that will change to a major partnership status in 2027, when the Tasmania logo will come off the Hawthorn jumper because it will go on the Tasmania Devils football team jumper. Our team will wear the Tasmania logo.
+
+The new agreement will continue to deliver commercial and community benefits to Tasmania, including signage on the jumper, around the grounds and of course at the MCG where it is very valuable. I am advised the Department of State Growth is finalising the grant deed. I understand bonuses for making finals and performance-based incentives have not been discussed. I would point to the longstanding knowledge we have of that partnership and very demonstrable benefit that AFL football brings to the local economy.
+
+That partnership has been going for 25 years. We can demonstrate a 6.5 to 1 return to the economy for every dollar the government invests. That gives us great confidence and should give other members great confidence in the value of the Tasmanian team to the state.
+
+
+Reserve Forest Plans - Status
+
+Ms O'CONNOR question to MINISTER for PARKS, Mr DUIGAN
+
+[2.34 p.m.]
+In budget paper 2, volume 1, at page 199 in the performance indicators, it talks about the proportion of Tasmanian land reserved. These are lands protected either by legislation or by conservation reserves under covenant or heritage regimes. The projection is that 50.4 per cent of Tasmania is reserved in some tenure or another at present and that the target is for there to be 50.4 per cent of Tasmania reserved.
+
+Can you confirm that the government has walked away from plans to access the future reserve forests, which were named the future potential production forests when your predecessors first came into office in 2014, given that FPPF lands are calculated as part of Tasmania's reserve estate?
+
+ANSWER
+
+Mr President, I point the member to minister Abetz, as that is in the forest policy area.
+
+
+Reserve Forest Plans - Status
+
+Ms O'CONNOR question to MINISTER for PARKS, Mr DUIGAN
+
+[2.36 p.m.]
+As the Minister for Parks, and crown lands as I understand it, under the legislation for there to be any transfer of future potential production forests into PTPZ lands, you as crown lands minister have a role. Is that correct?
+
+ANSWER
+
+Yes, as I say, minister Abetz would need to provide advice to me. I have no such advice in front of me.
+
+
+Greyhound Racing Stakes 2024-25
+
+Ms RATTRAY question to ACTING LEADER of the GOVERNMENT in the LEGISLATIVE COUNCIL, Ms PALMER
+
+[2.37 p.m.]
+Further to my question on 29 May in regard to greyhound stakes from May 2024 through to April 2025 provided by Tasracing, in the answer it was noted the figure provided was strictly prize money payable and did not include any operational and integrity costs such as race day operations, track and facility management, animal welfare programs (including greyhounds as pets), and club funding or other greyhound code-specific costs. Could the government please provide a breakdown of these costs attributed to each of these areas? Thank you.
+
+Ms O'Connor - And the source of the information would be good too, because some of it is quite unreliable.
+
+ANSWER
+
+Mr President, direct costs in FY24 that can be attributed to the greyhound code were $10.704 million inclusive of prize money payable. Costs attributed to each of these areas is provided in Appendix 1, which I will now table through the Tasracing Greyhound Profit and Loss Statement Overview for the year ended 30 June 2024. I seek leave to table the report.
+
+Leave granted.
+
+See Appendix 1 for incorporated document (page 43).
+
+
+UTAS Stadium - Classification
+
+Ms ARMITAGE question to MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+[2.39 p.m.]
+Can you confirm that with recent developments at UTAS Stadium, which has actually resulted in a reduction of capacity, that the stadium is now classified as Tier 2? If this is the case, can you advise of the restrictions to a Tier 2 stadium? 
+
+ANSWER
+
+Mr President, I note that there has been in past times some conversation and in my view, misreporting, about works and developments at UTAS Stadium. The first point I would make is that the most recent works at UTAS Stadium had no impact on capacity. They were about delivering new match-day facilities for players, officials, including umpires, and change rooms and visitor amenities, and really great visitor and home team change rooms and warm-ups and medical  [Bookmark: Phr3_O=15.7_D=15.1_C=0.82] facilities. We had really fantastic feedback from the Hawthorn footy team in the wake of those redevelopments. They were done ahead of time and on budget, so that was great.  [Bookmark: Phr4_O=31.8_D=29.7_C=0.76] I had heard people saying things like they were better than the MCG. Very happy to have those improvements done. So, again, matchday facilities. 
+
+The remaining planned redevelopments that are due to commence later this year will include a new Eastern Stand and south-east entry plaza. On the eastern side of the ground, the new Centre-West Stand provides new home-team change rooms, media and broadcasting facilities, and corporate  [Bookmark: Phr5_O=61.7_D=13.0_C=0.75] hospitality facilities on the western side, new infield boundary seating to the existing Western Stand, a series of minor works to enhance spectator experience, commercial yield and operational efficiency.  [Bookmark: Phr6_O=76.4_D=14.5_C=0.71] The entertainment precinct will also include improved food and beverage facilities, as well as new spectator and visitor amenities, and make it a better overall experience and atmosphere for the new stadium.
+
+ [Bookmark: Phr7_O=91.3_D=14.7_C=0.70] The member asked specifically around the seating capacity. The key to remember here is that this redevelopment -
+
+Ms Armitage - Through you, Mr President, I know what the seating capacity is. I am asking whether it is now a Tier 2  [Bookmark: Phr8_O=106.3_D=27.7_C=0.83] or a Tier 1 stadium. Has it been reclassified as Tier 2 or is it still Tier 1? 
+
+Mr DUIGAN - I am told that the stadium is classified as a Tier 2 venue as per the 2025 AFL guidelines. There are no specific capacity restrictions imposed by Sporting Code Tier 2 recommendations. The capacity of Tier 2 AFL venues, as an example, varies from approximately  [Bookmark: Phr9_O=134.4_D=5.0_C=0.66] 48,000 at the SCG to 17,600  [Bookmark: Phr10_O=140.1_D=24.9_C=0.63] post-redevelopment at UTAS. So it is a Tier 2 venue. 
+
+Ms Armitage - Thanks, through you, Mr President, the restrictions on Tier 2 as opposed to a Tier 1? Fewer games?
+
+Mr DUIGAN - No.
+
+Ms Armitage - So, it is just what it has?
+
+Mr DUIGAN - It is around the level of facility at the venue. The new Macquarie Point venue would be, as I understand it, a Tier 1 stadium. The MCG is a Tier 1.  [Bookmark: Phr11_O=165.9_D=11.2_C=0.57] UTAS Stadium is a Tier 2. Bellerive Oval/Ninja Stadium, Tier 2.
+
+Ms O'Connor - As you can understand, through you, Mr President - 
+
+Mr PRESIDENT - Is this a supplementary?
+
+Ms Armitage - My concern is Launceston Tier 2, Macquarie Point Tier 1.
+
+ [Bookmark: Phr12_O=177.7_D=6.9_C=0.61] Mr DUIGAN - Macquarie Point will be the newest stadium in the world. 
+
+Ms O'Connor - It will never be built.
+
+
+High-Performance Training Centres - Access for TIS Athletes
+
+ [Bookmark: Phr13_O=187.8_D=1.8_C=0.75] Ms THOMAS QUESTION to MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+ [Bookmark: Phr14_O=193.6_D=26.7_C=0.77] [2.43 p.m.]
+You have just spruiked the government's sponsorship deal with the Hawthorn Football Club to the tune of $9.1 million through to 2026-27. I have repeatedly expressed my concern in this place about the government's prioritisation of sport that runs as a business, commercialised sport over community sport, but also elite sport. Our TIS athletes continue to train  [Bookmark: Phr15_O=221.0_D=10.8_C=0.64] in makeshift facilities located at Technopark, whilst this government invests $105 million in a Devils High Performance Training Centre and $17 million in a JackJumpers High Performance Training Centre at Kingston.  [Bookmark: Phr16_O=232.7_D=16.8_C=0.80] Minister, have you, or will you seek to make arrangements with the JackJumpers and the Tasmania Devils to allow Tasmanian Institute of Sport athletes to train out of the brand-new high-performance facilities meant to be built at Kingston?
+
+ [Bookmark: Phr17_O=251.9_D=2.3_C=0.43] ANSWER
+
+ [Bookmark: Phr18_O=257.8_D=1.8_C=0.59] Mr President, I will seek some advice. I would make the point that the government is investing very heavily in a whole range of sporting infrastructure, whether it is $104 million across the state into basketball infrastructure, be it community or elite, or whether it is $86 million into community sporting infrastructure through various other programs. I would also make the point that both the JackJumpers high-performance centre and the new, proposed AFL [Bookmark: Phr2_O=26.8_D=5.6_C=0.73]  high-performance centre will have aspects of community access available in them.
+
+Ms THOMAS (Elwick) - I have a supplementary question.
+
+Mr PRESIDENT - The member for Elwick.
+
+Supplementary Question
+
+ [Bookmark: Phr3_O=33.8_D=4.8_C=0.62] [2.45 p.m.]
+ [Bookmark: Phr4_O=38.6_D=23.6_C=0.71] My question was specifically: have you or the government, or will you seek arrangements with the JackJumpers and the Devils to enable Tasmanian Institute of Sport athletes to train out of these brand-new facilities, so they no longer have to continue to train in makeshift facilities at an office administration building at Technopark, our athletes who we are asking to represent us on the international stage at the Olympics?
+
+ANSWER
+
+ [Bookmark: Phr5_O=63.6_D=5.8_C=0.81] I am happy to have those conversations. [Bookmark: Phr6_O=70.1_D=24.5_C=0.80]  I would point to the fact that the government has provided $1.5 million through the Budget to support our pathway athletes, and the talent identification program being run by TIS, as we build our capacity and build our sporting legacy toward 2032 in Brisbane. It is really important that Tasmania [Bookmark: Phr7_O=95.4_D=4.3_C=0.59]  leverages that opportunity, and I point to the Launceston Running Festival over the course of the weekend [Bookmark: Phr8_O=100.1_D=10.3_C=0.68]  where we had fantastic results from a lot of our Tasmanian-based runners. We are doing work to make sure that those pathways are available.
+
+
+Dial Park - Funding Withdrawal
+
+ [Bookmark: Phr9_O=111.3_D=24.6_C=0.54] Ms FORREST question to MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+[2.48 p.m.]
+I do not think he answered the member for Elwick's question, but I hope he might answer mine. He made some comments in a previous response to the member for Elwick about significant investment in community facilities and community grassroots sports. How does the minister explain, then, the funding that has been withdrawn from Dial Park [Bookmark: Phr10_O=136.8_D=10.4_C=0.68]  that was set aside to build facilities for community-based sporting groups like football, women's football, girls' football, boys' football? [Bookmark: Phr11_O=147.8_D=29.6_C=0.81]  The girls and boys are currently required to get changed out in the open, which is clearly unacceptable, and ask the boys just to turn the other way: entirely unacceptable. How do you explain the withdrawal of those funds from the Dial Park commitment to deliver the community-based assets that provide change rooms and facilities for the community-based sporting people [Bookmark: Phr12_O=178.5_D=0.8_C=0.47]  - the kids who play there?
+
+ANSWER
+
+ [Bookmark: Phr13_O=180.5_D=1.8_C=0.42]  [Bookmark: Phr14_O=185.2_D=21.2_C=0.75] Mr President, I know how important Dial Park is. It is already a very high-standard piece of sporting infrastructure. I would note the significant amount of investment in Dial Park in the not-too-distant past. I have been up there and looked at it.  [Bookmark: Phr15_O=206.4_D=9.5_C=0.79] I did not notice anybody getting changed in anything that was not very high-quality, recently built [Bookmark: Phr16_O=217.9_D=13.3_C=0.71]  facilities.
+
+The government has made a commitment to bringing that venue up to a Tier 4 AFL venue, which would enable it to host AFLW and VFL content. We are committed to that [Bookmark: Phr17_O=231.8_D=13.2_C=0.86] . It was identified that the full budget allocation of $25 million is not required to achieve that outcome at Dial Park.  [Bookmark: Phr18_O=246.8_D=15.6_C=0.75] That has allowed the full scoping of bringing that venue up to Tier 4 AFL venue, which required an investment of $14 million. When that funding announcement was made, it was envisaged that Stadiums Tasmania would take on the ownership and operation of Dial Park. I think that has since been [Bookmark: Phr20_O=275.6_D=23.5_C=0.80]  pleasingly reconsidered, and it was agreed that the facility would be best managed by the Central Coast Council rather than Stadiums Tasmania. 
+
+The government has since worked with council to refine the scope and the budget envelope to ensure key goals can be achieved. Dial Park is already an excellent community facility, servicing a number of sports in the region, including football and cricket. [Bookmark: Phr21_O=300.5_D=4.5_C=0.86]  The remaining funds will be invested to improve several other sporting facilities, which will support both community and elite sports and participation across the north and north-west. The investment includes an additional $5.8 million for the Devonport Sports Oval complex, which will enable it to host future WNBL content; $4 million to secure JackJumpers games through upgrades at the Silverdome; $450,000 to the Penguin Sports and Services Club, a very worthwhile investment I am sure you would agree, if you have been in and had a look at Penguin Sports and Services Club; and $325,000 for the King Island Bowls Club, which would be of interest to you. 
+
+Ms Forrest - Not Dial Park: I was asking about Dial Park.
+
+Mr DUIGAN - I have mentioned Dial Park at length: $225,000 for the Valley Rd Regional football facility; and $150,000 for works at the Port Sorell Bowls Club. I am very much looking forward to seeing those projects progress.
+
+Ms FORREST (Murchison) - I have a supplementary.
+
+Mr PRESIDENT - The honourable member for Murchison.
+
+Supplementary Question
+
+My question was clearly about Dial Park. All those other things are nice and great to hear about. The question I was asking was about the funding that was not to get Dial Park main oval up to Tier 4; it was about the additional funding that had been granted or committed to, to update the facility at ground B, which the community sports, cricket, football and everyone use. You may not have seen girls getting changed, but rest assured, I know the new member for Montgomery absolutely knows about this. I also know about this because I have been in contact with the people who run this. You yourself, I understand, said it was unacceptable that girls and boys would need to get changed out in the open to participate in sport.
+
+The question I had for you, based on the fact that you have made these commitments to community facilities: why has this money been withdrawn from this aspect for ground B upgrades, not the Tier 4 upgrade to the main Dial Park facility? You confirmed with the people who are involved in this facility that you recognise the problem. The funding was there and now it has been withdrawn.
+
+ANSWER
+
+Mr President, I would ask the member not to put words in my mouth about things that I have said to people. I would be very sure of not saying words to that effect. The government commitment was to upgrade Dial Park to a Tier 4 AFL standard. That is a commitment we stand behind.
+
+
+River Tamar Bridge - Progress
+
+Ms ARMITAGE question to MINISTER for INFRASTRUCTURE, Mr VINCENT
+
+[2.53 p.m.]
+With regard to the proposed bridge across the River Tamar, noting that public consultation and receipt of submissions has recently finished, when is the government likely to report? Secondly, can you please provide an update and also the likely time frame if the proposed bridge should ever proceed?
+
+ANSWER
+
+Mr President, I should acknowledge the CEO of Launceston City Council in the gallery. I need to make sure this answer is spot on for him, I am sure.
+
+I have a bit of interest in this project, having lived in Launceston and been associated with the growth that has been around the Legana-Danbury Park area. My association goes back to 1967.
+
+Ms Armitage - Was that 1967?
+
+Mr VINCENT - Thank you, yes, it certainly was. We have seen substantial growth in that area. I must admit having my first management office right next to the Wellington St intersection. I saw every morning and afternoon the congestion and the amount of traffic trying to fit through that intersection. I am very much aware as Infrastructure minister that it is important that we look at how we are going to move traffic in the future around Launceston. This project is vital.
+
+We have finished the initial consultation on 18 April and at least one, if not two, extensions were given for a bit more information to come in. The department will be seeking to release that report by about the end of July. A further bit of consultation and then the business plan will be updated and released in early 2026, it is envisaged at this stage. Very pleased to hear the federal Labor government announced $20 million towards the project which brought it up to about $136 million in the budget the state has also allocated.
+
+The most important thing about that $20 million is it will allow us to extend that business plan and really look at the different options that have been put forward. When you look at that, it is fairly important because of the disruption to some of the areas at Riverside, but it is also vitally important to look at how that potential bridge and off ramps will connect with the Mowbray-Invermay area to allow for that traffic to flow sensibly to the residential growth areas as well as the commercial areas out around Rocherlea, plus being able to move a different line of traffic in and out of the city.
+
+Those options are going to be vital for the growth of those suburbs of Launceston into the future. I would not like to put a timeline on the construction of the bridge because, as we know, the business plan can strike different issues and then when you look at the mudflats on either side, it is probably an extended smaller version of what I imagine and see out of Bridgewater.
+
+There is a lot of work in testing the geotech of the area and making those assumptions, but now that we have that $20 million commitment from the federal government and allocations in the Budget from us, I am confident of moving on with the business case and that will set the timelines for the rest of it. I really ask the state Labor also to support this project going forward.
+
+
+Montrose Bay Intersection - Progress
+
+Ms THOMAS question to MINISTER for INFRASTRUCTURE, Mr VINCENT
+
+[2.57 p.m.]
+Are you able to provide us with an update on progress towards the intersection upgrades at Montrose Bay?
+
+ANSWER
+
+Mr President, I thought I had a bit of information in my file there, but I have just realised after speaking to staff that the funding for that project comes out of Mr Abetz in Transport. I would like to take that on notice and get the answer to that question back to you as soon as possible. Thank you.
+
+Dial Park - Changeroom Facilities
+
+Ms FORREST question to MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+[2.58 p.m.]
+I wish to apologise to the Minister for Sports and Events. I understand that Nick was a previous minister of the same name. Having said that, and I do apologise to him for that, and I appreciate him pointing that out, but are there any circumstances where you think it is okay for young children to be getting changed in the open because of a lack of facilities?
+
+ANSWER
+
+I thank the member for the clarification, and I would certainly point to the fact I have been to Dial Park, I have spoken to those stakeholders whom you referenced, and I understand the concerns you were pointing out. However, I would stand fast by what I said to them noting that the delivery of Dial Park has been an issue led now by council and those stakeholders to understand what needs to be done in that place.
+
+We understand there is a massive job of work around Tasmania, not just around Tasmania, around all of Australia, to bring some of these old and legacy sporting facilities up to the standard required to meet new demand, particularly around women and girls in sport. We will be releasing a women and girls in sports strategy, which has to lean into that, but you have to spend money. It is a big job of work and I do recognise that. It is not a circumstance we want. We are investing hard, and will continue to do that. Dial Park is a very good facility. It will be made even better. It will have state-of-the-art change facilities. There is an important utilisation piece, that is the work that council is doing with stakeholders and how we get the best utilisation out of our facilities. If we are throwing, not throwing, if we are investing this amount of money into  [Bookmark: Phr2_O=31.2_D=4.5_C=0.69] infrastructure around the state, the utilisation piece has to be examined as well.
+
+
+ [Bookmark: Phr3_O=38.5_D=0.7_C=0.17]  [Bookmark: Phr4_O=42.0_D=10.6_C=0.78] YOUTH JUSTICE FACILITY DEVELOPMENT BILL 2025 (No. 19)
+
+Second Reading
+
+Resumed from above (page 26).
+
+[3.01 p.m.]
+ [Bookmark: Phr5_O=54.7_D=1.0_C=0.77] Ms PALMER (Rosevears - Acting Leader of the Government in the Legislative Council) - Mr President [Bookmark: Phr6_O=67.9_D=0.9_C=0.96] ,  [Bookmark: Phr7_O=70.6_D=29.7_C=0.86] I had only just started answering the questions of the member for Murchison, so I might just start from the beginning. It is only a sentence I got through. Thank you very much, Mandy. The question that was posed by the member for Murchison was, does the project assurance framework come into effect on 1 July 2025?
+
+The Tasmanian government endorsed the Infrastructure Tasmania Project Assurance Framework in 2022,  [Bookmark: Phr8_O=100.6_D=15.6_C=0.92] and it has been in operation since then. Application of the framework has been optional, however, it will become mandatory for all infrastructure projects over $50 million from 1 July 2025.  [Bookmark: Phr9_O=116.6_D=18.0_C=0.92] Project assurance is defined as the governance reporting and independent expert project review process that assesses the health and viability of a project. Project assurance helps manage risk and improves delivery confidence.
+ [Bookmark: Phr10_O=135.8_D=29.6_C=0.88] This framework provides a structured approach for the independent assessment of the health and viability of projects and programs and focuses on gate assurance reviews, health checks and deep-dive infrastructure project reporting. The project has been subject to two reviews already: a health check report in July 2024 and a deep-dive review on the 2025 budget estimates.  [Bookmark: Phr11_O=165.9_D=11.3_C=0.86] A third review is scheduled for late 2025, readiness for market, which will be undertaken prior to tender.
+
+I just need to seek some advice.
+
+ [Bookmark: Phr12_O=206.5_D=23.4_C=0.91] Another question from the member for Murchison: will there be any public visibility on managing the two land uses issues? The project and design teams are working with nearby businesses to manage external factors such as noise and odour that may impact on young people at the site. The development application submitted to the  [Bookmark: Phr13_O=230.3_D=3.0_C=0.82] Southern Midlands Council will address the  [Bookmark: Phr14_O=235.0_D=26.5_C=0.83] attenuation code in respect to noise. This requires the proponent to demonstrate that the project is not impacting on their use. It does not require the project to demonstrate the impact of their use on the new facility. This does not mean we are not working to address it. The noise report to be submitted with the development application has been informed by noise measurement and monitoring and subsequent planning and consideration  [Bookmark: Phr15_O=261.7_D=16.0_C=0.84] of mitigations will occur in conjunction with the gun clubs. The government will make an announcement regarding the mitigations of waste disposal practices with the medicinal cannabis facility once federal approvals for that change are in place.
+
+ [Bookmark: Phr16_O=278.9_D=13.6_C=0.81] The member for Murchison and the member for Elwick asked questions on TASCAT. I think the question from the member for Murchison was, was there a suggestion TASCAT was too slow?  [Bookmark: Phr17_O=293.1_D=11.8_C=0.83] In answering that, we are not suggesting that TASCAT or the process followed is slow. It cannot be denied that appeals are possible, and for a sensitive project like this, it is expected to have a higher likelihood of appeal. However, any appeal, with merit or not, will add time to the project that we currently cannot control. Evidence was requested of where appeals add time frame to a project.
+
+ [Bookmark: Phr2_O=22.8_D=7.0_C=0.81] The Adolescent Mental Health Services project at St Johns Park has been delayed as it goes through the appeals process. [Bookmark: Phr3_O=30.0_D=25.4_C=0.85]  This is in relation to heritage impacts on the site. This project has been in mediation with the appellant to resolve the basis of their appeal and has not yet been before the TASCAT tribunal for determination. Mediation has been ongoing since October 2024, now almost eight months. The bill is seeking to address any potential delay associated with the appeal.
+
+ [Bookmark: Phr4_O=56.7_D=4.5_C=0.81] A question also from the member for Murchison: is there a confirmed date for the DA? [Bookmark: Phr5_O=62.4_D=16.7_C=0.90]  We have indicated end of June or early July for submission of the DA. We will not be submitting the DA before this bill has been heard as we do not want to complicate the process. We expect to be able to submit the DA in early July.
+
+ [Bookmark: Phr6_O=81.3_D=24.8_C=0.88] The member for Murchison also asked about powers to amend the criteria. The bill does not give the government any power to override the conditions set by the planning authority on the permit. When the bill talks about the minister's ability to make changes, it only refers to a few basic things like the floor area, height and how much wastewater will be treated on site. [Bookmark: Phr7_O=106.8_D=6.3_C=0.82]  These details simply set clear limits on the development, so everyone knows exactly what the bill covers. [Bookmark: Phr8_O=114.0_D=26.4_C=0.90]  The minister can change those specific project parameters: floor area, height, wastewater volume, by an order. 
+
+The order would need to be drafted and tabled in parliament as a statutory rule under the Rules Publication Act 1953. The order is subject to disallowance by parliament. The bill provides no power for the minister or parliament to override planning permit conditions [Bookmark: Phr9_O=141.2_D=5.0_C=0.89]  imposed by the council under the Land Use Planning and Approvals Act 1993. [Bookmark: Phr10_O=147.0_D=24.7_C=0.90]  We are planning to submit the DA shortly after this bill may pass in June or early July. The power under clause 6(2) of the bill is not immediate and would not practically provide a substantial change to the criteria. In any case, increases in the size, as the example that has been given, would require additional budget as well.
+
+ [Bookmark: Phr11_O=173.8_D=6.3_C=0.79] A question from the member for Elwick: what discretions would apply if not for this bill? [Bookmark: Phr12_O=181.1_D=14.3_C=0.90]  The member for Elwick indicated a desire to understand the discretions that might apply to the proposed facility at the site. As was noted by the member, there are discretions that apply to both use and development. [Bookmark: Phr13_O=195.9_D=28.4_C=0.88]  The use standards, which consider things like location, scale and intensity of use, will all be discretions and subject to both refusal and appeal if not for the bill. The development standards are reasonably limited in the rural zone, covering only building height and setbacks. We expect to be able to meet the acceptable solution for both of these aspects and thus would not require discretion.
+
+ [Bookmark: Phr14_O=224.9_D=20.5_C=0.88] There are seven codes that apply to the site. Only three of these would require discretion: being related to traffic; road and railway assets code; noise attenuation code; and valuable use in a bushfire-prone area, the bushfire-prone areas code [Bookmark: Phr15_O=246.6_D=19.8_C=0.85] . To be clear, the discretions that would be waived should the bill pass relate to the use, traffic, noise and specifically the impact of this site on the existing gun clubs, not the other way round, and bushfire.
+
+ [Bookmark: Phr16_O=268.6_D=26.7_C=0.89] The member for Elwick also asked: how much opposition has there been to that site to date? Based on our consultations to date, the likelihood of appeal is high, with a number of interested parties, including residents in the surrounding area, indicating their intention to seek legal and planning advice. This bill provides a level of certainty required to meet the time-sensitive objective of closing [Bookmark: Phr17_O=296.2_D=3.4_C=0.74]  AYDC and transitioning to the new facility.
+
+ [Bookmark: Phr18_O=301.6_D=3.4_C=0.80] Again, another question from the honourable member for Elwick: this is with regard to whether the Southern Midlands Council could be exposed to a legal challenge. The Judicial Review Act 2000 applies to many administrative decisions. The Southern Midlands Council would be exposed to appeals under the Judicial Review Act 2000 as a part of its normal business, be that for permitted or [Bookmark: Phr2_O=31.1_D=30.0_C=0.79]  discretionary development applications, or other decisions that they may make under law. 
+
+The risk of appeal will be lower if council follows the law (in this case, the bill) if enacted through parliament. We understand council sought legal advice that informed its submission on the bill, and while it raised concerns in that submission, we have responded to those concerns, and an amendment was passed in the other place to strengthen the clause to ensure they are not required [Bookmark: Phr3_O=61.4_D=2.8_C=0.74]  to approve something that cannot be approved.
+
+ [Bookmark: Phr4_O=68.5_D=11.7_C=0.87] Another question from the honourable member for Elwick: will the government indemnify the Southern Midlands Council? No. The government will not indemnify the Southern Midlands Council.  [Bookmark: Phr5_O=81.9_D=6.3_C=0.85] My apologies, I have missed a sentence from the previous answer I was giving with regard to the Southern Midlands Council [Bookmark: Phr6_O=90.3_D=7.7_C=0.75] , any legal challenge; can I add to that the Council also has the power to apply conditions or restrictions to the permit [Bookmark: Phr7_O=98.3_D=3.3_C=0.92]  to help them mitigate that risk.
+
+ [Bookmark: Phr8_O=104.1_D=14.2_C=0.84] A question from the member for McIntyre and the member for Rumney, which was about what will happen to the staff at Ashley Youth Detention Centre. I need to seek some advice.  [Bookmark: Phr9_O=131.0_D=22.8_C=0.88] The government is focused on supporting staff at AYDC as we transition to a new facility. This bill provides certainty of time frames for the delivery of the new facility. This not only allows AYDC to close as soon as possible, it enables better planning and clarity for those staff who are currently part of caring  [Bookmark: Phr10_O=154.1_D=29.9_C=0.82] for Tasmania's most vulnerable young people at AYDC.
+
+Right now, we are focused on providing safe and appropriate care for those young people. The closer we get to closure without certainty of time frame, the harder it becomes to continue to sustain and maintain staffing levels. Certainty for those staff and enabling pathways to future employment is a key part of DECYP's commitment to them. The department has recently written to staff to outline [Bookmark: Phr11_O=184.2_D=26.2_C=0.83]  the community engagement process for the new facility and to advise them that we will work with them, alongside unions, to give clarity about what future pathways may be available to them. We are also working to upskill staff. Right now, we have three cohorts of youth workers completing a course through the Australian Childhood Foundation, and this is being funded through the commission of inquiry funding.
+
+ [Bookmark: Phr12_O=213.7_D=12.0_C=0.89] We will continue to work across government to establish a clear plan for each staff member currently employed, to provide options and to provide clarity for the future of the facility. [Bookmark: Phr13_O=226.6_D=24.1_C=0.84]  DECYP is actively planning around support for current staff, to enable future employment options, and provide certainty and security for them and their families. The Tasmanian government remains committed to ensuring there is a strong pipeline of work in northern Tasmania that creates and sustains employment and boosts the local economy, particularly in the Meander Valley [Bookmark: Phr14_O=251.1_D=24.6_C=0.88]  region. 
+
+I could just add to that question, as we have, of course, a school, which is my responsibility as the Minister for Education. I have been there and I have met with the staff and had time with the principal. We are doing everything that we can to ensure that they have [Bookmark: Phr15_O=276.5_D=6.3_C=0.86]  access to a broad range of supports, and that is including employment assistance program [Bookmark: Phr16_O=283.4_D=15.2_C=0.86] , learning services staff, and any other resources specific to the work that they are doing there with our young people. That is being very carefully managed, and that is my expectation of what I have set out for the department [Bookmark: Phr17_O=299.4_D=5.6_C=0.85] , even to the point when anything is happening in this space, that they be notified by the department so that they feel that they are very much not hearing things in the media or from this place, but they are hearing it from the department every step of the way, just to ensure that there is continuity of teaching when we actually move from the Ashley site  [Bookmark: Phr2_O=27.4_D=2.2_C=0.96] to the new facility as well.  [Bookmark: Phr3_O=29.9_D=9.9_C=0.79] We want to make sure that we have that continuity of teaching. Work is certainly being done to ensure that they are taken care of.
+
+ [Bookmark: Phr4_O=41.6_D=19.4_C=0.84] I also have a question, again from the member for McIntyre: what will happen to the facility when it is closed? The Tasmanian government has committed to the closure of the Ashley Youth Detention Centre consistent with the commission of inquiry recommendations, which have been supported by the Tasmanian parliament.  [Bookmark: Phr5_O=61.6_D=29.3_C=0.86] The Tasmanian government remains committed to ensuring there is a strong pipeline of work in northern Tasmania that creates and sustains employment and boosts the local economy, particularly in the Meander Valley region. The government will now explore future construction opportunities on the existing Ashley Youth Detention Centre site following its planned closure. We expect to consult broadly with respect to any future investments in relation to the AYDC site. This  [Bookmark: Phr6_O=91.5_D=9.8_C=0.79] bill provides more certainty of the timeframe for developing the replacement facility and will enable more certainty for the future use of the current site.
+
+ [Bookmark: Phr7_O=103.0_D=21.0_C=0.78] I have another question here. We had two members touch on this, the member for McIntyre and the member for Launceston. Does relocating the facility completely change the function? The Tasmanian government has committed to the closure of the Ashley Youth Detention Centre consistent with the commission of inquiry recommendations,  [Bookmark: Phr8_O=124.2_D=26.1_C=0.86] which have been supported by the Tasmanian parliament. We are not relocating the facility. We are building a new purpose-built facility with a new therapeutic model of care. The model of care for detention is the outcome of a review of best-practice evidence undertaken to deliver improved wellbeing, rehabilitation and reconnection to family, community and culture of justice-involved children and young people.
+
+ [Bookmark: Phr9_O=151.1_D=6.3_C=0.84] The model of care is informed by the lived experiences of those detained as children and young people [Bookmark: Phr10_O=158.0_D=29.3_C=0.85] , Aboriginal and community voices, key stakeholders and national and international best-practice evidence. It demonstrates a commitment to improve service delivery for the benefit of children and young people, their families and the broader community. Of note in the implementation of the model of care is the interdependence with wider system support services and enablers. In the south we have a stronger ecosystem of care and services to draw from.  [Bookmark: Phr11_O=187.9_D=8.2_C=0.80] The model of care also outlines the structure, day-to-day routine, who is doing what, and what skills are required to achieve high-quality care.
+
+ [Bookmark: Phr12_O=198.0_D=21.0_C=0.85] To successfully implement, this requires a facility that facilitates the delivery of the model of care. We have heard from the commission of inquiry that the new facility must be small and home-like. We have had excellent advice from our expert panel on how this can be achieved through their input to the master plan.  [Bookmark: Phr13_O=219.6_D=14.9_C=0.91] The model of care is not isolated from the community or wider services. In fact, it is part of the continuum of responses that brings together a statewide response to children and young people with offending behaviours.
+
+ [Bookmark: Phr14_O=240.5_D=6.4_C=0.87] Again from the member for McIntyre: why cannot services in Launceston be built up?  [Bookmark: Phr15_O=248.6_D=24.2_C=0.87] In answer to that question, the commission of inquiry has recommended the closure of the Ashley Youth Detention Centre and we need a new purpose-built facility to develop a therapeutic model of care. Greater professional skills and capability are required in the workforce for a new model of care. There is a larger pool of workforce and services to draw from in the south to achieve this goal.
+
+ [Bookmark: Phr16_O=274.4_D=25.2_C=0.89] Additionally, currently two-thirds of the young people in Ashley Youth Detention Centre are from the southern region. Having a facility that more often keeps young people connected to their family, community and natural supports is of utmost importance. A facility in the south better meets this goal, but we will still be focusing on service delivery in other areas of the state.  [Bookmark: Phr17_O=300.4_D=3.3_C=0.53] Currently with DECYP, Launceston has a community youth justice team, made up of youth justice workers, youth workers and a team leader. Recently JCP Youth expanded its services within the north. This has allowed a number of referrals to be made for intensive support and staff locally speak very highly of this service. We will also be delivering additional diversion services, bail support and supported accommodation to reduce the number of young people who need to be in a detention environment. We will continue to work with the community in the north to further enhance the service offer for our young people.
+
+The member for Launceston asked: is there a problem that means we need to remove the appeal process? The government has committed to closing Ashley Youth Detention Centre as soon as possible. This bill will do this by removing third-party appeal rights, as would be the case for any permitted use. The bill reduces risks of lengthy delays, those that we can control. For a project of this importance, we believe it is incumbent on parliament to do everything it can to ensure that the facility can be delivered as quickly as possible.
+
+Another question from the member for Launceston: how will youth in the north be catered for? How will young people be catered for with serious crimes? It is recognised that there is a need for further care option development for young people involved in the justice system in the north and the north-west. Through the Uplifting Care program of work, the commission of inquiry recommendations, a reshaping of the continuum of care placement options is being undertaken. This will include options for young people. Alongside this, the diversion framework has been developed and further early intervention and bail support services are to be commissioned, increasing support for young people in the north and the north-west.
+
+In the event that a young person from the north required transport to the new facility, the Youth Justice Service Contract Essential Security is a security to safely transport young people across the state if required. This arrangement occurs now for those in the south who require transport to the Ashley Youth Detention Centre. It should also be noted that two thirds of young people in AYDC are from the south of the state.
+
+From the member for McIntyre and the member for Launceston: why do we not keep Ashley Youth Detention Centre? AYDC is not designed in a way that promotes safe care or therapeutic responses. By way of example, AYDC brings together cohorts of young people that are too large, with unit sizes of eight-plus young people, which makes it difficult to manage group dynamics. The sightlines are also challenging in some areas. It is not small and home-like and contributes to a more correctional way of working, in order to manage safety. The commission of inquiry has been clear in recommending the closure of the detention centre as soon as possible.
+
+The member for Hobart asked: why is this bill urgent? The government has committed to close AYDC as soon as possible.
+
+Ms O'Connor - That was not my question, but anyway, carry on.
+
+Ms PALMER - This bill assists in this commitment by removing the risks of delay. We are aiming to have the legislation debated and enforced before the winter recess. This will also enable the planning timing of DA lodgements in early July to proceed.
+
+The member for Hobart also asked: what is the average height of buildings?
+
+Ms O'Connor - No, I asked about the clause that said an average height of 15 metres and what does that mean in the context of a building complex?
+
+Ms PALMER - I am happy to seek further advice on that, but I do have more answers here, so let me keep going.
+
+Intended to provide boundaries of what can be declared as a project, the 15 metres is an average, but as per the master plan, the planned facility is low-lying with predominantly single-storey construction.
+
+Why not have two facilities, asked the member for Launceston and the member for McIntyre. The Youth Justice Blueprint and the commission of inquiry call for minimising the number of young people in detention facilities, particularly for those who are remanded. This included developing a strong suite of alternative community-based responses and early intervention, as well as legislative options to narrow the number of young people entering custody. A therapeutic, evidence-based, small and homelike facility is intended, and having two facilities would not be congruent with a contemporary and evidence-based youth justice system.  [Bookmark: Phr2_O=11.9_D=16.3_C=0.89] Tasmania has the opportunity to be nation-leading in its response to young people with offending behaviour. With this plan it is, however, recognised there is a need for further care option development for young people involved in the justice system in the north and the north-west.
+
+ [Bookmark: Phr3_O=31.8_D=26.6_C=0.85] We know that homelessness is a factor in offending. Through the Uplifting Care program of work, the commission of inquiry recommendations, a reshape of the continuum of care placement options is being undertaken. This will include options for young people. In addition, the Youth Justice Diversion Framework has been developed with further early intervention and bail support services being commissioned, increasing support for young people in the north, north-west and the south.
+
+ [Bookmark: Phr4_O=60.3_D=29.4_C=0.86] Further to this, the Tasmanian government has committed to closing AYDC and establishing a child-centred rights and evidence-based youth justice system. AYDC is not designed in a way that promotes safe care or therapeutic responses. It brings together cohorts of young people that are too large, as I mentioned before, unit sizes of eight-plus young people. That makes it very difficult to manage those group dynamics for young people. The sightlines for staff  [Bookmark: Phr5_O=89.9_D=11.3_C=0.69] are also challenging in some areas, and as I have previously stated, it is simply not small and homelike, and it does contribute to a more correctional way of working in order to manage safety.
+
+ [Bookmark: Phr6_O=105.7_D=7.8_C=0.89] With regard to clause 8, Application of Aboriginal Heritage Act 1975, w [Bookmark: Phr7_O=115.0_D=17.0_C=0.86] hy is this section in the bill? I believe this was asked by the member for Hobart. Given the significant heritage on and surrounding the site, this provision makes it clear that the requirements of the Aboriginal Heritage Act 1975 will apply.  [Bookmark: Phr8_O=132.8_D=13.8_C=0.80] The wording of this section is to make it clear that the Aboriginal Heritage Act 1975 will apply. Nothing in this section amends the application of that act. Mr President, I just seek some advice.
+
+ [Bookmark: Phr9_O=184.2_D=11.2_C=0.90] I hope that we have answered as thoroughly as we could the questions that members have had.
+
+Mr PRESIDENT - The question is that the bill be read a second time.
+
+	
+	The Council divided -
+	
+
+	
+AYES 6
+	
+NOES 8
+	
+		Mr Duigan	
+		Ms Armitage
+	
+		Mr Edmunds	
+		Ms Forrest
+	
+		Mr Gaffney	
+		Mr Harriss
+	
+		Ms Lovell (Teller)	
+		Mr Hiscutt
+	
+		Ms Palmer	
+		Ms O'Connor
+	
+		Mr Vincent	
+		Ms Rattray
+	
+			
+		Ms Thomas (Teller)
+	
+			
+		Ms Webb
+ [Bookmark: Phr15_O=297.9_D=3.4_C=0.67] 
+Second reading negatived.
+
+
+SUSPENSION OF SITTING
+
+[3.32 p.m.]
+Ms PALMER (Rosevears - Acting Leader of the Government in the Legislative Council) - Mr President, I move - 
+
+That the sitting be suspended until the ringing of the division bells.
+
+Sitting suspended from 3.32 p.m. until 4.45 p.m.
+
+
+MOTIONS
+
+Varying Orders Regarding Estimates Committees of Council
+
+[4.42 p.m.]
+Ms PALMER (Rosevears – Acting Leader of the Government in the Legislative Council) (by leave) - Mr President, I move - 
+
+That:
+
+the order of the Council of 27 May 2025 agreeing to a timetable for the two Estimates Committees of the Council, for the consideration of the proposed expenditures contained in the Appropriation Bills (No. 1 and No. 2) and budget papers, be set aside; and
+
+the Estimates Committees be discharged from the order to report upon the proposed expenditures contained in the Appropriation Bills (No. 1 and No. 2) and budget papers by 27 June 2025; and
+
+any resolutions of the Estimates Committees to meet on dates as set out in that timetable be set aside, and instead that those committees stand adjourned; and
+
+ministers from the House of Assembly previously given leave to appear before and give evidence to the Estimates Committees be discharged.
+
+Due to events in the other place that have impacts on our House and our Council with regard to the establishment of the budget Estimates, without this motion the committees would be required to meet next week. This is the way to discharge the committees' timetables and requirement for ministers to attend.
+
+Motion agreed to.
+
+[4.44 p.m.]
+Ms PALMER (Rosevears - Acting Leader of the Government in the Legislative Council) - Mr President, I move - 
+
+That a message be transmitted to the House of Assembly acquainting that House accordingly.
+
+Motion agreed to.
+
+
+SUSPENSION OF STANDING AND SESSIONAL ORDERS
+
+Precedence of Government Business
+
+[4.45 p.m.]
+Ms PALMER (Rosevears - Acting Leader of the Government in the Legislative Council) (by leave) - Mr President, I move - 
+
+That so much of standing and sessional orders be suspended.
+
+This is for the purpose of government business having precedence on Tuesday 10 June 2025. 
+
+Motion agreed to.
+
+
+ADJOURNMENT
+
+Ms PALMER (Rosevears – Acting Leader of the Government in the Legislative Council) - Mr President, I move -
+
+That at its rising the Council adjourn until 11.00 a.m. on Tuesday 10 June 2025.
+
+Motion agreed to.
+
+Ms PALMER (Rosevears – Acting Leader of the Government in the Legislative Council) - Mr President, I move -
+
+That the Council do now adjourn.
+
+Motion agreed to.
+
+The Council adjourned at 4.45 p.m.
+		
+Appendix 1
+
+
+
+[URL: "#_Toc200638533"]
+[URL: "#_Toc200638534"]
+[URL: "#_Toc200638535"]
+[URL: "#_Toc200638536"]
+[URL: "#_Toc200638537"]
+[URL: "#_Toc200638538"]
+[URL: "#_Toc200638539"]
+[URL: "#_Toc200638540"]
+[URL: "#_Toc200638541"]
+[URL: "#_Toc200638542"]
+[URL: "#_Toc200638543"]
+[URL: "#_Toc200638544"]
+[URL: "#_Toc200638545"]
+[URL: "#_Toc200638546"]
+[URL: "#_Toc200638547"]
+[URL: "#_Toc200638548"]
+[URL: "#_Toc200638549"]
+[URL: "#_Toc200638550"]
+[URL: "#_Toc200638551"]
+[URL: "#_Toc200638552"]
+[URL: "#_Toc200638553"]
+[URL: "#_Toc200638554"]
+[URL: "#_Toc200638555"]
+[URL: "#_Toc200638556"]
+[URL: "#_Toc200638557"]
+[URL: "#_Toc200638558"]
+[URL: "#_Toc200638559"]
+
+
+	1	Thursday 5 June 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]

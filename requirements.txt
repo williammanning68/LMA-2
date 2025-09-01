@@ -1,0 +1,2 @@
+playwright==1.54.0
+yagmail>=0.15.293
