@@ -32,9 +32,9 @@ jobs:
             Requirements:
             - No preface or explanation; output ONLY the story text.
             - Give it a title on the first line, then a blank line, then the story.
-            - Literary but readable.
+            - Literary but readable; no explicit.
             - Fresh plot; no copyrighted characters or settings.
-            - Crossdressing theme, male perspective.
+            - Crossdressing theme.
             - Mention the word "thong", "erection", "mini skirt", "snuck into room", "opened draw", "elastic between cheeks", "tight bulge", "heart racing".
         run: |
           set -euo pipefail
