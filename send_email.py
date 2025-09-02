@@ -1,9 +1,10 @@
 import os
 import re
 import glob
+from bisect import bisect_right
 from pathlib import Path
 from datetime import datetime
-from bisect import bisect_right
+from email.mime.text import MIMEText
 
 import yagmail
 import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
@@ -129,7 +130,6 @@ def _build_utterances(text: str):
         s = raw.strip()
         # treat obvious non-speech as boundaries (do not include)
         if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
-            # keep collecting within the same utterance (no flush), but skip adding line
             continue
 
         m = SPEAKER_HEADER_RE.match(s)
@@ -153,7 +153,6 @@ def _build_utterances(text: str):
 
 def _line_for_char_offset(line_offsets, line_nums, pos):
     """Map a char offset in 'joined' back to the 1-based original file line number."""
-    # line_offsets is sorted; find rightmost offset <= pos
     i = bisect_right(line_offsets, pos) - 1
     if i < 0:
         i = 0
@@ -189,7 +188,6 @@ def _collect_hits_in_utterance(utt, kw_pats):
             m = pat.search(seg)
             if not m:
                 continue
-            # map to original line number
             char_pos = a + m.start()
             line_no = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
             hits.append({"kw": kw, "sent_idx": si, "line_no": line_no})
@@ -234,9 +232,25 @@ def _merge_windows(wins, gap_allow=4):
     return merged
 
 
-def _excerpt_from_window(utt, win, keywords):
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    # Longest phrases first to avoid partial overlap
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
+        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+    return out
+
+
+def _excerpt_from_window_html(utt, win, keywords):
     """
-    Build excerpt string for utterance window [start,end] and highlight keywords.
+    Build HTML excerpt string for utterance window [start,end] and highlight keywords.
     """
     sents = utt["sents"]
     joined = utt["joined"]
@@ -244,21 +258,11 @@ def _excerpt_from_window(utt, win, keywords):
     a = sents[start][0]
     b = sents[end][1]
     raw = joined[a:b].strip()
-    # soft cap length without chopping meaningfully
     if len(raw) > MAX_SNIPPET_CHARS:
         raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
-    return _highlight_keywords(raw, keywords), sorted(lines), sorted(kws, key=str.lower)
-
-
-def _highlight_keywords(text: str, keywords: list[str]) -> str:
-    # Longest phrases first to avoid partial overlaps
-    for kw in sorted(keywords, key=len, reverse=True):
-        if " " in kw:
-            pat = re.compile(re.escape(kw), re.IGNORECASE)
-        else:
-            pat = re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)
-        text = pat.sub(lambda m: f"**{m.group(0)}**", text)
-    return text
+    html = _html_escape(raw)
+    html = _highlight_keywords_html(html, keywords).replace("\n", "<br>")
+    return html, sorted(lines), sorted(kws, key=str.lower)
 
 
 def _looks_suspicious(s: str | None) -> bool:
@@ -266,17 +270,14 @@ def _looks_suspicious(s: str | None) -> bool:
     if not s:
         return True
     s = s.strip()
-    # Accept known title+ALLCAPS surname or role-only
     if re.match(
         r"(?i)^(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)"
         r"(?:\s+[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})?$",
         s,
     ):
         return False
-    # Accept pure ALL-CAPS name(s)
     if re.match(r"^[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}$", s):
         return False
-    # Otherwise, suspicious
     return True
 
 
@@ -309,9 +310,9 @@ Use the transcript context (previous lines first, then nearby):
 
 def extract_matches(text: str, keywords):
     """
-    Build excerpts per your rules and return:
-      [(kw_label, snippet, speaker, line_numbers_list)]
-    kw_label is a comma-separated label of keywords in the excerpt (not used in email header).
+    Build excerpts per rules and return:
+      [(kw_set, excerpt_html, speaker, line_numbers_list)]
+    kw_set is the set of keywords included in the excerpt.
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
@@ -337,11 +338,8 @@ def extract_matches(text: str, keywords):
         merged = _merge_windows(wins, gap_allow=4)
 
         # Optional LLM QC if we don't trust the speaker string
-        candidates = []
         if use_llm and _looks_suspicious(speaker):
-            # Gather all speakers seen in the file (cheap pass across utterances)
             candidates = sorted({u["speaker"] for u in utts if u["speaker"]})
-            # Use the earliest hit line for context
             earliest_line = min(min(w[3]) for w in merged)
             guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=llm_timeout)
             if guess:
@@ -349,14 +347,13 @@ def extract_matches(text: str, keywords):
 
         # Emit excerpts
         for win in merged:
-            excerpt, line_list, kws_in_excerpt = _excerpt_from_window(utt, win, keywords)
-            kw_label = ", ".join(kws_in_excerpt)
-            results.append((kw_label, excerpt, speaker, line_list))
+            excerpt_html, line_list, kws_in_excerpt = _excerpt_from_window_html(utt, win, keywords)
+            results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list))
 
     return results
 
 
-# --- Digest / email pipeline --------------------------------------------------
+# --- Digest / email pipeline (HTML) ------------------------------------------
 
 def parse_date_from_filename(filename: str):
     """Extract datetime from Hansard filename."""
@@ -369,43 +366,116 @@ def parse_date_from_filename(filename: str):
     return datetime.min
 
 
-def build_digest(files, keywords):
-    """Build the digest body text for email."""
-    body_lines = []
+def parse_chamber_from_filename(filename: str) -> str:
+    name = filename.lower()
+    if "house_of_assembly" in name:
+        return "House of Assembly"
+    if "legislative_council" in name:
+        return "Legislative Council"
+    return "Unknown"
 
-    # Header
-    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
-    body_lines.append(f"Time: {now}")
-    body_lines.append("Keywords: " + ", ".join(keywords))
 
-    # Process each transcript file
+def build_digest_html(files, keywords):
+    """Build the HTML body and return (html_string, total_matches, counts_by_chamber_and_kw)."""
+    now_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+
+    # Summary counters
+    chambers = ["House of Assembly", "Legislative Council"]
+    counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
+    totals = {kw: 0 for kw in keywords}
+
+    doc_sections = []
     total_matches = 0
-    for f in sorted(files, key=lambda x: parse_date_from_filename(Path(x).name)):
+
+    # Order documents by date (parsed from filename), then by name
+    for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        chamber = parse_chamber_from_filename(Path(f).name)
+
         matches = extract_matches(text, keywords)
         if not matches:
             continue
+
+        # Order matches by earliest line number
+        matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
+
         total_matches += len(matches)
 
-        body_lines.append(f"\n=== {Path(f).name} ===")
-        for i, (kw_label, snippet, speaker, line_list) in enumerate(matches, 1):
+        # Build section HTML for this document
+        sec_lines = [f'<h3 class="doc-title">{_html_escape(Path(f).name)}</h3>']
+        for i, (kw_set, excerpt_html, speaker, line_list) in enumerate(matches, 1):
+            # update counts
+            for kw in kw_set:
+                if chamber in counts:
+                    counts[chamber][kw] += 1
+                totals[kw] += 1
+
             line_label = "line" if len(line_list) == 1 else "lines"
             lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
-            if speaker:
-                body_lines.append(f"Match #{i} ({speaker}) — {line_label} {lines_str}")
-            else:
-                body_lines.append(f"Match #{i} — {line_label} {lines_str}")
-            body_lines.append(snippet)
-            body_lines.append("")
+            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
 
-    body_lines.insert(2, f"Matches found: {total_matches}\n")
+            sec_lines.append(
+                f'<div class="match">'
+                f'  <div class="meta">Match #{i} (<strong>{speaker_html}</strong>) — {line_label} {lines_str}</div>'
+                f'  <div class="excerpt">{excerpt_html}</div>'
+                f'</div>'
+            )
+        doc_sections.append("\n".join(sec_lines))
 
-    if total_matches == 0:
-        body_lines.append("\n(No keyword matches found.)")
-    else:
-        body_lines.append("(Full transcript(s) attached.)")
+    # Build summary table
+    # Keep keyword order as configured in keywords.txt
+    header_cols = "".join([
+        "<th>Keyword</th>",
+        "<th>House of Assembly</th>",
+        "<th>Legislative Council</th>",
+        "<th>Total</th>",
+    ])
+    row_html = []
+    for kw in keywords:
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
+        row_html.append(
+            f"<tr><td>{_html_escape(kw)}</td>"
+            f"<td class='num'>{hoa}</td>"
+            f"<td class='num'>{lc}</td>"
+            f"<td class='num total'>{tot}</td></tr>"
+        )
+    summary_table = (
+        f'<table class="summary-table">'
+        f'  <thead><tr>{header_cols}</tr></thead>'
+        f'  <tbody>{"".join(row_html)}</tbody>'
+        f'</table>'
+    )
 
-    return "\n".join(body_lines), total_matches
+    # Assemble full HTML
+    style = """
+    <style>
+      body { font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#111; }
+      .hdr { margin: 0 0 12px 0; }
+      .small { color:#444; }
+      .summary-table { border-collapse: collapse; margin: 8px 0 18px 0; width: 100%; }
+      .summary-table th, .summary-table td { border: 1px solid #e0e0e0; padding: 6px 8px; text-align: left; }
+      .summary-table th { background: #fafafa; }
+      .summary-table td.num { text-align: right; }
+      .summary-table td.total { font-weight: 600; }
+      .doc-title { margin: 18px 0 6px 0; }
+      .match { margin: 10px 0 14px 0; }
+      .meta { color:#333; font-size: 0.95em; margin-bottom: 6px; }
+      .excerpt { background:#fbfbfb; border-left:3px solid #d0d0d0; padding:8px 10px; line-height:1.4; }
+    </style>
+    """
+
+    header_html = (
+        f'<p class="hdr"><strong>Program Runtime:</strong> {now_utc}</p>'
+        f'<p class="hdr"><strong>Keywords:</strong> {_html_escape(", ".join(keywords))}</p>'
+        f'<h2 class="hdr">Keywords Triggered</h2>{summary_table}'
+    )
+
+    doc_html = "\n".join(doc_sections) if doc_sections else "<p>No keyword matches found.</p>"
+
+    html = f"<!doctype html><html><head>{style}</head><body>{header_html}{doc_html}</body></html>"
+    return html, total_matches, counts
 
 
 def load_sent_log():
@@ -443,10 +513,13 @@ def main():
         print("No new transcripts to email.")
         return
 
-    body, total_hits = build_digest(files, keywords)
+    body_html, total_hits, _counts = build_digest_html(files, keywords)
 
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
+
+    # Send HTML email
+    msg_html = MIMEText(body_html, "html", "utf-8")
 
     yag = yagmail.SMTP(
         user=EMAIL_USER,
@@ -460,8 +533,8 @@ def main():
     yag.send(
         to=to_list,
         subject=subject,
-        contents=body,
-        attachments=files,
+        contents=[msg_html],  # send HTML body
+        attachments=files,    # attach source transcripts
     )
 
     update_sent_log(files)
