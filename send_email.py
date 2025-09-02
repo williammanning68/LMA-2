@@ -392,399 +392,348 @@ def _inline_css(html: str) -> str:
 
 def build_digest_html(files, keywords):
     """
-    Build the HTML email body with Outlook-safe rounded corners (VML) and
-    a clean, modern layout.  Returns (html, total_matches, counts_by_keyword).
+    Scans transcripts and returns (html, total_hits, counts_by_keyword)
 
-    - Does NOT call _kw_hit (avoids NameError).
-    - If a function extract_matches(text, keywords) exists, it uses that to
-      obtain (kw, snippet, speaker) tuples. Otherwise, it falls back to a
-      basic in-function matcher.
-    - Adds <b>…</b> highlighting for all configured keywords.
-    - Computes a per-chamber summary table from occurrences.
+    Email-safe HTML:
+      - Table-based layout
+      - All styles inlined
+      - No CSS variables
+      - Rounded corners supported in Outlook via VML on the header band
     """
-    import re, html
+    import re
     from datetime import datetime, timezone
     from pathlib import Path
 
-    # ----- helpers ----------------------------------------------------------
+    # --------------------------- helpers ---------------------------
+    def compile_keyword_pattern(kw: str) -> re.Pattern:
+        # Full-word/phrase match, case-insensitive
+        return re.compile(r"\b" + re.escape(kw) + r"\b", re.IGNORECASE)
 
-    def program_runtime_str():
-        try:
-            now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
-        except Exception:
-            # Fallback for very old Python if timezone is missing
-            now_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
-        return now_utc
+    kw_patterns = {kw: compile_keyword_pattern(kw) for kw in keywords}
 
-    def is_house_of_assembly(name: str) -> bool:
-        name_l = name.lower()
-        return ("house_of_assembly" in name_l) or ("house of assembly" in name_l)
-
-    def is_legislative_council(name: str) -> bool:
-        name_l = name.lower()
-        return ("legislative_council" in name_l) or ("legislative council" in name_l)
-
-    def kw_regex(kw: str):
-        # Word-bound for single tokens; gap-tolerant for phrases
-        parts = kw.strip().split()
-        if len(parts) == 1:
-            return re.compile(rf"\b{re.escape(parts[0])}\b", re.IGNORECASE)
-        return re.compile(r"\b" + r"\s+".join(re.escape(p) for p in parts) + r"\b", re.IGNORECASE)
-
-    kw_patterns = {kw: kw_regex(kw) for kw in keywords}
-
-    def count_occurrences_per_kw(text: str) -> dict[str, int]:
-        counts = {kw: 0 for kw in keywords}
-        for kw, pat in kw_patterns.items():
-            counts[kw] = len(pat.findall(text))
-        return counts
-
-    def highlight_all_keywords(s: str) -> str:
-        # Replace longer keywords first to avoid nested/overlap issues
-        ordered = sorted(keywords, key=len, reverse=True)
-        out = s
-        for kw in ordered:
-            pat = kw_patterns[kw]
-            out = pat.sub(lambda m: f"<b>{html.escape(m.group(0))}</b>", out)
+    def highlight(text: str, kw_list):
+        # Bold each keyword occurrence (no links)
+        out = text
+        for kw in sorted(kw_list, key=len, reverse=True):
+            pat = re.compile(r"\b" + re.escape(kw) + r"\b", re.IGNORECASE)
+            out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
         return out
 
-    def first_line_for(text: str, needle_regex: re.Pattern) -> int | None:
-        m = needle_regex.search(text)
-        if not m:
-            return None
-        upto = text[: m.start()]
-        return upto.count("\n") + 1  # 1-based line no.
+    def find_speaker(prev_lines):
+        # Heuristic: look back up to 5 lines for “NAME” patterns
+        sp_pat = re.compile(r"^\s*([A-Z][A-Z\s\.\-']+)\s*[:\-–]\s*$")
+        for line in reversed(prev_lines[-5:]):
+            m = sp_pat.match(line.strip())
+            if m:
+                return m.group(1).strip()
+        # Another common pattern: "Mr WINTER —"
+        sp_pat2 = re.compile(r"^\s*(Mr|Ms|Mrs|Dr|Hon|Madam|Sir)\s+[A-Z][A-Z\-']+\b")
+        for line in reversed(prev_lines[-5:]):
+            if sp_pat2.search(line):
+                return sp_pat2.search(line).group(0).strip()
+        return "Unknown"
 
-    # Fallback extractor if your enhanced one is not available
-    def fallback_extract_matches(text: str, kws: list[str]):
-        """Returns a list of dicts: {kw, speaker, snippet, line} (speaker may be None)."""
-        results = []
-        # naive: take first hit per keyword; try to find a nearby block of text
-        sentences = re.split(r"(?<=[.!?])\s+", text.strip())
-        for kw in kws:
-            pat = kw_patterns[kw]
-            for sent in sentences:
-                if pat.search(sent):
-                    # Make a tiny excerpt: 1 sentence around the hit
-                    snippet = sent.strip()
-                    # Try to guess a line number by searching whole text
-                    line = first_line_for(text, pat)
-                    results.append({
-                        "kw": kw,
-                        "speaker": None,
-                        "snippet": snippet,
-                        "line": line
-                    })
-                    break
-        return results
+    def sentence_spans(s):
+        # crude sentence splitter for snippets
+        spans, start = [], 0
+        for m in re.finditer(r"([\.!?])\s+", s):
+            spans.append((start, m.end()))
+            start = m.end()
+        spans.append((start, len(s)))
+        return spans
 
-    def normalize_from_extract_matches(text: str, raw):
-        """
-        Turn your extract_matches() output into a list of dicts with:
-        {kw, speaker, snippet, line}
-        Compatible with earlier tuples (kw, snippet, speaker) or an extended
-        structure if you’ve already added line numbers.
-        """
-        norm = []
-        for item in raw:
-            # Common original form: (kw, snippet, speaker)
-            if isinstance(item, tuple) and len(item) == 3:
-                kw, snippet, speaker = item
-                pat = kw_patterns.get(kw)
-                line = first_line_for(text, pat) if pat else None
-            elif isinstance(item, dict):
-                # If you already return dicts, just map what we can
-                kw = item.get("kw") or item.get("keyword")
-                snippet = item.get("snippet") or item.get("text") or ""
-                speaker = item.get("speaker")
-                line = item.get("line")
-                if line is None and kw in kw_patterns:
-                    line = first_line_for(text, kw_patterns[kw])
-            else:
-                # Unknown shape; skip
-                continue
-            norm.append({
-                "kw": kw,
-                "speaker": speaker,
-                "snippet": snippet,
-                "line": line
-            })
-        return norm
+    # ------------------------- scan files --------------------------
+    counts = {kw: {"hoa": 0, "lc": 0, "total": 0} for kw in keywords}
+    file_matches = []  # [{file, display, matches:[{n,speaker,line,excerpt, kws}]}]
+    total_hits = 0
 
-    # ----- compute data -----------------------------------------------------
+    for fp in files:
+        name = Path(fp).name
+        chamber = "hoa" if "house_of_assembly" in name.lower() else ("lc" if "legislative_council" in name.lower() else "hoa")
+        with open(fp, "r", encoding="utf-8", errors="ignore") as f:
+            raw = f.read()
 
-    runtime = program_runtime_str()
+        lines = raw.splitlines()
+        text = raw
+        # Count per keyword
+        for kw, pat in kw_patterns.items():
+            n = len(list(pat.finditer(text)))
+            if n:
+                counts[kw][chamber] += n
+                counts[kw]["total"] += n
+                total_hits += n
 
-    # Totals for summary table
-    by_kw = {kw: {"hoa": 0, "lc": 0, "total": 0} for kw in keywords}
+        # Build excerpts
+        matches = []
+        # Map index -> keywords hit at that index
+        hit_positions = []
+        for kw, pat in kw_patterns.items():
+            for m in pat.finditer(text):
+                hit_positions.append((m.start(), m.end(), kw))
+        if hit_positions:
+            # group nearby hits into excerpts (<= 2 sentences apart & same speaker heuristic)
+            hit_positions.sort(key=lambda x: x[0])
+            # precompute line numbers for fast lookup
+            nl_positions = [i for i, ch in enumerate(text) if ch == "\n"]
 
-    # Per-document matches (for rendering below)
-    documents = []  # [{name, matches: [{idx, speaker, line_label, excerpt_html}], match_count}]
-    grand_total_matches = 0
+            def pos_to_line(pos):
+                # 1-based line number
+                import bisect
+                return bisect.bisect_left(nl_positions, pos) + 1
 
-    for fpath in files:
-        name = Path(fpath).name
-        try:
-            text = Path(fpath).read_text(encoding="utf-8", errors="ignore")
-        except Exception:
-            text = ""
+            # Build snippets around each first occurrence in a group
+            used_idxs = set()
+            group_id = 0
+            for i, (start, end, kw0) in enumerate(hit_positions):
+                if i in used_idxs:
+                    continue
+                # speaker near the hit
+                line_no = pos_to_line(start)
+                prev_lines = lines[max(0, line_no - 6):line_no - 1]
+                speaker = find_speaker(prev_lines)
 
-        # Count occurrences per chamber for summary
-        occ = count_occurrences_per_kw(text)
-        for kw, c in occ.items():
-            if is_house_of_assembly(name):
-                by_kw[kw]["hoa"] += c
-            elif is_legislative_council(name):
-                by_kw[kw]["lc"] += c
-            else:
-                # Unknown chamber -> count only in total
-                pass
-            by_kw[kw]["total"] += c
+                # sentence window
+                # Take surrounding 1 sentence on each side (expand later if needed)
+                para_start = text.rfind("\n\n", 0, start)
+                para_start = 0 if para_start == -1 else para_start + 2
+                para_end = text.find("\n\n", end)
+                para_end = len(text) if para_end == -1 else para_end
+                para = text[para_start:para_end]
 
-        # Collect matches for this doc (prefer your extractor if available)
-        matches_raw = []
-        if "extract_matches" in globals() and callable(globals()["extract_matches"]):
-            try:
-                matches_raw = globals()["extract_matches"](text, keywords)
-            except Exception:
-                matches_raw = []
-        if not matches_raw:
-            matches_raw = fallback_extract_matches(text, keywords)
+                spans = sentence_spans(para)
+                # locate sentence index containing hit
+                s_idx = next((si for si, (a, b) in enumerate(spans) if para_start + a <= start <= para_start + b), 0)
+                # base window [s_idx-1 .. s_idx+1]
+                left = max(0, s_idx - 1)
+                right = min(len(spans) - 1, s_idx + 1)
 
-        matches = normalize_from_extract_matches(text, matches_raw)
+                # look ahead for nearby hits by same speaker (<= 2 sentences apart)
+                kws_in_snippet = {kw0}
+                for j in range(i + 1, len(hit_positions)):
+                    s2, e2, kw2 = hit_positions[j]
+                    if s2 - end > 3000:  # far in text; stop early
+                        break
+                    line2 = pos_to_line(s2)
+                    prev_lines2 = lines[max(0, line2 - 6):line2 - 1]
+                    speaker2 = find_speaker(prev_lines2)
+                    if speaker2 != speaker:
+                        continue
+                    # if within 2 sentences, merge into same snippet window
+                    if para_start <= s2 <= para_end:
+                        s2_idx = next((si for si, (a, b) in enumerate(spans) if para_start + a <= s2 <= para_start + b), s_idx)
+                        if abs(s2_idx - s_idx) <= 2:
+                            left = min(left, min(s_idx, s2_idx) - 1 if min(s_idx, s2_idx) > 0 else 0)
+                            right = max(right, max(s_idx, s2_idx) + 1 if max(s_idx, s2_idx) + 1 < len(spans) else len(spans) - 1)
+                            kws_in_snippet.add(kw2)
+                            used_idxs.add(j)
 
-        # Build renderable entries
-        rendered = []
-        for i, m in enumerate(matches, 1):
-            speaker = m.get("speaker") or ""
-            # Line label
-            line = m.get("line")
-            if isinstance(line, int):
-                line_label = f"line {line}"
-            elif isinstance(line, str):
-                line_label = line
-            else:
-                line_label = ""
+                a, _ = spans[left]
+                _, b = spans[right]
+                excerpt = para[a:b].strip()
+                excerpt = highlight(excerpt, list(kws_in_snippet))
 
-            # Escape + highlight
-            snippet_html = highlight_all_keywords(html.escape(m.get("snippet", "")))
+                group_id += 1
+                matches.append({
+                    "n": group_id,
+                    "speaker": speaker,
+                    "line": line_no,
+                    "kws": sorted(kws_in_snippet),
+                    "excerpt": excerpt
+                })
 
-            rendered.append({
-                "idx": i,
-                "speaker": html.escape(speaker) if speaker else "",
-                "line_label": html.escape(line_label) if line_label else "",
-                "excerpt_html": snippet_html
-            })
-
-        documents.append({
-            "name": name,
-            "matches": rendered,
-            "match_count": len(rendered),
+        file_matches.append({
+            "file": fp,
+            "display": name,
+            "matches": matches
         })
-        grand_total_matches += len(rendered)
 
-    # Inline keyword "pills"
-    if keywords:
-        pills = []
-        for kw in keywords:
-            pills.append(
-                f'<span style="display:inline-block;margin:4px 6px 0 0;padding:6px 10px;'
-                f'font:600 12px/1.2 Segoe UI,Arial,sans-serif;color:#4A5A6A;'
-                f'background:#C5A57214;border:1px solid #C5A572;border-radius:12px;">'
-                f'{html.escape(kw)}</span>'
-            )
-        keywords_inline_html = "".join(pills)
-    else:
-        keywords_inline_html = '<span style="font:14px Segoe UI,Arial,sans-serif;color:#475560;">(none)</span>'
+    # ---------------------- render email (tables) -------------------
+    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
-    # Summary table rows
-    summary_rows = []
+    # Summaries
+    def td_num(n):
+        return f'''<td align="right" style="font:14px/20px Arial,Helvetica,sans-serif;color:#475560;padding:8px 12px;border-bottom:1px solid #ECF0F1;">{n}</td>'''
+
+    rows_summary = []
     for kw in keywords:
-        r = by_kw[kw]
-        summary_rows.append(
-            f"""<tr>
-<td style="padding:10px 12px;border-bottom:1px solid #D9DFE3;">{html.escape(kw)}</td>
-<td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;">{r['hoa']}</td>
-<td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;">{r['lc']}</td>
-<td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;">
-  <span style="display:inline-block;min-width:28px;padding:2px 8px;border-radius:10px;background:#ECF0F1;border:1px solid #D9DFE3;color:#475560;font-weight:700;">{r['total']}</span>
-</td>
-</tr>"""
+        rows_summary.append(
+            f'''
+            <tr>
+              <td style="font:14px/20px Arial,Helvetica,sans-serif;color:#475560;padding:8px 12px;border-bottom:1px solid #ECF0F1;">{kw}</td>
+              {td_num(counts[kw]["hoa"])}{td_num(counts[kw]["lc"])}{td_num(counts[kw]["total"])}
+            </tr>
+            '''
         )
-    summary_rows_html = "".join(summary_rows)
+    summary_table_html = "\n".join(rows_summary) if rows_summary else ""
 
-    # ----- HTML (with VML rounded wrappers) ---------------------------------
+    # Keyword chips fallback (comma separated for Outlook)
+    if keywords:
+        kw_list_html = ", ".join(keywords)
+    else:
+        kw_list_html = "—"
 
-    html_parts = []
-    html_parts.append(f"""\
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="x-apple-disable-message-reformatting">
-  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
-  <meta name="color-scheme" content="light only">
-  <title>Hansard Keyword Digest</title>
-</head>
-<body style="margin:0;padding:0;background:#f4f6f8;">
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background:#f4f6f8;">
-    <tr>
-      <td align="center" style="padding:24px 8px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="640" style="width:640px;background:#ffffff;border-collapse:separate;border-spacing:0;">
-""")
+    # Per-file sections
+    file_sections = []
+    for doc in file_matches:
+        matches_html = []
+        if doc["matches"]:
+            for m in doc["matches"]:
+                matches_html.append(f"""
+                  <tr>
+                    <td style="padding:0 0 12px 0;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:separate;">
+                        <tr>
+                          <td width="40" align="center" valign="top" style="background:#ECF0F1;border-radius:8px;font:bold 14px/40px Arial,Helvetica,sans-serif;color:#4A5A6A;height:40px;">{m["n"]}</td>
+                          <td style="width:12px;">&nbsp;</td>
+                          <td valign="top" style="background:#FFFFFF;border:1px solid #ECF0F1;border-radius:12px;padding:12px;">
+                            <div style="font:bold 14px/20px Arial,Helvetica,sans-serif;color:#4A5A6A;margin:0 0 6px 0;">{m["speaker"]} <span style="font-weight:normal;color:#8795A1;">— line {m["line"]}</span></div>
+                            <div style="font:14px/22px Arial,Helvetica,sans-serif;color:#475560;">{m["excerpt"]}</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                """)
+        else:
+            matches_html.append(f'''
+              <tr>
+                <td style="font:14px/20px Arial,Helvetica,sans-serif;color:#8795A1;padding:8px 0;">No keyword matches found in this transcript.</td>
+              </tr>
+            ''')
 
-    # HEADER block (VML rounded)
-    html_parts.append(f"""\
-<tr>
-  <td align="center" style="padding:16px 12px;">
-    <!--[if mso]>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-      arcsize="8%" fillcolor="#4A5A6A" strokecolor="#4A5A6A" strokeweight="1px"
-      style="width:640px;mso-fit-shape-to-text:true;">
-      <v:textbox inset="0,0,0,0">
-    <![endif]-->
-      <div style="background:#4A5A6A;border:1px solid #4A5A6A;border-radius:14px;color:#ECF0F1;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td style="padding:20px 24px;font-family:Segoe UI,Arial,sans-serif;">
-              <h1 style="margin:0 0 4px 0;font-size:24px;line-height:1.25;font-weight:700;color:#ECF0F1;">
-                Hansard Keyword Digest
-              </h1>
-              <p style="margin:0;font-size:13px;line-height:1.4;color:#ECF0F1;opacity:.9;">
-                Comprehensive parliamentary transcript analysis — {runtime}
-              </p>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <!--[if mso]></v:textbox></v:roundrect><![endif]-->
-  </td>
-</tr>
-""")
+        section = f"""
+        <tr>
+          <td style="padding:16px 0 8px 0;font:bold 16px/20px Arial,Helvetica,sans-serif;color:#4A5A6A;">
+            {doc["display"]}
+          </td>
+        </tr>
+        <tr><td style="font:12px/18px Arial,Helvetica,sans-serif;color:#8795A1;padding:0 0 8px 0;">{len(doc["matches"])} match(es)</td></tr>
+        {''.join(matches_html)}
+        """
+        file_sections.append(section)
+    files_block_html = "\n".join(file_sections)
 
-    # KEYWORDS PANEL (VML rounded)
-    html_parts.append(f"""\
-<tr>
-  <td align="center" style="padding:12px 12px 0;">
-    <!--[if mso]>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-      arcsize="12%" fillcolor="#ECF0F1" strokecolor="#D9DFE3" strokeweight="1px"
-      style="width:640px;mso-fit-shape-to-text:true;">
-      <v:textbox inset="0,0,0,0">
-    <![endif]-->
-      <div style="background:#ECF0F1;border:1px solid #D9DFE3;border-radius:16px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td style="padding:16px 20px;font-family:Segoe UI,Arial,sans-serif;">
-              <h2 style="margin:0 0 8px 0;font-size:16px;line-height:1.3;color:#475560;">Keywords Being Tracked</h2>
-              <div style="font-size:13px;line-height:1.6;color:#475560;">
-                {keywords_inline_html}
-              </div>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <!--[if mso]></v:textbox></v:roundrect><![endif]-->
-  </td>
-</tr>
-""")
-
-    # SUMMARY PANEL (VML rounded)
-    html_parts.append(f"""\
-<tr>
-  <td align="center" style="padding:12px 12px 0;">
-    <!--[if mso]>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-      arcsize="12%" fillcolor="#ECF0F1" strokecolor="#D9DFE3" strokeweight="1px"
-      style="width:640px;mso-fit-shape-to-text:true;">
-      <v:textbox inset="0,0,0,0">
-    <![endif]-->
-      <div style="background:#ECF0F1;border:1px solid #D9DFE3;border-radius:16px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td style="padding:16px 20px;font-family:Segoe UI,Arial,sans-serif;">
-              <h2 style="margin:0 0 12px 0;font-size:16px;line-height:1.3;color:#475560;">Summary by Chamber</h2>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-size:13px;color:#475560;">
-                <tr>
-                  <td style="padding:10px 12px;border-bottom:1px solid #D9DFE3;font-weight:700;">Keyword</td>
-                  <td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;font-weight:700;">House of Assembly</td>
-                  <td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;font-weight:700;">Legislative Council</td>
-                  <td align="right" style="padding:10px 12px;border-bottom:1px solid #D9DFE3;font-weight:700;">Total</td>
-                </tr>
-                {summary_rows_html}
-              </table>
-            </td>
-          </tr>
-        </table>
-      </div>
-    <!--[if mso]></v:textbox></v:roundrect><![endif]-->
-  </td>
-</tr>
-""")
-
-    # PER-DOCUMENT sections + MATCH CARDS (VML rounded)
-    for doc in documents:
-        doc_name = html.escape(doc["name"])
-        match_count = doc["match_count"]
-        html_parts.append(f"""\
-<tr>
-  <td style="padding:18px 12px 8px 12px;font-family:Segoe UI,Arial,sans-serif;color:#475560;">
-    <div style="font-size:14px;font-weight:700;margin-bottom:4px;">{doc_name}</div>
-    <div style="font-size:12px;opacity:.75;margin-bottom:2px;">{match_count} match(es)</div>
-  </td>
-</tr>
-""")
-        for m in doc["matches"]:
-            idx = m["idx"]
-            speaker = m["speaker"]
-            line_label = m["line_label"]
-            excerpt_html = m["excerpt_html"]
-
-            html_parts.append(f"""\
-<tr>
-  <td align="center" style="padding:12px 12px 0;">
-    <!--[if mso]>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-      arcsize="10%" fillcolor="#FFFFFF" strokecolor="#E3E8EB" strokeweight="1px"
-      style="width:640px;mso-fit-shape-to-text:true;">
-      <v:textbox inset="0,0,0,0">
-    <![endif]-->
-      <div style="background:#FFFFFF;border:1px solid #E3E8EB;border-radius:12px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-          <tr>
-            <td style="padding:16px 16px 0 16px;font-family:Segoe UI,Arial,sans-serif;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                <tr>
-                  <td style="font-size:12px;font-weight:700;color:#4A5A6A;background:#ECF0F1;border-radius:6px;padding:6px 10px;width:32px;text-align:center;">{idx}</td>
-                  <td style="padding-left:10px;font-size:14px;font-weight:700;color:#475560;">{speaker}</td>
-                  <td align="right" style="font-size:12px;color:#475560;opacity:.8;">{line_label}</td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:12px 16px 16px 16px;font-family:Segoe UI,Arial,sans-serif;font-size:14px;line-height:1.6;color:#475560;">
-              {excerpt_html}
-            </td>
-          </tr>
-        </table>
-      </div>
-    <!--[if mso]></v:textbox></v:roundrect><![endif]-->
-  </td>
-</tr>
-""")
-
-    # close containers
-    html_parts.append("""\
+    # Small KPI cards
+    k_card = lambda title, value: f"""
+      <td width="150" valign="top" style="padding:0 8px 0 0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background:#FFFFFF;border:1px solid #ECF0F1;border-radius:14px;">
+          <tr><td align="center" style="font:bold 26px/34px Arial,Helvetica,sans-serif;color:#C5A572;padding:16px 12px 4px 12px;">{value}</td></tr>
+          <tr><td align="center" style="font:12px/16px Arial,Helvetica,sans-serif;color:#475560;padding:0 12px 14px 12px;">{title}</td></tr>
         </table>
       </td>
-    </tr>
-  </table>
-</body>
-</html>
-""")
+    """
 
-    return "".join(html_parts), grand_total_matches, by_kw
+    # Header band with rounded corners (VML for Outlook)
+    header_band = f"""
+    <!--[if mso]>
+    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" arcsize="8%" fillcolor="#4A5A6A" stroke="f" style="width:560px;height:60px;">
+      <v:textbox inset="0,0,0,0">
+        <div style="text-align:left;color:#FFFFFF;font:bold 22px Arial,Helvetica,sans-serif;line-height:60px;padding-left:20px;">Hansard Keyword Digest</div>
+      </v:textbox>
+    </v:roundrect>
+    <![endif]-->
+    <!--[if !mso]><!-- -->
+    <div style="background:#4A5A6A;border-radius:14px;color:#FFFFFF;font:bold 22px/26px Arial,Helvetica,sans-serif;padding:18px 20px;">Hansard Keyword Digest</div>
+    <!--<![endif]-->
+    """
+
+    # Outer shell
+    html = f"""
+<!DOCTYPE html>
+<html>
+  <body style="margin:0;padding:0;background:#F5F7F9;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#F5F7F9;">
+      <tr>
+        <td align="center" style="padding:20px 12px;">
+          <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="width:600px;max-width:600px;background:#F5F7F9;border-collapse:separate;">
+            <tr><td>{header_band}</td></tr>
+
+            <tr><td height="10" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+
+            <!-- KPI row -->
+            <tr>
+              <td>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse:separate;">
+                  <tr>
+                    {k_card("New transcripts", len(files))}
+                    {k_card("Keywords", len(keywords))}
+                    {k_card("Total matches", total_hits)}
+                    <td valign="top" style="padding:0;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background:#FFFFFF;border:1px solid #ECF0F1;border-radius:14px;">
+                        <tr><td align="center" style="font:bold 20px/34px Arial,Helvetica,sans-serif;color:#4A5A6A;padding:16px 12px 4px 12px;">Now</td></tr>
+                        <tr><td align="center" style="font:12px/16px Arial,Helvetica,sans-serif;color:#475560;padding:0 12px 14px 12px;">{now_utc}</td></tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td height="16" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+
+            <!-- Keywords Being Tracked -->
+            <tr>
+              <td>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background:#FFFFFF;border:1px solid #ECF0F1;border-radius:14px;">
+                  <tr>
+                    <td style="padding:14px 16px;font:bold 16px/20px Arial,Helvetica,sans-serif;color:#4A5A6A;">Keywords Being Tracked</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0 16px 16px 16px;font:14px/20px Arial,Helvetica,sans-serif;color:#475560;">{kw_list_html}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td height="16" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+
+            <!-- Summary by Chamber -->
+            <tr>
+              <td>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background:#FFFFFF;border:1px solid #ECF0F1;border-radius:14px;">
+                  <tr>
+                    <td style="padding:14px 16px 6px 16px;font:bold 16px/20px Arial,Helvetica,sans-serif;color:#4A5A6A;">Summary by Chamber</td>
+                  </tr>
+                  <tr>
+                    <td style="padding:0 16px 16px 16px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                        <tr>
+                          <th align="left" style="font:bold 12px/16px Arial,Helvetica,sans-serif;color:#8795A1;padding:8px 12px;border-bottom:2px solid #ECF0F1;">Keyword</th>
+                          <th align="right" style="font:bold 12px/16px Arial,Helvetica,sans-serif;color:#8795A1;padding:8px 12px;border-bottom:2px solid #ECF0F1;">House of Assembly</th>
+                          <th align="right" style="font:bold 12px/16px Arial,Helvetica,sans-serif;color:#8795A1;padding:8px 12px;border-bottom:2px solid #ECF0F1;">Legislative Council</th>
+                          <th align="right" style="font:bold 12px/16px Arial,Helvetica,sans-serif;color:#8795A1;padding:8px 12px;border-bottom:2px solid #ECF0F1;">Total</th>
+                        </tr>
+                        {summary_table_html}
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td height="16" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+
+            <!-- Files & matches -->
+            <tr>
+              <td>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;background:#FFFFFF;border:1px solid #ECF0F1;border-radius:14px;padding:0 16px 12px 16px;">
+                  {files_block_html if files_block_html else '<tr><td style="font:14px/20px Arial,Helvetica,sans-serif;color:#8795A1;padding:16px 0;">No transcripts contained keyword matches.</td></tr>'}
+                </table>
+              </td>
+            </tr>
+
+            <tr><td height="22" style="font-size:0;line-height:0;">&nbsp;</td></tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+    """
+
+    return html, total_hits, counts
+
 
 
 def load_sent_log():
