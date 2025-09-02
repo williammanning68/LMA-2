@@ -600,14 +600,19 @@ def main():
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    yag = yagmail.SMTP(
-        user=EMAIL_USER,
-        password=EMAIL_PASS,
-        host="smtp.gmail.com",
-        port=587,
-        smtp_starttls=True,
-        smtp_ssl=False,
-    )
+SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+SMTP_STARTTLS = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
+SMTP_SSL = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
+
+yag = yagmail.SMTP(
+    user=EMAIL_USER,
+    password=EMAIL_PASS,
+    host=SMTP_HOST,
+    port=SMTP_PORT,
+    smtp_starttls=SMTP_STARTTLS,
+    smtp_ssl=SMTP_SSL,
+)
 
     yag.send(
         to=to_list,
