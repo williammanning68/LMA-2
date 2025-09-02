@@ -68,7 +68,6 @@ def _bold_keywords(text: str, keywords):
     for kw in _sort_keywords_longest_first(keywords):
         if not kw:
             continue
-        # For phrases, simple case-insensitive replace using regex
         if " " in kw:
             pattern = re.compile(re.escape(kw), re.IGNORECASE)
         else:
@@ -80,12 +79,10 @@ def _bold_keywords(text: str, keywords):
 # Speaker-aware segmentation tuned for Tas Hansard
 # -----------------------------------------------------------------------------
 
-# Accept colon OR dash after the header; allow title-only (e.g., "The SPEAKER")
 SPEAKER_HEADER_RE = re.compile(
     r"""
 ^
 (?:
-  # (A) Title + optional name
   (?P<title>
       Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|
       Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|
@@ -93,18 +90,17 @@ SPEAKER_HEADER_RE = re.compile(
   )
   (?:[\s.]+(?P<name>[A-Z][A-Za-z'’\-]+(?:\s+[A-Z][A-Za-z'’\-]+){0,3}))?
  |
-  # (B) Name-only (covers things like "Prof RAZAY" or "Jane HOWLETT")
   (?P<name_only>[A-Z][A-Za-z'’\-]+(?:\s+[A-Z][A-Za-z'’\-]+){0,3})
 )
-(?:\s*\([^)]*\))?        # optional (Electorate—Portfolio)
+(?:\s*\([^)]*\))?
 \s*
-(?::|[-–—]\s)            # delimiter: ":" OR " - " / "– " / "— "
+(?::|[-–—]\s)
 """,
     re.IGNORECASE | re.VERBOSE,
 )
 
 TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
-UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")  # e.g., MOTION, ADJOURNMENT
+UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
 INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
 
 def _canonicalize(s: str) -> str:
@@ -127,7 +123,6 @@ def _known_speakers_from(text: str) -> list[str]:
     return seen
 
 def _speaker_from_prior_lines(lines, start_idx):
-    """Scan backward from start_idx to find the most recent speaker header; return display name or None."""
     for i in range(start_idx, -1, -1):
         m = SPEAKER_HEADER_RE.match(lines[i].strip())
         if m:
@@ -140,9 +135,7 @@ def _speaker_from_prior_lines(lines, start_idx):
 
 def _segment_utterances_with_lines(text: str):
     """
-    Yield tuples: (speaker, utterance_text, utter_lines) where
-      utter_lines = list of (line_no_1based, raw_line).
-    Speaker persists until a new header appears. Skip timestamps and headings.
+    Yield: (speaker, utter_text, utter_line_numbers[list[int]])
     """
     current_speaker = None
     buff = []
@@ -161,31 +154,25 @@ def _segment_utterances_with_lines(text: str):
         line_no = idx + 1
         line = raw_line.strip()
 
-        # boundaries to skip (do not attach to any speaker)
         if not line or TIME_STAMP_RE.match(line) or UPPER_HEADING_RE.match(line) or INTERJECTION_RE.match(line):
             if line == "" and buff:
-                # keep paragraph break inside same speaker
                 buff.append("")
                 buff_line_nums.append(line_no)
             else:
-                # flush any accumulated paragraph, then skip this line
                 yield from flush()
             continue
 
         m = SPEAKER_HEADER_RE.match(line)
         if m:
-            # header line - start a new utterance
             yield from flush()
             title = (m.group("title") or "").strip()
             name = (m.group("name") or m.group("name_only") or "").strip()
             current_speaker = " ".join(x for x in (title, name) if x).strip()
             continue
 
-        # normal text line
         buff.append(raw_line.rstrip())
         buff_line_nums.append(line_no)
 
-    # final flush
     yield from flush()
 
 # -----------------------------------------------------------------------------
@@ -193,11 +180,8 @@ def _segment_utterances_with_lines(text: str):
 # -----------------------------------------------------------------------------
 
 def _llm_guess_speaker(snippet: str, context: str, candidates: list[str], model: str | None = None, timeout: int = 30) -> str | None:
-    """
-    Ask local Ollama (e.g., llama3.2:3b) to choose ONE candidate or UNKNOWN.
-    """
     model = model or os.environ.get("ATTRIB_LLM_MODEL", "llama3.2:3b")
-    options = "\n".join(f"- {c}" for c in candidates[:40])  # keep prompt small
+    options = "\n".join(f"- {c}" for c in candidates[:40])
     prompt = f"""Link this Hansard excerpt to the most likely speaker.
 Return EXACTLY one item from the candidate list below. If none fits, return "UNKNOWN".
 
@@ -230,18 +214,11 @@ def _sentences(s: str):
     return parts
 
 def _window_for_index(idx: int, n: int):
-    """Per rules: first sentence -> next two; otherwise one before + one after."""
     if idx <= 0:
-        return (0, min(2, n - 1))  # inclusive indices
+        return (0, min(2, n - 1))
     return (max(0, idx - 1), min(n - 1, idx + 1))
 
 def _merge_windows_by_gap(base_window, new_window, idx_gap, allow_if_within=4, require_gap_gt=2):
-    """
-    Expand base_window to also cover new_window only if:
-      - sentence index gap <= allow_if_within, AND
-      - gap > require_gap_gt (avoid tiny overlaps that cause duplication)
-    Windows are inclusive (start,end).
-    """
     if idx_gap <= allow_if_within and idx_gap > require_gap_gt:
         return (min(base_window[0], new_window[0]), max(base_window[1], new_window[1]))
     return base_window
@@ -256,13 +233,7 @@ def _chamber_from_filename(name: str) -> str:
 def extract_matches(text: str, keywords):
     """
     Returns list of dicts:
-      {
-        "keyword": kw,
-        "speaker": speaker or None,
-        "excerpt_html": "...",
-        "line_no": int,                 # first line where any keyword in group occurs
-        "file_chamber": "House of Assembly" | "Legislative Council" | "Unknown",
-      }
+      { "keyword", "speaker", "excerpt_html", "line_no" }
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
@@ -277,72 +248,61 @@ def extract_matches(text: str, keywords):
         if not utt.strip():
             continue
 
-        # Per-utterance: compute sentence list and map sentence index to line numbers
         sents = _sentences(utt)
         if not sents:
             continue
 
-        # Find which sentences contain any keywords; collect (sent_idx, kw, line_no)
         hit_sent_indices = []
-        hit_details = []  # each: (sent_idx, kw, first_line_no_for_kw)
-        # map sentence to first line containing the keyword (approx)
-        # We scan the utter_lines in order to find first matching line for the sentence keyword
+        hit_details = []  # (sent_idx, kw, first_line_no_for_kw)
+
         for i, sent in enumerate(sents):
             for kw in keywords:
                 if _kw_hit(sent, kw):
-                    # find a line number within this utterance that contains the kw
                     line_no = None
-                    for ln, raw in utter_lines:
+                    # utter_lines is a list of ints (line numbers). Look up raw text from all_lines.
+                    for ln in utter_lines:
+                        raw = all_lines[ln - 1] if 0 < ln <= len(all_lines) else ""
                         if _kw_hit(raw, kw):
                             line_no = ln
                             break
                     if line_no is None and utter_lines:
-                        line_no = utter_lines[0][0]
+                        line_no = utter_lines[0]
                     hit_sent_indices.append(i)
                     hit_details.append((i, kw, line_no))
-                    # NOTE: keep multiple keywords in same sentence; we'll handle dedupe later
 
         if not hit_details:
             continue
 
-        # Build a combined window per the rules
         hit_sent_indices = sorted(set(hit_sent_indices))
         n = len(sents)
-        # Start from first hit
         base_i = hit_sent_indices[0]
         window = _window_for_index(base_i, n)
 
         for j in hit_sent_indices[1:]:
             new_window = _window_for_index(j, n)
             window = _merge_windows_by_gap(window, new_window, j - base_i, allow_if_within=4, require_gap_gt=2)
-            base_i = j  # advance for next gap computation
+            base_i = j
 
         start_idx, end_idx = window
-
-        # Compose excerpt sentences in window; bold keywords
         excerpt_text = " ".join(sents[start_idx:end_idx+1]).strip()
         excerpt_html = _bold_keywords(excerpt_text, keywords)
 
-        # Determine the representative keyword & first line in the window
-        # Pick the earliest line number among hits that fall inside [start_idx, end_idx]
         in_window_hits = [h for h in hit_details if start_idx <= h[0] <= end_idx]
         if in_window_hits:
             first_line = min(h[2] for h in in_window_hits if h[2] is not None)
             rep_kw = in_window_hits[0][1]
         else:
-            first_line = utter_lines[0][0] if utter_lines else 1
+            first_line = utter_lines[0] if utter_lines else 1
             rep_kw = hit_details[0][1]
 
         linked = speaker
         if not linked:
-            # Try to infer by scanning backward for last seen header
-            start_line_idx = utter_lines[0][0] - 2 if utter_lines else 0
+            start_line_idx = (utter_lines[0] - 2) if utter_lines else 0
             back_guess = _speaker_from_prior_lines(all_lines, start_line_idx)
             if back_guess:
                 linked = back_guess
 
         if (not linked) and use_llm:
-            # fallback: ask LLM
             guess = _llm_guess_speaker(excerpt_text, context=utt, candidates=candidates, timeout=llm_timeout)
             if guess and _canonicalize(guess) in norm_candidates:
                 linked = norm_candidates[_canonicalize(guess)]
@@ -363,7 +323,6 @@ def extract_matches(text: str, keywords):
 # -----------------------------------------------------------------------------
 
 def _px_to_pt(px: int) -> int:
-    """Convert pixels to points for VML text insets (~0.75pt per px at 96dpi)."""
     return max(0, int(round(px * 0.75)))
 
 def vml_rounded_container(inner_html: str,
@@ -372,12 +331,7 @@ def vml_rounded_container(inner_html: str,
                           border: str = C["border"],
                           radius_px: int = 12,
                           pad_px: int = 20) -> str:
-    """
-    Bulletproof rounded box:
-      • Modern clients use the DIV (border-radius).
-      • Outlook desktop (Word engine) uses the VML <v:roundrect> fallback.
-    """
-    arc_percent = max(1, min(50, int(round(radius_px * 100.0 / max(1, width_px)))))  # corner %
+    arc_percent = max(1, min(50, int(round(radius_px * 100.0 / max(1, width_px)))))
     inset_pt = _px_to_pt(pad_px)
     return f"""
     <!--[if mso]>
@@ -396,7 +350,6 @@ def vml_rounded_container(inner_html: str,
     """
 
 def parse_date_from_filename(filename: str):
-    """Extract datetime from Hansard filename."""
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
     if m:
         try:
@@ -406,9 +359,7 @@ def parse_date_from_filename(filename: str):
     return datetime.min
 
 def _counts_table_html(counts_by_keyword):
-    # Build a simple table with headers
     rows = []
-    # sort keywords alphabetically for stable order
     for kw in sorted(counts_by_keyword.keys(), key=str.lower):
         ha = counts_by_keyword[kw].get("House of Assembly", 0)
         lc = counts_by_keyword[kw].get("Legislative Council", 0)
@@ -439,14 +390,10 @@ def _counts_table_html(counts_by_keyword):
     return table
 
 def build_digest_html(files, keywords):
-    """Build the full HTML email; return (html, total_matches, counts_by_keyword)."""
     now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
-    # Counts structure: { kw: {"House of Assembly": n, "Legislative Council": n} }
     counts_by_keyword = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
     total_matches = 0
-
-    # Collect per-file matches (ordered by filename date, then by line number)
     file_sections = []
 
     for f in sorted(files, key=lambda x: parse_date_from_filename(Path(x).name)):
@@ -455,14 +402,11 @@ def build_digest_html(files, keywords):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
 
         matches = extract_matches(text, keywords)
-
         if not matches:
             continue
 
-        # sort by first occurrence line number
         matches.sort(key=lambda m: (m["line_no"], (m["speaker"] or "ZZZ")))
 
-        # Update counts
         for m in matches:
             kw = m["keyword"]
             if chamber in ("House of Assembly", "Legislative Council"):
@@ -471,7 +415,6 @@ def build_digest_html(files, keywords):
 
         total_matches += len(matches)
 
-        # Build per-file heading
         file_heading_inner = f"""
           <h3 style="margin:0 0 4px 0; font-family:Arial,Helvetica,sans-serif; font-size:18px; color:{C['dark']};">
             {name}
@@ -489,7 +432,6 @@ def build_digest_html(files, keywords):
             pad_px=16
         )
 
-        # Build each match card
         match_cards = []
         for i, m in enumerate(matches, 1):
             spk = m["speaker"] or "UNKNOWN"
@@ -517,7 +459,6 @@ def build_digest_html(files, keywords):
                 radius_px=12,
                 pad_px=20
             )
-            # Spacer table (Outlook-safe)
             card = f"""
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr><td height="12" style="line-height:12px;font-size:12px;">&nbsp;</td></tr>
@@ -527,7 +468,6 @@ def build_digest_html(files, keywords):
             match_cards.append(card)
 
         file_section_html = f"""
-          <!-- File section -->
           {file_heading_html}
           {''.join(match_cards)}
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -536,10 +476,6 @@ def build_digest_html(files, keywords):
         """
         file_sections.append(file_section_html)
 
-    # Header block with title + small summary tiles
-    # You can tailor the tiles; here we show files count, distinct keywords, total matches, runtime
-    tiles = []
-    # Compute a few quick tiles
     files_count = sum(1 for _ in file_sections)
     distinct_kw = sum(1 for kw, c in counts_by_keyword.items() if (c.get("House of Assembly", 0) + c.get("Legislative Council", 0)) > 0)
     tiles_data = [
@@ -548,8 +484,7 @@ def build_digest_html(files, keywords):
         ("Matches", total_matches),
         ("Runtime", "Now"),
     ]
-    # Lay out 4 tiles with fixed widths
-    tile_w = 148  # (640 - 3*16)/4
+    tile_w = 148
     tile_cells = []
     for label, value in tiles_data:
         tile_inner = f"""
@@ -559,7 +494,7 @@ def build_digest_html(files, keywords):
         tile_html = vml_rounded_container(
             inner_html=tile_inner,
             width_px=tile_w,
-            bg="rgba(255,255,255,0.08)".replace("rgba", "rgb"),  # Outlook ignores alpha; fine as light box
+            bg="#4A5A6A",  # solid for Outlook; visually matches header
             border=C["navy"],
             radius_px=10,
             pad_px=14
@@ -598,7 +533,6 @@ def build_digest_html(files, keywords):
         pad_px=20
     )
 
-    # Keywords being tracked block
     if keywords:
         kw_badges = " ".join(
             f'<span style="display:inline-block; padding:6px 8px; border:1px solid {C["gold"]}; border-radius:8px; margin:0 6px 6px 0; color:{C["dark"]}; background:#fff4de;">{k}</span>'
@@ -622,7 +556,6 @@ def build_digest_html(files, keywords):
         pad_px=20
     )
 
-    # Summary table block
     summary_title = f"""
       <div style="font-family:Arial,Helvetica,sans-serif; font-size:16px; color:{C['dark']}; font-weight:700; margin-bottom:10px;">
         Summary by Chamber
@@ -638,7 +571,6 @@ def build_digest_html(files, keywords):
         pad_px=20
     )
 
-    # Combine file sections
     files_section_html = "\n".join(file_sections) if file_sections else vml_rounded_container(
         inner_html="""
           <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#333;">
@@ -652,7 +584,6 @@ def build_digest_html(files, keywords):
         pad_px=16
     )
 
-    # Outer wrapper (table-based, Outlook-safe)
     full_html = f"""
 <!DOCTYPE html>
 <html>
@@ -691,30 +622,23 @@ def build_digest_html(files, keywords):
     return full_html, total_matches, counts_by_keyword
 
 # -----------------------------------------------------------------------------
-# Email sending (SMTP, no yagmail)
+# Email sending (SMTP)
 # -----------------------------------------------------------------------------
 
 def _as_plain_text(html: str) -> str:
-    """Very simple HTML to text fallback."""
-    # Replace <br> with newline
     text = re.sub(r"(?i)<br\s*/?>", "\n", html)
-    # Add newlines before/after block tags
     text = re.sub(r"(?i)</(div|p|h\d|tr|table)>", r"\n", text)
-    # Strip tags
     text = re.sub(r"<[^>]+>", "", text)
-    # Collapse whitespace
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r"\n\s*\n\s*\n+", "\n\n", text)
     return text.strip()
 
 def load_sent_log():
-    """Return set of transcript filenames that have already been emailed."""
     if LOG_FILE.exists():
         return {line.strip() for line in LOG_FILE.read_text(encoding="utf-8").splitlines() if line.strip()}
     return set()
 
 def update_sent_log(files):
-    """Append newly emailed filenames to the log."""
     with LOG_FILE.open("a", encoding="utf-8") as f:
         for file in files:
             f.write(f"{Path(file).name}\n")
@@ -747,7 +671,6 @@ def main():
     subject = f"Hansard keyword digest — {datetime.now(timezone.utc).strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    # Build MIME message: multipart/mixed -> (multipart/alternative -> plain + html) + attachments
     msg = MIMEMultipart("mixed")
     msg["From"] = EMAIL_USER
     msg["To"] = ", ".join(to_list)
@@ -760,7 +683,6 @@ def main():
     alt.attach(MIMEText(plain_fallback, "plain", "utf-8"))
     alt.attach(MIMEText(body_html, "html", "utf-8"))
 
-    # Attach transcripts
     for path in files:
         try:
             with open(path, "rb") as f:
@@ -772,7 +694,6 @@ def main():
         except Exception as e:
             print(f"Warning: failed to attach {path}: {e}")
 
-    # Send via Gmail SMTP (STARTTLS)
     context = ssl.create_default_context()
     with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.ehlo()
