@@ -1,39 +1,25 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import os
 import re
 import glob
-import smtplib
-import ssl
-import subprocess
-from email.mime.base import MIMEBase
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email import encoders
+from bisect import bisect_right
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 
-# -----------------------------------------------------------------------------
-# Config / constants
-# -----------------------------------------------------------------------------
+import yagmail
+import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
 
+
+# File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
 
-EMAIL_WIDTH = 640  # fixed width for the email body; used by VML wrapper
+# --- Tunables ----------------------------------------------------------------
+MAX_SNIPPET_CHARS = 800     # upper bound after merging windows; keep readable but compact
+WINDOW_PAD_SENTENCES = 1    # for non-first-sentence hits: one sentence either side
+FIRST_SENT_FOLLOWING = 2    # for first-sentence hits: include next two sentences
+MERGE_IF_GAP_GT = 2         # Only merge windows if the gap (in sentences) is > this value
 
-C = {
-    "gold": "#C5A572",      # --federal-gold
-    "navy": "#4A5A6A",      # --federal-navy
-    "dark": "#475560",      # --federal-dark
-    "light": "#ECF0F1",     # --federal-light
-    "accent": "#D4AF37",    # --federal-accent
-    "border": "#E4E9EE"     # neutral border for boxes
-}
 
-# -----------------------------------------------------------------------------
-# Helpers: keywords
-# -----------------------------------------------------------------------------
+# --- Helpers -----------------------------------------------------------------
 
 def load_keywords():
     """Load keywords from keywords.txt or KEYWORDS env var, ignoring comments and stripping quotes."""
@@ -52,302 +38,295 @@ def load_keywords():
         return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
     return []
 
-def _kw_hit(text: str, kw: str):
-    """Word boundary for single words; tolerant substring for phrases (case-insensitive)."""
-    if " " in kw:
-        return re.search(re.escape(kw), text, re.IGNORECASE)
-    return re.search(rf"\b{re.escape(kw)}\b", text, re.IGNORECASE)
 
-def _sort_keywords_longest_first(keywords):
-    """Return keywords sorted by length desc to prefer phrase highlighting first."""
-    return sorted(keywords, key=lambda s: len(s), reverse=True)
-
-def _bold_keywords(text: str, keywords):
-    """Bold matched keywords in HTML (no links). Handles words & phrases, case-insensitive."""
-    out = text
-    for kw in _sort_keywords_longest_first(keywords):
-        if not kw:
-            continue
-        if " " in kw:
-            pattern = re.compile(re.escape(kw), re.IGNORECASE)
-        else:
-            pattern = re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)
-        out = pattern.sub(lambda m: f"<b>{m.group(0)}</b>", out)
-    return out
-
-# -----------------------------------------------------------------------------
-# Speaker-aware segmentation tuned for Tas Hansard
-# -----------------------------------------------------------------------------
+# --- Speaker header detection & guards ---------------------------------------
 
 SPEAKER_HEADER_RE = re.compile(
     r"""
 ^
 (?:
-  (?P<title>
-      Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|
-      Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|
-      Deputy\s+Speaker|Deputy\s+President
-  )
-  (?:[\s.]+(?P<name>[A-Z][A-Za-z'’\-]+(?:\s+[A-Z][A-Za-z'’\-]+){0,3}))?
+  (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
+  (?:[\s.]+(?P<name>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}))?
  |
-  (?P<name_only>[A-Z][A-Za-z'’\-]+(?:\s+[A-Z][A-Za-z'’\-]+){0,3})
+  (?P<name_only>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})
 )
 (?:\s*\([^)]*\))?
-\s*
-(?::|[-–—]\s)
+\s*(?::|[-–—]\s)
 """,
-    re.IGNORECASE | re.VERBOSE,
+    re.VERBOSE,
 )
 
+CONTENT_COLON_RE = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
 TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
-UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s''—\-&,;:.()]+$")
 INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
+
 
 def _canonicalize(s: str) -> str:
     s = re.sub(r"\([^)]*\)", "", s)
-    s = re.sub(r"\b(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)\b\.?", "", s, flags=re.I)
+    s = re.sub(
+        r"\b(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)\b\.?",
+        "",
+        s,
+        flags=re.I,
+    )
     s = re.sub(r"\s+", " ", s).strip()
     return s.lower()
 
-def _known_speakers_from(text: str) -> list[str]:
-    seen = []
-    for m in SPEAKER_HEADER_RE.finditer(text):
-        title = (m.group("title") or "").strip()
-        name = (m.group("name") or m.group("name_only") or "").strip()
-        spk = " ".join(x for x in (title, name) if x).strip()
-        if spk and spk not in seen:
-            seen.append(spk)
-    for r in ["The SPEAKER", "Madam SPEAKER", "The CLERK"]:
-        if r not in seen:
-            seen.append(r)
-    return seen
 
-def _speaker_from_prior_lines(lines, start_idx):
-    for i in range(start_idx, -1, -1):
-        m = SPEAKER_HEADER_RE.match(lines[i].strip())
-        if m:
-            title = (m.group("title") or "").strip()
-            name = (m.group("name") or m.group("name_only") or "").strip()
-            spk = " ".join(x for x in (title, name) if x).strip()
-            if spk:
-                return spk
-    return None
+# --- Utterance segmentation with spans ---------------------------------------
 
-def _segment_utterances_with_lines(text: str):
-    """
-    Yield: (speaker, utter_text, utter_line_numbers[list[int]])
-    """
-    current_speaker = None
-    buff = []
-    buff_line_nums = []
+def _build_utterances(text: str):
     all_lines = text.splitlines()
+    utterances = []
+    curr = {"speaker": None, "lines": [], "line_nums": []}
 
     def flush():
-        nonlocal buff, buff_line_nums, current_speaker
-        body = "\n".join(buff).strip()
-        if body:
-            yield (current_speaker, body, list(buff_line_nums))
-        buff = []
-        buff_line_nums = []
+        if curr["lines"]:
+            joined = "\n".join(curr["lines"])
+            offs = []
+            total = 0
+            for i, ln in enumerate(curr["lines"]):
+                offs.append(total)
+                total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
 
-    for idx, raw_line in enumerate(all_lines):
-        line_no = idx + 1
-        line = raw_line.strip()
+            sents = []
+            start = 0
+            for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
+                end = m.start()
+                if end > start:
+                    sents.append((start, end))
+                start = m.end()
+            if start < len(joined):
+                sents.append((start, len(joined)))
 
-        if not line or TIME_STAMP_RE.match(line) or UPPER_HEADING_RE.match(line) or INTERJECTION_RE.match(line):
-            if line == "" and buff:
-                buff.append("")
-                buff_line_nums.append(line_no)
-            else:
-                yield from flush()
+            utterances.append({
+                "speaker": curr["speaker"],
+                "lines": curr["lines"][:],
+                "line_nums": curr["line_nums"][:],
+                "joined": joined,
+                "line_offsets": offs,
+                "sents": sents
+            })
+
+    for idx, raw in enumerate(all_lines):
+        s = raw.strip()
+        if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
             continue
 
-        m = SPEAKER_HEADER_RE.match(line)
-        if m:
-            yield from flush()
+        m = SPEAKER_HEADER_RE.match(s)
+        if m and not (m.group("name_only") and CONTENT_COLON_RE.match(s)):
+            flush()
             title = (m.group("title") or "").strip()
             name = (m.group("name") or m.group("name_only") or "").strip()
-            current_speaker = " ".join(x for x in (title, name) if x).strip()
+            curr = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
             continue
 
-        buff.append(raw_line.rstrip())
-        buff_line_nums.append(line_no)
+        curr["lines"].append(raw.rstrip())
+        curr["line_nums"].append(idx + 1)
 
-    yield from flush()
+    flush()
+    return utterances, all_lines
 
-# -----------------------------------------------------------------------------
-# Optional LLM attribution (local Ollama)
-# -----------------------------------------------------------------------------
 
-def _llm_guess_speaker(snippet: str, context: str, candidates: list[str], model: str | None = None, timeout: int = 30) -> str | None:
+def _line_for_char_offset(line_offsets, line_nums, pos):
+    i = bisect_right(line_offsets, pos) - 1
+    if i < 0:
+        i = 0
+    if i >= len(line_nums):
+        i = len(line_nums) - 1
+    return line_nums[i]
+
+
+# --- Matching, windows & merging ---------------------------------------------
+
+def _compile_kw_patterns(keywords):
+    pats = []
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pats.append((kw, re.compile(re.escape(kw), re.IGNORECASE)))
+        else:
+            pats.append((kw, re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)))
+    return pats
+
+
+def _collect_hits_in_utterance(utt, kw_pats):
+    hits = []
+    joined = utt["joined"]
+    sents = utt["sents"]
+    for si, (a, b) in enumerate(sents):
+        seg = joined[a:b]
+        for kw, pat in kw_pats:
+            m = pat.search(seg)
+            if not m:
+                continue
+            char_pos = a + m.start()
+            line_no = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
+            hits.append({"kw": kw, "sent_idx": si, "line_no": line_no})
+    return hits
+
+
+def _windows_for_hits(hits, sent_count):
+    wins = []
+    for h in hits:
+        j = h["sent_idx"]
+        if j == 0:
+            start = 0
+            end = min(sent_count - 1, FIRST_SENT_FOLLOWING)
+        else:
+            start = max(0, j - WINDOW_PAD_SENTENCES)
+            end = min(sent_count - 1, j + WINDOW_PAD_SENTENCES)
+        wins.append([start, end, {h["kw"]}, {h["line_no"]}])
+    wins.sort(key=lambda w: (w[0], w[1]))
+    return wins
+
+
+def _dedup_windows(wins):
+    """Collapse windows with identical (start,end); union keywords and line numbers."""
+    if not wins:
+        return []
+    bucket = {}
+    for s, e, kws, lines in wins:
+        key = (s, e)
+        if key in bucket:
+            bucket[key][0] |= kws
+            bucket[key][1] |= lines
+        else:
+            bucket[key] = [set(kws), set(lines)]
+    deduped = [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
+    return deduped
+
+
+def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
+    if not wins:
+        return []
+    merged = [wins[0]]
+    for s, e, kws, lines in wins[1:]:
+        ps, pe, pk, pl = merged[-1]
+        gap = s - pe
+        if gap > gap_gt:
+            merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
+        else:
+            merged.append([s, e, kws, lines])
+    return merged
+
+
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
+        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+    return out
+
+
+def _excerpt_from_window_html(utt, win, keywords):
+    sents = utt["sents"]
+    joined = utt["joined"]
+    start, end, kws, lines = win
+    a = sents[start][0]
+    b = sents[end][1]
+    raw = joined[a:b].strip()
+    if len(raw) > MAX_SNIPPET_CHARS:
+        raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
+    html = _html_escape(raw)
+    html = _highlight_keywords_html(html, keywords).replace("\n", "<br>")
+
+    start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
+    end_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
+
+    return html, sorted(lines), sorted(kws, key=str.lower), start_line, end_line
+
+
+def _looks_suspicious(s: str | None) -> bool:
+    if not s:
+        return True
+    s = s.strip()
+    if re.match(
+        r"(?i)^(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)"
+        r"(?:\s+[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})?$",
+        s,
+    ):
+        return False
+    if re.match(r"^[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}$", s):
+        return False
+    return True
+
+
+def _llm_qc_speaker(full_lines, hit_line_no, candidates, model=None, timeout=30):
     model = model or os.environ.get("ATTRIB_LLM_MODEL", "llama3.2:3b")
-    options = "\n".join(f"- {c}" for c in candidates[:40])
-    prompt = f"""Link this Hansard excerpt to the most likely speaker.
-Return EXACTLY one item from the candidate list below. If none fits, return "UNKNOWN".
-
-Candidates:
+    i = max(0, hit_line_no - 1)
+    start = max(0, i - 80)
+    context = "\n".join(full_lines[start: i + 5])[:3000]
+    options = "\n".join(f"- {c}" for c in candidates[:50]) or "- UNKNOWN"
+    prompt = f"""Choose the most likely speaker from the list (or 'UNKNOWN'):
 {options}
 
-Context (nearby lines):
-{context[:1500]}
+Use the transcript context (previous lines first, then nearby):
 
-Excerpt:
-{snippet}
+{context}
 """
     try:
         out = subprocess.check_output(["ollama", "run", model, prompt], text=True, timeout=timeout)
         ans = out.strip().splitlines()[-1].strip()
-        if ans.upper().startswith("UNKNOWN") or not ans:
+        if not ans or ans.upper().startswith("UNKNOWN"):
             return None
         return ans
     except Exception:
         return None
 
-# -----------------------------------------------------------------------------
-# Match extraction with sentence windows, dedupe, line numbers
-# -----------------------------------------------------------------------------
-
-SENT_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
-
-def _sentences(s: str):
-    parts = [p.strip() for p in SENT_SPLIT_RE.split(s.strip()) if p.strip()]
-    return parts
-
-def _window_for_index(idx: int, n: int):
-    if idx <= 0:
-        return (0, min(2, n - 1))
-    return (max(0, idx - 1), min(n - 1, idx + 1))
-
-def _merge_windows_by_gap(base_window, new_window, idx_gap, allow_if_within=4, require_gap_gt=2):
-    if idx_gap <= allow_if_within and idx_gap > require_gap_gt:
-        return (min(base_window[0], new_window[0]), max(base_window[1], new_window[1]))
-    return base_window
-
-def _chamber_from_filename(name: str) -> str:
-    if "House_of_Assembly" in name:
-        return "House of Assembly"
-    if "Legislative_Council" in name or "Legislative Council" in name:
-        return "Legislative Council"
-    return "Unknown"
 
 def extract_matches(text: str, keywords):
     """
-    Returns list of dicts:
-      { "keyword", "speaker", "excerpt_html", "line_no" }
+    Return list of:
+      (kw_set, excerpt_html, speaker, line_numbers_list, win_start_line, win_end_line)
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
 
-    candidates = _known_speakers_from(text)
-    norm_candidates = { _canonicalize(c): c for c in candidates }
+    utts, all_lines = _build_utterances(text)
+    kw_pats = _compile_kw_patterns(keywords)
 
     results = []
-    all_lines = text.splitlines()
 
-    for speaker, utt, utter_lines in _segment_utterances_with_lines(text):
-        if not utt.strip():
+    for utt in utts:
+        speaker = utt["speaker"]
+        if not utt["lines"]:
             continue
 
-        sents = _sentences(utt)
-        if not sents:
+        hits = _collect_hits_in_utterance(utt, kw_pats)
+        if not hits:
             continue
 
-        hit_sent_indices = []
-        hit_details = []  # (sent_idx, kw, first_line_no_for_kw)
+        wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
 
-        for i, sent in enumerate(sents):
-            for kw in keywords:
-                if _kw_hit(sent, kw):
-                    line_no = None
-                    # utter_lines is a list of ints (line numbers). Look up raw text from all_lines.
-                    for ln in utter_lines:
-                        raw = all_lines[ln - 1] if 0 < ln <= len(all_lines) else ""
-                        if _kw_hit(raw, kw):
-                            line_no = ln
-                            break
-                    if line_no is None and utter_lines:
-                        line_no = utter_lines[0]
-                    hit_sent_indices.append(i)
-                    hit_details.append((i, kw, line_no))
+        # ✅ NEW: Remove identical (start,end) windows to avoid duplicate excerpts
+        wins = _dedup_windows(wins)
 
-        if not hit_details:
-            continue
+        # Keep separate unless far apart; if far (>2), merge into a longer excerpt
+        merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
-        hit_sent_indices = sorted(set(hit_sent_indices))
-        n = len(sents)
-        base_i = hit_sent_indices[0]
-        window = _window_for_index(base_i, n)
+        if use_llm and _looks_suspicious(speaker):
+            candidates = sorted({u["speaker"] for u in utts if u["speaker"]})
+            earliest_line = min(min(w[3]) for w in merged)
+            guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=llm_timeout)
+            if guess:
+                speaker = guess
 
-        for j in hit_sent_indices[1:]:
-            new_window = _window_for_index(j, n)
-            window = _merge_windows_by_gap(window, new_window, j - base_i, allow_if_within=4, require_gap_gt=2)
-            base_i = j
-
-        start_idx, end_idx = window
-        excerpt_text = " ".join(sents[start_idx:end_idx+1]).strip()
-        excerpt_html = _bold_keywords(excerpt_text, keywords)
-
-        in_window_hits = [h for h in hit_details if start_idx <= h[0] <= end_idx]
-        if in_window_hits:
-            first_line = min(h[2] for h in in_window_hits if h[2] is not None)
-            rep_kw = in_window_hits[0][1]
-        else:
-            first_line = utter_lines[0] if utter_lines else 1
-            rep_kw = hit_details[0][1]
-
-        linked = speaker
-        if not linked:
-            start_line_idx = (utter_lines[0] - 2) if utter_lines else 0
-            back_guess = _speaker_from_prior_lines(all_lines, start_line_idx)
-            if back_guess:
-                linked = back_guess
-
-        if (not linked) and use_llm:
-            guess = _llm_guess_speaker(excerpt_text, context=utt, candidates=candidates, timeout=llm_timeout)
-            if guess and _canonicalize(guess) in norm_candidates:
-                linked = norm_candidates[_canonicalize(guess)]
-            else:
-                linked = None
-
-        results.append({
-            "keyword": rep_kw,
-            "speaker": linked,
-            "excerpt_html": excerpt_html,
-            "line_no": first_line,
-        })
+        for win in merged:
+            excerpt_html, line_list, kws_in_excerpt, win_start, win_end = _excerpt_from_window_html(utt, win, keywords)
+            results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
 
     return results
 
-# -----------------------------------------------------------------------------
-# Digest + HTML building with bulletproof rounded corners (VML)
-# -----------------------------------------------------------------------------
 
-def _px_to_pt(px: int) -> int:
-    return max(0, int(round(px * 0.75)))
-
-def vml_rounded_container(inner_html: str,
-                          width_px: int = EMAIL_WIDTH,
-                          bg: str = "#FFFFFF",
-                          border: str = C["border"],
-                          radius_px: int = 12,
-                          pad_px: int = 20) -> str:
-    arc_percent = max(1, min(50, int(round(radius_px * 100.0 / max(1, width_px)))))
-    inset_pt = _px_to_pt(pad_px)
-    return f"""
-    <!--[if mso]>
-    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
-        arcsize="{arc_percent}%"
-        fillcolor="{bg}"
-        strokecolor="{border}"
-        strokeweight="1px"
-        style="width:{width_px}px; mso-wrap-style:none; mso-position-horizontal:center;">
-      <v:textbox inset="{inset_pt}pt,{inset_pt}pt,{inset_pt}pt,{inset_pt}pt" style="mso-fit-shape-to-text:t">
-    <![endif]-->
-    <div style="background:{bg}; border:1px solid {border}; border-radius:{radius_px}px; padding:{pad_px}px;">
-      {inner_html}
-    </div>
-    <!--[if mso]></v:textbox></v:roundrect><![endif]-->
-    """
+# --- Digest / email pipeline (HTML) ------------------------------------------
 
 def parse_date_from_filename(filename: str):
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
@@ -358,294 +337,488 @@ def parse_date_from_filename(filename: str):
             return datetime.min
     return datetime.min
 
-def _counts_table_html(counts_by_keyword):
-    rows = []
-    for kw in sorted(counts_by_keyword.keys(), key=str.lower):
-        ha = counts_by_keyword[kw].get("House of Assembly", 0)
-        lc = counts_by_keyword[kw].get("Legislative Council", 0)
-        total = ha + lc
-        rows.append(f"""
-          <tr>
-            <td style="padding:10px 12px; border-bottom:1px solid {C['border']};">{kw}</td>
-            <td style="padding:10px 12px; border-bottom:1px solid {C['border']}; text-align:center;">{ha}</td>
-            <td style="padding:10px 12px; border-bottom:1px solid {C['border']}; text-align:center;">{lc}</td>
-            <td style="padding:10px 12px; border-bottom:1px solid {C['border']}; text-align:center; font-weight:600;">{total}</td>
-          </tr>
-        """)
-    table = f"""
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#FFFFFF;">
-        <thead>
-          <tr style="background:{C['light']};">
-            <th align="left" style="padding:12px; border-bottom:2px solid {C['border']}; font-weight:700; color:{C['dark']};">Keyword</th>
-            <th align="center" style="padding:12px; border-bottom:2px solid {C['border']}; font-weight:700; color:{C['dark']};">House of Assembly</th>
-            <th align="center" style="padding:12px; border-bottom:2px solid {C['border']}; font-weight:700; color:{C['dark']};">Legislative Council</th>
-            <th align="center" style="padding:12px; border-bottom:2px solid {C['border']}; font-weight:700; color:{C['dark']};">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {''.join(rows) if rows else f'<tr><td colspan="4" style="padding:12px;">No keywords triggered.</td></tr>'}
-        </tbody>
-      </table>
-    """
-    return table
+
+def parse_chamber_from_filename(filename: str) -> str:
+    name = filename.lower()
+    if "house_of_assembly" in name:
+        return "House of Assembly"
+    if "legislative_council" in name:
+        return "Legislative Council"
+    return "Unknown"
+
 
 def build_digest_html(files, keywords):
-    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    counts_by_keyword = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
+    chambers = ["House of Assembly", "Legislative Council"]
+    counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
+    totals = {kw: 0 for kw in keywords}
+
+    doc_sections = []
     total_matches = 0
-    file_sections = []
 
-    for f in sorted(files, key=lambda x: parse_date_from_filename(Path(x).name)):
-        name = Path(f).name
-        chamber = _chamber_from_filename(name)
+    for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        chamber = parse_chamber_from_filename(Path(f).name)
 
         matches = extract_matches(text, keywords)
         if not matches:
             continue
 
-        matches.sort(key=lambda m: (m["line_no"], (m["speaker"] or "ZZZ")))
-
-        for m in matches:
-            kw = m["keyword"]
-            if chamber in ("House of Assembly", "Legislative Council"):
-                counts_by_keyword.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
-                counts_by_keyword[kw][chamber] = counts_by_keyword[kw].get(chamber, 0) + 1
-
+        matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        file_heading_inner = f"""
-          <h3 style="margin:0 0 4px 0; font-family:Arial,Helvetica,sans-serif; font-size:18px; color:{C['dark']};">
-            {name}
-          </h3>
-          <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:{C['navy']};">
-            {len(matches)} match(es)
-          </div>
-        """
-        file_heading_html = vml_rounded_container(
-            inner_html=file_heading_inner,
-            width_px=EMAIL_WIDTH,
-            bg="#FFFFFF",
-            border=C["border"],
-            radius_px=12,
-            pad_px=16
-        )
+        sec_lines = [f'<div class="document-section">']
+        sec_lines.append(f'  <div class="doc-header">')
+        sec_lines.append(f'    <h3 class="doc-title">{_html_escape(Path(f).name)}</h3>')
+        sec_lines.append(f'    <div class="doc-meta">{len(matches)} matches found</div>')
+        sec_lines.append(f'  </div>')
+        sec_lines.append(f'  <div class="matches-container">')
+        
+        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+            for kw in kw_set:
+                if chamber in counts:
+                    counts[chamber][kw] += 1
+                totals[kw] += 1
 
-        match_cards = []
-        for i, m in enumerate(matches, 1):
-            spk = m["speaker"] or "UNKNOWN"
-            ln = m["line_no"]
-            title_row = f"""
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-                <tr>
-                  <td style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:{C['dark']}; font-weight:700;">
-                    Match #{i} ({spk}) — line {ln}
-                  </td>
-                </tr>
-              </table>
-            """
-            body_row = f"""
-              <div style="margin-top:8px; font-family:Georgia, 'Times New Roman', serif; font-size:15px; line-height:1.5; color:#222;">
-                {m["excerpt_html"]}
-              </div>
-            """
-            match_inner = title_row + body_row
-            card = vml_rounded_container(
-                inner_html=match_inner,
-                width_px=EMAIL_WIDTH,
-                bg="#FFFFFF",
-                border=C["border"],
-                radius_px=12,
-                pad_px=20
+            first_line = min(line_list) if line_list else win_start
+            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
+            line_label = "line" if len(line_list) == 1 else "lines"
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
+
+            sec_lines.append(
+                f'    <div class="match-card">'
+                f'      <div class="match-header">'
+                f'        <span class="match-number">{i}</span>'
+                f'        <div class="speaker-badge">'
+                f'          <span class="speaker-name">{speaker_html}</span>'
+                f'        </div>'
+                f'        <span class="line-info">{line_label} {lines_str}</span>'
+                f'      </div>'
+                f'      <div class="excerpt">{excerpt_html}</div>'
+                f'    </div>'
             )
-            card = f"""
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr><td height="12" style="line-height:12px;font-size:12px;">&nbsp;</td></tr>
-              <tr><td>{card}</td></tr>
-            </table>
-            """
-            match_cards.append(card)
+        sec_lines.append('  </div>')
+        sec_lines.append('</div>')
+        doc_sections.append("\n".join(sec_lines))
 
-        file_section_html = f"""
-          {file_heading_html}
-          {''.join(match_cards)}
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-            <tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>
-          </table>
-        """
-        file_sections.append(file_section_html)
-
-    files_count = sum(1 for _ in file_sections)
-    distinct_kw = sum(1 for kw, c in counts_by_keyword.items() if (c.get("House of Assembly", 0) + c.get("Legislative Council", 0)) > 0)
-    tiles_data = [
-        ("Files", files_count),
-        ("Keywords", distinct_kw),
-        ("Matches", total_matches),
-        ("Runtime", "Now"),
-    ]
-    tile_w = 148
-    tile_cells = []
-    for label, value in tiles_data:
-        tile_inner = f"""
-          <div style="font-family:Arial,Helvetica,sans-serif; font-size:28px; font-weight:700; color:{C['gold']};">{value}</div>
-          <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#FFFFFF; opacity:.85; margin-top:2px;">{label}</div>
-        """
-        tile_html = vml_rounded_container(
-            inner_html=tile_inner,
-            width_px=tile_w,
-            bg="#4A5A6A",  # solid for Outlook; visually matches header
-            border=C["navy"],
-            radius_px=10,
-            pad_px=14
+    # Build summary table
+    header_cols = "".join([
+        "<th scope='col'>Keyword</th>",
+        "<th scope='col'>House of Assembly</th>",
+        "<th scope='col'>Legislative Council</th>",
+        "<th scope='col'>Total</th>",
+    ])
+    row_html = []
+    for kw in keywords:
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
+        row_html.append(
+            f"<tr><td class='keyword-cell'>{_html_escape(kw)}</td>"
+            f"<td class='count-cell'>{hoa}</td>"
+            f"<td class='count-cell'>{lc}</td>"
+            f"<td class='count-cell total-cell'>{tot}</td></tr>"
         )
-        tile_cells.append(f'<td width="{tile_w}" valign="top">{tile_html}</td>')
-
-    tiles_row = f"""
-      <table role="presentation" width="{EMAIL_WIDTH}" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          {tile_cells[0]}
-          <td width="16">&nbsp;</td>
-          {tile_cells[1]}
-          <td width="16">&nbsp;</td>
-          {tile_cells[2]}
-          <td width="16">&nbsp;</td>
-          {tile_cells[3]}
-        </tr>
-      </table>
-    """
-
-    header_inner = f"""
-      <div style="font-family:Arial,Helvetica,sans-serif; color:#FFFFFF;">
-        <h1 style="margin:0 0 6px 0; font-size:28px; font-weight:700;">Hansard Keyword Digest</h1>
-        <div style="font-size:13px; opacity:.9;">Comprehensive parliamentary transcript analysis — {now_utc}</div>
-        <div style="height:16px; line-height:16px; font-size:16px;">&nbsp;</div>
-        {tiles_row}
-      </div>
-    """
-
-    header_html = vml_rounded_container(
-        inner_html=header_inner,
-        width_px=EMAIL_WIDTH,
-        bg=C["navy"],
-        border=C["navy"],
-        radius_px=12,
-        pad_px=20
+    summary_table = (
+        f'<table class="summary-table" role="table">'
+        f'  <thead><tr>{header_cols}</tr></thead>'
+        f'  <tbody>{"".join(row_html)}</tbody>'
+        f'</table>'
     )
 
-    if keywords:
-        kw_badges = " ".join(
-            f'<span style="display:inline-block; padding:6px 8px; border:1px solid {C["gold"]}; border-radius:8px; margin:0 6px 6px 0; color:{C["dark"]}; background:#fff4de;">{k}</span>'
-            for k in keywords
-        )
-    else:
-        kw_badges = '<span style="color:#555;">(none)</span>'
-
-    keywords_inner_html = f"""
-      <div style="font-family:Arial,Helvetica,sans-serif; font-size:16px; color:{C['dark']}; font-weight:700; margin-bottom:10px;">
-        Keywords Being Tracked
-      </div>
-      <div>{kw_badges}</div>
-    """
-    keywords_card = vml_rounded_container(
-        inner_html=keywords_inner_html,
-        width_px=EMAIL_WIDTH,
-        bg=C["light"],
-        border=C["border"],
-        radius_px=12,
-        pad_px=20
-    )
-
-    summary_title = f"""
-      <div style="font-family:Arial,Helvetica,sans-serif; font-size:16px; color:{C['dark']}; font-weight:700; margin-bottom:10px;">
-        Summary by Chamber
-      </div>
-    """
-    summary_table_html = _counts_table_html(counts_by_keyword)
-    summary_card = vml_rounded_container(
-        inner_html=summary_title + summary_table_html,
-        width_px=EMAIL_WIDTH,
-        bg=C["light"],
-        border=C["border"],
-        radius_px=12,
-        pad_px=20
-    )
-
-    files_section_html = "\n".join(file_sections) if file_sections else vml_rounded_container(
-        inner_html="""
-          <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#333;">
-            No keyword matches found in new transcripts.
-          </div>
-        """,
-        width_px=EMAIL_WIDTH,
-        bg="#FFFFFF",
-        border=C["border"],
-        radius_px=12,
-        pad_px=16
-    )
-
-    full_html = f"""
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta charset="UTF-8">
-  <!--[if mso]>
+    # Federal-themed professional CSS inspired by dashboard design
+    style = """
     <style>
-      table, td, div, p, a {{ font-family: Arial, sans-serif !important; }}
+      :root {
+        --federal-gold: #C5A572;
+        --federal-navy: #4A5A6A;
+        --federal-dark: #475560;
+        --federal-light: #ECF0F1;
+        --federal-accent: #D4AF37;
+        --white: #FFFFFF;
+        --border-light: #D8DCE0;
+        --text-primary: #2C3440;
+        --text-secondary: #6B7684;
+      }
+      
+      * { 
+        box-sizing: border-box; 
+        margin: 0;
+        padding: 0;
+      }
+      
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        line-height: 1.6; 
+        color: var(--text-primary); 
+        background: var(--federal-light); 
+        padding: 0;
+      }
+      
+      .container { 
+        max-width: 900px; 
+        margin: 0 auto; 
+        background: var(--white); 
+      }
+      
+      .header { 
+        background: linear-gradient(135deg, var(--federal-dark) 0%, var(--federal-dark) 100%);
+        color: var(--white); 
+        padding: 2rem 2.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+      }
+      
+      .header h1 { 
+        font-size: 2rem; 
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+        color: white;
+      }
+      
+      .header-subtitle {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      
+      .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 3px solid var(--federal-gold);
+      }
+      
+      .stat-card h4 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--federal-gold);
+      }
+      
+      .stat-label {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        margin-top: 0.25rem;
+      }
+      
+      .content { 
+        padding: 2rem;
+        background: var(--federal-light);
+      }
+      
+      .panel {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      
+      .panel h2 {
+        color: var(--federal-navy);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--federal-gold);
+        font-size: 1.25rem;
+      }
+      
+      .summary-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        background: var(--white);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      .summary-table th { 
+        background: var(--federal-navy); 
+        color: var(--white); 
+        padding: 0.8rem; 
+        text-align: left; 
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .summary-table td { 
+        padding: 0.6rem 0.8rem; 
+        border-bottom: 1px solid var(--federal-light);
+        font-size: 0.9rem;
+      }
+      
+      .summary-table tbody tr:hover { 
+        background: rgba(197, 165, 114, 0.1);
+      }
+      
+      .summary-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      
+      .keyword-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: var(--federal-gold);
+        color: white;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      
+      .count-cell { 
+        text-align: center; 
+        font-variant-numeric: tabular-nums;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+      
+      .total-cell { 
+        background: rgba(212, 175, 55, 0.15);
+        font-weight: 700;
+        color: var(--federal-dark);
+      }
+      
+      .document-section { 
+        margin-bottom: 1.5rem;
+      }
+      
+      .doc-header {
+        background: linear-gradient(135deg, var(--federal-light) 0%, white 100%);
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--federal-gold);
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 0;
+      }
+      
+      .doc-title { 
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--federal-navy);
+        margin: 0;
+      }
+      
+      .doc-meta {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+      }
+      
+      .matches-container {
+        background: white;
+        border-radius: 0 0 8px 8px;
+        padding: 1rem;
+        border: 1px solid var(--border-light);
+        border-top: none;
+      }
+      
+      .match-card { 
+        margin: 0.75rem 0;
+        border: 1px solid var(--border-light);
+        border-radius: 6px;
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+      
+      .match-card:hover { 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transform: translateY(-1px);
+      }
+      
+      .match-header { 
+        background: var(--federal-light);
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border-light);
+      }
+      
+      .match-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+        background: var(--federal-navy);
+        color: var(--white);
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      
+      .speaker-badge {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .speaker-name { 
+        font-weight: 600;
+        color: var(--federal-dark);
+        font-size: 0.9rem;
+      }
+      
+      .line-info { 
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        background: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+      }
+      
+      .excerpt { 
+        padding: 1rem 1.25rem;
+        background: var(--white);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+      }
+      
+      .excerpt strong { 
+        background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+        color: var(--federal-dark);
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-weight: 600;
+        box-decoration-break: clone;
+      }
+      
+      .no-matches { 
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-secondary);
+        background: white;
+        border-radius: 8px;
+        border: 2px dashed var(--border-light);
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      
+      .footer {
+        background: var(--federal-navy);
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+      
+      @media (max-width: 640px) {
+        .container { 
+          border-radius: 0;
+        }
+        
+        .header, .content { 
+          padding: 1.5rem;
+        }
+        
+        .header h1 {
+          font-size: 1.5rem;
+        }
+        
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        
+        .match-header {
+          flex-wrap: wrap;
+        }
+        
+        .summary-table { 
+          font-size: 0.8rem;
+        }
+        
+        .summary-table th, 
+        .summary-table td { 
+          padding: 0.5rem;
+        }
+      }
+      
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        
+        .container {
+          box-shadow: none;
+        }
+        
+        .panel {
+          box-shadow: none;
+          border: 1px solid #ddd;
+        }
+      }
     </style>
-  <![endif]-->
-  <title>Hansard Keyword Digest</title>
-</head>
-<body style="margin:0; padding:0; background:{C['light']};">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{C['light']};">
-    <tr>
-      <td align="center">
-        <table role="presentation" width="{EMAIL_WIDTH}" cellpadding="0" cellspacing="0" border="0" style="width:{EMAIL_WIDTH}px;">
-          <tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>
-          <tr><td>{header_html}</td></tr>
-          <tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>
-          <tr><td>{keywords_card}</td></tr>
-          <tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>
-          <tr><td>{summary_card}</td></tr>
-          <tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>
-          <tr><td>{files_section_html}</td></tr>
-          <tr><td height="24" style="line-height:24px;font-size:24px;">&nbsp;</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-""".strip()
+    """
 
-    return full_html, total_matches, counts_by_keyword
+    header_html = (
+        f'<div class="header">'
+        f'  <h1>Hansard Keyword Digest</h1>'
+        f'  <div class="header-meta">'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Generated</span>'
+        f'      <span class="meta-value">{now_utc}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Keywords Tracked</span>'
+        f'      <span class="meta-value">{_html_escape(", ".join(keywords))}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Documents Analyzed</span>'
+        f'      <span class="meta-value">{len(files)}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Total Matches</span>'
+        f'      <span class="meta-value">{total_matches}</span>'
+        f'    </div>'
+        f'  </div>'
+        f'</div>'
+    )
 
-# -----------------------------------------------------------------------------
-# Email sending (SMTP)
-# -----------------------------------------------------------------------------
+    summary_section = (
+        f'<div class="summary-section">'
+        f'  <h2 class="section-title">Keyword Summary by Chamber</h2>'
+        f'  {summary_table}'
+        f'</div>'
+    )
 
-def _as_plain_text(html: str) -> str:
-    text = re.sub(r"(?i)<br\s*/?>", "\n", html)
-    text = re.sub(r"(?i)</(div|p|h\d|tr|table)>", r"\n", text)
-    text = re.sub(r"<[^>]+>", "", text)
-    text = re.sub(r"[ \t]+", " ", text)
-    text = re.sub(r"\n\s*\n\s*\n+", "\n\n", text)
-    return text.strip()
+    doc_html = "\n".join(doc_sections) if doc_sections else '<div class="no-matches">No keyword matches found in the processed documents.</div>'
+
+    html = f"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Hansard Digest</title>{style}</head><body><div class='container'>{header_html}<div class='content'>{summary_section}{doc_html}</div></div></body></html>"
+    return html, total_matches, counts
+
 
 def load_sent_log():
     if LOG_FILE.exists():
-        return {line.strip() for line in LOG_FILE.read_text(encoding="utf-8").splitlines() if line.strip()}
+        return {line.strip() for line in LOG_FILE.read_text().splitlines() if line.strip()}
     return set()
+
 
 def update_sent_log(files):
     with LOG_FILE.open("a", encoding="utf-8") as f:
         for file in files:
             f.write(f"{Path(file).name}\n")
 
-# -----------------------------------------------------------------------------
-# Main
-# -----------------------------------------------------------------------------
+
+# --- Main --------------------------------------------------------------------
 
 def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
@@ -668,42 +841,29 @@ def main():
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
 
-    subject = f"Hansard keyword digest — {datetime.now(timezone.utc).strftime('%d %b %Y')}"
+    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    msg = MIMEMultipart("mixed")
-    msg["From"] = EMAIL_USER
-    msg["To"] = ", ".join(to_list)
-    msg["Subject"] = subject
+    yag = yagmail.SMTP(
+        user=EMAIL_USER,
+        password=EMAIL_PASS,
+        host="smtp.gmail.com",
+        port=587,
+        smtp_starttls=True,
+        smtp_ssl=False,
+    )
 
-    alt = MIMEMultipart("alternative")
-    msg.attach(alt)
-
-    plain_fallback = _as_plain_text(body_html)
-    alt.attach(MIMEText(plain_fallback, "plain", "utf-8"))
-    alt.attach(MIMEText(body_html, "html", "utf-8"))
-
-    for path in files:
-        try:
-            with open(path, "rb") as f:
-                part = MIMEBase("application", "octet-stream")
-                part.set_payload(f.read())
-            encoders.encode_base64(part)
-            part.add_header("Content-Disposition", f'attachment; filename="{Path(path).name}"')
-            msg.attach(part)
-        except Exception as e:
-            print(f"Warning: failed to attach {path}: {e}")
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.ehlo()
-        server.starttls(context=context)
-        server.ehlo()
-        server.login(EMAIL_USER, EMAIL_PASS)
-        server.sendmail(EMAIL_USER, to_list, msg.as_string())
+    yag.send(
+        to=to_list,
+        subject=subject,
+        contents=[body_html],   # HTML string (no links)
+        attachments=files,
+    )
 
     update_sent_log(files)
-    print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
+    print(f"Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
 
 if __name__ == "__main__":
     main()
