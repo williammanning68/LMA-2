@@ -538,7 +538,7 @@ def load_sent_log():
 
 def update_sent_log(files):
     """Append newly emailed filenames to the log."""
-    with LOG_FILE.open("a", encoding="utf-8") as f":
+    with LOG_FILE.open("a", encoding="utf-8") as f:
         for file in files:
             f.write(f"{Path(file).name}\n")
 
