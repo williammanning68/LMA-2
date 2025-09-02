@@ -3,8 +3,7 @@ import re
 import glob
 from bisect import bisect_right
 from pathlib import Path
-from datetime import datetime
-from email.mime.text import MIMEText
+from datetime import datetime, UTC  # ✅ use UTC constant (Py 3.11+)
 
 import yagmail
 import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
@@ -408,7 +407,7 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 def build_digest_html(files, keywords):
     """Build the HTML body and return (html_string, total_matches, counts_by_chamber_and_kw)."""
-    now_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")  # ✅ no deprecation
     blob_base = _repo_blob_base()
 
     # Summary counters
@@ -451,31 +450,22 @@ def build_digest_html(files, keywords):
 
             speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
             line_label = "line" if len(line_list) == 1 else "lines"
-            lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
-
-            # Build links if repo info is available
-            header_link = ""
-            lines_links = lines_str
-            ctx_link = ""
+            # each line can be clicked individually
             if blob_base:
-                header_url = _github_line_link(blob_base, relpath, first_line)
-                header_link = f'<a href="{header_url}" title="Open on GitHub at line {first_line}">Match #{i}</a>'
-                if line_list:
-                    # each line becomes its own link
-                    line_anchors = []
-                    for n in sorted(set(line_list)):
-                        line_anchors.append(f'<a href="{_github_line_link(blob_base, relpath, n)}" title="Open on GitHub at line {n}">{n}</a>')
-                    lines_links = ", ".join(line_anchors)
-                # wider context link to a range
-                ctx_url = _github_range_link(blob_base, relpath, ctx_start, ctx_end)
-                ctx_link = f' &nbsp;·&nbsp; <a href="{ctx_url}" title="Show wider context: lines {ctx_start}–{ctx_end}">wider context (±{WIDER_CONTEXT_PAD})</a>'
+                line_links = ", ".join(
+                    f'<a href="{_github_line_link(blob_base, relpath, n)}" title="Open on GitHub at line {n}">{n}</a>'
+                    for n in sorted(set(line_list))
+                ) if line_list else str(first_line)
+                header_link = f'<a href="{_github_line_link(blob_base, relpath, first_line)}" title="Open on GitHub at line {first_line}">Match #{i}</a>'
+                ctx_link = f' &nbsp;·&nbsp; <a href="{_github_range_link(blob_base, relpath, ctx_start, ctx_end)}" title="Show wider context: lines {ctx_start}–{ctx_end}">wider context (±{WIDER_CONTEXT_PAD})</a>'
             else:
+                line_links = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
                 header_link = f"Match #{i}"
+                ctx_link = ""
 
             sec_lines.append(
                 f'<div class="match">'
-                f'  <div class="meta">{header_link} '
-                f'(<strong>{speaker_html}</strong>) — {line_label} {lines_links}{ctx_link}</div>'
+                f'  <div class="meta">{header_link} (<strong>{speaker_html}</strong>) — {line_label} {line_links}{ctx_link}</div>'
                 f'  <div class="excerpt">{excerpt_html}</div>'
                 f'</div>'
             )
@@ -548,7 +538,7 @@ def load_sent_log():
 
 def update_sent_log(files):
     """Append newly emailed filenames to the log."""
-    with LOG_FILE.open("a", encoding="utf-8") as f:
+    with LOG_FILE.open("a", encoding="utf-8") as f":
         for file in files:
             f.write(f"{Path(file).name}\n")
 
@@ -576,34 +566,4 @@ def main():
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
 
-    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
-    to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
-
-    # Send HTML email
-    msg_html = MIMEText(body_html, "html", "utf-8")
-
-    yag = yagmail.SMTP(
-        user=EMAIL_USER,
-        password=EMAIL_PASS,
-        host="smtp.gmail.com",
-        port=587,
-        smtp_starttls=True,
-        smtp_ssl=False,
-    )
-
-    yag.send(
-        to=to_list,
-        subject=subject,
-        contents=[msg_html],  # send HTML body
-        attachments=files,    # attach source transcripts
-    )
-
-    update_sent_log(files)
-
-    print(
-        f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es)."
-    )
-
-
-if __name__ == "__main__":
-    main()
+    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %
