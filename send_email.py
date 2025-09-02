@@ -15,12 +15,20 @@ LOG_FILE = Path("sent.log")
 # --- Helpers -----------------------------------------------------------------
 
 def load_keywords():
-    """Load keywords from keywords.txt or KEYWORDS env var."""
+    """Load keywords from keywords.txt or KEYWORDS env var, ignoring comments and stripping quotes."""
     if os.path.exists("keywords.txt"):
+        kws = []
         with open("keywords.txt", encoding="utf-8") as f:
-            return [kw.strip() for kw in f if kw.strip()]
+            for line in f:
+                s = line.strip()
+                if not s or s.startswith("#"):
+                    continue
+                if s.startswith('"') and s.endswith('"') and len(s) >= 2:
+                    s = s[1:-1]
+                kws.append(s)
+        return kws
     if "KEYWORDS" in os.environ:
-        return [kw.strip() for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
+        return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
     return []
 
 
