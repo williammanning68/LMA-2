@@ -18,6 +18,16 @@ WINDOW_PAD_SENTENCES = 1    # for non-first-sentence hits: one sentence either s
 FIRST_SENT_FOLLOWING = 2    # for first-sentence hits: include next two sentences
 MERGE_IF_GAP_GT = 2         # Only merge windows if the gap (in sentences) is > this value
 
+# Visual/layout constants (email-safe)
+EMAIL_WIDTH = 640
+COLORS = {
+    "gold":  "#C5A572",  # --federal-gold
+    "navy":  "#4A5A6A",  # --federal-navy
+    "dark":  "#475560",  # --federal-dark
+    "light": "#ECF0F1",  # --federal-light
+    "accent":"#D4AF37",  # --federal-accent
+    "border":"#E4E9EE",
+}
 
 # --- Helpers -----------------------------------------------------------------
 
@@ -306,10 +316,8 @@ def extract_matches(text: str, keywords):
 
         wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
 
-        # ✅ NEW: Remove identical (start,end) windows to avoid duplicate excerpts
+        # keep your de-dup + merge rules
         wins = _dedup_windows(wins)
-
-        # Keep separate unless far apart; if far (>2), merge into a longer excerpt
         merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
         if use_llm and _looks_suspicious(speaker):
@@ -325,6 +333,36 @@ def extract_matches(text: str, keywords):
 
     return results
 
+
+# ---------------------------- VISUAL HELPERS ---------------------------------
+
+def _px_to_pt(px: int) -> int:
+    # Outlook VML textbox inset uses points
+    return max(0, int(round(px * 0.75)))
+
+def _vml_rounded(inner_html: str, width_px: int, bg: str, border: str, radius_px: int = 12, pad_px: int = 16) -> str:
+    """
+    Bulletproof rounded container:
+    - Works in Apple Mail, Gmail, iOS via normal <div> with border-radius
+    - Works in Outlook (Windows desktop) via VML shape in conditional comments
+    """
+    arc_percent = max(1, min(50, int(round(radius_px * 100.0 / max(1, width_px)))))
+    inset_pt = _px_to_pt(pad_px)
+    return f"""
+<!--[if mso]>
+<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+    arcsize="{arc_percent}%"
+    fillcolor="{bg}"
+    strokecolor="{border}"
+    strokeweight="1px"
+    style="width:{width_px}px;">
+  <v:textbox inset="{inset_pt}pt,{inset_pt}pt,{inset_pt}pt,{inset_pt}pt">
+<![endif]-->
+<div style="background:{bg}; border:1px solid {border}; border-radius:{radius_px}px; padding:{pad_px}px;">
+  {inner_html}
+</div>
+<!--[if mso]></v:textbox></v:roundrect><![endif]-->
+""".strip()
 
 # --- Digest / email pipeline (HTML) ------------------------------------------
 
@@ -348,6 +386,7 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 
 def build_digest_html(files, keywords):
+    # Keep your UTC output
     now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
     chambers = ["House of Assembly", "Legislative Council"]
@@ -368,7 +407,20 @@ def build_digest_html(files, keywords):
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        sec_lines = [f'<h3 class="doc-title">{_html_escape(Path(f).name)}</h3>']
+        # Document header (boxed with rounded corners)
+        doc_title_html = f"""
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="font-family:Arial,Helvetica,sans-serif; color:{COLORS['dark']}; font-size:18px; font-weight:700;">
+                {_html_escape(Path(f).name)}
+              </td>
+            </tr>
+          </table>
+        """
+        doc_title_box = _vml_rounded(doc_title_html, EMAIL_WIDTH, "#FFFFFF", COLORS["border"], radius_px=12, pad_px=14)
+
+        # Matches
+        cards = []
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
             for kw in kw_set:
                 if chamber in counts:
@@ -376,69 +428,137 @@ def build_digest_html(files, keywords):
                 totals[kw] += 1
 
             first_line = min(line_list) if line_list else win_start
-            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
             line_label = "line" if len(line_list) == 1 else "lines"
             lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
+            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
 
-            sec_lines.append(
-                f'<div class="match">'
-                f'  <div class="meta">Match #{i} (<strong>{speaker_html}</strong>) — {line_label} {lines_str}</div>'
-                f'  <div class="excerpt">{excerpt_html}</div>'
-                f'</div>'
-            )
-        doc_sections.append("\n".join(sec_lines))
+            meta = f"""
+              <div style="font-family:Arial,Helvetica,sans-serif; color:{COLORS['dark']}; font-size:14px; font-weight:700;">
+                Match #{i} ({speaker_html}) — {line_label} {lines_str}
+              </div>
+            """
+            body = f"""
+              <div style="margin-top:8px; font-family:Georgia, 'Times New Roman', serif; font-size:15px; line-height:1.55; color:#222;">
+                {excerpt_html}
+              </div>
+            """
+            card_inner = meta + body
+            card = _vml_rounded(card_inner, EMAIL_WIDTH, "#FFFFFF", COLORS["border"], radius_px=12, pad_px=18)
+            cards.append(f"""
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr><td height="12" style="line-height:12px; font-size:12px;">&nbsp;</td></tr>
+                <tr><td>{card}</td></tr>
+              </table>
+            """)
 
-    header_cols = "".join([
-        "<th>Keyword</th>",
-        "<th>House of Assembly</th>",
-        "<th>Legislative Council</th>",
-        "<th>Total</th>",
-    ])
-    row_html = []
+        doc_sections.append(
+            f"""
+            {doc_title_box}
+            {''.join(cards)}
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr><td height="16" style="line-height:16px; font-size:16px;">&nbsp;</td></tr>
+            </table>
+            """
+        )
+
+    # Summary table (inline styles)
+    header_cols = (
+        "<th align='left' style='padding:12px; border-bottom:2px solid {b}; color:{d}; font-family:Arial,Helvetica,sans-serif; font-size:13px;'>Keyword</th>"
+        "<th align='center' style='padding:12px; border-bottom:2px solid {b}; color:{d}; font-family:Arial,Helvetica,sans-serif; font-size:13px;'>House of Assembly</th>"
+        "<th align='center' style='padding:12px; border-bottom:2px solid {b}; color:{d}; font-family:Arial,Helvetica,sans-serif; font-size:13px;'>Legislative Council</th>"
+        "<th align='center' style='padding:12px; border-bottom:2px solid {b}; color:{d}; font-family:Arial,Helvetica,sans-serif; font-size:13px;'>Total</th>"
+    ).format(b=COLORS["border"], d=COLORS["dark"])
+
+    rows = []
     for kw in keywords:
         hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
         lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
         tot = totals[kw]
-        row_html.append(
-            f"<tr><td>{_html_escape(kw)}</td>"
-            f"<td class='num'>{hoa}</td>"
-            f"<td class='num'>{lc}</td>"
-            f"<td class='num total'>{tot}</td></tr>"
+        rows.append(
+            f"<tr>"
+            f"<td style='padding:10px 12px; border-bottom:1px solid {COLORS['border']}; font-family:Arial,Helvetica,sans-serif; font-size:14px;'>{_html_escape(kw)}</td>"
+            f"<td align='center' style='padding:10px 12px; border-bottom:1px solid {COLORS['border']}; font-family:Arial,Helvetica,sans-serif; font-size:14px;'>{hoa}</td>"
+            f"<td align='center' style='padding:10px 12px; border-bottom:1px solid {COLORS['border']}; font-family:Arial,Helvetica,sans-serif; font-size:14px;'>{lc}</td>"
+            f"<td align='center' style='padding:10px 12px; border-bottom:1px solid {COLORS['border']}; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:700;'>{tot}</td>"
+            f"</tr>"
         )
-    summary_table = (
-        f'<table class="summary-table">'
-        f'  <thead><tr>{header_cols}</tr></thead>'
-        f'  <tbody>{"".join(row_html)}</tbody>'
-        f'</table>'
-    )
 
-    style = """
-    <style>
-      body { font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#111; }
-      .hdr { margin: 0 0 12px 0; }
-      .small { color:#444; }
-      .summary-table { border-collapse: collapse; margin: 8px 0 18px 0; width: 100%; }
-      .summary-table th, .summary-table td { border: 1px solid #e0e0e0; padding: 6px 8px; text-align: left; }
-      .summary-table th { background: #fafafa; }
-      .summary-table td.num { text-align: right; }
-      .summary-table td.total { font-weight: 600; }
-      .doc-title { margin: 18px 0 6px 0; }
-      .match { margin: 10px 0 14px 0; }
-      .meta { color:#333; font-size: 0.95em; margin-bottom: 6px; }
-      .excerpt { background:#fbfbfb; border-left:3px solid #d0d0d0; padding:8px 10px; line-height:1.4; }
-      strong { font-weight: 700; }
-    </style>
+    summary_table = f"""
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#FFFFFF;">
+        <thead>
+          <tr style="background:{COLORS['light']};">{header_cols}</tr>
+        </thead>
+        <tbody>
+          {''.join(rows) if rows else f"<tr><td colspan='4' style='padding:12px; font-family:Arial,Helvetica,sans-serif;'>No keywords triggered.</td></tr>"}
+        </tbody>
+      </table>
     """
 
-    header_html = (
-        f'<p class="hdr"><strong>Program Runtime:</strong> {now_utc}</p>'
-        f'<p class="hdr"><strong>Keywords:</strong> {_html_escape(", ".join(keywords))}</p>'
-        f'<h2 class="hdr">Keywords Triggered</h2>{summary_table}'
+    # Keywords badges (inline styles)
+    if keywords:
+        kw_badges = " ".join(
+            f"<span style='display:inline-block; margin:0 6px 6px 0; padding:6px 8px; border:1px solid {COLORS['gold']}; border-radius:8px; background:#fff4de; color:{COLORS['dark']}; font-family:Arial,Helvetica,sans-serif; font-size:13px;'>{_html_escape(k)}</span>"
+            for k in keywords
+        )
+    else:
+        kw_badges = f"<span style='font-family:Arial,Helvetica,sans-serif; color:#555; font-size:14px;'>(none)</span>"
+
+    # Top header card
+    header_inner = f"""
+      <div style="font-family:Arial,Helvetica,sans-serif; color:#FFFFFF;">
+        <div style="font-size:22px; font-weight:700; margin:0 0 6px 0;">Hansard Keyword Digest</div>
+        <div style="font-size:13px; opacity:.9;">Comprehensive parliamentary transcript analysis — {now_utc}</div>
+      </div>
+    """
+    header_box = _vml_rounded(header_inner, EMAIL_WIDTH, COLORS["navy"], COLORS["navy"], radius_px=12, pad_px=18)
+
+    # Keywords card
+    keywords_inner = f"""
+      <div style="font-family:Arial,Helvetica,sans-serif; font-size:16px; color:{COLORS['dark']}; font-weight:700; margin-bottom:10px;">Keywords Being Tracked</div>
+      <div>{kw_badges}</div>
+    """
+    keywords_box = _vml_rounded(keywords_inner, EMAIL_WIDTH, COLORS["light"], COLORS["border"], radius_px=12, pad_px=18)
+
+    # Summary card
+    summary_title = f"<div style='font-family:Arial,Helvetica,sans-serif; font-size:16px; color:{COLORS['dark']}; font-weight:700; margin-bottom:10px;'>Summary by Chamber</div>"
+    summary_box = _vml_rounded(summary_title + summary_table, EMAIL_WIDTH, COLORS["light"], COLORS["border"], radius_px=12, pad_px=18)
+
+    files_html = "\n".join(doc_sections) if doc_sections else _vml_rounded(
+        "<div style='font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#333;'>No keyword matches found.</div>",
+        EMAIL_WIDTH, "#FFFFFF", COLORS["border"], radius_px=12, pad_px=16
     )
 
-    doc_html = "\n".join(doc_sections) if doc_sections else "<p>No keyword matches found.</p>"
-
-    html = f"<!doctype html><html><head>{style}</head><body>{header_html}{doc_html}</body></html>"
+    # Outer wrapper (table-based, inline)
+    html = f"""<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <!--[if mso]>
+      <style>*, body, table, td, div, p, a {{ font-family: Arial, sans-serif !important; }}</style>
+    <![endif]-->
+    <title>Hansard Keyword Digest</title>
+  </head>
+  <body style="margin:0; padding:0; background:{COLORS['light']};">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:{COLORS['light']};">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="{EMAIL_WIDTH}" cellpadding="0" cellspacing="0" border="0" style="width:{EMAIL_WIDTH}px;">
+            <tr><td height="16" style="line-height:16px; font-size:16px;">&nbsp;</td></tr>
+            <tr><td>{header_box}</td></tr>
+            <tr><td height="16" style="line-height:16px; font-size:16px;">&nbsp;</td></tr>
+            <tr><td>{keywords_box}</td></tr>
+            <tr><td height="16" style="line-height:16px; font-size:16px;">&nbsp;</td></tr>
+            <tr><td>{summary_box}</td></tr>
+            <tr><td height="16" style="line-height:16px; font-size:16px;">&nbsp;</td></tr>
+            <tr><td>{files_html}</td></tr>
+            <tr><td height="24" style="line-height:24px; font-size:24px;">&nbsp;</td></tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>"""
     return html, total_matches, counts
 
 
