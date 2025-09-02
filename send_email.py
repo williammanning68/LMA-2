@@ -5,9 +5,11 @@ from bisect import bisect_right
 from pathlib import Path
 from datetime import datetime, UTC
 
-import yagmail
-import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
-
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 # File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
