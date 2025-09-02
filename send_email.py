@@ -379,220 +379,389 @@ def _inline_css(html: str) -> str:
 
 def build_digest_html(files, keywords):
     """
-    Returns: (html_string, total_matches, counts_by_chamber_and_kw)
-
-    Email-safe HTML:
-      - Single column
-      - Inline styles only (no <style> blocks, no CSS classes)
-      - Table-based structure (works in Gmail/Outlook/Apple Mail)
-      - Palette: federal gold/navy/dark/light/accent
+    Outlook-safe HTML digest:
+      - Table-based layout (no flex/grid)
+      - Inline styles only (works in Outlook/Word engine)
+      - Matches grouped by document, with speaker + line refs
+      - Keywords bolded in excerpts
+      - Summary table per keyword (HoA / LC / Total)
+    Returns: (html, total_matches, counts_dict)
     """
-    import re
-    from pathlib import Path
-    from datetime import datetime, UTC
+    # ----- helpers (local, digest-scoped) ------------------------------------
+    def is_legislative_council(name: str) -> bool:
+        n = name.lower()
+        return "legislative" in n or "council" in n
 
-    # --- palette (inline hex) ---
-    FEDERAL_GOLD   = "#C5A572"
-    FEDERAL_NAVY   = "#4A5A6A"
-    FEDERAL_DARK   = "#475560"
-    FEDERAL_LIGHT  = "#ECF0F1"
-    FEDERAL_ACCENT = "#D4AF37"
-    BORDER_LIGHT   = "#D8DCE0"
-    TEXT_PRIMARY   = "#2C3440"
-    TEXT_SECONDARY = "#6B7684"
-    WHITE          = "#FFFFFF"
+    def chamber_of(name: str) -> str:
+        return "Legislative Council" if is_legislative_council(name) else "House of Assembly"
 
-    # helpers
-    def esc(s: str) -> str:
-        try:
-            return _html_escape(s)
-        except NameError:
-            import html
-            return html.escape(s or "")
+    # sentence split (simple, email-safe)
+    SENT_SPLIT_RE = re.compile(r"(?<=[.!?])\s+")
+    def split_sentences(text: str) -> list[str]:
+        return SENT_SPLIT_RE.split(text.strip())
 
-    def parse_date_from_filename(filename: str):
-        m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
-        if m:
-            try:
-                return datetime.strptime(m.group(1), "%d %B %Y")
-            except ValueError:
-                return datetime.min
-        return datetime.min
+    # bold a keyword (case-insensitive) inside an HTML-safe string
+    def bold_kw(html_text: str, kw: str) -> str:
+        return re.sub(rf"({re.escape(kw)})", r"<strong>\1</strong>", html_text, flags=re.I)
 
-    def parse_chamber_from_filename(filename: str) -> str:
-        low = filename.lower()
-        if "house_of_assembly" in low:
-            return "House of Assembly"
-        if "legislative_council" in low:
-            return "Legislative Council"
-        return "Unknown"
+    # find first line number (1-based) for kw inside a range of original lines
+    def first_kw_line_for(block_text: str, block_start_line: int, kw: str) -> int | None:
+        # scan within block by lines for first occurrence
+        lines = block_text.splitlines()
+        for i, ln in enumerate(lines):
+            if re.search(rf"(?i){re.escape(kw)}", ln):
+                return block_start_line + i
+        return None
 
-    # counters
-    chambers = ["House of Assembly", "Legislative Council"]
-    counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
-    totals = {kw: 0 for kw in keywords}
+    # Use your existing robust Tas Hansard header regex to segment speakers.
+    # We also track the starting source line index for each utterance so we
+    # can compute accurate "line N" references.
+    def segment_with_line_start(raw: str):
+        current_speaker = None
+        buff = []
+        start_line = 1
+        line_idx = 0
+
+        def flush():
+            nonlocal buff, current_speaker, start_line
+            body = "\n".join(buff).strip()
+            if body:
+                yield (current_speaker, body, start_line)
+            buff = []
+
+        lines = raw.splitlines()
+        while line_idx < len(lines):
+            raw_line = lines[line_idx]
+            line = raw_line.strip()
+
+            # boundaries to skip/flush on (reuse your compiled regexes)
+            if (not line) or TIME_STAMP_RE.match(line) or UPPER_HEADING_RE.match(line) or INTERJECTION_RE.match(line):
+                if line == "" and buff:
+                    buff.append("")  # keep paragraph gap
+                else:
+                    yield from flush()
+                line_idx += 1
+                start_line = line_idx + 1
+                continue
+
+            m = SPEAKER_HEADER_RE.match(line)
+            if m:
+                # new speaker — flush previous
+                yield from flush()
+                title = (m.group("title") or "").strip()
+                name = (m.group("name") or m.group("name_only") or "").strip()
+                current_speaker = " ".join(x for x in (title, name) if x).strip()
+                line_idx += 1
+                start_line = line_idx + 1
+                continue
+
+            # accumulate
+            if not buff:
+                start_line = line_idx + 1
+            buff.append(raw_line.rstrip())
+            line_idx += 1
+
+        yield from flush()
+
+    # For combining nearby keyword mentions within the same speaker’s block
+    def combine_if_near(sentences: list[str], hit_idxs: list[int]) -> tuple[int, int]:
+        """
+        If multiple keywords for a speaker occur within 2 sentences of each other,
+        keep the original single-window logic (do not extend).
+        Only extend the window if another matched keyword is > 2 sentences away.
+        Returns a (start_idx, end_idx_exclusive) to slice sentences.
+        """
+        if not hit_idxs:
+            return (0, min(2, len(sentences)))
+
+        hit_idxs = sorted(set(hit_idxs))
+        # Start with a window around the first hit per your rules
+        first = hit_idxs[0]
+        # rule: if hit in first sentence -> next 2 sentences, else one on either side
+        if first == 0:
+            start, end = 0, min(3, len(sentences))
+        else:
+            start, end = max(0, first - 1), min(len(sentences), first + 2)
+
+        # Now check for other hits by the same speaker
+        for hi in hit_idxs[1:]:
+            if abs(hi - first) > 2:
+                # spread out enough -> extend to include that far hit with same rule
+                if hi == 0:
+                    s2, e2 = 0, min(3, len(sentences))
+                else:
+                    s2, e2 = max(0, hi - 1), min(len(sentences), hi + 2)
+                start = min(start, s2)
+                end = max(end, e2)
+
+        return (start, end)
+
+    # ----- build content ------------------------------------------------------
+    now_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
     total_matches = 0
-    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    # per-document sections
-    doc_sections = []
-    files_sorted = sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name))
-    docs_analyzed = len(files_sorted)
+    # counts[keyword] = {"House of Assembly": n, "Legislative Council": n, "Total": n}
+    counts = {kw: {"House of Assembly": 0, "Legislative Council": 0, "Total": 0} for kw in keywords}
 
-    for fpath in files_sorted:
-        name = Path(fpath).name
-        text = Path(fpath).read_text(encoding="utf-8", errors="ignore")
-        chamber = parse_chamber_from_filename(name)
+    documents_render = []
 
-        matches = extract_matches(text, keywords)
-        if not matches:
-            continue
+    for f in sorted(files, key=lambda x: parse_date_from_filename(Path(x).name)):
+        name = Path(f).name
+        chamber = chamber_of(name)
+        raw = Path(f).read_text(encoding="utf-8", errors="ignore")
 
-        matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
-        total_matches += len(matches)
+        # Collect matches for this document: [(match_no, speaker, lines_text, excerpt_html)]
+        match_cards = []
+        match_no = 0
 
-        # Document header row
-        sec = []
-        sec.append(f"""
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
-  <tr>
-    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-left:6px solid {FEDERAL_GOLD}; border-radius:8px; overflow:hidden;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        for speaker, utt, start_line in segment_with_line_start(raw):
+            if not utt.strip():
+                continue
+
+            # Which keywords hit in this utterance?
+            hits = []
+            for kw in keywords:
+                if _kw_hit(utt, kw):
+                    hits.append(kw)
+
+            if not hits:
+                continue
+
+            # sentence window logic
+            sentences = split_sentences(utt)
+            hit_idxs = []
+            for i, s in enumerate(sentences):
+                for kw in hits:
+                    if _kw_hit(s, kw):
+                        hit_idxs.append(i)
+                        break
+            s_idx, e_idx = combine_if_near(sentences, hit_idxs)
+            snippet = " ".join(sentences[s_idx:e_idx]).strip()
+
+            # line reference: first matching kw within the utterance window
+            line_refs = []
+            for kw in hits:
+                ln = first_kw_line_for(utt, start_line, kw)
+                if ln is not None:
+                    line_refs.append(ln)
+
+            # highlight keywords
+            for kw in keywords:
+                if _kw_hit(snippet, kw):
+                    snippet = bold_kw(snippet, kw)
+
+            # Count each keyword once per utterance block
+            for kw in set(hits):
+                counts[kw][chamber] += 1
+                counts[kw]["Total"] += 1
+                total_matches += 1
+
+            match_no += 1
+            line_label = (
+                f"line {line_refs[0]}" if len(line_refs) == 1
+                else f"lines {', '.join(str(x) for x in sorted(set(line_refs)))}"
+            ) if line_refs else "line —"
+
+            # Render a match card (table-based)
+            match_cards.append(f"""
+              <!-- match card -->
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="border:1px solid #D8DCE0;border-radius:6px;margin:12px 0;">
+                <tr>
+                  <td style="padding:10px 12px;background:#ECF0F1;border-bottom:1px solid #D8DCE0;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td width="36" align="center" valign="middle"
+                            style="background:#4A5A6A;color:#FFFFFF;font:600 12px Segoe UI,Arial,sans-serif;border-radius:18px;height:32px;width:32px;">
+                          {match_no}
+                        </td>
+                        <td style="padding-left:12px;font:600 14px Segoe UI,Arial,sans-serif;color:#475560;">
+                          {speaker if speaker else "UNKNOWN"}
+                        </td>
+                        <td align="right" style="font:12px Segoe UI,Arial,sans-serif;color:#6B7684;">
+                          {line_label}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 16px;font:14px/1.6 Segoe UI,Arial,sans-serif;color:#2C3440;">
+                    {snippet}
+                  </td>
+                </tr>
+              </table>
+            """)
+
+        if match_cards:
+            documents_render.append(f"""
+              <!-- document block -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px 0;">
+                <tr>
+                  <td style="padding:12px 14px;border-left:4px solid #C5A572;background:#F7F9FA;border-radius:8px 8px 0 0;">
+                    <div style="font:600 15px Segoe UI,Arial,sans-serif;color:#4A5A6A;">{name}</div>
+                    <div style="font:13px Segoe UI,Arial,sans-serif;color:#6B7684;margin-top:2px;">{len(match_cards)} match(es)</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="border:1px solid #D8DCE0;border-top:none;border-radius:0 0 8px 8px;background:#FFFFFF;padding:10px 12px;">
+                    {''.join(match_cards)}
+                  </td>
+                </tr>
+              </table>
+            """)
+
+    # Build keyword summary table
+    def td(s, style=""): return f"<td style=\"padding:8px 10px;border-bottom:1px solid #ECF0F1;{style}\">{s}</td>"
+    rows = []
+    for kw in keywords:
+        hoa = counts[kw]["House of Assembly"]
+        lc  = counts[kw]["Legislative Council"]
+        tot = counts[kw]["Total"]
+        rows.append(
+            "<tr>" +
+            td(f"<span style='font-weight:600;color:#4A5A6A'>{kw}</span>") +
+            td(f"<div style='text-align:center;color:#6B7684;font-weight:600'>{hoa}</div>") +
+            td(f"<div style='text-align:center;color:#6B7684;font-weight:600'>{lc}</div>") +
+            td(f"<div style='text-align:center;background:#F4E9D3;color:#475560;font-weight:700;border-radius:4px;padding:4px 0'>{tot}</div>") +
+            "</tr>"
+        )
+    summary_table_html = f"""
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#FFFFFF;border-radius:8px;overflow:hidden;border:1px solid #D8DCE0;">
         <tr>
-          <td style="padding:14px 16px; border-bottom:1px solid {BORDER_LIGHT};">
-            <div style="font-weight:700; color:{FEDERAL_NAVY}; font-size:16px; line-height:1.3;">{esc(name)}</div>
-            <div style="color:{TEXT_SECONDARY}; font-size:12px; margin-top:2px;">{esc(chamber)}</div>
-          </td>
+          <th align="left" style="background:#4A5A6A;color:#FFFFFF;padding:12px 10px;font:600 12px Segoe UI,Arial,sans-serif;text-transform:uppercase;letter-spacing:.5px;">Keyword</th>
+          <th align="left" style="background:#4A5A6A;color:#FFFFFF;padding:12px 10px;font:600 12px Segoe UI,Arial,sans-serif;text-transform:uppercase;letter-spacing:.5px;">House of Assembly</th>
+          <th align="left" style="background:#4A5A6A;color:#FFFFFF;padding:12px 10px;font:600 12px Segoe UI,Arial,sans-serif;text-transform:uppercase;letter-spacing:.5px;">Legislative Council</th>
+          <th align="left" style="background:#4A5A6A;color:#FFFFFF;padding:12px 10px;font:600 12px Segoe UI,Arial,sans-serif;text-transform:uppercase;letter-spacing:.5px;">Total</th>
         </tr>
-""")
+        {''.join(rows) if rows else '<tr>' + td('—')*4 + '</tr>'}
+      </table>
+    """
 
-        # Matches
-        for i, (kw_set, excerpt_html, speaker, line_list, _w0, _w1) in enumerate(matches, 1):
-            for kw in kw_set:
-                if chamber in counts:
-                    counts[chamber][kw] += 1
-                totals[kw] += 1
-
-            line_label = "line" if len(set(line_list)) == 1 else "lines"
-            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else "—"
-            speaker_html = esc(speaker) if speaker else "UNKNOWN"
-
-            sec.append(f"""
+    # Header stat cards (table layout)
+    total_docs = sum(1 for _ in documents_render)
+    total_terms = len(keywords)
+    header_stats_html = f"""
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:10px;">
         <tr>
-          <td style="padding:0; border-top:1px solid {BORDER_LIGHT};">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-              <tr>
-                <td style="padding:10px 16px;">
-                  <div style="font-size:12px; color:{TEXT_SECONDARY}; margin:0 0 6px 0;">
-                    <span style="display:inline-block; padding:1px 6px; background:rgba(74,90,106,.08); border:1px solid rgba(74,90,106,.18); border-radius:6px; color:{FEDERAL_DARK}; font-weight:700; margin-right:8px;">Match #{i}</span>
-                    <span style="font-weight:600; color:{FEDERAL_DARK};">{speaker_html}</span>
-                    <span style="margin-left:10px;">{line_label} {esc(lines_str)}</span>
-                  </div>
-                  <div style="background:#fbfbfb; border-left:3px solid {FEDERAL_ACCENT}; padding:10px 12px; border-radius:4px; color:{TEXT_PRIMARY}; font-size:14px; line-height:1.5;">
-                    {excerpt_html}
-                  </div>
-                </td>
-              </tr>
+          <td width="25%" valign="top" style="padding:8px 6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:8px;border-left:3px solid #C5A572;">
+              <tr><td style="padding:10px 12px;">
+                <div style="font:500 12px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">Documents</div>
+                <div style="font:600 22px Segoe UI,Arial,sans-serif;color:#C5A572"> {total_docs} </div>
+                <div style="font:13px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">transcripts analyzed</div>
+              </td></tr>
+            </table>
+          </td>
+          <td width="25%" valign="top" style="padding:8px 6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:8px;border-left:3px solid #C5A572;">
+              <tr><td style="padding:10px 12px;">
+                <div style="font:500 12px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">Keywords</div>
+                <div style="font:600 22px Segoe UI,Arial,sans-serif;color:#C5A572"> {total_terms} </div>
+                <div style="font:13px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">terms tracked</div>
+              </td></tr>
+            </table>
+          </td>
+          <td width="25%" valign="top" style="padding:8px 6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:8px;border-left:3px solid #C5A572;">
+              <tr><td style="padding:10px 12px;">
+                <div style="font:500 12px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">Matches</div>
+                <div style="font:600 22px Segoe UI,Arial,sans-serif;color:#C5A572"> {total_matches} </div>
+                <div style="font:13px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">excerpts found</div>
+              </td></tr>
+            </table>
+          </td>
+          <td width="25%" valign="top" style="padding:8px 6px;">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:8px;border-left:3px solid #C5A572;">
+              <tr><td style="padding:10px 12px;">
+                <div style="font:500 12px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">Generated</div>
+                <div style="font:600 22px Segoe UI,Arial,sans-serif;color:#C5A572"> Now </div>
+                <div style="font:13px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9">{now_utc}</div>
+              </td></tr>
             </table>
           </td>
         </tr>
-""")
-
-        # Close card
-        sec.append("""
       </table>
-    </td>
-  </tr>
-</table>
-""")
-        doc_sections.append("".join(sec))
+    """
 
-    # Summary rows
-    def summary_rows():
-        rows = []
-        for kw in keywords:
-            hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
-            lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
-            tot = totals[kw]
-            rows.append(f"""
-<tr>
-  <td style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT};">
-    <span style="display:inline-block; background:rgba(197,165,114,.15); color:{FEDERAL_DARK}; border:1px solid rgba(197,165,114,.35); border-radius:999px; padding:2px 8px; font-size:12px;">{esc(kw)}</span>
-  </td>
-  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; color:{TEXT_SECONDARY};">{hoa}</td>
-  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; color:{TEXT_SECONDARY};">{lc}</td>
-  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; font-weight:700; color:{FEDERAL_DARK}; background:rgba(212,175,55,0.08);">{tot}</td>
-</tr>
-""")
-        return "".join(rows)
-
-    summary_table = f"""
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; overflow:hidden; margin:0 0 18px 0;">
-  <thead>
-    <tr>
-      <th align="left" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Keyword</th>
-      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">House of Assembly</th>
-      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Legislative Council</th>
-      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    {summary_rows()}
-  </tbody>
-</table>
-"""
-
-    # Header block
-    header_block = f"""
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
-  <tr>
-    <td style="background:{FEDERAL_NAVY}; color:{WHITE}; padding:18px; border-radius:10px; border-bottom:4px solid {FEDERAL_GOLD};">
-      <div style="font-size:18px; font-weight:700; margin:0 0 4px 0;">Hansard Keyword Digest</div>
-      <div style="opacity:.95; font-size:12px;">Program Runtime: {esc(now_utc)}</div>
-    </td>
-  </tr>
-</table>
-"""
-
-    # Summary card
-    summary_card = f"""
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
-  <tr>
-    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; padding:12px 14px;">
-      <div style="font-size:14px; color:{TEXT_PRIMARY};">
-        <span style="color:{TEXT_SECONDARY};">Keywords:</span> {esc(", ".join(keywords))}
-        <span style="margin-left:12px; color:{TEXT_SECONDARY};">Documents analyzed:</span> {docs_analyzed}
-        <span style="margin-left:12px; color:{TEXT_SECONDARY};">Total matches:</span> {total_matches}
-      </div>
-    </td>
-  </tr>
-</table>
-"""
-
-    docs_html = "\n".join(doc_sections) if doc_sections else f"""
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-top:16px;">
-  <tr>
-    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; padding:14px 16px;">No transcripts with matches.</td>
-  </tr>
-</table>
-"""
-
-    # Outer wrapper: use tables + inline styles only
-    html = f"""<!doctype html>
+    # Full Outlook-safe shell (no external CSS; all inline)
+    html = f"""<!DOCTYPE html>
 <html>
-  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"/></head>
-  <body style="margin:0; padding:24px; background:{FEDERAL_LIGHT}; color:{TEXT_PRIMARY}; font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
-    <center>
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; max-width:900px; margin:0 auto;">
-        <tr><td>
-          {header_block}
-          {summary_card}
-          {summary_table}
-          {docs_html}
-        </td></tr>
-      </table>
-    </center>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Hansard Keyword Digest</title>
+</head>
+<body style="margin:0;padding:0;background:#ECF0F1;">
+  <center style="width:100%;background:#ECF0F1;">
+    <!--[if mso]><table role="presentation" width="600" align="center" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+    <table role="presentation" align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:900px;margin:0 auto;background:#FFFFFF;">
+      <tr>
+        <td style="padding:0;">
+          <!-- Header -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#475560;">
+            <tr>
+              <td style="padding:24px 28px;">
+                <div style="font:400 24px Segoe UI,Arial,sans-serif;color:#FFFFFF;">Hansard Keyword Digest</div>
+                <div style="font:14px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9;margin-top:6px;">Comprehensive parliamentary transcript analysis — {now_utc}</div>
+                {header_stats_html}
+              </td>
+            </tr>
+          </table>
+
+          <!-- Content -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ECF0F1;">
+            <tr><td style="height:16px;line-height:16px;">&nbsp;</td></tr>
+            <tr>
+              <td style="padding:0 16px;">
+                <!-- Panel: Keywords Being Tracked -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:12px;padding:0;border:1px solid #D8DCE0;">
+                  <tr>
+                    <td style="padding:16px 18px;border-bottom:3px solid #C5A572;">
+                      <div style="font:600 18px Segoe UI,Arial,sans-serif;color:#4A5A6A;">Keywords Being Tracked</div>
+                      <div style="margin-top:8px;">
+                        {"".join(f"<span style='display:inline-block;padding:4px 10px;background:#C5A572;color:#FFFFFF;border-radius:4px;font:600 13px Segoe UI,Arial,sans-serif;margin:4px 6px 0 0;'>{kw}</span>" for kw in keywords)}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <div style="height:16px;line-height:16px;">&nbsp;</div>
+
+                <!-- Panel: Summary by Chamber -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#FFFFFF;border-radius:12px;border:1px solid #D8DCE0;">
+                  <tr>
+                    <td style="padding:16px 18px;border-bottom:3px solid #C5A572;">
+                      <div style="font:600 18px Segoe UI,Arial,sans-serif;color:#4A5A6A;">Summary by Chamber</div>
+                    </td>
+                  </tr>
+                  <tr><td style="padding:12px 16px;">{summary_table_html}</td></tr>
+                </table>
+
+                <div style="height:16px;line-height:16px;">&nbsp;</div>
+
+                <!-- Documents & Matches -->
+                {"".join(documents_render) if documents_render else
+                 "<table role='presentation' width='100%'><tr><td style='font:14px Segoe UI,Arial,sans-serif;color:#6B7684;padding:12px;'>No keyword matches found.</td></tr></table>"}
+              </td>
+            </tr>
+            <tr><td style="height:16px;line-height:16px;">&nbsp;</td></tr>
+          </table>
+
+          <!-- Footer -->
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#4A5A6A;">
+            <tr>
+              <td style="padding:16px;text-align:center;font:12px Segoe UI,Arial,sans-serif;color:#FFFFFF;opacity:.9;">
+                Automated Hansard Digest System — Generated {now_utc}
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if mso]></td></tr></table><![endif]-->
+  </center>
+</body>
 </html>"""
 
     return html, total_matches, counts
