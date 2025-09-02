@@ -348,15 +348,37 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 
 def build_digest_html(files, keywords):
+    """Build the HTML body and return (html_string, total_matches, counts_by_chamber_and_kw)."""
+    from datetime import datetime, UTC
     now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
+    # Summary counters
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
 
+    # Collect per-document sections
     doc_sections = []
     total_matches = 0
 
+    def parse_date_from_filename(filename: str):
+        m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
+        if m:
+            try:
+                return datetime.strptime(m.group(1), "%d %B %Y")
+            except ValueError:
+                return datetime.min
+        return datetime.min
+
+    def parse_chamber_from_filename(filename: str) -> str:
+        name = filename.lower()
+        if "house_of_assembly" in name:
+            return "House of Assembly"
+        if "legislative_council" in name:
+            return "Legislative Council"
+        return "Unknown"
+
+    # Order documents by date (parsed from filename), then by name
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
@@ -365,771 +387,234 @@ def build_digest_html(files, keywords):
         if not matches:
             continue
 
+        # Order matches by earliest line number
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # Extract date for better display
-        date_obj = parse_date_from_filename(Path(f).name)
-        date_str = date_obj.strftime("%d %B %Y") if date_obj != datetime.min else ""
-        
-        # Chamber icon
-        chamber_icon = "🏛️" if chamber == "House of Assembly" else "⚖️" if chamber == "Legislative Council" else "📋"
-        
-        sec_lines = [
-            f'<div class="document-section" role="region" aria-label="Document: {_html_escape(Path(f).name)}">'
-            f'  <div class="doc-header">'
-            f'    <div class="doc-title-wrapper">'
-            f'      <span class="chamber-icon" aria-hidden="true">{chamber_icon}</span>'
-            f'      <div class="doc-info">'
-            f'        <h3 class="doc-title">{_html_escape(Path(f).name)}</h3>'
-            f'        <div class="doc-meta">'
-            f'          <span class="doc-chamber">{chamber}</span>'
-            f'          {f"<span class='doc-date'>{date_str}</span>" if date_str else ""}'
-            f'          <span class="match-count">{len(matches)} matches</span>'
-            f'        </div>'
-            f'      </div>'
-            f'    </div>'
-            f'  </div>'
-            f'  <div class="matches-container">'
-        ]
-        
-        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+        # Build section HTML for this document
+        sec = []
+        sec.append(
+            f'<section class="doc">'
+            f'  <header class="doc__header">'
+            f'    <div class="doc__title">{_html_escape(Path(f).name)}</div>'
+            f'    <div class="doc__meta">{_html_escape(chamber)}</div>'
+            f'  </header>'
+        )
+
+        for i, (kw_set, excerpt_html, speaker, line_list, _win_start, _win_end) in enumerate(matches, 1):
+            # Update counts
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
-            first_line = min(line_list) if line_list else win_start
+            first_line = min(line_list) if line_list else None
             speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
             line_label = "line" if len(line_list) == 1 else "lines"
-            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
-            
-            # Keywords as tags
-            kw_tags = "".join([f'<span class="keyword-tag">{_html_escape(kw)}</span>' for kw in sorted(kw_set, key=str.lower)])
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else "—"
 
-            sec_lines.append(
-                f'<article class="match-card" role="article" aria-label="Match {i}">'
-                f'  <div class="match-header">'
-                f'    <div class="match-header-left">'
-                f'      <span class="match-number" aria-label="Match number">{i}</span>'
-                f'      <div class="speaker-info">'
-                f'        <span class="speaker-icon" aria-hidden="true">👤</span>'
-                f'        <span class="speaker-name">{speaker_html}</span>'
-                f'      </div>'
+            sec.append(
+                f'  <article class="match">'
+                f'    <div class="match__meta">'
+                f'      <span class="match__index">Match #{i}</span>'
+                f'      <span class="match__speaker">{speaker_html}</span>'
+                f'      <span class="match__lines">{line_label} {lines_str}</span>'
                 f'    </div>'
-                f'    <div class="match-header-right">'
-                f'      <span class="line-info" aria-label="{line_label}">'
-                f'        <span class="line-icon" aria-hidden="true">📍</span>'
-                f'        {lines_str}'
-                f'      </span>'
-                f'    </div>'
-                f'  </div>'
-                f'  <div class="keyword-tags" aria-label="Keywords found">{kw_tags}</div>'
-                f'  <div class="excerpt" aria-label="Excerpt">{excerpt_html}</div>'
-                f'</article>'
+                f'    <div class="match__excerpt">{excerpt_html}</div>'
+                f'  </article>'
             )
-        sec_lines.append('  </div>')
-        sec_lines.append('</div>')
-        doc_sections.append("\n".join(sec_lines))
 
-    # Build summary statistics
-    total_docs = len([f for f in files if extract_matches(Path(f).read_text(encoding="utf-8", errors="ignore"), keywords)])
-    
-    # Build enhanced summary table
+        sec.append('</section>')
+        doc_sections.append("\n".join(sec))
+
+    # Build summary table
     header_cols = "".join([
-        "<th scope='col' class='th-keyword'>Keyword</th>",
-        "<th scope='col' class='th-chamber'><span class='chamber-icon-small' aria-hidden='true'>🏛️</span> House of Assembly</th>",
-        "<th scope='col' class='th-chamber'><span class='chamber-icon-small' aria-hidden='true'>⚖️</span> Legislative Council</th>",
-        "<th scope='col' class='th-total'>Total</th>",
+        "<th>Keyword</th>",
+        "<th>House of Assembly</th>",
+        "<th>Legislative Council</th>",
+        "<th>Total</th>",
     ])
-    
     row_html = []
     for kw in keywords:
         hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
         lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
         tot = totals[kw]
-        
-        # Add visual indicators for high counts
-        hoa_class = "high-count" if hoa > 10 else "medium-count" if hoa > 5 else ""
-        lc_class = "high-count" if lc > 10 else "medium-count" if lc > 5 else ""
-        tot_class = "high-count" if tot > 20 else "medium-count" if tot > 10 else ""
-        
         row_html.append(
             f"<tr>"
-            f"<td class='keyword-cell'><strong>{_html_escape(kw)}</strong></td>"
-            f"<td class='num {hoa_class}'>{hoa}</td>"
-            f"<td class='num {lc_class}'>{lc}</td>"
-            f"<td class='num total {tot_class}'>{tot}</td>"
+            f"  <td class='kw'><span class='kw__pill'>{_html_escape(kw)}</span></td>"
+            f"  <td class='num'>{hoa}</td>"
+            f"  <td class='num'>{lc}</td>"
+            f"  <td class='num total'>{tot}</td>"
             f"</tr>"
         )
-    
     summary_table = (
-        f'<table class="summary-table" role="table" aria-label="Keyword summary statistics">'
+        f'<table class="summary">'
         f'  <thead><tr>{header_cols}</tr></thead>'
         f'  <tbody>{"".join(row_html)}</tbody>'
         f'</table>'
     )
 
-    # Enhanced CSS with better accessibility and modern design
+    # Assemble full HTML
     style = """
     <style>
-      * { box-sizing: border-box; }
-      
-      /* Base styles */
-      body { 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif; 
-        line-height: 1.6; 
-        color: #2c3e50; 
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        margin: 0; 
-        padding: 20px;
-        min-height: 100vh;
+      :root{
+        --federal-gold:#C5A572;
+        --federal-navy:#4A5A6A;
+        --federal-dark:#475560;
+        --federal-light:#ECF0F1;
+        --federal-accent:#D4AF37;
+        --bg: var(--federal-light);
+        --text: var(--federal-dark);
+        --card-bg: #ffffff;
+        --muted: #6b7a89;
+        --rule: rgba(71,85,96,0.12);
       }
-      
-      .container { 
-        max-width: 900px; 
-        margin: 0 auto; 
-        background: white; 
-        border-radius: 16px; 
-        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-        overflow: hidden;
+      body{
+        margin:0; padding:24px;
+        background:var(--bg);
+        color:var(--text);
+        font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       }
-      
-      /* Header section */
-      .header { 
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white; 
-        padding: 32px;
-        position: relative;
-        overflow: hidden;
+      .wrap{
+        max-width: 860px; margin: 0 auto;
       }
-      
-      .header::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-        animation: pulse 4s ease-in-out infinite;
-      }
-      
-      @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 0.5; }
-        50% { transform: scale(1.1); opacity: 0.3; }
-      }
-      
-      .header h1 { 
-        margin: 0 0 24px 0; 
-        font-size: 32px; 
-        font-weight: 700;
-        letter-spacing: -0.5px;
-        position: relative;
-        z-index: 1;
-      }
-      
-      .header-info { 
-        background: rgba(255,255,255,0.2); 
-        backdrop-filter: blur(10px);
-        border-radius: 12px; 
-        padding: 20px; 
-        position: relative;
-        z-index: 1;
-      }
-      
-      .header-stats {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 16px;
-        margin-top: 16px;
-      }
-      
-      .stat-item {
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .stat-label {
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        opacity: 0.9;
-        margin-bottom: 4px;
-      }
-      
-      .stat-value {
-        font-size: 24px;
-        font-weight: 700;
-      }
-      
-      /* Content section */
-      .content { 
-        padding: 32px;
-      }
-      
-      /* Summary section */
-      .summary-section {
-        margin-bottom: 40px;
-      }
-      
-      .summary-section h2 { 
-        color: #2c3e50; 
-        margin: 0 0 24px 0; 
-        font-size: 24px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      
-      .summary-section h2::before {
-        content: '📊';
-        font-size: 28px;
-      }
-      
-      /* Summary table */
-      .summary-table { 
-        width: 100%; 
-        border-collapse: separate;
-        border-spacing: 0;
-        margin: 0 0 32px 0; 
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        border-radius: 12px; 
-        overflow: hidden;
-      }
-      
-      .summary-table th { 
-        background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-        color: white; 
-        padding: 16px; 
-        text-align: left; 
-        font-weight: 600; 
-        font-size: 14px;
-        letter-spacing: 0.3px;
-      }
-      
-      .summary-table th.th-total {
-        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-      }
-      
-      .chamber-icon-small {
-        font-size: 16px;
-        margin-right: 4px;
-      }
-      
-      .summary-table td { 
-        padding: 14px 16px; 
-        border-bottom: 1px solid #e2e8f0;
-        transition: all 0.2s ease;
-      }
-      
-      .summary-table tbody tr:hover { 
-        background: #f7fafc;
-        transform: translateX(4px);
-      }
-      
-      .summary-table tbody tr:last-child td {
-        border-bottom: none;
-      }
-      
-      .keyword-cell {
-        color: #4a5568;
-      }
-      
-      .summary-table td.num { 
-        text-align: center; 
-        font-weight: 600; 
-        font-variant-numeric: tabular-nums;
-        font-size: 16px;
-      }
-      
-      .summary-table td.total { 
-        background: linear-gradient(135deg, #e6fffa 0%, #c6f6d5 100%);
-        font-weight: 700; 
-        color: #22543d;
-      }
-      
-      .summary-table td.high-count {
-        color: #9f1239;
-        background: #fef2f2;
-      }
-      
-      .summary-table td.medium-count {
-        color: #92400e;
-        background: #fef3c7;
-      }
-      
-      /* Document sections */
-      .document-section { 
-        margin: 40px 0;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: box-shadow 0.3s ease;
-      }
-      
-      .document-section:hover {
-        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      }
-      
-      .doc-header {
-        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-        padding: 20px;
-        border-bottom: 2px solid #e2e8f0;
-      }
-      
-      .doc-title-wrapper {
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-      }
-      
-      .chamber-icon {
-        font-size: 32px;
-        margin-top: 4px;
-      }
-      
-      .doc-info {
-        flex: 1;
-      }
-      
-      .doc-title { 
-        color: #2d3748;
-        margin: 0 0 8px 0; 
-        font-size: 18px; 
-        font-weight: 600;
-        line-height: 1.3;
-      }
-      
-      .doc-meta {
-        display: flex;
-        gap: 16px;
-        flex-wrap: wrap;
-        font-size: 14px;
-        color: #718096;
-      }
-      
-      .doc-chamber {
-        background: #edf2f7;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-weight: 500;
-      }
-      
-      .doc-date {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-      
-      .doc-date::before {
-        content: '📅';
-        font-size: 14px;
-      }
-      
-      .match-count {
-        background: #f0fff4;
-        color: #22543d;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-weight: 600;
-      }
-      
-      .matches-container {
-        padding: 20px;
-      }
-      
-      /* Match cards */
-      .match-card { 
-        margin: 16px 0;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-        background: white;
-      }
-      
-      .match-card:hover { 
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        border-color: #cbd5e0;
-      }
-      
-      .match-header { 
-        background: linear-gradient(135deg, #f7fafc 0%, #ffffff 100%);
-        padding: 16px 20px;
-        border-bottom: 1px solid #e2e8f0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      
-      .match-header-left {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      
-      .match-number { 
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: 700;
-        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-      }
-      
-      .speaker-info {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      
-      .speaker-icon {
-        font-size: 20px;
-        opacity: 0.8;
-      }
-      
-      .speaker-name { 
-        font-weight: 600;
-        color: #2d3748;
-        font-size: 16px;
-      }
-      
-      .match-header-right {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      
-      .line-info { 
-        color: #718096;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: #f7fafc;
-        padding: 4px 12px;
-        border-radius: 20px;
-      }
-      
-      .line-icon {
-        font-size: 14px;
-      }
-      
-      .keyword-tags {
-        padding: 12px 20px;
-        background: #faf5ff;
-        border-bottom: 1px solid #e9d5ff;
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-      
-      .keyword-tag {
-        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
-        color: white;
-        padding: 4px 12px;
-        border-radius: 16px;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.3px;
-        box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
-      }
-      
-      .excerpt { 
-        padding: 20px;
-        background: white;
-        line-height: 1.8;
-        color: #4a5568;
-        font-size: 15px;
-        position: relative;
-      }
-      
-      .excerpt strong { 
-        background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
-        color: #92400e;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-weight: 600;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
-        box-shadow: 0 1px 3px rgba(251, 191, 36, 0.3);
-      }
-      
-      /* No matches message */
-      .no-matches { 
-        text-align: center;
-        padding: 60px 20px;
-        color: #718096;
-        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-        border-radius: 12px;
-        margin: 20px 0;
-        font-size: 16px;
-      }
-      
-      .no-matches::before {
-        content: '🔍';
-        display: block;
-        font-size: 48px;
+      .brand{
+        background: var(--card-bg);
+        border: 1px solid var(--rule);
+        border-left: 6px solid var(--federal-gold);
+        border-radius: 8px;
+        padding: 16px 18px;
         margin-bottom: 16px;
-        opacity: 0.5;
       }
-      
-      /* Accessibility improvements */
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation: none !important;
-          transition: none !important;
-        }
+      .brand__title{
+        font-size: 18px; font-weight: 700; color: var(--federal-navy);
+        margin: 0 0 2px 0;
       }
-      
-      /* High contrast mode support */
-      @media (prefers-contrast: high) {
-        .match-card, .document-section {
-          border-width: 2px;
-        }
-        
-        .excerpt strong {
-          text-decoration: underline;
-          text-decoration-thickness: 2px;
-        }
+      .brand__sub{ margin:0; color: var(--muted); }
+      .summary-card{
+        background: var(--card-bg);
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 18px;
       }
-      
-      /* Dark mode support */
-      @media (prefers-color-scheme: dark) {
-        body {
-          background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
-        }
-        
-        .container {
-          background: #2d3748;
-          color: #e2e8f0;
-        }
-        
-        .header {
-          background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
-        }
-        
-        .content {
-          background: #2d3748;
-        }
-        
-        .match-card, .document-section {
-          background: #374151;
-          border-color: #4b5563;
-        }
-        
-        .doc-header, .match-header {
-          background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-        }
-        
-        .excerpt {
-          background: #374151;
-          color: #e5e7eb;
-        }
-        
-        .excerpt strong {
-          background: linear-gradient(135deg, #7c2d12 0%, #991b1b 100%);
-          color: #fef3c7;
-        }
-        
-        .doc-title, .speaker-name {
-          color: #f3f4f6;
-        }
-        
-        .summary-table tbody tr:hover {
-          background: #374151;
-        }
+      .kvs{ display:flex; flex-wrap:wrap; gap:12px 24px; margin: 6px 0 0 0; padding:0; list-style:none;}
+      .kvs li{ margin:0; }
+      .kvs .k{ color: var(--muted); margin-right:6px; }
+      .summary{
+        width:100%;
+        border-collapse: collapse;
+        background: var(--card-bg);
+        border: 1px solid var(--rule);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 6px 0 22px 0;
       }
-      
-      /* Mobile responsiveness */
-      @media (max-width: 768px) {
-        body { 
-          padding: 0;
-        }
-        
-        .container { 
-          border-radius: 0;
-          box-shadow: none;
-        }
-        
-        .header { 
-          padding: 24px 16px;
-          border-radius: 0;
-        }
-        
-        .header h1 {
-          font-size: 24px;
-        }
-        
-        .content { 
-          padding: 20px 16px;
-        }
-        
-        .header-stats {
-          grid-template-columns: 1fr 1fr;
-        }
-        
-        .summary-table {
-          font-size: 14px;
-        }
-        
-        .summary-table th, 
-        .summary-table td {
-          padding: 10px 8px;
-        }
-        
-        .doc-title-wrapper {
-          flex-direction: column;
-        }
-        
-        .chamber-icon {
-          font-size: 24px;
-        }
-        
-        .match-header {
-          flex-direction: column;
-          align-items: flex-start;
-        }
-        
-        .match-header-left,
-        .match-header-right {
-          width: 100%;
-        }
-        
-        .excerpt {
-          padding: 16px;
-          font-size: 14px;
-        }
+      .summary thead th{
+        text-align:left;
+        padding:10px 12px;
+        background: linear-gradient(0deg, var(--federal-navy), var(--federal-dark));
+        color: #fff;
+        font-weight:600;
+        font-size:13px;
+        border-bottom: 1px solid var(--rule);
       }
-      
-      @media (max-width: 480px) {
-        .header-stats {
-          grid-template-columns: 1fr;
-        }
-        
-        .doc-meta {
-          flex-direction: column;
-          gap: 8px;
-        }
-        
-        .summary-table {
-          font-size: 12px;
-        }
+      .summary tbody td{
+        padding:10px 12px; border-bottom:1px solid var(--rule);
+        vertical-align: top; background: #fff;
       }
-      
-      /* Print styles */
-      @media print {
-        body {
-          background: white;
-          padding: 0;
-        }
-        
-        .container {
-          box-shadow: none;
-          border: none;
-        }
-        
-        .header {
-          background: none;
-          color: black;
-          border-bottom: 2px solid black;
-        }
-        
-        .header-info {
-          background: none;
-          border: 1px solid black;
-        }
-        
-        .match-card {
-          page-break-inside: avoid;
-          border: 1px solid black;
-        }
-        
-        .excerpt strong {
-          background: none;
-          text-decoration: underline;
-          font-weight: 900;
-        }
+      .summary tbody tr:nth-child(even) td{ background:#fafbfc; }
+      .summary td.num{ text-align:right; width:110px; }
+      .summary td.total{ font-weight:700; }
+      .kw__pill{
+        display:inline-block; background: rgba(197,165,114,0.15);
+        color: var(--federal-dark); border:1px solid rgba(197,165,114,0.35);
+        border-radius: 999px; padding:2px 8px; font-size:12px;
+      }
+
+      section.doc{
+        background: var(--card-bg);
+        border: 1px solid var(--rule);
+        border-radius: 10px;
+        margin: 14px 0;
+        overflow: hidden;
+      }
+      .doc__header{
+        display:flex; justify-content:space-between; align-items:center;
+        padding: 12px 14px;
+        background: #fff;
+        border-bottom: 1px solid var(--rule);
+      }
+      .doc__title{
+        font-weight:700; color: var(--federal-navy);
+      }
+      .doc__meta{
+        color: var(--muted); font-size: 12px;
+      }
+
+      article.match{
+        padding: 12px 14px;
+        border-top: 1px solid var(--rule);
+      }
+      .match:first-of-type{ border-top:none; }
+      .match__meta{
+        display:flex; flex-wrap:wrap; gap:10px 16px; align-items:baseline;
+        color: var(--muted); font-size: 12px; margin-bottom: 6px;
+      }
+      .match__index{
+        color: var(--federal-dark); font-weight:700; font-size: 12px;
+        background: rgba(74,90,106,0.08);
+        border: 1px solid rgba(74,90,106,0.18);
+        border-radius: 6px; padding: 2px 6px;
+      }
+      .match__speaker{ font-weight:600; color: var(--federal-dark); }
+      .match__lines{ }
+      .match__excerpt{
+        background: #fbfbfb;
+        border-left: 3px solid var(--federal-accent);
+        padding: 10px 12px;
+        border-radius: 4px;
+      }
+      strong{ font-weight:700; color: #222; }
+      @media (max-width: 520px){
+        body{ padding: 16px; }
+        .doc__header{ flex-direction: column; align-items: flex-start; gap: 4px; }
       }
     </style>
     """
 
-    # Build header with enhanced statistics
     header_html = (
-        f'<div class="header">'
-        f'  <h1>📜 Hansard Keyword Digest</h1>'
-        f'  <div class="header-info">'
-        f'    <div><strong>Generated:</strong> {now_utc}</div>'
-        f'    <div><strong>Keywords monitored:</strong> {_html_escape(", ".join(keywords))}</div>'
-        f'    <div class="header-stats">'
-        f'      <div class="stat-item">'
-        f'        <span class="stat-label">Documents</span>'
-        f'        <span class="stat-value">{len(files)}</span>'
-        f'      </div>'
-        f'      <div class="stat-item">'
-        f'        <span class="stat-label">Total Matches</span>'
-        f'        <span class="stat-value">{total_matches}</span>'
-        f'      </div>'
-        f'      <div class="stat-item">'
-        f'        <span class="stat-label">Active Keywords</span>'
-        f'        <span class="stat-value">{len([k for k in keywords if totals[k] > 0])}/{len(keywords)}</span>'
-        f'      </div>'
-        f'    </div>'
-        f'  </div>'
+        f'<div class="brand">'
+        f'  <h1 class="brand__title">Hansard Keyword Digest</h1>'
+        f'  <p class="brand__sub">Program Runtime: {now_utc}</p>'
         f'</div>'
-    )
-
-    summary_section = (
-        f'<div class="summary-section">'
-        f'  <h2>Summary Statistics</h2>'
-        f'  {summary_table}'
+        f'<div class="summary-card">'
+        f'  <ul class="kvs">'
+        f'    <li><span class="k">Keywords:</span><span>{_html_escape(", ".join(keywords))}</span></li>'
+        f'    <li><span class="k">Total matches:</span><span>{total_matches}</span></li>'
+        f'  </ul>'
         f'</div>'
+        f'<table class="summary">'
+        f'  <thead><tr>'
+        f'    <th>Keyword</th><th>House of Assembly</th><th>Legislative Council</th><th>Total</th>'
+        f'  </tr></thead>'
+        f'  <tbody>'
+        f'    {summary_table.split("<tbody>")[1].split("</tbody>")[0]}'
+        f'  </tbody>'
+        f'</table>'
     )
 
     doc_html = "\n".join(doc_sections) if doc_sections else (
-        '<div class="no-matches">'
-        '  No keyword matches found in the processed documents.'
-        '</div>'
+        '<section class="doc">'
+        '  <header class="doc__header"><div class="doc__title">No transcripts with matches</div>'
+        '  <div class="doc__meta">—</div></header>'
+        '  <article class="match"><div class="match__excerpt">No keyword matches found.</div></article>'
+        '</section>'
     )
 
-    html = (
-        f'<!DOCTYPE html>'
-        f'<html lang="en">'
-        f'<head>'
-        f'  <meta charset="UTF-8">'
-        f'  <meta name="viewport" content="width=device-width, initial-scale=1">'
-        f'  <meta name="description" content="Hansard Keyword Digest - Parliamentary transcript analysis">'
-        f'  <title>Hansard Keyword Digest - {datetime.now().strftime("%d %B %Y")}</title>'
-        f'  {style}'
-        f'</head>'
-        f'<body>'
-        f'  <div class="container">'
-        f'    {header_html}'
-        f'    <main class="content" role="main">'
-        f'      {summary_section}'
-        f'      <section aria-label="Document matches">'
-        f'        <h2 style="color: #2c3e50; margin: 32px 0 24px 0; font-size: 24px; font-weight: 600; display: flex; align-items: center; gap: 12px;">'
-        f'          <span aria-hidden="true">📄</span> Document Matches'
-        f'        </h2>'
-        f'        {doc_html}'
-        f'      </section>'
-        f'    </main>'
-        f'  </div>'
-        f'</body>'
-        f'</html>'
-    )
-    
+    html = f"<!doctype html><html><head>{style}</head><body><div class='wrap'>{header_html}{doc_html}</div></body></html>"
     return html, total_matches, counts
+
 
 
 def load_sent_log():
