@@ -30,6 +30,21 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m playwright install chromium
+          
+      - name: Setup Ollama CLI
+        uses: ai-action/setup-ollama@v1
+
+      - name: Cache Ollama models
+        uses: actions/cache@v4
+        with:
+          path: ~/.ollama
+          key: ${{ runner.os }}-ollama
+          restore-keys: |
+            ${{ runner.os }}-ollama
+
+      - name: Pull Llama 3.2 3B
+        run: ollama pull llama3.2:3b
+
 
       - name: Scan & download any new transcripts for current year
         env:
@@ -51,6 +66,8 @@ jobs:
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_TO:   ${{ secrets.EMAIL_TO }}
+          ATTRIB_WITH_LLM: "1"            # <-- add
+          ATTRIB_LLM_MODEL: "llama3.2:3b" # <-- add (optional; default is same)
         run: python send_email.py
 
       - name: Commit sent log
