@@ -428,7 +428,7 @@ def build_digest_html(files, keywords):
         # Word-bound for single tokens; gap-tolerant for phrases
         parts = kw.strip().split()
         if len(parts) == 1:
-            return re.compile(rfr"\b{re.escape(parts[0])}\b", re.IGNORECASE)
+            return re.compile(rf"\b{re.escape(parts[0])}\b", re.IGNORECASE)
         return re.compile(r"\b" + r"\s+".join(re.escape(p) for p in parts) + r"\b", re.IGNORECASE)
 
     kw_patterns = {kw: kw_regex(kw) for kw in keywords}
