@@ -1,8 +1,9 @@
 import os
 import re
 import glob
+from bisect import bisect_right
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, UTC
 
 import yagmail
 import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
@@ -10,6 +11,12 @@ import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
 
 # File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
+
+# --- Tunables ----------------------------------------------------------------
+MAX_SNIPPET_CHARS = 800     # upper bound after merging windows; keep readable but compact
+WINDOW_PAD_SENTENCES = 1    # for non-first-sentence hits: one sentence either side
+FIRST_SENT_FOLLOWING = 2    # for first-sentence hits: include next two sentences
+MERGE_IF_GAP_GT = 2         # Only merge windows if the gap (in sentences) is > this value
 
 
 # --- Helpers -----------------------------------------------------------------
@@ -34,26 +41,25 @@ def load_keywords():
 
 # --- Speaker header detection & guards ---------------------------------------
 
-# Accept titles (case-insensitive) or ALL-CAPS surnames; require ":" or a dash after header
 SPEAKER_HEADER_RE = re.compile(
     r"""
 ^
 (?:
-  # (A) Title + optional ALL-CAPS surname(s)
   (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
   (?:[\s.]+(?P<name>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}))?
  |
-  # (B) ALL-CAPS name-only (e.g., DOW, WOODRUFF, O'BYRNE)
   (?P<name_only>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})
 )
-(?:\s*\([^)]*\))?        # optional (Electorate—Portfolio)
-\s*(?::|[-–—]\s)         # ":" OR " - " / "– " / "— "
+(?:\s*\([^)]*\))?
+\s*(?::|[-–—]\s)
 """,
     re.VERBOSE,
 )
 
-# Lines that look like prose-with-colon; never treat them as headers (belt-and-braces)
 CONTENT_COLON_RE = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
+TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
+UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
 
 
 def _canonicalize(s: str) -> str:
@@ -68,77 +74,196 @@ def _canonicalize(s: str) -> str:
     return s.lower()
 
 
-def _speaker_map_by_line(text: str):
-    """
-    Map each line index -> current speaker (persisting until the next real header).
-    We treat only genuine headers as speaker boundaries; everything else inherits.
-    """
-    lines = text.splitlines()
-    curr = None
-    mapping = []
-    for ln in lines:
-        s = ln.strip()
-        m = SPEAKER_HEADER_RE.match(s)
-        # Guard: e.g., "There are the projects:" must NOT be a header
-        if m and m.group("name_only") and CONTENT_COLON_RE.match(s):
-            m = None
+# --- Utterance segmentation with spans ---------------------------------------
 
-        if m:
-            title = (m.group("title") or "").strip()
-            name = (m.group("name") or m.group("name_only") or "").strip()
-            curr = " ".join(x for x in (title, name) if x) or curr
-            mapping.append(curr)
+def _build_utterances(text: str):
+    all_lines = text.splitlines()
+    utterances = []
+    curr = {"speaker": None, "lines": [], "line_nums": []}
+
+    def flush():
+        if curr["lines"]:
+            joined = "\n".join(curr["lines"])
+            offs = []
+            total = 0
+            for i, ln in enumerate(curr["lines"]):
+                offs.append(total)
+                total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
+
+            sents = []
+            start = 0
+            for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
+                end = m.start()
+                if end > start:
+                    sents.append((start, end))
+                start = m.end()
+            if start < len(joined):
+                sents.append((start, len(joined)))
+
+            utterances.append({
+                "speaker": curr["speaker"],
+                "lines": curr["lines"][:],
+                "line_nums": curr["line_nums"][:],
+                "joined": joined,
+                "line_offsets": offs,
+                "sents": sents
+            })
+
+    for idx, raw in enumerate(all_lines):
+        s = raw.strip()
+        if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
             continue
 
-        mapping.append(curr)
-    return lines, mapping
+        m = SPEAKER_HEADER_RE.match(s)
+        if m and not (m.group("name_only") and CONTENT_COLON_RE.match(s)):
+            flush()
+            title = (m.group("title") or "").strip()
+            name = (m.group("name") or m.group("name_only") or "").strip()
+            curr = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
+            continue
+
+        curr["lines"].append(raw.rstrip())
+        curr["line_nums"].append(idx + 1)
+
+    flush()
+    return utterances, all_lines
 
 
-def _nearest_speaker_above(mapping, idx):
-    """Walk upward to the closest previous non-None speaker."""
-    for i in range(idx, -1, -1):
-        if mapping[i]:
-            return mapping[i]
-    return None
+def _line_for_char_offset(line_offsets, line_nums, pos):
+    i = bisect_right(line_offsets, pos) - 1
+    if i < 0:
+        i = 0
+    if i >= len(line_nums):
+        i = len(line_nums) - 1
+    return line_nums[i]
 
 
-def _kw_hit(text: str, kw: str):
-    """Word boundary for single words; substring for phrases."""
-    if " " in kw:
-        return re.search(re.escape(kw), text, re.IGNORECASE)
-    return re.search(rf"\b{re.escape(kw)}\b", text, re.IGNORECASE)
+# --- Matching, windows & merging ---------------------------------------------
+
+def _compile_kw_patterns(keywords):
+    pats = []
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pats.append((kw, re.compile(re.escape(kw), re.IGNORECASE)))
+        else:
+            pats.append((kw, re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)))
+    return pats
+
+
+def _collect_hits_in_utterance(utt, kw_pats):
+    hits = []
+    joined = utt["joined"]
+    sents = utt["sents"]
+    for si, (a, b) in enumerate(sents):
+        seg = joined[a:b]
+        for kw, pat in kw_pats:
+            m = pat.search(seg)
+            if not m:
+                continue
+            char_pos = a + m.start()
+            line_no = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
+            hits.append({"kw": kw, "sent_idx": si, "line_no": line_no})
+    return hits
+
+
+def _windows_for_hits(hits, sent_count):
+    wins = []
+    for h in hits:
+        j = h["sent_idx"]
+        if j == 0:
+            start = 0
+            end = min(sent_count - 1, FIRST_SENT_FOLLOWING)
+        else:
+            start = max(0, j - WINDOW_PAD_SENTENCES)
+            end = min(sent_count - 1, j + WINDOW_PAD_SENTENCES)
+        wins.append([start, end, {h["kw"]}, {h["line_no"]}])
+    wins.sort(key=lambda w: (w[0], w[1]))
+    return wins
+
+
+def _dedup_windows(wins):
+    """Collapse windows with identical (start,end); union keywords and line numbers."""
+    if not wins:
+        return []
+    bucket = {}
+    for s, e, kws, lines in wins:
+        key = (s, e)
+        if key in bucket:
+            bucket[key][0] |= kws
+            bucket[key][1] |= lines
+        else:
+            bucket[key] = [set(kws), set(lines)]
+    deduped = [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
+    return deduped
+
+
+def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
+    if not wins:
+        return []
+    merged = [wins[0]]
+    for s, e, kws, lines in wins[1:]:
+        ps, pe, pk, pl = merged[-1]
+        gap = s - pe
+        if gap > gap_gt:
+            merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
+        else:
+            merged.append([s, e, kws, lines])
+    return merged
+
+
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
+        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+    return out
+
+
+def _excerpt_from_window_html(utt, win, keywords):
+    sents = utt["sents"]
+    joined = utt["joined"]
+    start, end, kws, lines = win
+    a = sents[start][0]
+    b = sents[end][1]
+    raw = joined[a:b].strip()
+    if len(raw) > MAX_SNIPPET_CHARS:
+        raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
+    html = _html_escape(raw)
+    html = _highlight_keywords_html(html, keywords).replace("\n", "<br>")
+
+    start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
+    end_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
+
+    return html, sorted(lines), sorted(kws, key=str.lower), start_line, end_line
 
 
 def _looks_suspicious(s: str | None) -> bool:
-    """Decide if an attributed speaker string looks untrustworthy (to trigger QC)."""
     if not s:
         return True
     s = s.strip()
-    # Accept known title+ALLCAPS surname or role-only
     if re.match(
         r"(?i)^(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)"
         r"(?:\s+[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})?$",
         s,
     ):
         return False
-    # Accept pure ALL-CAPS name(s)
     if re.match(r"^[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}$", s):
         return False
-    # Otherwise, suspicious
     return True
 
 
-def _llm_qc_speaker(full_lines, hit_index, candidates, model=None, timeout=30):
-    """
-    Ask local Ollama to choose ONE candidate speaker using a large backward context.
-    Used only as a last-resort QC. Returns None if uncertain.
-    """
+def _llm_qc_speaker(full_lines, hit_line_no, candidates, model=None, timeout=30):
     model = model or os.environ.get("ATTRIB_LLM_MODEL", "llama3.2:3b")
-
-    # Give the model substantial context ABOVE the hit so it can see the last header.
-    start = max(0, hit_index - 80)  # ~80 lines preceding
-    context = "\n".join(full_lines[start: hit_index + 5])[:3000]
-
+    i = max(0, hit_line_no - 1)
+    start = max(0, i - 80)
+    context = "\n".join(full_lines[start: i + 5])[:3000]
     options = "\n".join(f"- {c}" for c in candidates[:50]) or "- UNKNOWN"
     prompt = f"""Choose the most likely speaker from the list (or 'UNKNOWN'):
 {options}
@@ -159,53 +284,51 @@ Use the transcript context (previous lines first, then nearby):
 
 def extract_matches(text: str, keywords):
     """
-    Find keyword matches line-by-line, assign speaker by walking back to the last header.
-    Optionally call LLM as a final QC if the result looks suspicious or missing.
+    Return list of:
+      (kw_set, excerpt_html, speaker, line_numbers_list, win_start_line, win_end_line)
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
 
-    # Precompute per-line speaker map from real headers
-    lines, line_speaker = _speaker_map_by_line(text)
-    # Candidate list for optional QC (unique speakers seen today)
-    candidates = sorted({s for s in line_speaker if s})
-    norm_candidates = {_canonicalize(c): c for c in candidates}
+    utts, all_lines = _build_utterances(text)
+    kw_pats = _compile_kw_patterns(keywords)
 
     results = []
-    for i, raw in enumerate(lines):
-        row = raw.rstrip()
-        if not row:
+
+    for utt in utts:
+        speaker = utt["speaker"]
+        if not utt["lines"]:
             continue
 
-        for kw in keywords:
-            # match: word boundary for single words, substring for phrases
-            if not ((" " in kw and re.search(re.escape(kw), row, re.IGNORECASE)) or
-                    re.search(rf"\b{re.escape(kw)}\b", row, re.IGNORECASE)):
-                continue
+        hits = _collect_hits_in_utterance(utt, kw_pats)
+        if not hits:
+            continue
 
-            # Build a concise snippet from nearby lines (≈2–3 sentences / a few lines)
-            window = "\n".join(lines[max(0, i-3): min(len(lines), i+6)])
-            snippet = re.sub(r"\s+\n", "\n", window).strip()
+        wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
 
-            # Deterministic attribution by walking backwards to the last header
-            speaker = _nearest_speaker_above(line_speaker, i)
+        # ✅ NEW: Remove identical (start,end) windows to avoid duplicate excerpts
+        wins = _dedup_windows(wins)
 
-            # OPTIONAL: final QC via LLM if speaker missing or looks fishy
-            if use_llm and _looks_suspicious(speaker):
-                guess = _llm_qc_speaker(lines, i, candidates, timeout=llm_timeout)
-                if guess and _canonicalize(guess) in norm_candidates:
-                    speaker = norm_candidates[_canonicalize(guess)]
+        # Keep separate unless far apart; if far (>2), merge into a longer excerpt
+        merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
-            results.append((kw, snippet, speaker))
-            break  # one snippet per line per keyword window
+        if use_llm and _looks_suspicious(speaker):
+            candidates = sorted({u["speaker"] for u in utts if u["speaker"]})
+            earliest_line = min(min(w[3]) for w in merged)
+            guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=llm_timeout)
+            if guess:
+                speaker = guess
+
+        for win in merged:
+            excerpt_html, line_list, kws_in_excerpt, win_start, win_end = _excerpt_from_window_html(utt, win, keywords)
+            results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
 
     return results
 
 
-# --- Digest / email pipeline --------------------------------------------------
+# --- Digest / email pipeline (HTML) ------------------------------------------
 
 def parse_date_from_filename(filename: str):
-    """Extract datetime from Hansard filename."""
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
     if m:
         try:
@@ -215,52 +338,117 @@ def parse_date_from_filename(filename: str):
     return datetime.min
 
 
-def build_digest(files, keywords):
-    """Build the digest body text for email."""
-    body_lines = []
+def parse_chamber_from_filename(filename: str) -> str:
+    name = filename.lower()
+    if "house_of_assembly" in name:
+        return "House of Assembly"
+    if "legislative_council" in name:
+        return "Legislative Council"
+    return "Unknown"
 
-    # Header
-    now = datetime.utcnow().strftime("%Y-%m-%d %H:%M UTC")
-    body_lines.append(f"Time: {now}")
-    body_lines.append("Keywords: " + ", ".join(keywords))
 
-    # Process each transcript file
+def build_digest_html(files, keywords):
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
+
+    chambers = ["House of Assembly", "Legislative Council"]
+    counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
+    totals = {kw: 0 for kw in keywords}
+
+    doc_sections = []
     total_matches = 0
-    for f in sorted(files, key=lambda x: parse_date_from_filename(Path(x).name)):
+
+    for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        chamber = parse_chamber_from_filename(Path(f).name)
+
         matches = extract_matches(text, keywords)
         if not matches:
             continue
+
+        matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        body_lines.append(f"\n=== {Path(f).name} ===")
-        for i, (kw, snippet, speaker) in enumerate(matches, 1):
-            if speaker:
-                body_lines.append(f"🔹 Match #{i} ({speaker})")
-            else:
-                body_lines.append(f"🔹 Match #{i}")
-            body_lines.append(snippet)
-            body_lines.append("")
+        sec_lines = [f'<h3 class="doc-title">{_html_escape(Path(f).name)}</h3>']
+        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+            for kw in kw_set:
+                if chamber in counts:
+                    counts[chamber][kw] += 1
+                totals[kw] += 1
 
-    body_lines.insert(2, f"Matches found: {total_matches}\n")
+            first_line = min(line_list) if line_list else win_start
+            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
+            line_label = "line" if len(line_list) == 1 else "lines"
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
-    if total_matches == 0:
-        body_lines.append("\n(No keyword matches found.)")
-    else:
-        body_lines.append("(Full transcript(s) attached.)")
+            sec_lines.append(
+                f'<div class="match">'
+                f'  <div class="meta">Match #{i} (<strong>{speaker_html}</strong>) — {line_label} {lines_str}</div>'
+                f'  <div class="excerpt">{excerpt_html}</div>'
+                f'</div>'
+            )
+        doc_sections.append("\n".join(sec_lines))
 
-    return "\n".join(body_lines), total_matches
+    header_cols = "".join([
+        "<th>Keyword</th>",
+        "<th>House of Assembly</th>",
+        "<th>Legislative Council</th>",
+        "<th>Total</th>",
+    ])
+    row_html = []
+    for kw in keywords:
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
+        row_html.append(
+            f"<tr><td>{_html_escape(kw)}</td>"
+            f"<td class='num'>{hoa}</td>"
+            f"<td class='num'>{lc}</td>"
+            f"<td class='num total'>{tot}</td></tr>"
+        )
+    summary_table = (
+        f'<table class="summary-table">'
+        f'  <thead><tr>{header_cols}</tr></thead>'
+        f'  <tbody>{"".join(row_html)}</tbody>'
+        f'</table>'
+    )
+
+    style = """
+    <style>
+      body { font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#111; }
+      .hdr { margin: 0 0 12px 0; }
+      .small { color:#444; }
+      .summary-table { border-collapse: collapse; margin: 8px 0 18px 0; width: 100%; }
+      .summary-table th, .summary-table td { border: 1px solid #e0e0e0; padding: 6px 8px; text-align: left; }
+      .summary-table th { background: #fafafa; }
+      .summary-table td.num { text-align: right; }
+      .summary-table td.total { font-weight: 600; }
+      .doc-title { margin: 18px 0 6px 0; }
+      .match { margin: 10px 0 14px 0; }
+      .meta { color:#333; font-size: 0.95em; margin-bottom: 6px; }
+      .excerpt { background:#fbfbfb; border-left:3px solid #d0d0d0; padding:8px 10px; line-height:1.4; }
+      strong { font-weight: 700; }
+    </style>
+    """
+
+    header_html = (
+        f'<p class="hdr"><strong>Program Runtime:</strong> {now_utc}</p>'
+        f'<p class="hdr"><strong>Keywords:</strong> {_html_escape(", ".join(keywords))}</p>'
+        f'<h2 class="hdr">Keywords Triggered</h2>{summary_table}'
+    )
+
+    doc_html = "\n".join(doc_sections) if doc_sections else "<p>No keyword matches found.</p>"
+
+    html = f"<!doctype html><html><head>{style}</head><body>{header_html}{doc_html}</body></html>"
+    return html, total_matches, counts
 
 
 def load_sent_log():
-    """Return set of transcript filenames that have already been emailed."""
     if LOG_FILE.exists():
         return {line.strip() for line in LOG_FILE.read_text().splitlines() if line.strip()}
     return set()
 
 
 def update_sent_log(files):
-    """Append newly emailed filenames to the log."""
     with LOG_FILE.open("a", encoding="utf-8") as f:
         for file in files:
             f.write(f"{Path(file).name}\n")
@@ -287,7 +475,7 @@ def main():
         print("No new transcripts to email.")
         return
 
-    body, total_hits = build_digest(files, keywords)
+    body_html, total_hits, _counts = build_digest_html(files, keywords)
 
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
@@ -304,15 +492,13 @@ def main():
     yag.send(
         to=to_list,
         subject=subject,
-        contents=body,
+        contents=[body_html],   # HTML string (no links)
         attachments=files,
     )
 
     update_sent_log(files)
 
-    print(
-        f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es)."
-    )
+    print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
 
 if __name__ == "__main__":
