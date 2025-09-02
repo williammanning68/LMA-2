@@ -11,6 +11,11 @@ import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
 # File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
 
+# --- Tunables ----------------------------------------------------------------
+MAX_SNIPPET_CHARS = 240     # target max length of each excerpt
+WINDOW_LINES_BEFORE = 2     # lines to include before the hit when building the sentence window
+WINDOW_LINES_AFTER  = 2     # lines to include after the hit when building the sentence window
+
 
 # --- Helpers -----------------------------------------------------------------
 
@@ -157,10 +162,61 @@ Use the transcript context (previous lines first, then nearby):
         return None
 
 
+# --- Snippet building & highlighting -----------------------------------------
+
+def _sentence_window(lines, i):
+    """Small window around line i to help find a sentence containing the hit."""
+    start = max(0, i - WINDOW_LINES_BEFORE)
+    end = min(len(lines), i + WINDOW_LINES_AFTER + 1)
+    return "\n".join(lines[start:end]).strip()
+
+
+def _pick_sentence_with_kw(text_window: str, kw: str) -> str:
+    # Split conservatively into sentences; handle semicolon/bullet-ish lists by falling back
+    sentences = re.split(r"(?<=[\.\?\!])\s+", text_window) or [text_window]
+    pat = re.compile((r"\b" + re.escape(kw) + r"\b") if " " not in kw else re.escape(kw), re.IGNORECASE)
+    for s in sentences:
+        if pat.search(s):
+            return s.strip()
+    # Fallback: return the whole window (will be cropped later)
+    return text_window.strip()
+
+
+def _crop_around_kw(text: str, kw: str, max_chars: int) -> str:
+    if len(text) <= max_chars:
+        return text
+    pat = re.compile((r"\b" + re.escape(kw) + r"\b") if " " not in kw else re.escape(kw), re.IGNORECASE)
+    m = pat.search(text)
+    if not m:
+        return (text[: max_chars - 1] + "…").strip()
+    center = m.start()
+    half = max_chars // 2
+    start = max(0, center - half)
+    end = min(len(text), start + max_chars)
+    # adjust start if we clipped the end hard
+    start = max(0, end - max_chars)
+    return ("…" if start > 0 else "") + text[start:end].strip() + ("…" if end < len(text) else "")
+
+
+def _highlight_keywords(text: str, keywords: list[str]) -> str:
+    # Longest phrases first to avoid partial overlapping highlights
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(kw), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)
+        text = pat.sub(lambda m: f"**{m.group(0)}**", text)
+    return text
+
+
+# --- Matching ----------------------------------------------------------------
+
 def extract_matches(text: str, keywords):
     """
     Find keyword matches line-by-line, assign speaker by walking back to the last header.
+    Excerpt is a single sentence (cropped to MAX_SNIPPET_CHARS) with keywords highlighted.
     Optionally call LLM as a final QC if the result looks suspicious or missing.
+    Returns list of tuples: (keyword, snippet, speaker, line_no)
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
@@ -183,9 +239,11 @@ def extract_matches(text: str, keywords):
                     re.search(rf"\b{re.escape(kw)}\b", row, re.IGNORECASE)):
                 continue
 
-            # Build a concise snippet from nearby lines (≈2–3 sentences / a few lines)
-            window = "\n".join(lines[max(0, i-3): min(len(lines), i+6)])
-            snippet = re.sub(r"\s+\n", "\n", window).strip()
+            # Build short snippet: sentence containing the hit (from a small window), then crop
+            window_text = _sentence_window(lines, i)
+            sentence = _pick_sentence_with_kw(window_text, kw)
+            snippet_raw = _crop_around_kw(sentence, kw, MAX_SNIPPET_CHARS)
+            snippet = _highlight_keywords(snippet_raw, keywords)
 
             # Deterministic attribution by walking backwards to the last header
             speaker = _nearest_speaker_above(line_speaker, i)
@@ -196,7 +254,7 @@ def extract_matches(text: str, keywords):
                 if guess and _canonicalize(guess) in norm_candidates:
                     speaker = norm_candidates[_canonicalize(guess)]
 
-            results.append((kw, snippet, speaker))
+            results.append((kw, snippet, speaker, i + 1))  # 1-based line number
             break  # one snippet per line per keyword window
 
     return results
@@ -234,11 +292,11 @@ def build_digest(files, keywords):
         total_matches += len(matches)
 
         body_lines.append(f"\n=== {Path(f).name} ===")
-        for i, (kw, snippet, speaker) in enumerate(matches, 1):
+        for i, (kw, snippet, speaker, line_no) in enumerate(matches, 1):
             if speaker:
-                body_lines.append(f"🔹 Match #{i} ({speaker})")
+                body_lines.append(f"Match #{i} ({speaker}) — line {line_no}")
             else:
-                body_lines.append(f"🔹 Match #{i}")
+                body_lines.append(f"Match #{i} — line {line_no}")
             body_lines.append(snippet)
             body_lines.append("")
 
