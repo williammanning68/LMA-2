@@ -625,3 +625,7 @@ def main():
 
     update_sent_log(files)
     print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
+
+if __name__ == "__main__":
+    main()
