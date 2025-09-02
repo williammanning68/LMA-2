@@ -3,7 +3,7 @@ import re
 import glob
 from bisect import bisect_right
 from pathlib import Path
-from datetime import datetime, UTC  # ✅ use UTC constant (Py 3.11+)
+from datetime import datetime, UTC
 
 import yagmail
 import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
@@ -16,7 +16,7 @@ LOG_FILE = Path("sent.log")
 MAX_SNIPPET_CHARS = 800     # upper bound after merging windows; keep readable but compact
 WINDOW_PAD_SENTENCES = 1    # for non-first-sentence hits: one sentence either side
 FIRST_SENT_FOLLOWING = 2    # for first-sentence hits: include next two sentences
-WIDER_CONTEXT_PAD = 10      # lines to include on either side for the "wider context" link
+MERGE_IF_GAP_GT = 2         # NEW: only merge windows if the gap (in sentences) is > this value
 
 
 # --- Helpers -----------------------------------------------------------------
@@ -215,19 +215,23 @@ def _windows_for_hits(hits, sent_count):
     return wins
 
 
-def _merge_windows(wins, gap_allow=4):
+def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     """
-    Merge windows when the next window starts within <= gap_allow sentences of the previous.
-    Merge also unions keyword sets and line numbers.
+    NEW policy: Only increase excerpt size (merge) if the next window is
+    separated by a gap of > `gap_gt` sentences from the previous window.
+    Otherwise, keep as separate excerpts.
     """
     if not wins:
         return []
     merged = [wins[0]]
     for s, e, kws, lines in wins[1:]:
         ps, pe, pk, pl = merged[-1]
-        if s - pe <= gap_allow:
+        gap = s - pe
+        if gap > gap_gt:
+            # far apart: create one longer excerpt spanning both windows
             merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
         else:
+            # close (≤ gap_gt): keep a separate excerpt
             merged.append([s, e, kws, lines])
     return merged
 
@@ -340,8 +344,8 @@ def extract_matches(text: str, keywords):
         # Build windows per hit according to first/other sentence rule
         wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
 
-        # Merge windows when hits are within 4 sentences
-        merged = _merge_windows(wins, gap_allow=4)
+        # NEW: Only merge when gaps are > MERGE_IF_GAP_GT sentences (same speaker already guaranteed per utterance)
+        merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
         # Optional LLM QC if we don't trust the speaker string
         if use_llm and _looks_suspicious(speaker):
@@ -357,30 +361,6 @@ def extract_matches(text: str, keywords):
             results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
 
     return results
-
-
-# --- Repo link helpers --------------------------------------------------------
-
-def _repo_blob_base():
-    """
-    Build the base URL to the repo blob view:
-      https://github.com/<org>/<repo>/blob/<ref>
-    Choose <ref> as GITHUB_SHA (preferred) or REPO_REF env (fallback, default 'main').
-    """
-    server = os.environ.get("GITHUB_SERVER_URL", "https://github.com").rstrip("/")
-    repo = os.environ.get("GITHUB_REPOSITORY", "").strip()
-    if not repo:
-        return None  # no links
-    ref = os.environ.get("GITHUB_SHA") or os.environ.get("REPO_REF", "main")
-    return f"{server}/{repo}/blob/{ref}"
-
-
-def _github_line_link(blob_base, relpath, line):
-    return f"{blob_base}/{relpath}#L{line}"
-
-
-def _github_range_link(blob_base, relpath, start_line, end_line):
-    return f"{blob_base}/{relpath}#L{start_line}-L{end_line}"
 
 
 # --- Digest / email pipeline (HTML) ------------------------------------------
@@ -407,8 +387,7 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 def build_digest_html(files, keywords):
     """Build the HTML body and return (html_string, total_matches, counts_by_chamber_and_kw)."""
-    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")  # ✅ no deprecation
-    blob_base = _repo_blob_base()
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
     # Summary counters
     chambers = ["House of Assembly", "Legislative Council"]
@@ -423,7 +402,6 @@ def build_digest_html(files, keywords):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         total_lines = len(text.splitlines())
         chamber = parse_chamber_from_filename(Path(f).name)
-        relpath = f"transcripts/{Path(f).name}"
 
         matches = extract_matches(text, keywords)
         if not matches:
@@ -444,28 +422,13 @@ def build_digest_html(files, keywords):
                 totals[kw] += 1
 
             first_line = min(line_list) if line_list else win_start
-            # wider context range
-            ctx_start = max(1, win_start - WIDER_CONTEXT_PAD)
-            ctx_end = min(total_lines, win_end + WIDER_CONTEXT_PAD)
-
             speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
             line_label = "line" if len(line_list) == 1 else "lines"
-            # each line can be clicked individually
-            if blob_base:
-                line_links = ", ".join(
-                    f'<a href="{_github_line_link(blob_base, relpath, n)}" title="Open on GitHub at line {n}">{n}</a>'
-                    for n in sorted(set(line_list))
-                ) if line_list else str(first_line)
-                header_link = f'<a href="{_github_line_link(blob_base, relpath, first_line)}" title="Open on GitHub at line {first_line}">Match #{i}</a>'
-                ctx_link = f' &nbsp;·&nbsp; <a href="{_github_range_link(blob_base, relpath, ctx_start, ctx_end)}" title="Show wider context: lines {ctx_start}–{ctx_end}">wider context (±{WIDER_CONTEXT_PAD})</a>'
-            else:
-                line_links = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
-                header_link = f"Match #{i}"
-                ctx_link = ""
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
             sec_lines.append(
                 f'<div class="match">'
-                f'  <div class="meta">{header_link} (<strong>{speaker_html}</strong>) — {line_label} {line_links}{ctx_link}</div>'
+                f'  <div class="meta">Match #{i} (<strong>{speaker_html}</strong>) — {line_label} {lines_str}</div>'
                 f'  <div class="excerpt">{excerpt_html}</div>'
                 f'</div>'
             )
@@ -500,8 +463,6 @@ def build_digest_html(files, keywords):
     style = """
     <style>
       body { font-family: Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:#111; }
-      a { color: #0b57d0; text-decoration: none; }
-      a:hover { text-decoration: underline; }
       .hdr { margin: 0 0 12px 0; }
       .small { color:#444; }
       .summary-table { border-collapse: collapse; margin: 8px 0 18px 0; width: 100%; }
@@ -569,7 +530,7 @@ def main():
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    # ✅ Send HTML body as a plain string — let yagmail build the MIME parts
+    # Send HTML body (no links to GitHub; just plain text line numbers)
     yag = yagmail.SMTP(
         user=EMAIL_USER,
         password=EMAIL_PASS,
@@ -582,8 +543,8 @@ def main():
     yag.send(
         to=to_list,
         subject=subject,
-        contents=[body_html],   # <-- pass HTML string, NOT MIMEText
-        attachments=files,
+        contents=[body_html],   # HTML string
+        attachments=files,      # attach source transcripts
     )
 
     update_sent_log(files)
