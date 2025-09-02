@@ -31,41 +31,6 @@ def load_keywords():
         return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
     return []
 
-
-def split_paragraphs(text: str):
-    """Split transcript into paragraphs."""
-    return re.split(r"\n\s*\n", text)
-
-
-def detect_speaker(paragraph: str):
-    """Detect speaker name at start of paragraph."""
-    first_line = paragraph.strip().split("\n", 1)[0]
-    if re.match(r"^(Mr|Ms|Mrs|Hon|Premier)\b", first_line):
-        return first_line.strip()
-    return None
-
-
-def extract_matches(text: str, keywords):
-    """Find keyword matches and return structured results."""
-    results = []
-    paragraphs = split_paragraphs(text)
-
-    for para in paragraphs:
-        for kw in keywords:
-            if re.search(rf"\b{re.escape(kw)}\b", para, re.IGNORECASE):
-                # Extract 2–3 sentences around keyword
-                sentences = re.split(r"(?<=[.!?])\s+", para.strip())
-                for i, s in enumerate(sentences):
-                    if kw.lower() in s.lower():
-                        start = max(0, i - 1)
-                        end = min(len(sentences), i + 2)
-                        snippet = " ".join(sentences[start:end])
-                        speaker = detect_speaker(para)
-                        results.append((kw, snippet.strip(), speaker))
-                        break
-    return results
-
-
 def parse_date_from_filename(filename: str):
     """Extract datetime from Hansard filename."""
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
