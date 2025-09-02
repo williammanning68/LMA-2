@@ -566,4 +566,32 @@ def main():
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
 
-    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %
+    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
+    to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
+
+    # ✅ Send HTML body as a plain string — let yagmail build the MIME parts
+    yag = yagmail.SMTP(
+        user=EMAIL_USER,
+        password=EMAIL_PASS,
+        host="smtp.gmail.com",
+        port=587,
+        smtp_starttls=True,
+        smtp_ssl=False,
+    )
+
+    yag.send(
+        to=to_list,
+        subject=subject,
+        contents=[body_html],   # <-- pass HTML string, NOT MIMEText
+        attachments=files,
+    )
+
+    update_sent_log(files)
+
+    print(
+        f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es)."
+    )
+
+
+if __name__ == "__main__":
+    main()
