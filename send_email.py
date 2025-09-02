@@ -42,6 +42,19 @@ def load_keywords():
         return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
     return []
 
+# --- Keyword matching helper -----------------------------------------------
+def _kw_hit(text: str, kw: str):
+    """
+    Return a regex match if the keyword is found in text.
+    - For multi-word phrases, do a case-insensitive substring match.
+    - For single words, enforce word boundaries.
+    """
+    if not text or not kw:
+        return None
+    if " " in kw:
+        return re.search(re.escape(kw), text, re.IGNORECASE)
+    return re.search(rf"\b{re.escape(kw)}\b", text, re.IGNORECASE)
+
 
 # --- Speaker header detection & guards ---------------------------------------
 
