@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime
 
 import yagmail
+import subprocess 
 
 
 # File that records which transcripts have already been emailed
