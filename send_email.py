@@ -11,6 +11,8 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
+from premailer import transform
+
 # File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
 
@@ -348,6 +350,32 @@ def parse_chamber_from_filename(filename: str) -> str:
         return "Legislative Council"
     return "Unknown"
 
+def _bake_css_vars(html: str) -> str:
+    mapping = {
+        "--federal-gold":   "#C5A572",
+        "--federal-navy":   "#4A5A6A",
+        "--federal-dark":   "#475560",
+        "--federal-light":  "#ECF0F1",
+        "--federal-accent": "#D4AF37",
+        "--white":          "#FFFFFF",
+        "--border-light":   "#D8DCE0",
+        "--text-primary":   "#2C3440",
+        "--text-secondary": "#6B7684",
+    }
+    for var, val in mapping.items():
+        html = html.replace(f"var({var})", val)
+    html = re.sub(r":root\s*\{[^}]*\}", "", html, flags=re.S)
+    return html
+
+def _inline_css(html: str) -> str:
+    return transform(
+        html,
+        remove_classes=False,
+        keep_style_tags=False,
+        disable_leftover_css=True,
+        strip_important=False,
+    )
+
 
 def build_digest_html(files, keywords):
     """
@@ -586,7 +614,7 @@ def update_sent_log(files):
 def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
-    EMAIL_TO = os.environ["EMAIL_TO"]
+    EMAIL_TO   = os.environ["EMAIL_TO"]
 
     keywords = load_keywords()
     if not keywords:
@@ -602,12 +630,17 @@ def main():
         print("No new transcripts to email.")
         return
 
+    # Build the HTML body with your existing renderer
     body_html, total_hits, _counts = build_digest_html(files, keywords)
+
+    # ✅ STEP 3: Bake CSS variables and inline styles before sending
+    body_html = _bake_css_vars(body_html)   # replace var(--color) with real hex
+    body_html = _inline_css(body_html)      # inline CSS so Outlook/etc. render it
 
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    # --- Build a plaintext fallback from the HTML (very compact) ---
+    # Plain-text fallback (compact)
     def html_to_text_min(html: str) -> str:
         text = re.sub(r"<br\s*/?>", "\n", html, flags=re.I)
         text = re.sub(r"</(p|div|tr|table|section|article|h\d)>", "\n", text, flags=re.I)
@@ -615,7 +648,7 @@ def main():
         text = re.sub(r"\n{3,}", "\n\n", text).strip()
         return text
 
-    # --- Create multipart/alternative with attachments ---
+    # Build multipart/alternative email with attachments
     msg = MIMEMultipart("mixed")
     msg["Subject"] = subject
     msg["From"] = EMAIL_USER
@@ -626,7 +659,6 @@ def main():
     alt.attach(MIMEText(body_html, "html", "utf-8"))
     msg.attach(alt)
 
-    # Attach source transcripts
     for fpath in files:
         with open(fpath, "rb") as fp:
             part = MIMEBase("application", "octet-stream")
@@ -635,7 +667,6 @@ def main():
         part.add_header("Content-Disposition", f'attachment; filename="{Path(fpath).name}"')
         msg.attach(part)
 
-    # --- Send via Gmail SMTP (TLS) ---
     with smtplib.SMTP("smtp.gmail.com", 587) as s:
         s.ehlo()
         s.starttls()
@@ -644,6 +675,7 @@ def main():
 
     update_sent_log(files)
     print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
 
 
 
