@@ -351,21 +351,32 @@ def build_digest_html(files, keywords):
     """
     Returns: (html_string, total_matches, counts_by_chamber_and_kw)
 
-    Layout mirrors the provided inspiration:
-      - Navy header with gold underline and a four-cell meta grid
-      - "Keyword Summary by Chamber" table
-      - One "document section" per transcript, with numbered match cards
-      - No emojis, no hyperlinks; line numbers shown as plain text
+    Email-safe HTML:
+      - Single column
+      - Inline styles only (no <style> blocks, no CSS classes)
+      - Table-based structure (works in Gmail/Outlook/Apple Mail)
+      - Palette: federal gold/navy/dark/light/accent
     """
     import re
     from pathlib import Path
     from datetime import datetime, UTC
 
-    # ---------- helpers ----------
+    # --- palette (inline hex) ---
+    FEDERAL_GOLD   = "#C5A572"
+    FEDERAL_NAVY   = "#4A5A6A"
+    FEDERAL_DARK   = "#475560"
+    FEDERAL_LIGHT  = "#ECF0F1"
+    FEDERAL_ACCENT = "#D4AF37"
+    BORDER_LIGHT   = "#D8DCE0"
+    TEXT_PRIMARY   = "#2C3440"
+    TEXT_SECONDARY = "#6B7684"
+    WHITE          = "#FFFFFF"
+
+    # helpers
     def esc(s: str) -> str:
         try:
             return _html_escape(s)
-        except NameError:  # fallback if helper not in scope
+        except NameError:
             import html
             return html.escape(s or "")
 
@@ -386,29 +397,17 @@ def build_digest_html(files, keywords):
             return "Legislative Council"
         return "Unknown"
 
-    # ---------- palette (email-safe hexes) ----------
-    FEDERAL_GOLD   = "#C5A572"
-    FEDERAL_NAVY   = "#4A5A6A"
-    FEDERAL_DARK   = "#475560"
-    FEDERAL_LIGHT  = "#ECF0F1"
-    FEDERAL_ACCENT = "#D4AF37"
-    BORDER_LIGHT   = "#D8DCE0"
-    TEXT_PRIMARY   = "#2C3440"
-    TEXT_SECONDARY = "#6B7684"
-    WHITE          = "#FFFFFF"
-
-    # ---------- counters ----------
+    # counters
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
     total_matches = 0
     now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    # ---------- per-document sections ----------
+    # per-document sections
     doc_sections = []
     files_sorted = sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name))
     docs_analyzed = len(files_sorted)
-    docs_with_matches = 0
 
     for fpath in files_sorted:
         name = Path(fpath).name
@@ -419,22 +418,26 @@ def build_digest_html(files, keywords):
         if not matches:
             continue
 
-        docs_with_matches += 1
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # Document "card" (header + match list)
+        # Document header row
         sec = []
-        sec.append(
-            f"""
-            <div class='document-section'>
-              <h3 class='doc-title'>{esc(name)}</h3>
-            """
-        )
+        sec.append(f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
+  <tr>
+    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-left:6px solid {FEDERAL_GOLD}; border-radius:8px; overflow:hidden;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <tr>
+          <td style="padding:14px 16px; border-bottom:1px solid {BORDER_LIGHT};">
+            <div style="font-weight:700; color:{FEDERAL_NAVY}; font-size:16px; line-height:1.3;">{esc(name)}</div>
+            <div style="color:{TEXT_SECONDARY}; font-size:12px; margin-top:2px;">{esc(chamber)}</div>
+          </td>
+        </tr>
+""")
 
-        # Match cards
+        # Matches
         for i, (kw_set, excerpt_html, speaker, line_list, _w0, _w1) in enumerate(matches, 1):
-            # Update summary counts
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
@@ -444,208 +447,125 @@ def build_digest_html(files, keywords):
             lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else "—"
             speaker_html = esc(speaker) if speaker else "UNKNOWN"
 
-            sec.append(
-                f"""
-                <div class='match-card'>
-                  <div class='match-header'>
-                    <span class='match-index'>{i}</span>
-                    <span class='speaker-info'>
-                      <span class='speaker-name'>{speaker_html}</span>
-                      <span class='line-ref'>{line_label} {esc(lines_str)}</span>
-                    </span>
+            sec.append(f"""
+        <tr>
+          <td style="padding:0; border-top:1px solid {BORDER_LIGHT};">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+              <tr>
+                <td style="padding:10px 16px;">
+                  <div style="font-size:12px; color:{TEXT_SECONDARY}; margin:0 0 6px 0;">
+                    <span style="display:inline-block; padding:1px 6px; background:rgba(74,90,106,.08); border:1px solid rgba(74,90,106,.18); border-radius:6px; color:{FEDERAL_DARK}; font-weight:700; margin-right:8px;">Match #{i}</span>
+                    <span style="font-weight:600; color:{FEDERAL_DARK};">{speaker_html}</span>
+                    <span style="margin-left:10px;">{line_label} {esc(lines_str)}</span>
                   </div>
-                  <div class='excerpt'>
+                  <div style="background:#fbfbfb; border-left:3px solid {FEDERAL_ACCENT}; padding:10px 12px; border-radius:4px; color:{TEXT_PRIMARY}; font-size:14px; line-height:1.5;">
                     {excerpt_html}
                   </div>
-                </div>
-                """
-            )
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+""")
 
-        sec.append("</div>")  # close .document-section
+        # Close card
+        sec.append("""
+      </table>
+    </td>
+  </tr>
+</table>
+""")
         doc_sections.append("".join(sec))
 
-    # ---------- summary table rows ----------
-    def summary_rows() -> str:
+    # Summary rows
+    def summary_rows():
         rows = []
         for kw in keywords:
             hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
             lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
             tot = totals[kw]
-            rows.append(
-                f"""
-                <tr>
-                  <td class='keyword-cell'>{esc(kw)}</td>
-                  <td class='count-cell'>{hoa}</td>
-                  <td class='count-cell'>{lc}</td>
-                  <td class='count-cell total-cell'>{tot}</td>
-                </tr>
-                """
-            )
+            rows.append(f"""
+<tr>
+  <td style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT};">
+    <span style="display:inline-block; background:rgba(197,165,114,.15); color:{FEDERAL_DARK}; border:1px solid rgba(197,165,114,.35); border-radius:999px; padding:2px 8px; font-size:12px;">{esc(kw)}</span>
+  </td>
+  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; color:{TEXT_SECONDARY};">{hoa}</td>
+  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; color:{TEXT_SECONDARY};">{lc}</td>
+  <td align="right" style="padding:10px 12px; border-bottom:1px solid {BORDER_LIGHT}; font-weight:700; color:{FEDERAL_DARK}; background:rgba(212,175,55,0.08);">{tot}</td>
+</tr>
+""")
         return "".join(rows)
 
-    summary_table_html = f"""
-      <table class='summary-table' role='table' cellpadding='0' cellspacing='0'>
-        <thead>
-          <tr>
-            <th scope='col'>Keyword</th>
-            <th scope='col'>House of Assembly</th>
-            <th scope='col'>Legislative Council</th>
-            <th scope='col'>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {summary_rows()}
-        </tbody>
-      </table>
-    """
+    summary_table = f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; overflow:hidden; margin:0 0 18px 0;">
+  <thead>
+    <tr>
+      <th align="left" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Keyword</th>
+      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">House of Assembly</th>
+      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Legislative Council</th>
+      <th align="right" style="padding:12px 14px; background:{FEDERAL_DARK}; color:{WHITE}; font-weight:600; font-size:13px;">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {summary_rows()}
+  </tbody>
+</table>
+"""
 
-    # ---------- assembled HTML (email-safe) ----------
-    style = f"""
-    <style>
-      :root {{
-        --federal-gold: {FEDERAL_GOLD};
-        --federal-navy: {FEDERAL_NAVY};
-        --federal-dark: {FEDERAL_DARK};
-        --federal-light: {FEDERAL_LIGHT};
-        --federal-accent: {FEDERAL_ACCENT};
-        --white: {WHITE};
-        --border-light: {BORDER_LIGHT};
-        --text-primary: {TEXT_PRIMARY};
-        --text-secondary: {TEXT_SECONDARY};
-      }}
-      * {{ box-sizing: border-box; margin:0; padding:0; }}
-      body {{
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-        line-height: 1.6;
-        color: var(--text-primary);
-        background: var(--federal-light);
-        padding: 24px;
-      }}
-      .container {{
-        max-width: 900px; margin: 0 auto; background: var(--white);
-        border-radius: 4px; overflow: hidden;
-        box-shadow: 0 1px 3px rgba(71,85,96,0.1);
-      }}
-      .header {{
-        background: var(--federal-navy); color: var(--white);
-        padding: 32px 40px; border-bottom: 4px solid var(--federal-gold);
-      }}
-      .header h1 {{ font-size: 28px; font-weight: 300; letter-spacing: -0.5px; margin-bottom: 24px; }}
-      .header-meta {{
-        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px; padding: 20px; background: rgba(255,255,255,0.08); border-radius: 4px;
-      }}
-      .meta-item {{ display:flex; flex-direction:column; }}
-      .meta-label {{ font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--federal-gold); margin-bottom: 4px; }}
-      .meta-value {{ font-size: 14px; color: var(--white); }}
-      .content {{ padding: 32px 40px; }}
-      .section-title {{
-        font-size: 18px; font-weight: 600; color: var(--federal-dark);
-        margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--federal-gold);
-      }}
-      .summary-table {{
-        width: 100%; border-collapse: collapse; margin-bottom: 40px; background: var(--white); border: 1px solid var(--border-light);
-      }}
-      .summary-table th {{
-        background: var(--federal-dark); color: var(--white); padding: 14px 16px; text-align: left; font-weight: 500;
-        font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;
-      }}
-      .summary-table td {{ padding: 12px 16px; border-bottom: 1px solid var(--border-light); font-size: 14px; }}
-      .summary-table tbody tr:hover {{ background: rgba(236,240,241,0.5); }}
-      .keyword-cell {{ font-weight: 500; color: var(--federal-navy); }}
-      .count-cell {{ text-align: center; font-variant-numeric: tabular-nums; color: var(--text-secondary); }}
-      .total-cell {{ background: rgba(212,175,55,0.1); font-weight: 600; color: var(--federal-dark); }}
-      .document-section {{ margin: 40px 0; }}
-      .doc-title {{
-        font-size: 16px; font-weight: 500; color: var(--federal-navy); margin-bottom: 20px;
-        padding: 12px 16px; background: var(--federal-light); border-left: 3px solid var(--federal-gold);
-      }}
-      .match-card {{ margin: 16px 0; border: 1px solid var(--border-light); border-radius: 4px; overflow: hidden; }}
-      .match-header {{
-        background: rgba(236,240,241,0.6); padding: 12px 16px; display:flex; align-items:center; gap:16px; border-bottom:1px solid var(--border-light);
-      }}
-      .match-index {{
-        display:inline-flex; align-items:center; justify-content:center; min-width:28px; height:28px;
-        background: var(--federal-gold); color: var(--white); border-radius:50%; font-size:12px; font-weight:600;
-      }}
-      .speaker-info {{ display:flex; flex-direction:column; gap:2px; }}
-      .speaker-name {{ font-weight: 600; color: var(--federal-dark); font-size: 14px; }}
-      .line-ref {{ color: var(--text-secondary); font-size: 12px; }}
-      .excerpt {{ padding: 16px 20px; background: var(--white); line-height: 1.7; font-size: 14px; color: var(--text-primary); }}
-      .excerpt strong {{
-        background: rgba(212,175,55,0.2); color: var(--federal-dark); padding: 2px 4px; border-radius: 2px; font-weight: 600; box-decoration-break: clone;
-      }}
-      @media (max-width: 520px) {{
-        body {{ padding: 16px; }}
-        .content {{ padding: 20px; }}
-        .header {{ padding: 24px; }}
-      }}
-    </style>
-    """
+    # Header block
+    header_block = f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
+  <tr>
+    <td style="background:{FEDERAL_NAVY}; color:{WHITE}; padding:18px; border-radius:10px; border-bottom:4px solid {FEDERAL_GOLD};">
+      <div style="font-size:18px; font-weight:700; margin:0 0 4px 0;">Hansard Keyword Digest</div>
+      <div style="opacity:.95; font-size:12px;">Program Runtime: {esc(now_utc)}</div>
+    </td>
+  </tr>
+</table>
+"""
 
-    header_html = f"""
-      <div class='header'>
-        <h1>Hansard Keyword Digest</h1>
-        <div class='header-meta'>
-          <div class='meta-item'>
-            <span class='meta-label'>Generated</span>
-            <span class='meta-value'>{esc(now_utc)}</span>
-          </div>
-          <div class='meta-item'>
-            <span class='meta-label'>Keywords Tracked</span>
-            <span class='meta-value'>{esc(", ".join(keywords))}</span>
-          </div>
-          <div class='meta-item'>
-            <span class='meta-label'>Documents Analyzed</span>
-            <span class='meta-value'>{docs_analyzed}</span>
-          </div>
-          <div class='meta-item'>
-            <span class='meta-label'>Total Matches</span>
-            <span class='meta-value'>{total_matches}</span>
-          </div>
-        </div>
+    # Summary card
+    summary_card = f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin:0 0 18px 0;">
+  <tr>
+    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; padding:12px 14px;">
+      <div style="font-size:14px; color:{TEXT_PRIMARY};">
+        <span style="color:{TEXT_SECONDARY};">Keywords:</span> {esc(", ".join(keywords))}
+        <span style="margin-left:12px; color:{TEXT_SECONDARY};">Documents analyzed:</span> {docs_analyzed}
+        <span style="margin-left:12px; color:{TEXT_SECONDARY};">Total matches:</span> {total_matches}
       </div>
-    """
+    </td>
+  </tr>
+</table>
+"""
 
-    # Summary section
-    summary_section = f"""
-      <div class='summary-section'>
-        <h2 class='section-title'>Keyword Summary by Chamber</h2>
-        {summary_table_html}
-      </div>
-    """
+    docs_html = "\n".join(doc_sections) if doc_sections else f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; margin-top:16px;">
+  <tr>
+    <td style="background:{WHITE}; border:1px solid {BORDER_LIGHT}; border-radius:8px; padding:14px 16px;">No transcripts with matches.</td>
+  </tr>
+</table>
+"""
 
-    # Documents section (or empty state)
-    docs_html = "\n".join(doc_sections) if doc_sections else """
-      <div class='document-section'>
-        <h3 class='doc-title'>No transcripts with matches</h3>
-      </div>
-    """
-
-    # Outer wrapper
+    # Outer wrapper: use tables + inline styles only
     html = f"""<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="color-scheme" content="light">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Hansard Keyword Digest</title>
-    {style}
-  </head>
-  <body>
-    <div class='container'>
-      {header_html}
-      <div class='content'>
-        {summary_section}
-        {docs_html}
-      </div>
-    </div>
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"/></head>
+  <body style="margin:0; padding:24px; background:{FEDERAL_LIGHT}; color:{TEXT_PRIMARY}; font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
+    <center>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; max-width:900px; margin:0 auto;">
+        <tr><td>
+          {header_block}
+          {summary_card}
+          {summary_table}
+          {docs_html}
+        </td></tr>
+      </table>
+    </center>
   </body>
 </html>"""
 
     return html, total_matches, counts
-
-
 
 def load_sent_log():
     if LOG_FILE.exists():
@@ -685,25 +605,44 @@ def main():
     subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
-    yag = yagmail.SMTP(
-        user=EMAIL_USER,
-        password=EMAIL_PASS,
-        host="smtp.gmail.com",
-        port=587,
-        smtp_starttls=True,
-        smtp_ssl=False,
-    )
+    # --- Build a plaintext fallback from the HTML (very compact) ---
+    def html_to_text_min(html: str) -> str:
+        text = re.sub(r"<br\s*/?>", "\n", html, flags=re.I)
+        text = re.sub(r"</(p|div|tr|table|section|article|h\d)>", "\n", text, flags=re.I)
+        text = re.sub(r"<[^>]+>", "", text)
+        text = re.sub(r"\n{3,}", "\n\n", text).strip()
+        return text
 
-    yag.send(
-        to=to_list,
-        subject=subject,
-        contents=[body_html],   # HTML string (no links)
-        attachments=files,
-    )
+    # --- Create multipart/alternative with attachments ---
+    msg = MIMEMultipart("mixed")
+    msg["Subject"] = subject
+    msg["From"] = EMAIL_USER
+    msg["To"] = ", ".join(to_list)
+
+    alt = MIMEMultipart("alternative")
+    alt.attach(MIMEText(html_to_text_min(body_html), "plain", "utf-8"))
+    alt.attach(MIMEText(body_html, "html", "utf-8"))
+    msg.attach(alt)
+
+    # Attach source transcripts
+    for fpath in files:
+        with open(fpath, "rb") as fp:
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(fp.read())
+        encoders.encode_base64(part)
+        part.add_header("Content-Disposition", f'attachment; filename="{Path(fpath).name}"')
+        msg.attach(part)
+
+    # --- Send via Gmail SMTP (TLS) ---
+    with smtplib.SMTP("smtp.gmail.com", 587) as s:
+        s.ehlo()
+        s.starttls()
+        s.login(EMAIL_USER, EMAIL_PASS)
+        s.sendmail(EMAIL_USER, to_list, msg.as_string())
 
     update_sent_log(files)
+    print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
-    print(f"Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
 
 if __name__ == "__main__":
