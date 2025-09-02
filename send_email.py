@@ -46,9 +46,9 @@ SPEAKER_HEADER_RE = re.compile(
 ^
 (?:
   (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
-  (?:[\s.]+(?P<name>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}))?
+  (?:[\s.]+(?P<name>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}))?
  |
-  (?P<name_only>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})
+  (?P<name_only>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})
 )
 (?:\s*\([^)]*\))?
 \s*(?::|[-–—]\s)
@@ -58,7 +58,7 @@ SPEAKER_HEADER_RE = re.compile(
 
 CONTENT_COLON_RE = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
 TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
-UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s''—\-&,;:.()]+$")
 INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
 
 
@@ -250,11 +250,11 @@ def _looks_suspicious(s: str | None) -> bool:
     s = s.strip()
     if re.match(
         r"(?i)^(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)"
-        r"(?:\s+[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})?$",
+        r"(?:\s+[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})?$",
         s,
     ):
         return False
-    if re.match(r"^[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}$", s):
+    if re.match(r"^[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}$", s):
         return False
     return True
 
@@ -348,37 +348,15 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 
 def build_digest_html(files, keywords):
-    """Build the HTML body and return (html_string, total_matches, counts_by_chamber_and_kw)."""
-    from datetime import datetime, UTC
     now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    # Summary counters
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
 
-    # Collect per-document sections
     doc_sections = []
     total_matches = 0
 
-    def parse_date_from_filename(filename: str):
-        m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
-        if m:
-            try:
-                return datetime.strptime(m.group(1), "%d %B %Y")
-            except ValueError:
-                return datetime.min
-        return datetime.min
-
-    def parse_chamber_from_filename(filename: str) -> str:
-        name = filename.lower()
-        if "house_of_assembly" in name:
-            return "House of Assembly"
-        if "legislative_council" in name:
-            return "Legislative Council"
-        return "Unknown"
-
-    # Order documents by date (parsed from filename), then by name
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
@@ -387,52 +365,42 @@ def build_digest_html(files, keywords):
         if not matches:
             continue
 
-        # Order matches by earliest line number
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # Build section HTML for this document
-        sec = []
-        sec.append(
-            f'<section class="doc">'
-            f'  <header class="doc__header">'
-            f'    <div class="doc__title">{_html_escape(Path(f).name)}</div>'
-            f'    <div class="doc__meta">{_html_escape(chamber)}</div>'
-            f'  </header>'
-        )
-
-        for i, (kw_set, excerpt_html, speaker, line_list, _win_start, _win_end) in enumerate(matches, 1):
-            # Update counts
+        sec_lines = [f'<div class="document-section"><h3 class="doc-title">{_html_escape(Path(f).name)}</h3>']
+        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
-            first_line = min(line_list) if line_list else None
+            first_line = min(line_list) if line_list else win_start
             speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
             line_label = "line" if len(line_list) == 1 else "lines"
-            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else "—"
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
-            sec.append(
-                f'  <article class="match">'
-                f'    <div class="match__meta">'
-                f'      <span class="match__index">Match #{i}</span>'
-                f'      <span class="match__speaker">{speaker_html}</span>'
-                f'      <span class="match__lines">{line_label} {lines_str}</span>'
-                f'    </div>'
-                f'    <div class="match__excerpt">{excerpt_html}</div>'
-                f'  </article>'
+            sec_lines.append(
+                f'<div class="match-card">'
+                f'  <div class="match-header">'
+                f'    <span class="match-index">{i}</span>'
+                f'    <span class="speaker-info">'
+                f'      <span class="speaker-name">{speaker_html}</span>'
+                f'      <span class="line-ref">{line_label} {lines_str}</span>'
+                f'    </span>'
+                f'  </div>'
+                f'  <div class="excerpt">{excerpt_html}</div>'
+                f'</div>'
             )
-
-        sec.append('</section>')
-        doc_sections.append("\n".join(sec))
+        sec_lines.append('</div>')
+        doc_sections.append("\n".join(sec_lines))
 
     # Build summary table
     header_cols = "".join([
-        "<th>Keyword</th>",
-        "<th>House of Assembly</th>",
-        "<th>Legislative Council</th>",
-        "<th>Total</th>",
+        "<th scope='col'>Keyword</th>",
+        "<th scope='col'>House of Assembly</th>",
+        "<th scope='col'>Legislative Council</th>",
+        "<th scope='col'>Total</th>",
     ])
     row_html = []
     for kw in keywords:
@@ -440,181 +408,336 @@ def build_digest_html(files, keywords):
         lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
         tot = totals[kw]
         row_html.append(
-            f"<tr>"
-            f"  <td class='kw'><span class='kw__pill'>{_html_escape(kw)}</span></td>"
-            f"  <td class='num'>{hoa}</td>"
-            f"  <td class='num'>{lc}</td>"
-            f"  <td class='num total'>{tot}</td>"
-            f"</tr>"
+            f"<tr><td class='keyword-cell'>{_html_escape(kw)}</td>"
+            f"<td class='count-cell'>{hoa}</td>"
+            f"<td class='count-cell'>{lc}</td>"
+            f"<td class='count-cell total-cell'>{tot}</td></tr>"
         )
     summary_table = (
-        f'<table class="summary">'
+        f'<table class="summary-table" role="table">'
         f'  <thead><tr>{header_cols}</tr></thead>'
         f'  <tbody>{"".join(row_html)}</tbody>'
         f'</table>'
     )
 
-    # Assemble full HTML
+    # Federal-themed professional CSS
     style = """
     <style>
-      :root{
-        --federal-gold:#C5A572;
-        --federal-navy:#4A5A6A;
-        --federal-dark:#475560;
-        --federal-light:#ECF0F1;
-        --federal-accent:#D4AF37;
-        --bg: var(--federal-light);
-        --text: var(--federal-dark);
-        --card-bg: #ffffff;
-        --muted: #6b7a89;
-        --rule: rgba(71,85,96,0.12);
+      :root {
+        --federal-gold: #C5A572;
+        --federal-navy: #4A5A6A;
+        --federal-dark: #475560;
+        --federal-light: #ECF0F1;
+        --federal-accent: #D4AF37;
+        --white: #FFFFFF;
+        --border-light: #D8DCE0;
+        --text-primary: #2C3440;
+        --text-secondary: #6B7684;
       }
-      body{
-        margin:0; padding:24px;
-        background:var(--bg);
-        color:var(--text);
-        font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      
+      * { 
+        box-sizing: border-box; 
+        margin: 0;
+        padding: 0;
       }
-      .wrap{
-        max-width: 860px; margin: 0 auto;
+      
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; 
+        line-height: 1.6; 
+        color: var(--text-primary); 
+        background: var(--federal-light); 
+        padding: 24px;
       }
-      .brand{
-        background: var(--card-bg);
-        border: 1px solid var(--rule);
-        border-left: 6px solid var(--federal-gold);
-        border-radius: 8px;
-        padding: 16px 18px;
-        margin-bottom: 16px;
-      }
-      .brand__title{
-        font-size: 18px; font-weight: 700; color: var(--federal-navy);
-        margin: 0 0 2px 0;
-      }
-      .brand__sub{ margin:0; color: var(--muted); }
-      .summary-card{
-        background: var(--card-bg);
-        border: 1px solid var(--rule);
-        border-radius: 8px;
-        padding: 14px 16px;
-        margin-bottom: 18px;
-      }
-      .kvs{ display:flex; flex-wrap:wrap; gap:12px 24px; margin: 6px 0 0 0; padding:0; list-style:none;}
-      .kvs li{ margin:0; }
-      .kvs .k{ color: var(--muted); margin-right:6px; }
-      .summary{
-        width:100%;
-        border-collapse: collapse;
-        background: var(--card-bg);
-        border: 1px solid var(--rule);
-        border-radius: 8px;
+      
+      .container { 
+        max-width: 900px; 
+        margin: 0 auto; 
+        background: var(--white); 
+        border-radius: 4px; 
         overflow: hidden;
-        margin: 6px 0 22px 0;
+        box-shadow: 0 1px 3px rgba(71, 85, 96, 0.1);
       }
-      .summary thead th{
-        text-align:left;
-        padding:10px 12px;
-        background: linear-gradient(0deg, var(--federal-navy), var(--federal-dark));
-        color: #fff;
-        font-weight:600;
-        font-size:13px;
-        border-bottom: 1px solid var(--rule);
+      
+      .header { 
+        background: var(--federal-navy); 
+        color: var(--white); 
+        padding: 32px 40px;
+        border-bottom: 4px solid var(--federal-gold);
       }
-      .summary tbody td{
-        padding:10px 12px; border-bottom:1px solid var(--rule);
-        vertical-align: top; background: #fff;
+      
+      .header h1 { 
+        font-size: 28px; 
+        font-weight: 300;
+        letter-spacing: -0.5px;
+        margin-bottom: 24px;
       }
-      .summary tbody tr:nth-child(even) td{ background:#fafbfc; }
-      .summary td.num{ text-align:right; width:110px; }
-      .summary td.total{ font-weight:700; }
-      .kw__pill{
-        display:inline-block; background: rgba(197,165,114,0.15);
-        color: var(--federal-dark); border:1px solid rgba(197,165,114,0.35);
-        border-radius: 999px; padding:2px 8px; font-size:12px;
-      }
-
-      section.doc{
-        background: var(--card-bg);
-        border: 1px solid var(--rule);
-        border-radius: 10px;
-        margin: 14px 0;
-        overflow: hidden;
-      }
-      .doc__header{
-        display:flex; justify-content:space-between; align-items:center;
-        padding: 12px 14px;
-        background: #fff;
-        border-bottom: 1px solid var(--rule);
-      }
-      .doc__title{
-        font-weight:700; color: var(--federal-navy);
-      }
-      .doc__meta{
-        color: var(--muted); font-size: 12px;
-      }
-
-      article.match{
-        padding: 12px 14px;
-        border-top: 1px solid var(--rule);
-      }
-      .match:first-of-type{ border-top:none; }
-      .match__meta{
-        display:flex; flex-wrap:wrap; gap:10px 16px; align-items:baseline;
-        color: var(--muted); font-size: 12px; margin-bottom: 6px;
-      }
-      .match__index{
-        color: var(--federal-dark); font-weight:700; font-size: 12px;
-        background: rgba(74,90,106,0.08);
-        border: 1px solid rgba(74,90,106,0.18);
-        border-radius: 6px; padding: 2px 6px;
-      }
-      .match__speaker{ font-weight:600; color: var(--federal-dark); }
-      .match__lines{ }
-      .match__excerpt{
-        background: #fbfbfb;
-        border-left: 3px solid var(--federal-accent);
-        padding: 10px 12px;
+      
+      .header-meta {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.08);
         border-radius: 4px;
       }
-      strong{ font-weight:700; color: #222; }
-      @media (max-width: 520px){
-        body{ padding: 16px; }
-        .doc__header{ flex-direction: column; align-items: flex-start; gap: 4px; }
+      
+      .meta-item {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .meta-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--federal-gold);
+        margin-bottom: 4px;
+      }
+      
+      .meta-value {
+        font-size: 14px;
+        color: var(--white);
+      }
+      
+      .content { 
+        padding: 32px 40px;
+      }
+      
+      .section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--federal-dark);
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 2px solid var(--federal-gold);
+      }
+      
+      .summary-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-bottom: 40px;
+        background: var(--white);
+        border: 1px solid var(--border-light);
+      }
+      
+      .summary-table th { 
+        background: var(--federal-dark); 
+        color: var(--white); 
+        padding: 14px 16px; 
+        text-align: left; 
+        font-weight: 500;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .summary-table td { 
+        padding: 12px 16px; 
+        border-bottom: 1px solid var(--border-light);
+        font-size: 14px;
+      }
+      
+      .summary-table tbody tr:hover { 
+        background: rgba(236, 240, 241, 0.5);
+      }
+      
+      .keyword-cell {
+        font-weight: 500;
+        color: var(--federal-navy);
+      }
+      
+      .count-cell { 
+        text-align: center; 
+        font-variant-numeric: tabular-nums;
+        color: var(--text-secondary);
+      }
+      
+      .total-cell { 
+        background: rgba(212, 175, 55, 0.1);
+        font-weight: 600;
+        color: var(--federal-dark);
+      }
+      
+      .document-section { 
+        margin: 40px 0;
+      }
+      
+      .doc-title { 
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--federal-navy);
+        margin-bottom: 20px;
+        padding: 12px 16px;
+        background: var(--federal-light);
+        border-left: 3px solid var(--federal-gold);
+      }
+      
+      .match-card { 
+        margin: 16px 0;
+        border: 1px solid var(--border-light);
+        border-radius: 4px;
+        overflow: hidden;
+        transition: box-shadow 0.2s ease;
+      }
+      
+      .match-card:hover { 
+        box-shadow: 0 2px 8px rgba(71, 85, 96, 0.12);
+      }
+      
+      .match-header { 
+        background: rgba(236, 240, 241, 0.6);
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid var(--border-light);
+      }
+      
+      .match-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        background: var(--federal-gold);
+        color: var(--white);
+        border-radius: 50%;
+        font-size: 12px;
+        font-weight: 600;
+      }
+      
+      .speaker-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      
+      .speaker-name { 
+        font-weight: 600;
+        color: var(--federal-dark);
+        font-size: 14px;
+      }
+      
+      .line-ref { 
+        color: var(--text-secondary);
+        font-size: 12px;
+      }
+      
+      .excerpt { 
+        padding: 16px 20px;
+        background: var(--white);
+        line-height: 1.7;
+        font-size: 14px;
+        color: var(--text-primary);
+      }
+      
+      .excerpt strong { 
+        background: rgba(212, 175, 55, 0.2);
+        color: var(--federal-dark);
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-weight: 600;
+        box-decoration-break: clone;
+      }
+      
+      .no-matches { 
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-secondary);
+        background: var(--federal-light);
+        border-radius: 4px;
+        margin: 24px 0;
+        font-size: 14px;
+      }
+      
+      @media (max-width: 640px) {
+        body { 
+          padding: 12px;
+        }
+        
+        .container { 
+          border-radius: 0;
+        }
+        
+        .header, .content { 
+          padding: 24px;
+        }
+        
+        .header h1 {
+          font-size: 24px;
+        }
+        
+        .header-meta {
+          grid-template-columns: 1fr;
+        }
+        
+        .summary-table { 
+          font-size: 13px;
+        }
+        
+        .summary-table th, 
+        .summary-table td { 
+          padding: 10px 12px;
+        }
+        
+        .match-header {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        
+        .speaker-info {
+          flex: 1;
+        }
+      }
+      
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        
+        .container {
+          box-shadow: none;
+        }
       }
     </style>
     """
 
     header_html = (
-        f'<div class="brand">'
-        f'  <h1 class="brand__title">Hansard Keyword Digest</h1>'
-        f'  <p class="brand__sub">Program Runtime: {now_utc}</p>'
+        f'<div class="header">'
+        f'  <h1>Hansard Keyword Digest</h1>'
+        f'  <div class="header-meta">'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Generated</span>'
+        f'      <span class="meta-value">{now_utc}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Keywords Tracked</span>'
+        f'      <span class="meta-value">{_html_escape(", ".join(keywords))}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Documents Analyzed</span>'
+        f'      <span class="meta-value">{len(files)}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Total Matches</span>'
+        f'      <span class="meta-value">{total_matches}</span>'
+        f'    </div>'
+        f'  </div>'
         f'</div>'
-        f'<div class="summary-card">'
-        f'  <ul class="kvs">'
-        f'    <li><span class="k">Keywords:</span><span>{_html_escape(", ".join(keywords))}</span></li>'
-        f'    <li><span class="k">Total matches:</span><span>{total_matches}</span></li>'
-        f'  </ul>'
-        f'</div>'
-        f'<table class="summary">'
-        f'  <thead><tr>'
-        f'    <th>Keyword</th><th>House of Assembly</th><th>Legislative Council</th><th>Total</th>'
-        f'  </tr></thead>'
-        f'  <tbody>'
-        f'    {summary_table.split("<tbody>")[1].split("</tbody>")[0]}'
-        f'  </tbody>'
-        f'</table>'
     )
 
-    doc_html = "\n".join(doc_sections) if doc_sections else (
-        '<section class="doc">'
-        '  <header class="doc__header"><div class="doc__title">No transcripts with matches</div>'
-        '  <div class="doc__meta">—</div></header>'
-        '  <article class="match"><div class="match__excerpt">No keyword matches found.</div></article>'
-        '</section>'
+    summary_section = (
+        f'<div class="summary-section">'
+        f'  <h2 class="section-title">Keyword Summary by Chamber</h2>'
+        f'  {summary_table}'
+        f'</div>'
     )
 
-    html = f"<!doctype html><html><head>{style}</head><body><div class='wrap'>{header_html}{doc_html}</div></body></html>"
+    doc_html = "\n".join(doc_sections) if doc_sections else '<div class="no-matches">No keyword matches found in the processed documents.</div>'
+
+    html = f"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Hansard Digest</title>{style}</head><body><div class='container'>{header_html}<div class='content'>{summary_section}{doc_html}</div></div></body></html>"
     return html, total_matches, counts
-
 
 
 def load_sent_log():
@@ -673,7 +796,7 @@ def main():
 
     update_sent_log(files)
 
-    print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+    print(f"Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
 
 if __name__ == "__main__":
