@@ -348,225 +348,462 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 
 def build_digest_html(files, keywords):
-    """
-    Returns: (html_string, total_matches, counts_by_chamber_and_kw)
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
 
-    Email-safe, single-column layout:
-      - Header with runtime
-      - "Keywords Triggered" summary table
-      - One "Document Card" per transcript, with ordered matches
-      - No emoji, no keyword hyperlinks; line numbers shown as plain text
-    """
-    import re
-    from pathlib import Path
-    from datetime import datetime, UTC
-
-    # --- colours (hard-coded for email client compatibility) ---
-    FEDERAL_GOLD  = "#C5A572"
-    FEDERAL_NAVY  = "#4A5A6A"
-    FEDERAL_DARK  = "#475560"
-    FEDERAL_LIGHT = "#ECF0F1"
-    FEDERAL_ACCENT= "#D4AF37"
-
-    # --- small helpers -------------------------------------------------------
-    def esc(s: str) -> str:
-        try:
-            # use project-level helper if present
-            return _html_escape(s)
-        except NameError:
-            import html
-            return html.escape(s or "")
-
-    def parse_date_from_filename(filename: str):
-        m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
-        if m:
-            try:
-                return datetime.strptime(m.group(1), "%d %B %Y")
-            except ValueError:
-                return datetime.min
-        return datetime.min
-
-    def parse_chamber_from_filename(filename: str) -> str:
-        low = filename.lower()
-        if "house_of_assembly" in low:
-            return "House of Assembly"
-        if "legislative_council" in low:
-            return "Legislative Council"
-        return "Unknown"
-
-    # --- summary counters ----------------------------------------------------
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
+
+    doc_sections = []
     total_matches = 0
 
-    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
-
-    # --- build per-document sections ----------------------------------------
-    doc_sections = []
-
-    # sort docs by date then name
-    files_sorted = sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name))
-
-    for fpath in files_sorted:
-        name = Path(fpath).name
-        text = Path(fpath).read_text(encoding="utf-8", errors="ignore")
-        chamber = parse_chamber_from_filename(name)
+    for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
+        text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        chamber = parse_chamber_from_filename(Path(f).name)
 
         matches = extract_matches(text, keywords)
         if not matches:
             continue
 
-        # order by first mentioned line number
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # document header
-        sec = []
-        sec.append(
-            f"""
-            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 16px 0; border-collapse:collapse;">
-              <tr>
-                <td style="background:#fff; border:1px solid {FEDERAL_LIGHT}; border-left:6px solid {FEDERAL_GOLD}; border-radius:8px; overflow:hidden;">
-                  <div style="padding:14px 16px; border-bottom:1px solid {FEDERAL_LIGHT};">
-                    <div style="font-weight:700; color:{FEDERAL_NAVY}; font-size:16px; line-height:1.3;">{esc(name)}</div>
-                    <div style="color:#687783; font-size:12px; margin-top:2px;">{esc(chamber)}</div>
-                  </div>
-            """
-        )
-
-        # matches
-        for i, (kw_set, excerpt_html, speaker, line_list, _w0, _w1) in enumerate(matches, 1):
+        sec_lines = [f'<div class="document-section">']
+        sec_lines.append(f'  <div class="doc-header">')
+        sec_lines.append(f'    <h3 class="doc-title">{_html_escape(Path(f).name)}</h3>')
+        sec_lines.append(f'    <div class="doc-meta">{len(matches)} matches found</div>')
+        sec_lines.append(f'  </div>')
+        sec_lines.append(f'  <div class="matches-container">')
+        
+        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
-            speaker_html = esc(speaker) if speaker else "UNKNOWN"
-            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else "—"
-            line_label = "line" if len(set(line_list)) == 1 else "lines"
+            first_line = min(line_list) if line_list else win_start
+            speaker_html = _html_escape(speaker) if speaker else "UNKNOWN"
+            line_label = "line" if len(line_list) == 1 else "lines"
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
-            sec.append(
-                f"""
-                  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; border-top:1px solid {FEDERAL_LIGHT};">
-                    <tr>
-                      <td style="padding:10px 16px;">
-                        <div style="font-size:12px; color:#6b7a89; margin:0 0 6px 0;">
-                          <span style="display:inline-block; padding:1px 6px; background:rgba(74,90,106,.08); border:1px solid rgba(74,90,106,.18); border-radius:6px; color:{FEDERAL_DARK}; font-weight:700; margin-right:8px;">Match #{i}</span>
-                          <span style="font-weight:600; color:{FEDERAL_DARK};">{speaker_html}</span>
-                          <span style="margin-left:10px;">{line_label} {esc(lines_str)}</span>
-                        </div>
-                        <div style="background:#fbfbfb; border-left:3px solid {FEDERAL_ACCENT}; padding:10px 12px; border-radius:4px; color:#242b31; font-size:14px; line-height:1.5;">
-                          {excerpt_html}
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                """
+            sec_lines.append(
+                f'    <div class="match-card">'
+                f'      <div class="match-header">'
+                f'        <span class="match-number">{i}</span>'
+                f'        <div class="speaker-badge">'
+                f'          <span class="speaker-name">{speaker_html}</span>'
+                f'        </div>'
+                f'        <span class="line-info">{line_label} {lines_str}</span>'
+                f'      </div>'
+                f'      <div class="excerpt">{excerpt_html}</div>'
+                f'    </div>'
             )
+        sec_lines.append('  </div>')
+        sec_lines.append('</div>')
+        doc_sections.append("\n".join(sec_lines))
 
-        # footer of doc card
-        sec.append("    </td></tr></table>")
-        doc_sections.append("".join(sec))
+    # Build summary table
+    header_cols = "".join([
+        "<th scope='col'>Keyword</th>",
+        "<th scope='col'>House of Assembly</th>",
+        "<th scope='col'>Legislative Council</th>",
+        "<th scope='col'>Total</th>",
+    ])
+    row_html = []
+    for kw in keywords:
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
+        row_html.append(
+            f"<tr><td class='keyword-cell'>{_html_escape(kw)}</td>"
+            f"<td class='count-cell'>{hoa}</td>"
+            f"<td class='count-cell'>{lc}</td>"
+            f"<td class='count-cell total-cell'>{tot}</td></tr>"
+        )
+    summary_table = (
+        f'<table class="summary-table" role="table">'
+        f'  <thead><tr>{header_cols}</tr></thead>'
+        f'  <tbody>{"".join(row_html)}</tbody>'
+        f'</table>'
+    )
 
-    # --- summary table -------------------------------------------------------
-    def summary_rows() -> str:
-        rows = []
-        for kw in keywords:
-            hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
-            lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
-            tot = totals[kw]
-            rows.append(
-                f"""
-                <tr>
-                  <td style="padding:10px 12px; border-bottom:1px solid {FEDERAL_LIGHT};">
-                    <span style="display:inline-block; background:rgba(197,165,114,.15); color:{FEDERAL_DARK};
-                                 border:1px solid rgba(197,165,114,.35); border-radius:999px; padding:2px 8px; font-size:12px;">
-                      {esc(kw)}
-                    </span>
-                  </td>
-                  <td align="right" style="padding:10px 12px; border-bottom:1px solid {FEDERAL_LIGHT};">{hoa}</td>
-                  <td align="right" style="padding:10px 12px; border-bottom:1px solid {FEDERAL_LIGHT};">{lc}</td>
-                  <td align="right" style="padding:10px 12px; border-bottom:1px solid {FEDERAL_LIGHT}; font-weight:700;">{tot}</td>
-                </tr>
-                """
-            )
-        return "".join(rows)
-
-    summary_table = f"""
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; background:#fff; border:1px solid {FEDERAL_LIGHT}; border-radius:8px; overflow:hidden;">
-        <thead>
-          <tr>
-            <th align="left" style="padding:10px 12px; background:{FEDERAL_NAVY}; color:#fff; font-weight:600; font-size:13px;">Keyword</th>
-            <th align="right" style="padding:10px 12px; background:{FEDERAL_NAVY}; color:#fff; font-weight:600; font-size:13px;">House of Assembly</th>
-            <th align="right" style="padding:10px 12px; background:{FEDERAL_NAVY}; color:#fff; font-weight:600; font-size:13px;">Legislative Council</th>
-            <th align="right" style="padding:10px 12px; background:{FEDERAL_NAVY}; color:#fff; font-weight:600; font-size:13px;">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {summary_rows()}
-        </tbody>
-      </table>
+    # Federal-themed professional CSS inspired by dashboard design
+    style = """
+    <style>
+      :root {
+        --federal-gold: #C5A572;
+        --federal-navy: #4A5A6A;
+        --federal-dark: #475560;
+        --federal-light: #ECF0F1;
+        --federal-accent: #D4AF37;
+        --white: #FFFFFF;
+        --border-light: #D8DCE0;
+        --text-primary: #2C3440;
+        --text-secondary: #6B7684;
+      }
+      
+      * { 
+        box-sizing: border-box; 
+        margin: 0;
+        padding: 0;
+      }
+      
+      body { 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+        line-height: 1.6; 
+        color: var(--text-primary); 
+        background: var(--federal-light); 
+        padding: 0;
+      }
+      
+      .container { 
+        max-width: 900px; 
+        margin: 0 auto; 
+        background: var(--white); 
+      }
+      
+      .header { 
+        background: linear-gradient(135deg, var(--federal-dark) 0%, var(--federal-dark) 100%);
+        color: var(--white); 
+        padding: 2rem 2.5rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+      }
+      
+      .header h1 { 
+        font-size: 2rem; 
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+        color: white;
+      }
+      
+      .header-subtitle {
+        font-size: 0.95rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      
+      .stat-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 3px solid var(--federal-gold);
+      }
+      
+      .stat-card h4 {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.25rem;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--federal-gold);
+      }
+      
+      .stat-label {
+        font-size: 0.85rem;
+        opacity: 0.8;
+        margin-top: 0.25rem;
+      }
+      
+      .content { 
+        padding: 2rem;
+        background: var(--federal-light);
+      }
+      
+      .panel {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+      
+      .panel h2 {
+        color: var(--federal-navy);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--federal-gold);
+        font-size: 1.25rem;
+      }
+      
+      .summary-table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        background: var(--white);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      
+      .summary-table th { 
+        background: var(--federal-navy); 
+        color: var(--white); 
+        padding: 0.8rem; 
+        text-align: left; 
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      
+      .summary-table td { 
+        padding: 0.6rem 0.8rem; 
+        border-bottom: 1px solid var(--federal-light);
+        font-size: 0.9rem;
+      }
+      
+      .summary-table tbody tr:hover { 
+        background: rgba(197, 165, 114, 0.1);
+      }
+      
+      .summary-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      
+      .keyword-badge {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        background: var(--federal-gold);
+        color: white;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      
+      .count-cell { 
+        text-align: center; 
+        font-variant-numeric: tabular-nums;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+      
+      .total-cell { 
+        background: rgba(212, 175, 55, 0.15);
+        font-weight: 700;
+        color: var(--federal-dark);
+      }
+      
+      .document-section { 
+        margin-bottom: 1.5rem;
+      }
+      
+      .doc-header {
+        background: linear-gradient(135deg, var(--federal-light) 0%, white 100%);
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--federal-gold);
+        border-radius: 8px 8px 0 0;
+        margin-bottom: 0;
+      }
+      
+      .doc-title { 
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--federal-navy);
+        margin: 0;
+      }
+      
+      .doc-meta {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 0.25rem;
+      }
+      
+      .matches-container {
+        background: white;
+        border-radius: 0 0 8px 8px;
+        padding: 1rem;
+        border: 1px solid var(--border-light);
+        border-top: none;
+      }
+      
+      .match-card { 
+        margin: 0.75rem 0;
+        border: 1px solid var(--border-light);
+        border-radius: 6px;
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+      
+      .match-card:hover { 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transform: translateY(-1px);
+      }
+      
+      .match-header { 
+        background: var(--federal-light);
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        border-bottom: 1px solid var(--border-light);
+      }
+      
+      .match-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 32px;
+        height: 32px;
+        background: var(--federal-navy);
+        color: var(--white);
+        border-radius: 50%;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      
+      .speaker-badge {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .speaker-name { 
+        font-weight: 600;
+        color: var(--federal-dark);
+        font-size: 0.9rem;
+      }
+      
+      .line-info { 
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        background: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+      }
+      
+      .excerpt { 
+        padding: 1rem 1.25rem;
+        background: var(--white);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+      }
+      
+      .excerpt strong { 
+        background: linear-gradient(to bottom, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.2));
+        color: var(--federal-dark);
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-weight: 600;
+        box-decoration-break: clone;
+      }
+      
+      .no-matches { 
+        text-align: center;
+        padding: 3rem 2rem;
+        color: var(--text-secondary);
+        background: white;
+        border-radius: 8px;
+        border: 2px dashed var(--border-light);
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+      
+      .footer {
+        background: var(--federal-navy);
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        font-size: 0.8rem;
+        opacity: 0.9;
+      }
+      
+      @media (max-width: 640px) {
+        .container { 
+          border-radius: 0;
+        }
+        
+        .header, .content { 
+          padding: 1.5rem;
+        }
+        
+        .header h1 {
+          font-size: 1.5rem;
+        }
+        
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        
+        .match-header {
+          flex-wrap: wrap;
+        }
+        
+        .summary-table { 
+          font-size: 0.8rem;
+        }
+        
+        .summary-table th, 
+        .summary-table td { 
+          padding: 0.5rem;
+        }
+      }
+      
+      @media print {
+        body {
+          background: white;
+          padding: 0;
+        }
+        
+        .container {
+          box-shadow: none;
+        }
+        
+        .panel {
+          box-shadow: none;
+          border: 1px solid #ddd;
+        }
+      }
+    </style>
     """
 
-    # --- header & wrap -------------------------------------------------------
-    header_block = f"""
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 0 16px 0;">
-        <tr>
-          <td style="background:{FEDERAL_DARK}; color:#fff; padding:18px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,.06);">
-            <div style="font-size:18px; font-weight:700; margin:0 0 2px 0;">Hansard Keyword Digest</div>
-            <div style="opacity:.9; font-size:12px;">Program Runtime: {esc(now_utc)}</div>
-          </td>
-        </tr>
-      </table>
+    header_html = (
+        f'<div class="header">'
+        f'  <h1>Hansard Keyword Digest</h1>'
+        f'  <div class="header-meta">'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Generated</span>'
+        f'      <span class="meta-value">{now_utc}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Keywords Tracked</span>'
+        f'      <span class="meta-value">{_html_escape(", ".join(keywords))}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Documents Analyzed</span>'
+        f'      <span class="meta-value">{len(files)}</span>'
+        f'    </div>'
+        f'    <div class="meta-item">'
+        f'      <span class="meta-label">Total Matches</span>'
+        f'      <span class="meta-value">{total_matches}</span>'
+        f'    </div>'
+        f'  </div>'
+        f'</div>'
+    )
 
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse:collapse; margin:0 0 16px 0;">
-        <tr>
-          <td style="background:#fff; border:1px solid {FEDERAL_LIGHT}; border-radius:8px; padding:14px 16px;">
-            <div style="margin:0 0 8px 0; color:{FEDERAL_NAVY}; font-weight:700;">Summary</div>
-            <div style="font-size:14px; color:#333;">
-              <span style="color:#6b7a89;">Keywords:</span> {esc(", ".join(keywords))}
-              <span style="margin-left:12px; color:#6b7a89;">Total matches:</span> {total_matches}
-            </div>
-          </td>
-        </tr>
-      </table>
+    summary_section = (
+        f'<div class="summary-section">'
+        f'  <h2 class="section-title">Keyword Summary by Chamber</h2>'
+        f'  {summary_table}'
+        f'</div>'
+    )
 
-      {summary_table}
-    """
+    doc_html = "\n".join(doc_sections) if doc_sections else '<div class="no-matches">No keyword matches found in the processed documents.</div>'
 
-    docs_html = "\n".join(doc_sections) if doc_sections else f"""
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:16px; border-collapse:collapse;">
-        <tr>
-          <td style="background:#fff; border:1px solid {FEDERAL_LIGHT}; border-radius:8px; padding:14px 16px;">
-            No transcripts with matches.
-          </td>
-        </tr>
-      </table>
-    """
-
-    # --- final HTML (single column, centre) ----------------------------------
-    outer = f"""<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="color-scheme" content="light">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Hansard Keyword Digest</title>
-  </head>
-  <body style="margin:0; padding:24px; background:{FEDERAL_LIGHT}; color:{FEDERAL_DARK}; font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;">
-    <center>
-      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:860px; margin:0 auto; border-collapse:collapse;">
-        <tr><td style="padding:0 0 6px 0;">
-          {header_block}
-          {docs_html}
-        </td></tr>
-      </table>
-    </center>
-  </body>
-</html>"""
-
-    return outer, total_matches, counts
+    html = f"<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Hansard Digest</title>{style}</head><body><div class='container'>{header_html}<div class='content'>{summary_section}{doc_html}</div></div></body></html>"
+    return html, total_matches, counts
 
 
 def load_sent_log():
