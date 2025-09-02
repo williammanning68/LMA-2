@@ -306,7 +306,7 @@ def extract_matches(text: str, keywords):
 
         wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
 
-        # ✅ NEW: Remove identical (start,end) windows to avoid duplicate excerpts
+        # Remove identical (start,end) windows to avoid duplicate excerpts
         wins = _dedup_windows(wins)
 
         # Keep separate unless far apart; if far (>2), merge into a longer excerpt
@@ -324,6 +324,30 @@ def extract_matches(text: str, keywords):
             results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
 
     return results
+
+
+# --- Outlook-safe rounded card wrapper (VML) ---------------------------------
+
+def vml_card(inner_html: str, bg="#FFFFFF", border="#E4E9EE", arc="6%", pad_pt=(14, 14, 14, 14), width=640) -> str:
+    """
+    Wraps a content block in a VML rounded-rect for Outlook, with a <div> fallback
+    for other clients. Crucial bits:
+      - xmlns:v at <html> level (added below in html_open)
+      - mso-fit-shape-to-text:t so Outlook grows to content height
+    """
+    inset = ",".join(f"{p}pt" for p in pad_pt)
+    return (
+        f'<!--[if mso | IE]>'
+        f'<v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" '
+        f'arcsize="{arc}" fillcolor="{bg}" strokecolor="{border}" strokeweight="1px" '
+        f'style="width:{width}px;">'
+        f'<v:textbox inset="{inset}" style="mso-fit-shape-to-text:t;word-wrap:break-word">'
+        f'<![endif]-->'
+        f'<div style="background:{bg};border:1px solid {border};border-radius:12px;padding:18px;">'
+        f'{inner_html}'
+        f'</div>'
+        f'<!--[if mso | IE]></v:textbox></v:roundrect><![endif]-->'
+    )
 
 
 # --- Digest / email pipeline (HTML) ------------------------------------------
@@ -357,6 +381,7 @@ def build_digest_html(files, keywords):
     doc_sections = []
     total_matches = 0
 
+    # Build summary table data as before
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
@@ -368,7 +393,15 @@ def build_digest_html(files, keywords):
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        sec_lines = [f'<div class="document-title">{_html_escape(Path(f).name)}</div>']
+        # Document title card
+        title_inner = (
+            '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
+            f'<tr><td style="font-size:18px;color:#475560;font-weight:700;">{_html_escape(Path(f).name)}</td></tr>'
+            '</table>'
+        )
+        doc_html_parts = [vml_card(title_inner, bg="#FFFFFF", border="#E4E9EE", arc="6%", pad_pt=(10, 10, 10, 10))]
+
+        # Each match card
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
             for kw in kw_set:
                 if chamber in counts:
@@ -380,160 +413,144 @@ def build_digest_html(files, keywords):
             line_label = "line" if len(line_list) == 1 else "lines"
             lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
-            sec_lines.append(
-                f'<div class="match">'
-                f'  <div class="meta">Match #{i} (<strong>{speaker_html}</strong>) — {line_label} {lines_str}</div>'
-                f'  <div class="excerpt">{excerpt_html}</div>'
+            match_inner = (
+                f'<div style="color:#475560;font-size:14px;font-weight:700;">'
+                f'Match #{i} ({speaker_html}) — {line_label} {lines_str}'
                 f'</div>'
+                f'<div style="margin-top:8px;font-family:Georgia,\'Times New Roman\',serif;'
+                f'font-size:15px;line-height:1.55;color:#222;">{excerpt_html}</div>'
             )
-        doc_sections.append("\n".join(sec_lines))
+            doc_html_parts.append(vml_card(match_inner, bg="#FFFFFF", border="#E4E9EE", arc="6%"))
 
-    # Build summary table rows
+            # spacer between match cards (table row is added later)
+            doc_html_parts.append(
+                '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">'
+                '<tr><td height="12" style="line-height:12px;font-size:12px;">&nbsp;</td></tr>'
+                '</table>'
+            )
+
+        # wrap doc block rows
+        doc_sections.append(''.join([
+            '<tr><td>',
+            ''.join(doc_html_parts),
+            '</td></tr>',
+        ]))
+
+    # Summary table HTML (unchanged content, improved styles)
+    header_cols = "".join([
+        "<th align=\"left\" style=\"padding:12px;border-bottom:2px solid #E4E9EE;color:#475560;font-size:13px;\">Keyword</th>",
+        "<th align=\"center\" style=\"padding:12px;border-bottom:2px solid #E4E9EE;color:#475560;font-size:13px;\">House of Assembly</th>",
+        "<th align=\"center\" style=\"padding:12px;border-bottom:2px solid #E4E9EE;color:#475560;font-size:13px;\">Legislative Council</th>",
+        "<th align=\"center\" style=\"padding:12px;border-bottom:2px solid #E4E9EE;color:#475560;font-size:13px;\">Total</th>",
+    ])
     row_html = []
     for kw in keywords:
         hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
         lc  = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
         tot = totals[kw]
         row_html.append(
-            f"<tr><td>{_html_escape(kw)}</td>"
-            f"<td class='num'>{hoa}</td>"
-            f"<td class='num'>{lc}</td>"
-            f"<td class='num total'>{tot}</td></tr>"
+            f"<tr>"
+            f"<td style='padding:10px 12px;border-bottom:1px solid #E4E9EE;font-size:14px;'>{_html_escape(kw)}</td>"
+            f"<td align='center' style='padding:10px 12px;border-bottom:1px solid #E4E9EE;font-size:14px;'>{hoa}</td>"
+            f"<td align='center' style='padding:10px 12px;border-bottom:1px solid #E4E9EE;font-size:14px;'>{lc}</td>"
+            f"<td align='center' style='padding:10px 12px;border-bottom:1px solid #E4E9EE;font-size:14px;font-weight:700;'>{tot}</td>"
+            f"</tr>"
         )
-    
-    # Build the complete HTML with new styling
-    html = f"""<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Hansard Keyword Digest</title>
-<style>
-  body {{
-    font-family: Arial, sans-serif;
-    color: #475560;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-    background-color: #ECF0F1;
-  }}
-  .container {{
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 20px;
-  }}
-  .header {{
-    border-bottom: 2px solid #C5A572;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-  }}
-  .header h1 {{
-    color: #4A5A6A;
-    margin: 0 0 10px 0;
-    font-size: 24px;
-  }}
-  .metadata {{
-    font-size: 14px;
-    color: #4A5A6A;
-  }}
-  .summary-table {{
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 14px;
-  }}
-  .summary-table th {{
-    background-color: #4A5A6A;
-    color: #ffffff;
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #4A5A6A;
-  }}
-  .summary-table td {{
-    padding: 8px 10px;
-    border: 1px solid #D4AF37;
-  }}
-  .summary-table .num {{
-    text-align: right;
-  }}
-  .summary-table .total {{
-    font-weight: bold;
-    background-color: #ECF0F1;
-  }}
-  .document-section {{
-    margin: 25px 0;
-  }}
-  .document-title {{
-    color: #4A5A6A;
-    font-size: 18px;
-    border-bottom: 1px solid #C5A572;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-  }}
-  .match {{
-    margin: 15px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-left: 3px solid #D4AF37;
-  }}
-  .meta {{
-    font-size: 14px;
-    color: #4A5A6A;
-    margin-bottom: 8px;
-  }}
-  .excerpt {{
-    font-size: 14px;
-    line-height: 1.6;
-  }}
-  strong {{
-    color: #4A5A6A;
-    font-weight: bold;
-  }}
-  .footer {{
-    margin-top: 30px;
-    padding-top: 15px;
-    border-top: 1px solid #C5A572;
-    font-size: 12px;
-    color: #4A5A6A;
-  }}
-</style>
-</head>
-<body>
-  <div class="container">
-    <div class="header">
-      <h1>Hansard Keyword Digest</h1>
-      <div class="metadata">
-        <p><strong>Program Runtime:</strong> {now_utc}</p>
-        <p><strong>Keywords:</strong> {_html_escape(", ".join(keywords))}</p>
-      </div>
-    </div>
+    summary_table = (
+        f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
+        f'style="border-collapse:collapse;background:#FFFFFF;">'
+        f'  <thead><tr style="background:#ECF0F1;">{header_cols}</tr></thead>'
+        f'  <tbody>{"".join(row_html)}</tbody>'
+        f'</table>'
+    )
 
-    <h2>Keywords Triggered</h2>
-    <table class="summary-table">
-      <thead>
-        <tr>
-          <th>Keyword</th>
-          <th>House of Assembly</th>
-          <th>Legislative Council</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {"".join(row_html)}
-      </tbody>
-    </table>
+    # Build the hero + keyword pills + summary using VML cards
+    # hero
+    hero_inner = (
+        '<div style="color:#FFFFFF">'
+        '<div style="font-size:22px;font-weight:700;margin:0 0 6px 0;">Hansard Keyword Digest</div>'
+        f'<div style="font-size:13px;opacity:.9;">Comprehensive parliamentary transcript analysis — {now_utc}</div>'
+        '</div>'
+    )
+    hero = vml_card(hero_inner, bg="#4A5A6A", border="#4A5A6A", arc="6%", pad_pt=(14, 14, 14, 14))
 
-    <div class="documents">
-      {"".join(doc_sections) if doc_sections else "<p>No keyword matches found.</p>"}
-    </div>
+    # keyword pills
+    pills = ''.join(
+        f'<span style="display:inline-block;margin:0 6px 6px 0;'
+        f'padding:6px 8px;border:1px solid #C5A572;border-radius:8px;'
+        f'background:#fff4de;color:#475560;font-size:13px;">{_html_escape(kw)}</span>'
+        for kw in keywords
+    )
+    kw_block = vml_card(
+        f'<div style="font-size:16px;color:#475560;font-weight:700;margin-bottom:10px;">Keywords Being Tracked</div>'
+        f'<div>{pills}</div>',
+        bg="#ECF0F1", border="#E4E9EE", arc="6%"
+    )
 
-    <div class="footer">
-      <p>This digest was automatically generated by the Hansard Monitoring System.</p>
-    </div>
-  </div>
-</body>
-</html>"""
-    
+    # summary table block
+    summary_block = vml_card(
+        '<div style="font-size:16px;color:#475560;font-weight:700;margin-bottom:10px;">Summary by Chamber</div>'
+        f'{summary_table}',
+        bg="#ECF0F1", border="#E4E9EE", arc="6%"
+    )
+
+    # Minimal, client-safe HEAD + scaffolding
+    head = (
+        '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">'
+        '<!--[if mso]>'
+        '<xml><o:OfficeDocumentSettings xmlns:o="urn:schemas-microsoft-com:office:office">'
+        '<o:AllowPNG/>'
+        '</o:OfficeDocumentSettings></xml>'
+        '<style>*,body,table,td,div,p,a{font-family:Arial,Helvetica,sans-serif!important}</style>'
+        '<![endif]-->'
+        '<style>table{border-collapse:collapse}strong{font-weight:700}</style>'
+    )
+    html_open = (
+        '<!doctype html>'
+        '<html xmlns:v="urn:schemas-microsoft-com:vml" '
+        'xmlns:o="urn:schemas-microsoft-com:office:office">'
+        f'<head>{head}<title>Hansard Keyword Digest</title></head>'
+        '<body style="margin:0;padding:0;background:#ECF0F1;">'
+    )
+    html_close = '</body></html>'
+
+    # Outer table scaffold
+    outer_open = (
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#ECF0F1;">'
+        '<tr><td align="center">'
+        '<table role="presentation" width="640" cellpadding="0" cellspacing="0" border="0" style="width:640px;">'
+        '<tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>'
+    )
+    outer_close = (
+        '<tr><td height="24" style="line-height:24px;font-size:24px;">&nbsp;</td></tr>'
+        '</table></td></tr></table>'
+    )
+
+    # Assemble page
+    parts = [
+        html_open,
+        outer_open,
+        '<tr><td>', hero, '</td></tr>',
+        '<tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>',
+        '<tr><td>', kw_block, '</td></tr>',
+        '<tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>',
+        '<tr><td>', summary_block, '</td></tr>',
+    ]
+
+    if doc_sections:
+        # spacer
+        parts.append('<tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>')
+        parts.extend(doc_sections)
+    else:
+        empty_block = vml_card('<div>No keyword matches found.</div>', bg="#FFFFFF", border="#E4E9EE", arc="6%")
+        parts.extend([
+            '<tr><td height="16" style="line-height:16px;font-size:16px;">&nbsp;</td></tr>',
+            f'<tr><td>{empty_block}</td></tr>',
+        ])
+
+    parts.extend([outer_close, html_close])
+
+    html = ''.join(parts)
     return html, total_matches, counts
 
 
@@ -555,6 +572,12 @@ def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO = os.environ["EMAIL_TO"]
+
+    # Optional SMTP overrides (keeps Gmail defaults)
+    SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
+    SMTP_STARTTLS = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
+    SMTP_SSL = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
 
     keywords = load_keywords()
     if not keywords:
@@ -578,16 +601,18 @@ def main():
     yag = yagmail.SMTP(
         user=EMAIL_USER,
         password=EMAIL_PASS,
-        host="smtp.gmail.com",
-        port=587,
-        smtp_starttls=True,
-        smtp_ssl=False,
+        host=SMTP_HOST,
+        port=SMTP_PORT,
+        smtp_starttls=SMTP_STARTTLS,
+        smtp_ssl=SMTP_SSL,
     )
 
+    # IMPORTANT: pass the HTML string directly (NOT as a single-item list),
+    # so yagmail does NOT inject <br> between lines (which breaks MSO conditionals).
     yag.send(
         to=to_list,
         subject=subject,
-        contents=[body_html],   # HTML string (no links)
+        contents=body_html,   # HTML string, not a list
         attachments=files,
     )
 
