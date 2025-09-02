@@ -1,0 +1,1433 @@
+﻿
+Title: House of Assembly Tuesday 19 August 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: House of Assembly
+Character Count: 139191
+Characters with Spaces Count: 167213
+Company: Parliament of Tasmania
+Creation Date: Tue, 19 Aug 2025 9:06:00 AM (UTC)
+Keywords: 2025
+Last Printed: Tue, 19 Aug 2025 9:06:00 AM (UTC)
+Last Saved Date: Tue, 19 Aug 2025 9:13:00 AM (UTC)
+Line Count: 2868
+Links Dirty: false
+Links Up To Date: false
+Page Count: 4
+Paragraphs Count: 707
+Revision: 3
+Scale Crop: false
+Security: 0
+Shared Document: false
+Subject: Hansard
+Template: Hansard debates May 2025
+Total Editing Time: 0
+Typist: Karen Cuzzucoli
+Word Count: 28589
+isys:SubType: Word 2007
+
+PARLIAMENT OF TASMANIA 
+DEBATES OF THE HOUSE OF ASSEMBLY 
+ 
+ 
+ 
+ 
+DAILY HANSARD 
+ 
+ 
+Tuesday 19 August 2025
+Preliminary Transcript 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+This draft transcript of debates is issued in advance of the final Hansard for the use of the members of the House of Assembly and copies made from this may not be protected by parliamentary privilege. 
+ 
+
+
+
+
+
+
+Tuesday 19 August 2025
+
+
+FIRST SESSION OF THE FIFTY-SECOND PARLIAMENT
+
+The House met at 11.00 a.m. pursuant to the proclamation of Her Excellency the Governor.
+
+The Clerk read the proclamation:
+
+Proclamation by Her Excellency, the Honourable Barbara Baker, Companion of the Order of Australia, Governor in and over the state of Tasmania and its dependencies in the Commonwealth of Australia.
+
+WHEREAS by the Constitution Act 1934 it is provided that the Governor shall call the Parliament together for the despatch of business after every general election of the members of the Assembly within 90 days after the dissolution of the Assembly,
+
+AND WHEREAS the Assembly was dissolved on 11 June 2025 and a general election of members of the House of Assembly was held on 19 July 2025,
+
+AND WHEREAS it is expedient that I call Parliament together for the despatch of business as soon as practicable.
+
+NOW THEREFORE, I, the Honourable Barbara Baker, Companion of the Order of Australia, Governor in and over the State of Tasmania and its Dependencies in the Commonwealth of Australia, exercising the power and authority vested in me, do hereby fix 11.00 a.m. on Tuesday 19 August 2025, in the Houses of Parliament situated in the City of Hobart in Tasmania, as the time and place that the said Parliament shall assemble for the despatch of business; and the members of the said Parliament are hereby required to give their attendance at the same time and place accordingly.
+
+GIVEN under my hand at Hobart in Tasmania on 6 August 2025.
+
+B. BAKER, Governor.
+
+By Her Excellency's Command,
+J.P. ROCKLIFF, Premier.
+
+
+MESSAGE TO ATTEND THE GOVERNOR'S COMMISSIONERS
+
+The Usher of the Black Rod was admitted and delivered a message from the Commissioners requesting the attendance of members in the Legislative Council Chamber. Members accordingly proceeded to that Chamber and, having heard the Commission read, returned to the House of Assembly.
+
+
+RETURN TO WRIT
+
+The Clerk laid on the Table writs for the election of the following members of the House of Assembly.
+
+	
+		Eric Abetz (Franklin)	
+		Eloise Haddad (Clark)
+	
+		Bridget Archer (Bass)	
+		Jane Howlett (Lyons)
+	
+		Tabatha Badger (Lyons)	
+		Roger Jaensch (Braddon)
+	
+		Guy Barnett (Lyons)	
+		Kristie Johnston (Clark)
+	
+		Vica Bayley (Clark)	
+		Brian Mitchell (Lyons)
+	
+		Shane Broad (Braddon)	
+		David O'Byrne (Franklin)
+	
+		Meg Brown (Franklin)	
+		Madeleine Ogilvie (Clark)
+	
+		Helen Burnet (Clark)	
+		Gavin Pearce (Braddon)
+	
+		Jenna Butler (Lyons)	
+		Jacqueline Petrusma (Franklin)
+	
+		Anita Dow (Braddon)	
+		George Razay (Bass)
+	
+		Carlo Di Falco (Lyons)	
+		Jeremy Rockliff (Braddon)
+	
+		Felix Ellis (Braddon)	
+		Cecily Rosol (Bass)
+	
+		Robert Fairs (Bass)	
+		Mark Shelton (Lyons)
+	
+		Michael Ferguson (Bass)	
+		Marcus Vermey (Clark)
+	
+		Peter George (Franklin)	
+		Josh Willie (Clark)
+	
+		Jess Greene (Bass)	
+		Dean Winter (Franklin)
+	
+		Janie Finlay (Bass)	
+		Rosalie Woodruff (Franklin)
+	
+		Craig Garland (Braddon)	
+		
+
+
+MEMBERS SWORN
+
+The following members took and subscribed the Oath and codes of ethical conduct and race ethics:
+
+	
+		Eric Abetz (Franklin)	
+		Brian Mitchell (Lyons)
+	
+		Bridget Archer (Bass)	
+		Madeleine Ogilvie (Clark)
+	
+		Guy Barnett (Lyons)	
+		Gavin Pearce (Braddon)
+	
+		Jenna Butler (Lyons)	
+		Jacqueline Petrusma (Franklin)
+	
+		Carlo Di Falco (Lyons)	
+		George Razay (Bass)
+	
+		Felix Ellis (Braddon)	
+		Mark Shelton (Lyons)
+	
+		Michael Ferguson (Bass)	
+		Marcus Vermey (Clark)
+	
+		Janie Finlay (Bass)	
+		Dean Winter (Franklin)
+	
+		Jane Howlett (Lyons)	
+		
+
+
+MEMBERS AFFIRMED
+
+The following members took and subscribed the Affirmation of Allegiance and codes of ethical conduct and race ethics:
+
+	
+		Tabatha Badger (Lyons)	
+		Craig Garland (Braddon)
+	
+		Vica Bayley (Clark)	
+		Eloise Haddad (Clark)
+	
+		Shane Broad (Braddon)	
+		Roger Jaensch (Braddon)
+	
+		Meg Brown (Franklin)	
+		Kristie Johnston (Clark)
+	
+		Helen Burnet (Clark)	
+		David O'Byrne (Franklin)
+	
+		Anita Dow (Braddon)	
+		Jeremy Rockliff (Braddon)
+	
+		Robert Fairs (Bass)	
+		Cecily Rosol (Bass)
+	
+		Peter George (Franklin)	
+		Josh Willie (Clark)
+	
+		Jess Greene (Bass)	
+		Rosalie Woodruff (Franklin)
+
+
+ELECTION OF SPEAKER
+
+[11.28 a.m.]
+Mr ROCKLIFF (Braddon - Premier) - I move -
+
+That Mrs Jacquie Petrusma do take the Chair of this House as Speaker.
+
+Mr BARNETT (Lyons - Deputy Premier) - I second the nomination.
+
+The CLERK - Does the honourable member consent to such nomination?
+
+Mrs PETRUSMA (Franklin) - I do.
+
+The CLERK - Are there any other nominations?
+
+Mr WINTER (Franklin - Leader of the Opposition) - I move - 
+
+That Ms Jen Butler do take the Chair of this House as Speaker.
+
+Ms DOW (Braddon - Deputy Leader of the Opposition) - I second the nomination.
+
+The CLERK - Does the honourable member consent to such nomination?
+
+Ms BUTLER (Lyons) - I do.
+
+The House proceeded to ballot and the Clerk declared that Mrs Petrusma had been elected.
+
+Mrs Petrusma was conducted to the Chair.
+
+The SPEAKER - I humbly acknowledge the great honour the House has been pleased to confer upon me by choosing me to be the Speaker, an office which I will endeavour at all times to fill with dignity and impartiality.
+
+
+ACKNOWLEDGEMENT OF TRADITIONAL PEOPLE
+
+The SPEAKER - We acknowledge and pay respect to the Tasmanian Aboriginal people as the traditional and original owners and continuing custodians of this land on which we gather today and acknowledge elders past and present.
+
+
+PRAYERS AND REFLECTION
+
+The SPEAKER - I invite members to join me in reciting the Lord's Prayer or to stand in silence and pray or reflect on their responsibilities to the people of Tasmania.
+
+
+PRESENTATION OF SPEAKER
+
+[11.41 a.m.]
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I congratulate you on your appointment. Her Excellency the Governor would be pleased to receive you at Government House at 12.30 p.m.
+
+I move - 
+
+That a deputation consisting of the mover and the seconder, and such other members who see fit to go, do wait upon Her Excellency, the Governor, to notify Her Excellency of the election of the Speaker.
+
+Motion agreed to.
+
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I move -
+
+That the sitting of the House does now adjourn until 2.00 p.m. this day. 
+
+Motion agreed to.
+
+The House suspended from 11.41 a.m. to 2.00 p.m.
+
+
+PRESENTATION OF SPEAKER
+
+[2.00 p.m.]
+The SPEAKER - I have to report that, accompanied by a deputation of members, I've waited upon Her Excellency the Governor and informed Her Excellency that, in pursuance of the powers conferred by Section 24 of the Constitution Act, the House of Assembly has this day proceeded to the election of Speaker and has done me the honour to elect me to that high office. 
+
+In compliance with the other provisions of the same section, I have presented myself to Her Excellency as the Speaker, and I have, in the name and on behalf of this House, laid claim to their undoubted rights and privileges, and prayed that the most favourable construction might be put on all their proceedings; whereupon Her Excellency was pleased to make the following reply:
+
+To the Honourable the Speaker and members of the House of Assembly:
+
+I congratulate members of the House of Assembly on their choice of Speaker. I readily assure you, Speaker, of my confirmation of all the constitutional rights and privileges of the House of Assembly, the proceedings of which will always receive my most favourable consideration.
+
+
+MINISTERIAL APPOINTMENTS
+
+[2.02 p.m.]
+Mr ROCKLIFF (Braddon - Premier) - Honourable Speaker, congratulations on your appointment as Speaker. The portfolios for ministers of the Crown are as follows:
+
+The honourable Jeremy Rockliff MP as Premier.
+
+The honourable Guy Barnett MP as Deputy Premier, Attorney-General, Minister for Justice, Corrections and Rehabilitation, and Minister for Small Business, Trade and Consumer Affairs.
+
+The honourable Eric Abetz MP as Treasurer, and Minister for Macquarie Point Urban Renewal.
+
+The honourable Bridget Archer MP as Minister for Health, Mental Health and Wellbeing, Minister for Ageing, and Minister for Aboriginal Affairs.
+
+The honourable Nicholas Duigan MLC as Minister for Energy and Renewables, Minister for Parks, and Minister for Sport.
+
+The honourable Felix Ellis MP the Minister for Business, Industry and Resources, Minister for Schools and Jobs, and Minister for Police, Fire and Emergency Management.
+
+The honourable Jane Howlett MP as Minister for Tourism, Hospitality and Events, Minister for Racing, and Minister for Women and the Prevention of Family Violence.
+
+The honourable Madeleine Ogilvie MP as Minister for Environment; Minister for Innovation, Science and the Digital Economy, Minister for Community and Multicultural Affairs, and Minister for Arts and Heritage.
+
+The honourable Joanne Palmer MLC Minister for Education; Minister for Children and Youth; and Minister for Disability Services.
+
+The honourable Gavin Pearce MP as Minister for Primary Industries and Water, and Minister for Veterans' Affairs.
+
+The honourable Kerry Vincent MLC as Minister for Infrastructure and Transport, Minister for Local Government, and Minister for Housing and Planning.
+
+
+OPPOSITION APPOINTMENTS
+
+[2.03 p.m.]
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, congratulations on your appointment. There have been no changes to the Labor shadow ministry.
+
+
+TASMANIAN GREENS APPOINTMENTS
+
+[2.03 p.m.]
+Dr WOODRUFF (Franklin - Leader of the Greens) - Honourable Speaker, congratulations. I'm pleased to provide the following information:
+
+Rosalie Woodruff MP, the Leader of the Tasmanian Greens and member for Franklin, have the portfolios of Aboriginal Affairs; Forests; LGBTIQA+; and Marine Environment. 
+
+Vica Bayley MP, the Greens Deputy Leader and member for Clark, has the portfolios of Leader of Greens Business; Treasury and Finance; Energy; Environment and Biodiversity; Housing and Consumer Protection; Sports and Events; Veteran Affairs; and Arts.
+
+Helen Burnet MP, the member for Clark, has the portfolios of Preventative Health; Local Government; Planning, Infrastructure and Transport; Water; Workplace Relations and Safety; Multicultural Affairs; and Waste.
+
+Tabatha Badger MP, the member for Lyons, has the portfolios of Primary Industries; Police, Fire and Emergency Management; National Parks and Public Land; Skills and Training; Tourism and Hospitality; Prevention of Family Violence; Small Business; Science and Information Technology; and Mining. 
+
+Cecily Rosol MP, the member for Bass, has the portfolios of Health and Mental Health; Children and Young People; Corrections and Rehabilitation; Community Services; Disability Services; and Women. 
+
+The honourable Cassy O'Connor MLC, the member for Hobart, has the portfolios of Climate Change; Democracy and Integrity; Attorney-General and Justice; Education; Animal Rights; and Heritage.
+
+
+CHAIR OF COMMITTEES - APPOINTMENT
+
+[2.05 p.m.]
+Dr WOODRUFF (Franklin - Leader of the Greens) - Honourable Speaker, I move -
+
+That the honourable member for Clark, Helen Christina Burnet MP, be the Chair of Committees of the House.
+
+Ms JOHNSTON (Clark) - Honourable Speaker, I second the nomination.
+
+Madam SPEAKER - Does the honourable member consent to such nomination? 
+
+Ms BURNET (Clark) - I do.
+
+The SPEAKER - Are there any other nominations?
+
+[2.05 p.m.]
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, I move -
+
+That the honourable member for Lyons, Jen Anna Butler, be the Chair of Committees of the House.
+
+Ms DOW (Braddon - Deputy Leader of the Opposition) - I'm very pleased to second that nomination. 
+
+The SPEAKER - Does the honourable member consent to such nomination? 
+
+Ms BUTLER (Lyons) - I do.
+
+The SPEAKER - Are there any further nominations? I now inform the House that a ballot will be taken in accordance with Standing Order 6. 
+
+The result of the ballot is Ms Burnet 21 votes, Ms Butler 12 votes, and there was one informal vote. I declare Ms Burnet elected as Chair of Committees of this House. Congratulations, Ms Burnet.
+
+
+MOTION
+
+Leave to Debate Motion Without Notice
+
+[2.18 p.m.]
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, I seek leave to move a motion without notice for the purpose of suspending Standing Orders to debate the following motion forthwith. I move - 
+
+That the House - 
+
+Does not have confidence in either the Premier, the honourable Jeremy Rockliff, nor his government.
+
+Has and will continue to have confidence in the member for Franklin, the honourable Dean Winter.
+
+Leave granted.
+
+
+
+SUSPENSION OF STANDING ORDERS
+
+Debate Motion Forthwith
+
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, I move -
+
+That so much of Standing Orders be suspended as would prevent such a motion from being debated forthwith.
+
+Honourable Speaker, before I go on, I will point out that, as I understand it, there has been an agreement across the Chamber that speeches will be limited to 15 minutes each, or as close to as possible, with three members from government, three members from the opposition, two from the Greens and one from the crossbench - just for the public records so people understand why we're doing that.
+
+Motion agreed.
+
+
+STATEMENT BY SPEAKER
+
+Inaugural Speeches
+
+The SPEAKER - Before calling the Leader of the Opposition to move his substantive motion, I will make a statement about the participation of newly elected members in this debate. I know that it is the practice of the House that members are restricted from participating in substantive debates before they have made their inaugural speech to the parliament. However, given the importance of this motion to all members, including new members, I am prepared to overlook this practice to enable all members to speak to the motion if they wish.
+
+I further note that in accordance with longstanding practise, newly elected members of the House will be given a subsequent opportunity to give their inaugural speech at a later stage.
+
+
+MOTION
+
+Want of Confidence in Premier, Jeremy Rockliff
+
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, congratulations on your election to the Chair. On behalf of the Labor Party, I wish you every success in the role. Your experience this Chamber and very good relationships across the Chamber stand you in good stead to be a worthy and well-respected Speaker over the course of this parliament.
+
+Honourable Speaker, we are here today to determine who will be the Premier of this state. That is the ask from the Governor, Her Excellency, who has left it to the House of Assembly to determine who has its confidence. Her Excellency said, 'I have reappointed the Premier and leave it to the House of Assembly to determine confidence.' We must determine confidence here today. Those of us with conviction have no confidence in this Premier, Jeremy Rockliff, or his government.
+
+On 5 June 2025, some 74 days ago, the 51st Parliament of Tasmania lost confidence in the Premier of Tasmania following a budget which would have sent Tasmania broke. The budget had set course for $11 billion worth of net debt, $700 million wasted every year just paying off interest; more money than our entire ambulance system and emergency departments in our hospitals combined. It prepared the way for massive sackings in our public sector - 2500 public sector workers set to go - and asset sales of businesses Tasmania had built together for 100 years, like TasNetworks, Aurora and TasPorts.
+
+What was worse was the dishonesty, the false claim that there was a pathway to surplus, numbers that just could not be believed, and fake assumptions not made by Treasury but by the Treasurer that underestimated expenditure to the point where when we saw the true state of the budget in the pre-election financial report, net debt was $2 billion higher than what have been claimed. To read from that report, 
+
+The state budget has a structural problem. Expenses, significantly driven by health demand and costs, are growing at a faster rate than the state's current sources of revenue. This structural imbalance has developed further over a number of years. Recent state budgets and forward Estimates have been defined by increasing deficits and debt. As a state, we are spending more than we earn and the gap is growing.
+
+There was no pathway to surplus, and Treasury told us. 
+
+To put it bluntly, the Liberals were sending Tasmania broke. They denied it was true and dishonestly claimed there was a pathway to surplus. There was not. When the failed former treasurer's speech was delivered, the Liberal members clapped. One even stood and cheered for that Budget. It will not leave my memory: the horror of the recklessness, the disgrace of the government who just did not care, a Liberal government that was prepared to mortgage Tasmania's future so they did not have to make any hard decisions, and intergenerational theft to keep them in office.
+
+What also won't leave my memory was watching in disbelief at the Tasmanian Council of Social Service (TasCOSS) briefing the next day. It was described by one participant as 'a wake for the community sector' as they walked out having been told that they should plan for their programs they put their heart and soul into to end, just when the funding ended - jobs, clients, and communities dismissed. 
+
+Following the House's loss of confidence in the Premier, he called an election. He took no responsibility for his own government falling, for his own budget disaster. Instead, he blamed me. Labor moved no confidence because we could not allow that reckless budget to pass. It would have been irresponsible to do it and I could not have looked at myself in the mirror if I had just let it go. I did not come to this place to stand meekly by and let a bad government send this state broke. What sort of opposition would do that? What sort of crossbench would have supported such recklessness? They didn't. They stood tall against the reckless approach by the Liberals.
+
+The change I was hoping for did not come at the election, and I respect the decision of voters. As always, they got it right. Tasmania returned a House looking much the same as it did before the election, with no one party with a mandate to govern on their own, which is what the whole of the last four weeks has been about. 
+I'd like to acknowledge Casey Farrell, someone with enormous potential in our movement, who had only a short time to make his mark as the member for Lyons. I hope we see him back in this Chamber in the future. I'm sure that we will.
+
+I acknowledge the latest two members, Brian Mitchell and Jess Greene in particular, and I'm looking forward to having them on our team. 
+
+I also welcome all new members across the crossbench. Congratulations on your arrival in this place and I look forward to working with you. As I've said to crossbenchers, I hope to work positively with you throughout this parliament, especially in areas where we undoubtedly have common ground. 
+
+The worst budget in Tasmania's history never passed, and that is a good thing. The Liberals' privatisation plan was scrapped two days later, and that is a good thing. The bogus leasing plan for the Spirits of Tasmania is gone, and Spirit IV will be in Tasmanian waters in the next few days. That's a good thing too.
+
+Budget repair will be the government's greatest challenge, and I have no confidence at all in the Liberals' ability to do that. I will not, under any circumstances, support the same dishonesty we saw in the failed Barnett budget in the next one. There was no net debt when the Liberals came to office more than 11 years ago. There was $208 million worth of net cash and reserves in the bank. All of it has gone - demolished. We stand here today with net debt now pushed out to $5 billion, according to the latest report. It grew by $1.7 billion last year. It's four times the size of net debt since Jeremy Rockliff became the Premier a little over three years ago. Ten consecutive record cash deficits, three consecutive record fiscal deficits - a reckless and dangerous shambles that will take generations to pay back.
+
+This entire budget mess is the fault of the Tasmanian Liberal government, who still do not accept there is any kind of crisis, yet many here today will choose to leave them with a task of fixing it. We are here because the 51st Parliament had no confidence in the Rockliff Liberal government, and this parliament should have no more confidence. This is a Liberal budget disaster.
+
+We've seen a completely shambolic Marinus deal, a demand that the opposition sign off on a deal within 24 hours before the humiliating admission that, in fact, the Premier never needed it. No pathway for the closure of the Ashley Youth Detention Centre and no urgency to make it happen. The scrapping of treaty with the Tasmanian Aboriginal people. Backflips on privatisation, tax increases, Spirit leasing, fire tax, local government reform, salmon moratorium, forestry expansion, and racing.
+
+There are serious concerns within the Tasmanian business community about how to invest here with any confidence. The Premier's word now means nothing - not a thing. There is no job he won't sell out to save his own. From the people in racing who trusted and supported him for more than 20 years - left in tears. People in forestry who did not even receive a phone call to tell them he was about to dump his signature forestry policy. People in salmon who he told had his 100 per cent backing. The craven decisions of a Premier to cling on to power were not decisions that I could have made.
+
+I know people like Robin and Gary Johnson, people like Carol Martin, who have been fighting with us to protect and support the greyhound industry for years. People like Ben Englund, who received a personal letter from Jeremy Rockliff that said:
+
+The government is committed to support the longevity and sustainability of the racing industry which, as you know, generates close to $208 million in economic activity for Tasmania and involves more than 6400 people.
+
+25 days later, the Premier announced he would shut greyhound racing. Hundreds of livelihoods gone, families distraught, and a community of people in absolute shock.
+
+On 2 July, this Premier told the salmon industry that there was no stronger supporter of that industry, that he would stand firm against anti-industry activism and he wanted to see industry grow and provide investor certainty. He said he would not place moratoriums or arbitrary caps. He said he would not trade away this industry in any way, shape or form to retain government. He broke all those promises too.
+
+I seek leave to table two letters, both from Jeremy Rockliff: one to Ben Englund from the North West Greyhound Racing Club and one to Salmon Tasmania.
+
+Dr Woodruff - Honourable Speaker, we haven't seen a copy of those. That is, it would have been respectful to circulate them, but I'm happy to have them tabled, but just for noting.
+
+Leave granted.
+
+Mr WINTER - Honourable Speaker, Labor and I made much the same promises to those industries. The racing industry know that we've got their back. I know they'll have mine as we fight this together, not just on behalf of the code, but on behalf of all three codes.
+
+During the election campaign, I visited salmon workers across the state, as I know others did too. I gave them the same commitment: that I would never, ever sell them out. I made the choice not to sell out those workers, those families, or those industries, and Jeremy Rockliff made his choice: to keep his job. I would not sell those workers out or those families for anything. I'd rather not be premier than a premier who sells out Tasmanian working families. When I became Leader I said, 'Labor stands for safe, secure, well-paid jobs.' We live that commitment through our actions and commitments to regional Tasmania. Labor is now the only party that can be trusted with regional jobs. 
+
+There is now serious and deep concern about the impact of the Premier's sellouts on business confidence. To be fully transparent, over the last few weeks I've been asked to sell out on forestry, sell out on salmon, sell out on racing and sell out on the stadium. I refused. Labor refused to sell out. The Liberals have sold out regional Tasmania and Labor did not, but the crossbench needs to understand who they're dealing with here: someone who sells out anyone to stay in the chair. The deals from the last parliament have been laid bare. 
+
+The Gruen report, the Eslake Report, and the independent review of the Integrity Commission, all commissioned by the Premier as part of a deal with the JLN: all trashed, disrespected or abandoned by this Premier. How could you really trust this salmon review will really happen, given what happened to all the other reviews? How could you really trust him to shut down greyhound racing, given the promises he made to you about the cashless gaming card when he looked you in the eye and said it would happen? It can be spun however you like, but a vote against this motion today is a vote of confidence in this Tasmanian Liberal government that has let you down before.
+
+As minister Ellis said: make no mistake, accepting confidence and supply from the Greens is a deal, a very big deal. I'll tell you who the Greens have sold out with their position today, they've sold out every Tasmanian public sector servant facing wage cuts and sackings, who now fear the cost of Eric Abetz running Treasury. They've sold out every Tasmanian waiting for public housing who will miss out. They've sold out every Tasmanian renter who wants basics like heating, who will go without. They've sold out Tasmanians who can't afford to visit the doctor, who will pay the price. They've sold out every regional Tasmanian who can't get the care they need in our regional hospitals. They've sold out Aboriginal Tasmanians who want treaty. They've sold out Tasmanians who want electoral reform to clean up politics and a tougher ICAC. They've sold out every Tasmanian child who gets abandoned through the criminal system. They are the ones who suffer from the trauma for the rest of their life.
+
+It is no secret that my position during discussions with the crossbench was far apart from the crossbench expectations. I accept that. I said I wouldn't compromise on my values, and I did not expect them to either. I said I'd set the framework to find common ground, but they wanted immediate policy concessions, and I understand that. On the one hand, Jeremy Rockliff promised to compromise on his values -
+
+The SPEAKER - For the debate today, I encourage all members to use: honourable the Premier, honourable Leader of the Opposition, no first name and last name. We're going to make sure that this is a respectful parliament, so I will pull people up if they continue to use just first name and last name without correct titles.
+
+Mr WINTER – On the other hand, Premier Rockliff chose to compromise on all of his values. There is no job he wouldn't risk to save his own. The pressure that will now come upon every Tasmanian salmon worker's family is now his responsibility. My view remains that compromise should not be capitulation, and that short-term trade-offs will not achieve a stable parliament. We spent hours of work shaping a document that we felt could support a large and diverse crossbench through collaboration in its development, but, more importantly, collaboration over four years.
+
+The parliament is now built on a ban on greyhound racing and a moratorium and review of the salmon industry. That's it. Labor will not provide confidence and supply to this government. That is for those who vote for this Liberal government today. The crossbench that supports Jeremy Rockliff will now be responsible for a government that is sending Tasmania broke, a government with an absurd plan to start its own public insurer called TasInsure, with a business case that doesn't exist, no balance sheet, grim warnings from the insurance sector that this will definitely not work, and a promise to Tasmanians that their insurance premiums will be $250 less under a fictional body - that will never happen. It will no doubt further hurt business confidence in this government when they discover that there was no business case and nothing but a political slogan on hats and jackets, along with an empty shopfront. 
+
+I am deeply concerned about the economic impact of the last two weeks of horse trading. The Premier's word now means nothing. His reputation in the business community has been trashed. As the chamber of commerce and industry said, today's decision sends the message that Tasmania is not a safe place to do business. This follows a year after they said it will be hard to ever trust this government again. How could anyone ever invest with confidence with a Premier willing to sell any industry out, when his word means nothing and the letters he writes are now worthless?
+
+The 2010 Parliament started with the Liberals moving a motion not dissimilar to this and one speaker got up to say:
+
+Some of us, at least, put our hand up for honesty and integrity, and that's why I rise to support the motion. It is indeed fitting that in this place today, the first day of the new Parliament, the first action of the state opposition is to reaffirm its complete and absolute lack of confidence in this government.
+
+That person was now-Premier Jeremy Rockliff. This day might not end well for me, but this day will define this Premier for the rest of his political career. He will have the stigma of being a sellout, of giving into green demands on racing, salmon and forestry, selling out people who backed him for 20 years. No one can ever trust you again. You have shown there is no job in Tasmania that you will not sell out to save your own.
+
+Labor has no confidence in Jeremy Rockliff or his Liberal-Green government and I commend the motion to the House.
+
+[2.36 p.m.]
+Mr ROCKLIFF (Braddon - Premier) - Honourable Speaker, congratulations once again on your appointment. My congratulations also to the Deputy Speaker, Chair of Committees, Ms Burnet. 
+
+Let me begin by welcoming all members to this new parliament. It is a great privilege and an honour to represent the people of Tasmania. As I said on election night, it is no small thing to put yourself forward, to have the courage of your convictions. It is a demanding public service that we have entered into, a challenging role for us all, but it is a great privilege and a privilege I know that was felt very deeply by Simon Wood, Simon Behrakis and Nic Street, who served our team so remarkably well over a number of years. 
+
+There will be other opportunities to reflect on the election and the parliament and those who have been elected and those who were not, but I thank them for their service. I especially welcome the new members across the chamber. For you, this is indeed a baptism of fire, but nonetheless, welcome to you all. I again acknowledge and commend your selflessness and your desire to work to serve the people of Tasmania and help guide and shape the future of our great state. 
+
+Ten weeks ago, the Leader of the Opposition moved his first no confidence motion. That forced Tasmanians to an election and the result of that election was very clear: a minority government. I was very proud of our team to receive the vote that we did - a higher vote than the previous election - and I'm very proud of all our members here today and all our candidates who stood for that election. Tasmanians clearly rejected the political games, and they want us to get on with it.
+
+Whilst we did campaign for a majority government, as is every political party's right, that's not what the people of Tasmania decided. On behalf of my team, I'm very grateful that they elected 14 seats to the Liberal Party. The people of Tasmania clearly want us to continue to work with independents and other parties across the Chamber.
+
+The opposition leader, however, continues to demonstrate that he has learnt nothing. Indeed, Labor recorded their lowest vote since 1903. There was clearly a lesson in that. Rather than accepting and listening to the will of the people, it would appear that the Leader of the Opposition listened to nobody but his closest advisers. They believed he should continue his grab for power - so here we are, ten weeks on, right back where we started.
+
+The Leader of the Opposition wants the Greens and others on the crossbench to support him to become Premier. Clearly, he believes he can do so without listening to their concerns, priorities and issues. We cannot ignore the fact that in minority government we must come together and agree on policy positions that reflect the wider will of the Tasmanian community and of the Tasmanian parliament. None of us can take any of us for granted. We must work together for the betterment of the Tasmanian people.
+
+The Leader of the Opposition blew up the last parliament, claiming that it was on the basis of having no confidence in our budget, despite the fact that then, and throughout the campaign, he provided absolutely no alternative. How do we know that? Because, respectfully, the Leader of the Opposition did not submit policy costings to the Treasury. 
+
+Despite our budget challenges - and I'll come to those shortly - our economy is strong. Our unemployment is at record low levels. There is the highest business confidence in the nation in Tasmania, and we must all work hard to maintain that.
+
+We clearly acknowledge the need for budget repair. We have recognised the pressure caused by the pandemic and the ever-increasing need, as we should, to support vulnerable Tasmanians across our wonderful state. Not everyone enjoys the rewards that we are so fortunate to be able to enjoy. Therefore it's upon us to always reach in and support vulnerable Tasmanians so they can live their best lives.
+
+We also need to ensure that we continue to invest in critical areas of service. There is ever-increasing demand for our health system, for example. I was proud of our commitments at the last election, particularly when it came to the primary healthcare sector, and what that can do to alleviate the acute care pressures that all our major hospitals are experiencing.
+
+We have acknowledged the desire of this parliament to compress the timeline in which we return to surplus. We understand the challenges in achieving this, whilst maintaining investment in delivering the services that Tasmanians need, and the ones that I spoke of before. That is why we've established the Multi-Partisan Budget Panel. It will mean those from across this parliament and the wider community can face this challenge together. The panel is intended to be a multi-partisan mechanism to foster strong and positive working relationships right across this Chamber; for members to pursue common and collective objectives with the full knowledge of our financial situation. This includes the resolution of structural issues in the Tasmanian Budget, as well as mechanisms for its return to surplus.
+
+It aims to deliver improved outcomes for Tasmanians through positive and collective working arrangements and the balancing of competing policy objectives. It will give the opportunity to enable individuals, organisations, community groups and other professional experts and bodies to provide input, advice and other information for members to consider, to help inform budget-related matters. 
+
+Of course, the Budget Panel is part of our Foundations for Stability framework, which seeks to ensure that this parliament is productive and stable, and which seeks to ensure that we continue to deliver for Tasmanians over the next four years.
+
+We have acknowledged the need for parliamentary reform, to better reflect the reality of minority government. Minority government could well be here for many, many decades to come, and that's why we need to listen and learn and continue to make progress. In my view, we made significant progress on such reform in the last parliament.
+
+Our Foundations of Stability framework seeks to build on four fundamental principles:
+
+Recognition of the diversity of views as a strength, not a weakness;
+The principles of respectful conduct;
+Shared consultation timelines on new legislation; and
+A commitment to avoid perceived procedural traps.
+
+We've also committed to establish a Crossbench Liaison Office. The office will coordinate regular briefings for MPs, providing access to departmental information on upcoming legislation. It will also support independent policy analysis of major policy and bills.
+
+We will also ensure - as we were proud to do for the first time ever in the last parliament - that all MPs have access to the Office of Parliamentary Counsel, for private members' bills and amendments, as was the case in the previous parliament - have regular meetings with myself, with ministers and our officers, and have adequate staff resources to allow members to effectively represent their communities.
+
+In the last couple of weeks, we have moved on certain policy areas. This is an acknowledgement that the people have spoken. It is an acknowledgement of the diversity of views across the community that have come to this parliament, and an acknowledgement that we are minority government and we must respect the views of others. These will be delivered in a purposeful and very timely way.
+
+I do not accept the Leader of the Opposition's characterisation of the policy positions we have taken. We will always vigorously, as you all should do - whether you're a member of a party, you're independent, Greens, Labor - argue vigorously for our agenda. We were very proud of our agenda that we took to the last election, in areas across the economy, across our health system, across education and other very important community services.
+
+Our government will always support our traditional industries and the workers in those industries, like we have always done. However, to ensure that those industries survive, continue to prosper, and have the confidence of the Tasmanian community, we must ensure we work with them to instil and maintain that confidence, and not bury our heads in the sand. We owe it to the workers in those rural and regional communities to do so. We'll do all we can to ensure they remain sustainable and have the ongoing support of our community, but we will not shy away from listening and learning, listening to the concerns of members right across this parliament, reflecting the views of the Tasmanian people in a pragmatic, collaborative and sensible way.
+
+As I have stated many times during the campaign, after the campaign, and I'll state it again right now, not every member of this parliament will get 100 per cent of what they want 100 per cent of the time. We might not always agree, but everyone deserves to be heard. That was the message from Dewayne Everettsmith today in the other place, the power of people being heard, and we bring that to this minority parliament. We can ensure individual outcomes that continue to align with the greater good for Tasmania are able to be achieved in the true spirit of a cooperative parliament.
+
+I've said many times, in many different forums, there is nothing more powerful than those people through their voice of lived experience, and all the lived experience that everyone brings to this Chamber, and you soon discover when you listen to first speeches or votes in this place which I have listened to over the last couple of decades, particularly where a conscience vote is declared, where people rise to the occasion every single time and the shackles of partisan politics are taken away and people speak from the heart.
+
+We've all come from different places and a different journey to bring us here. I'm proud of my party and what it's achieved since 1944, as I'm sure others are proud of theirs as well, but we must never forget that we are human and are all here to make a contribution based on our journey and the lived experience we have had through our lifetimes. Irrespective of the colours we hold that brought us to this parliament, our lived experiences have empowered us all to do good.
+
+I note the words of the previous Speaker of the House, Ms O'Byrne, whose recent valedictory address included some very sage advice. She said:
+
+The parliament must be able to function to meet the needs of Tasmanians. Whatever parliament they choose to elect, we have to find consensus where we can. We have to have the maturity to not just do things just because we can.
+
+Cooperation, constructive negotiation and finding common ground are core beliefs that I would hope I've brought to this place over many years in different roles. I don't get it right all the time - none of us do. We are all human, but we need to reflect and learn. Yes, I do believe we've made great steps in understanding minority government in the last parliament. Just about all sides have achieved outcomes for their communities and the people who put them here to represent them. That being said, our government must do better, and I'm committed to exercising those qualities to the best of my ability as leader of this minority government.
+
+A number of crossbenchers were able to put forward proposals that addressed issues in which they had a particular interest - I'm speaking of the past parliament - and new laws were passed covering matters raised by independents, Greens and Labor. Some issues we will all never agree on. On some things there will never be consensus. On other matters there will be pragmatism and compromise. 
+
+I am first to acknowledge we have learnt lessons from that last parliament on how minority government needs to work. We are committed to self-improvement. I utterly reject the notion of the Leader of the Opposition, where he believes he is better placed to display the conduct required for such an approach to governing.
+
+When I entered this place some years ago, I had the same amount of experience as every single member, as a new member of this parliament. We all have our first day in this place and it's a huge learning curve, but we bring our own sets of values to this place. I spoke in the parliament of compassion, common sense, and commitment to duty as what drive me.
+
+Here we have a minority government that people voted for; a minority government that the people want to get on with the job in the spirit of collaboration across this Chamber. I urge members not to support this motion of no confidence. I urge members to allow us to demonstrate to the people of Tasmania that we can make the parliament  that they elected work.
+
+We have all learnt over the course of the last 15 months that we can have stability. We can have considered, respectful debate and we can achieve positive outcomes for our state's future.
+
+At this stage, we do not intend to call on additional speakers from this side of the House, given a number of crossbenchers have already stated their intentions. I take nothing for granted. We do not intend to prolong debate when there are so many important matters that we simply must be getting on with. Tasmanians deserve that. I assure Tasmanians that I will work with everything I have to ensure that this parliament runs its full term. Let's not delay anymore. Time is precious. Let's get on with working with members right across this Chamber to deliver a better future for all Tasmanians.
+
+[2.56 p.m.]
+Dr WOODRUFF (Franklin - Leader of the Greens) - Honourable Speaker, I recognise we meet in this 52nd Parliament on the land of the Muwinina people who didn't survive the violence of colonisation. I recognise that Lutruwita and this island's forests, coastlines, and waters are Palawa land. On behalf of the Greens, I want to use this first opportunity in parliament to commit to fighting to reform the Aboriginal Heritage Act to return lands, to protect cultural landscapes like Takayna, and for truth-telling and treaty.
+
+The Greens campaigned in this election to stop the stadium and to spend our precious limited resources on health and housing priorities instead, and to protect our marine environment and native forests. We returned all five MPs and the Greens vote once again increased. At the same time, progressive independents were also returned or elected anew. Neither major party in this case received an increase in seats.
+
+The Greens have already made it clear to the people of Tasmania what our intentions are in this debate today. We owe it to the people who place their trust in us, and to the parliament, to explain why we cannot support this motion of confidence in Labor.
+
+Over the last two weeks we've met with Labor multiple times and had many phone conversations about working together to provide them confidence to form government. We were clear about policy compromises and outcomes that we would need. We made it clear from the very beginning, and repeatedly at every opportunity afterwards, that the Greens expect some movement on the issues that we campaigned on. Business as usual under the Liberal and Labor parties is failing this state. However, Mr Winter showed no capacity or intention to negotiate in good faith with the Greens or to make policy compromises.
+
+Over the last five days there have been formal and informal conversations and letter exchanges between the Greens and other crossbench MPs with Mr Winter and with other members of Labor caucus.
+
+The SPEAKER - I will allow that, but we will say 'honourable Leader of the Opposition, Mr Winter', so that we use the correct forms of address inside the House.
+
+Dr WOODRUFF - Thank you. Labor's final position on their policies was communicated by letter on Sunday, where they confirmed their refusal to consider policy compromises on the key issues the Greens were elected to fight for - to stop the stadium, to prioritise our spending on health and housing and protect the marine environment and forests. These are the issues our voters put their faith in us to be their voice in parliament on.
+
+Honourable Speaker, we were not going to fail those people at the first hurdle. The honourable Leader of the Opposition and his party only secured 25 per cent of the vote. It's undemocratic and unrealistic for him to imagine he could then get things 100 per cent of his own way to be premier in his own right with 10 votes out of 18 and to control all policy on that basis. That's not the basis of a good-faith, open approach to minority government and Labor, under the honourable Dean Winter, is not currently serious about government.
+
+The honourable Dean Winter forced the election when he refused to talk to the Greens about taking on government at the end of the last term. As a result of the election and on the raw numbers, he lost support. Labor was returned with 3 per cent less support than they had before the election, their lowest statewide vote in over 120 years, so clearly the honourable Opposition Leader's policy platform is not something the majority of Tasmanian supported.
+
+The Greens and the rest of the crossbench also got 25 per cent of the vote between us. If Labor wanted to be in government, they needed to recognise that the Tasmanians we represent deserve to have their views heard, which is why we worked so hard over the last couple of weeks to negotiate an outcome with Labor on key policies.
+
+The Governor has recognised the Liberals are the incumbent government and they are now sworn in. If Labor wanted to be the government, they needed to demonstrate to the Greens why it would be worthwhile for us to support them for four years and to replace an existing government, but it appears today that perhaps nobody has been persuaded that Labor can do a better job - and we'll find out.
+
+We were expected to trust Labor to make potential changes to policy through a miasma of parliamentary processes over the next four years, instead of providing upfront commitments to us about the changes they would make. Why would we trust them? Why would we support people who have been contemptuous not only of the Greens but of the people who voted for us and the issues they're concerned about that we represent? How can we support Labor when they haven't set out a policy platform that's different from the Liberals on the key issues we campaigned to change? 
+
+Instead, Labor is busy trying to outdo the Liberals on environmental exploitation. They want to exempt a whole range of developments and industries from federal environmental law assessments. Their policy promise was effectively to weaken Tasmania's environmental protections even further. They've refused to consider even a moratorium on fish farm expansions, order countenance a whole range of other marine environment protections, not to mention those for our terrestrial environment. 
+
+Last week they locked in not only behind the brutal cruelty of the greyhound racing industry, but the continuation of its public funding. They've consistently supported the Liberals children-harming tough-on-crime agenda, including calling for more tough-on-crime policies, and of course most shamefully, last term we saw them crab-walk away from their longstanding and proud opposition to mandatory minimum sentencing laws, despite opposition from family violence support services and the Women's Legal Service.
+
+Labor has been strategically quiet on the pokies mandatory precommitment cards, choosing when asked to echo the Tasmanian Hospitality Association's THA's calls for facial recognition technology, and they backflipped on anti-protest laws and supported increased penalties and prison terms for defenders of this island's wilderness. They back in jailing the brave people who put themselves on the frontline to protect nature.
+
+The honourable Leader of the Opposition, Mr Winter, has claimed Labor has a mandate to form government because Tasmanians increased the vote for a majority progressive parliament, but how is any of that progressive? I agree that Tasmanians want a more progressive parliament and that was reflected in the increase in vote to the Greens and a big increase in progressive Independents who are sitting in the Chamber with us today.
+
+Sadly, the honourable Mr Winter failed to convince the Greens that his government would be a progressive government - and that he was personally willing to change to lead one - or that he would come to the table to talk about real outcomes for the people who elected a progressive crossbench. This is why we can't have confidence in the honourable Mr Winter's Labor.
+
+In truth, the honourable opposition leader is from the conservative faction of the Labor Party. When he took the leadership from the former opposition leader, Rebecca White, after last year's election, his first order of business was to walk away from many of the progressive policies that Labor had under Rebecca White. I can't recall a single Liberal government bill that Labor voted against in the last term of parliament. It says a lot, that a so-called progressive Labor opposition didn't oppose any of the legislative agenda of a so-called conservative government.
+
+On the big issue of budget repair, which is critical to safeguarding essential public services and which the honourable Mr Winter talked about in his speech, Labor has nothing to offer. They continue to blindly back building a billion-dollar stadium the state doesn't need and clearly can't afford.
+
+The Greens and members of the crossbench had a budget briefing two weeks ago. It was a horror show. According to Treasury, Tasmania has now fallen off the fiscal cliff. We're in freefall and we're paying interest on our interest to service our existing debt level.
+
+The crossbench repeatedly over the last week encouraged the honourable Mr Winter to get this same briefing from Treasury to understand exactly why we cannot justify another $2 billion of stadium debt going onto the Tasmanian balance sheet. He was stubbornly resistant. 
+
+During the election, the Greens and Liberals both provided Treasury with our separate fiscal strategy frameworks that met the clear requirements of the Charter of Budget Responsibility Act 2007. Labor released a fiscal strategy that did not comply with this act.
+
+Labor says they oppose the Liberals' DOGE-style Efficiency and Productivity Unit, but embedded in their election budget plan is a virtually identical unit. One of their budget savings is to redirect the waste levy revenue that is collected by councils and put it into government general revenue, which is not lawful. It is money required to be spent by the Waste and Resource Recovery Board.
+
+Their plan also predicts massive special dividends from MAIB, which is highly irresponsible and would almost certainly increase premiums for Tasmanians in a cost-of-living crisis. Labor's budget repair ideas include re-allocating the specific purpose payments provided to Tasmania from the Commonwealth, which is actually not possible as these grants are tied to a specific project and can't just be used for something else.
+
+In short, the budget plan Labor released last month was a charade. It shows gross incompetence in understanding basic fiscal details like specific purpose payments, dividends and hypothecated revenue. The honourable Mr Winter and the Labor caucus expect us to have confidence and support for them in government on the basis of nothing. No compromise on policy; no budging on any of their positions on the stadium, on environment, on animal welfare, or on anything else for that matter.
+
+The Greens want to work with the parliament to get the best outcomes for Tasmania, and I want to assure all Tasmanians we tried really hard to work with Labor. We tried to negotiate constructively and extensively with the Labor leader in an attempt to form a workable government. It wasn't easy. It's deeply disappointing and frustrating that we've come to this point.
+
+I've talked about trust today. What Labor asked us many times over the last fortnight was 'How could we trust the Liberals?' To be clear with Tasmanians, we don't trust the Liberals. Ultimately the Greens have decided that we do not have confidence in either the Liberal or Labor parties, and our vote today will reflect that. Voting against this no confidence motion in the Liberals does not mean we are providing confidence in this government.
+
+Dr Broad - Yes it does.
+
+The SPEAKER - Order.
+
+Dr WOODRUFF - Every day in this parliament, the honourable Premier Jeremy Rockliff has only 14 votes in this House. Every day, he needs four other people to pass legislation and to give him confidence. He will need to work to earn that, and we Greens will work from the crossbench across the Parliament to get outcomes on the reforms we promised people we'd fight to deliver. So far, Premier Rockliff has made several announcements on policy shifts on banning greyhound racing, a moratorium on salmon farm expansions, a properly independent Environment Protection Authority (EPA), a complete overhaul of marine environment laws to strengthen environmental protections, and a reversal of their planned logging of 40 000 hectares of high conservation value forests. On the face of it, these are significant changes of direction on the issues that the Greens have long campaigned for. It appears as though Premier Rockliff understands the minority parliament his government is working within and the need to compromise. 
+
+Of course, the Greens are, understandably, cautious and sceptical. The proof is, as they say, 'In the pudding.' We will be calling for concrete timelines from the Premier, for short-term legislative and regulatory actions on the announcements he has made, and to clarify some of the vague and empty language he's used about a pause on the so-called spatial expansion of salmon farms.
+
+In this minority parliament dynamic, goodwill and trust are critical to maintaining a functioning parliament and, ultimately, stability. Trust needs to be earned. The Greens have heard the community's very strong desire to have a stable parliament that runs for the full term. Being able to have a frank discussion about where you agree, where you disagree, and how to find common ground and compromise is critical. Unfortunately, we haven't seen any indication from the Leader of the Opposition that he's able or prepared to do that.
+
+This is the third time in recent years Labor has walked away from the opportunity to get the Greens' support to form government. Last year, Rebecca White opened the door to minority government and was immediately removed by her party's leadership. Three months ago, after the no confidence that the honourable Leader of the Opposition moved in Jeremy Rockliff, the Greens offered to talk about conditions under which we could provide confidence with Labor to avoid the election we just had, but the Leader of the Opposition, Mr Winter, refused. 
+
+Since 19 July, the Leader of the Opposition has refused to 'do a deal' or make any compromise at all on any of the issues we have discussed, even though he needs the support of eight crossbench members to govern. He asked the Greens to trust him and take on faith that we can resolve the differences down the line. If he won't do that before a government is sworn in, how could we have confidence that there would be any serious action or outcomes after his government was sworn in? We simply could not.
+
+Labor has to decide: do they want to be a party of government? Given Tasmanians are likely to return minority governments into the future, are Labor prepared to change their approach and to be collaborative? If not, they will remain in opposition and that's their decision to make. As the Leader of the Tasmanian Greens, I make a commitment that our door is always open to collaborate and work with every member in this chamber and that is our intention in this parliament. One of the most positive parts of the past few weeks - which, for several people in this chamber, was a tumultuous time and a lot of work - has been the opportunity, in this minority parliament, to work very closely and get to know members of the progressive crossbench.
+
+It has been a great opportunity for us to test out methods of working together, to build shared goals for the sort of functional and more democratic parliament that we all want to create. It's given me and the Greens a great hope for the future. The progressive crossbench shares a conviction in transparency and the public's right to freely access information about the decisions of governments and to reform the Integrity Commission; to repair the budget and invest in services that people need; and, of course, to protect this island's unique and precious environment.
+
+Tasmanians are watching us today, and I think a lot of Australians are too. On behalf of the Greens, I can assure Tasmanians who voted for us that we will continue to work collaboratively from the crossbench to maintain a stable and functional minority parliament. We will put forward strong legislation. We will always speak truth to power.
+
+We won't stop holding this government, any government, to account, and it's in our DNA to always fight for this island Lutruwita/Tasmania and its people. 
+
+[3.14 p.m.]
+Ms JOHNSTON (Clark) - Congratulations to you, honourable Speaker, on your election as Speaker and also to Ms Burnet on her election as Chair of Committees. 
+
+I also welcome new members to this place and acknowledge their efforts in coming here.
+
+The outcome of the election was no accident. Tasmanians deliberately chose a parliament without a majority party. They sent a message that neither major party has earned their full trust, that the crossbench has an important role to play in holding both to account. I heard that message clearly during the campaign, and since the election, and I share the community's concern. Trust and confidence in both major parties has been badly eroded, and it will take time and hard work to rebuild.
+
+The Liberals have mismanaged the budget and health and housing crises, walked away from the commitments to introduce a mandatory player card for poker machines, and commissioned then all-but ignored Saul Eslake's review of the state's finances, attacked Nicholas Gruen for his report on the stadium, and abandoned its commitment for a review of the Integrity Commission. The honourable Premier Rockliff suffers a trust deficit of his own making.
+
+Labor, for its part, ran a campaign that inspired little confidence. They recorded their lowest primary vote in a century, yet since the election they haven't accepted the reality their policy platform might need rethinking in the light of the magnitude of their loss. They also did not accept the reality that they would need to make concessions to the crossbench who they would rely upon to govern with.
+
+They have refused to budge on the stadium, on pokies, on salmon, or on native forests. Their so-called framework for collaboration is fine as far as it goes, but it doesn't reflect the voters who elected a diverse crossbench. They have not demonstrated, in my view, a preparedness to govern in a power-sharing parliament. I observed several efforts from members of the crossbench to offer pathways to compromise that were rejected outright.
+
+Despite what the honourable Leader of the Opposition or other Labor members might say, I did not see the crossbench asking for everything to go their way. The crossbench were willing to compromise on the positions they took the election, but Labor was not. The old saying: 'You can lead a horse to water, but you can't make it drink', is very applicable here. Based on this, I cannot in good conscience actively express my confidence in the Labor Party.
+
+This does not mean that my vote today can be taken as a vote of confidence in Premier Rockliff or the Liberal Government either -
+
+Members interjecting.
+
+The SPEAKER - Order, the honourable member will be heard in peace and shown the respect that she has shown every other member.
+
+Ms JOHNSTON - but in the wake of the election they have made some significant concessions. They have agreed to end greyhound racing subsidies, to protect native forests, to pause salmon expansion, and to strengthen parliamentary oversight. I'm not naive. These concessions are purely altruistic. They've only moved this far because they've had no choice. That actually tells me that parliament can work if we hold their feet to the fire. But they, nonetheless, represent progress. The challenge is whether the Premier can follow through, given the trust deficit.
+
+This is the Premier's opportunity to build trust and confidence with the parliament, but more importantly with the community. The Labor opposition, too, must do the same. More than a change of government, this is a change Tasmanians want. You don't build trust and confidence by making grossly inappropriate and contemptuous statements like, 'The Greens are the enemy of the working people,' or verballing independents. It is utterly disrespectful to members of this place who've been duly elected, and most importantly, utterly disrespectful to all Tasmanians who voted and who care about our environment and our community.
+
+I also believe that a workable, stable parliament is more likely under Premier Rockliff. Premier Rockliff has 14 seats. With concessions and a more collaborative approach, he can form a workable government that has the opportunity to last a full term, and we've seen some early indications of that already. Labor, with just ten seats, would need both the Greens' and the crossbench's support, yet they have ruled out working with the Greens. That makes their pathway impossible from day one. One pathway is impossible from the start, and the other at least has a chance of lasting, particularly if we put up some important guardrails, and that's what the crossbench is here to do.
+
+In the absence of providing confidence, it is the right thing to make clear to this place and to the Tasmanian people, how we are approaching every decision. I will be doing so on its merits, and it will be tested against five questions:
+
+Is it based on evidence?
+Has there been proper consultation?
+Will the impact on vulnerable Tasmanians be addressed?
+Is it fiscally responsible?
+Does it help or hinder our responsibilities to the environment, climate and future generations?
+
+These are not abstract questions; they are the lens through which I will judge every decision that comes before this parliament. 
+
+This parliament has been given a rare opportunity to do politics differently, to work together in the interest of Tasmania today and the generations who come after us. That's the parliament voters demanded and elected, and that's the parliament I intend to help deliver.
+
+[3.21 p.m.]
+Mr O'BYRNE (Franklin) - Honourable Speaker, congratulations on your election as Speaker. I did speak to the previous Speaker, and she also wishes me to pass on her best wishes. Congratulations also to Ms Burnet for her election to her position.
+
+Democracy is a precious thing. It's a valuable thing. We really should celebrate it. However, no Tasmanian was celebrating two elections in such a short period of time. Despite the fact that we have some wonderful new members to our parliament, the dysfunction and the disruption that has been created by the political uncertainty, the early election, and the game-playing in this place has caused so much harm to the Tasmanian community, to our economy, and to this parliament's image in terms of how we conduct ourselves in an appropriate way.
+
+I believe I said in a contribution on a censure motion that the Greens moved in the Leader of the Opposition, Mr Winter, in the last parliament, that I'm not sure who thought that was a good idea to move. I echo those sentiments, and I do that respectfully. I'm not sure why, given all the things that you've been saying, Mr Winter, Leader of the Opposition, over the last few weeks, that this is a good decision, this is a good first act of this parliament, when you know very well the vote. You know the result. In previous times, you said, 'The only motion of no confidence I will move will be the one where I know I've got the numbers.' Well, you don't have the numbers in this case; it has been made public.
+
+Members interjecting.
+
+Mr Winter - That's not what I said.
+
+Mr O'BYRNE - You said that.
+
+Members interjecting.
+
+Mr O'BYRNE - The only no confidence motion I will move is the one where I know I've got the numbers and I can be successful.
+
+Mr Winter – It’s the one I move. No, that is not what I said. That’s not what I said. 
+
+Mr O'BYRNE - No, you've tabled it. That's exactly what he said.
+
+Members interjecting.
+
+Mr Winter - Hang on. It's not.
+
+The SPEAKER - Order. The Leader of the Opposition has already had a call. Other members who haven't spoken yet can have an opposition. The honourable member who is on his feet has listened respectfully to all contributions without making a word. I ask that the same courtesy is shown to him while he's making his own contribution too.
+
+Mr O'BYRNE - If I've misquoted you, I would like to hear you set the record straight, because that is my understanding of what you said. I believe it was on ABC Radio. When you say those words and you respect the intent - and in the last couple of weeks, the conversations that we have had have been constructive. They've been respectful and I thought, 'Well, here we go. Here's a change in the discourse in this parliament.' Whilst it's been made clear by other members that some concessions on policy were not forthcoming, I thought your approaches to the crossbench and others were genuine. I accept that at face value, but it flies in the face of that genuine approach to create, on the first day of parliament - and some members are yet to give their inaugural speeches - here we are again from 10 weeks ago, the no confidence motion which very few Tasmanians thought was a good thing, and a lot of Tasmanians are very angry about the fact that that no confidence motion caused an election. 
+
+This no confidence motion will not cause another election; I accept that, but you know the result. Here we are again - Groundhog Day - going through the motions of this no-confidence motion because you want to score a political point, but you also, with goodwill to the crossbench, disrespect our perspective. It's clear that you don't have the numbers, but yet, you want to get people up and drag them through this debate when you know the result. 
+
+Make your point about why you don't agree with this government. Make your arguments about why you believe that you will be a better government, but using the forms of the House and a no confidence motion to drag people through this on the first day of parliament, knowing full well the people of Tasmania did not want that election, were angry about it in large numbers, and the ballot of the result did demonstrate that it was not in your favour, a swing against you, lowest vote. That is something that is just the broad numbers and the reality.
+
+When I was elected in the first as an independent, 14, 18 months ago, my commitment was to the people of Tasmania and Franklin that I would act constructively and work with other members of parliament. That is why, at that stage, I provided qualified supply and confidence to Jeremy Rockliff as Premier of this state. Through that last parliament I worked constructively with other members. I got a bill through, a review of Homes Tasmania dealing with the big issues that I felt the people of Franklin wanted me to represent. That is again the commitment that I provide this time around. 
+
+I engaged constructively and in good faith with the Leader of the Opposition, Mr Winter, over the last few weeks, and other members of the crossbench. I formed the view that given the conduct of those discussions and the outcome, the only path forward to create a stable parliament, a parliament that could work - not perfect, and this is by no means an endorsement of the Liberal government. They have made some significant errors and blues on policy and failure to deliver services, and that is something that I will continue to prosecute, but the Tasmanian people want us to get back to work, not to debate fruitless motions that will not end in the result that is sought by the Leader of the Opposition. 
+
+We need to be better. We need to be constructive. We need to show Tasmanians that we accept that other people disagree with us, but we're not going to flip the table every time we disagree. We have an obligation to make it work. And with the greatest of respect, 10 seats in a House of 35, seeking to form a government with no agreement with the crossbench and clearly no formal structure of how you agree to disagree, with five votes that you rely on in terms of the Greens party, does not augur well for a stable Parliament.
+
+My vote today will be against this motion. It's not an endorsement of the Liberal government. I will provide confidence and supply because they're the only ones that actually can form a workable parliament, and you know it, because people have said it. My hope for the opposition is: prosecute your case to find the difference between you and the government, but do not use the forms of the House to create uncertainty, to create chaos and potentially create another election when Tasmanians want us to get on with the job. Thank you. 
+
+[3.28 p.m.]
+Prof RAZAY (Bass) - Honourable Speaker, I first thank the people of Bass for electing me as an independent member. I feel privileged and honoured to represent them.
+
+Over the past two weeks I have had regular discussions with the Premier, the Leader of the Opposition, and many parliamentarians. I feel encouraged and optimistic about these open and robust discussions, with a focus on collaboration and working together by being pragmatic and reaching common ground to address the many issues that interest their communities.
+
+There is also an emphasis on the need to provide a stable government. Stability is what every Tasmanian demands. We should work very hard to achieve it. Today I feel sad and disappointed that on my first day in Tasmanian parliament, and without having any previous working relationship with government and parliamentarians, I have to decide on the future of the Tasmanian government. You can imagine the enormous pressure I have been under.
+
+I am making my decision today after listening to my community and parliamentarians and after reflecting on why I am standing here and why I got interested in politics.
+
+It started more than three years ago when I gave a public presentation on the health of our nation and what happened to our 'lucky country'. I looked at the World Happiness Report on the happiest countries in the world. Australia was varying between 11 and 12, while Finland has been the happiest country for several years. I asked myself: why is this the case when we have all the ingredients to be one of the happiest countries in the world? 
+
+First, I looked at mental health. There is no health like mental health. Australia prides itself on being the fair dinkum, fun-loving larrikin land, encapsulated in its greetings like 'G'day, mate', and 'No worries, mate'. They suggest a happy and harmonious society that values fairness, equal opportunities and social connectedness. In the 1990s, this was reflected in our rating of ninth in the World Happiness rankings. 
+
+Over the last three decades, mental health disorders have been increasing, reaching epidemic proportions never experienced in the history of Australia. According to the Australian Bureau of Statistics, in 2021, 20 per cent of Australians - nearly five million people - had a mental health disorder, with young people between 15 and 25 having the highest rate at 38 per cent, an unprecedented increase from 26 per cent in 2007. The rate of mental health disorders in the 1990s was only 6 per cent, so within three decades, Australia has gone from being the easy-going, laid-back, happy-go-lucky nation to being a stressed and anxious society.
+
+Second, I looked at chronic health disorders. According to the most recent survey by the Australian Bureau of Statistics, Tasmania is one of the sickest states, with more than 54 per cent of Tasmanians having at least one chronic health problem. Risk factors such as obesity and high blood pressure, which are among the main drivers of chronic health problems, are reaching epidemic proportions. A total of 35 per cent of Tasmanians are obese and 26 per cent have high blood pressure. In the 1990s, only 17 per cent of Tasmanians had chronic health problems, only 12 per cent had high blood pressure and only 12 per cent had obesity. Again, within three decades we have become one of the sickest states. 
+
+Some of the contributing factors for all of this include a dramatic change in our lifestyle and dietary habits. Today, Australians eat food that is rich in salt with fewer vegetables and fruits, drink more sugar-sweetened drinks and are less physically active. Therefore, understanding the changes in disease and the risk factors over time is essential in planning national health policy and healthcare delivery to improve the health and reduce the demand and cost on our health system. Tasmania needs and requires comprehensive strategy aimed at providing opportunity to people to eat healthy food and be more physically active.
+
+Over the last two to three decades, we also saw a widening gap in wealth, employment, health, education and housing. I believe that the pursuit of wealth led to putting individual interests at the expense of the community, leading to a fragmented and divided society. People seem to have what I call 'rushing syndrome.' Everybody's in a hurry, everybody's in a rush and do not have time to chat or do leisure activities. Some Australians have to do more than one job to make ends meet, which leads to overload in work and extreme financial pressure and they find it hard to switch off, forget their worries and have fun. People of all ages are frustrated. I asked the younger generation, 'What's the worst stress you have in life?' and the answer is one word, 'finances'.
+
+Look at the younger generation. If they go and study at TAFE or university, they have massive debt, they have difficulty in finding a secure job and they can't dream about buying a house when it's like six to eight times their salary. For our age group, in the 1980s we used to study at university for free, travel around the world, come back and find a secure job, and we used to buy a house worth two to three times our salary. We could even afford to buy a shack.
+
+If you look at parents, they have difficulty juggling work and family and they have massive financial stress because of high mortgage debt and school fees, with increasing numbers sending their children to private schools.
+
+As for our seniors, I've found that we have neglected them and look at them as a burden rather than the most valuable in our society. Only a few weeks ago, a retiree who retired from the hospital after many years working said to me, 'You don't realise how stressed I am', because she doesn't know if her superannuation, if she lives longer, will be enough for her to survive.
+
+We need to address the root causes of the problem by reducing wealth inequality, providing secure jobs, good health care, education and affordable housing. Change is clearly needed, but we need to give people hope to create positive changes and to make people feel happy and lead fulfilling lives.
+
+When I started campaigning, I probably had participated in six elections over three years. That must be a record. When I campaigned for the council job in Launceston, my main vision was to promote health and wellbeing. People used to say, 'That's not a council job', so you don't know how proud I felt this year when they put promoting health and wellbeing as one of their strategic priorities and also providing safe walkways. I felt really proud when they said, 'We have transferred the money from the road works to pavement maintenance.' Isn't that lovely, how even from your own budget, you can create safe walkways?
+
+Last year I published a book on dementia and new hope, which is for the public, to provide education about prevention and treatment of the disease. Then I got this email to say, 'My dad in his 80s read the book and decided to do more walking.' I thought, even at that age they wanted to prevent dementia, so that gave me the idea. I organised a dementia walking day at Seaport on 30 March and gave people certificates, and the hope that I gave them was even if you walk three kilometres a day you reduce the risk of dementia by 25 per cent. That was the hope and that's why I feel it gives people hope somehow to change.
+
+My favourite story is about a lady in her 80s who came walking with a Zimmer frame and she walked all the way to Stillwater and back. I gave her a certificate and she said, 'It took me longer to come back'. I said, 'How come?' and she said it was because she kept stopping and talking to people. It shows you that even walking, which is free, creates connectedness and improves their mental health.
+
+We need to raise public awareness through education about the impact their lifestyle has on their health. Our healthcare system's emphasis is more on tests and intervention to treat individual illnesses rather than prevention. Integrating better diet, especially fresh vegetables and fruit, and more physical activity and social connectedness into everyday life can help Tasmania to become healthier, happier and reduce the burden on our overstretched health system, and at less cost.
+
+I will also mention our education system. I feel sorry because all my kids went through the public system. I'm talking about in the 2000s. When you look at the figures of our education system since 2010, unfortunately they have gone backward. It makes me sad that nearly half our young people don't finish year 12. That will have a major impact on their prospect of getting a job. When we hear businesses crying for skilled workers, we should do something to motivate these people, encourage them to complete year 12 and then do training or study at university. That's the way we can improve their prospect of getting a job.
+
+I will also comment on our budget. I was shocked when I heard we are $4 billion in debt. We need to do something, especially if they are proposing a more than three-fold increase over the next three years. Honourable Treasurer, you are labelled a conservative. I hope you are fiscally conservative because I think you have to make a major decision on tightening the belt; not one or two inches, but perhaps three inches. We need to do something about it. In particular, I feel we should look at how we can provide services by improving efficiency rather than more spending.
+
+We should look at our infrastructure because there are great savings there, even in the short term, and that includes a new stadium.
+
+I will conclude. I believe and hope that by embracing unity, humility, and kindness we can move beyond divisive politics and work side by side to create a better future for Tasmania. I have already witnessed openness and direct positive engagement in this parliament. I believe a new era begins today and this parliament will work together, collaborate, compromise and act to address the shared hope and challenges of our diverse community.
+
+Tasmanians have voted for stability. They detest going to another election. After my election, of course, I was interviewed. I said that I would give the government that is elected my support and stability at the same time. I am therefore giving my support to the current government led by the honourable Premier, Mr Jeremy Rockliff. I'm therefore voting against the no-confidence motion.
+
+I will finish by saying that my life taught me during difficult times to not hate anything. It might be good for you. I hope in the future we will reflect on the no-confidence motion that it might have been the best thing to happen to Tasmania because it has created a new parliament that works with openness, collaboration and stable government.
+
+[3.43 p.m.]
+Ms DOW (Braddon - Deputy Leader of the Opposition) - Honourable Speaker, I, too, congratulate you on your election as Speaker of this House. I know that it's a role that you undertake with integrity and great enthusiasm.
+
+I begin by putting on the record that members on the other side of the House from the Liberal Party said that they won't be speaking. From the outset we had an agreement across this parliament that we would each provide three speakers today. It appears that is no longer the case. I am not quite sure what that says. We intend to do as we said and provide three speakers on this notice of motion this afternoon. The other point that I wanted to clarify on behalf of our leader, Dean Winter, is that he said that the only no-confidence motion he would support would be one that he moved himself - just to clarify the issue before.
+
+Honourable Deputy Speaker, congratulations to you, too, on your election.
+
+Tasmania is at a crossroads. Our community is divided. We are facing an unprecedented budget crisis. Our health, housing and educational outcomes are the worst in the country. We have potholes in our roads as big as craters. Tasmanians deserve accountable, responsible and, above all, stable government. They deserve a government that can work with the parliament they elected. They deserve better than the chaos and dysfunction that has characterised the past three years under this Premier, Jeremy Rockliff.
+
+We are here today for the same reason the last parliament held no confidence in Mr Rockliff. Tasmania faces a budget emergency that Mr Rockliff will not fix. Let's be very clear: It was Jeremy Rockliff who called the early state election, not the Opposition Leader, Dean Winter. The Premier did so after his minority government collapsed and the majority of the parliament, not just the Labor opposition, declared its loss of confidence in him.
+
+It was the second early election called by Mr Rockliff in 15 months due to his chronic inability to work with and maintain the support of the crossbench. Mr Rockliff did not resign when the House voted no confidence in his performance as premier, as is parliamentary convention. He chose to stay on and subject Tasmanians to yet another early election. If he did not want to go to an election, and if he knew Tasmanians did not want an election, why did he subject Tasmanians to another early election?
+
+To be clear, the Greens, Kristie Johnston, the member for Clark, and independent member Craig Garland, the member for Braddon, supported this no-confidence motion just a few months ago. I ask the House: 'What's changed?' The budget is still a mess. In fact, there is now more net debt than predicted in the budget. Our new Spirits still don't have a berth. Mr Rockliff might have changed his story on privatisation, but you still can't trust him.
+
+The Greens have struck transactional deals behind closed doors with the Liberals. You can call it what you like, but you have sold out to the Liberals to keep them in power. We did not move the first no-confidence motion in this place without enormous consideration. We did what any opposition worth its salt would do and drew a line in the sand. We couldn't stand by in good conscience and watch the Liberals destroy our state. Labor is the real opposition and that could not be any clearer here today.
+
+That's the difference between the Labor Party and the Liberal Party. We have integrity. I am proud of our team. We haven't traded away our values for the keys to power or sold out hard-working, regional Tasmanians. I know I can look salmon workers in Strahan in the eye. My question for the Premier is: can he?
+
+We said we wouldn't do a deal and we didn't. Sadly, the integrity of the Greens and many on the crossbench has been found left wanting. After lecturing us for years about the importance of integrity, transparency and accountability, when push comes to shove, they abandoned those principles in exchange for a handful of beans.
+
+Of course, the election result for Labor wasn't what we were hoping for. We hoped to win more seats. That did not occur. Tasmanians made it very clear that they want more collaboration in their parliament and that's what we continue to offer.
+
+We worked in good faith with the crossbench and the Greens to outline how we would do politics differently in Tasmania. Members of the crossbench and the Greens have made their choice. Following this early election, called by Mr Rockliff, Her Excellency the Governor asked this parliament to determine who holds its confidence. This is because the result of the election is that no major party has a majority. It is our constitutional duty to properly determine whether Mr Rockliff and his government have the full confidence of this House and, in the words of Her Excellency:
+
+I have reappointed the Premier and leave it to the House of Assembly to determine confidence.
+
+I remind the Liberals, this is what then-Opposition Leader Will Hodgman did in 2010. He tested the confidence of the House and lost that vote. Premier Jeremy Rockliff was his deputy at the time - I'm sure he recalls - and I'm pretty sure he didn't think it was so-called political games then.
+
+Tasmanians have elected this parliament, and not one member of this place has a monopoly on good ideas. Tasmanians never get it wrong. This is the parliament Tasmanians have elected, and we have been directed to make it work. Labor is committed to making it work.
+
+I acknowledge Casey Farrell, who did lose his seat at the last election. I'm sure it won't be the last time that we see him in this place. I warmly welcome Jess Greene and Brian Mitchell to our team. We look forward so much to working with the both of you as part of our team. 
+
+I congratulate all new members of the House of Assembly on their election. To sit in this place and represent your community is an enormous privilege and one that comes with great responsibility. We are here to collectively represent the entire Tasmanian community and make decisions on their behalf, not just the interests of our various supporter bases. I learnt this very important lesson a long time ago in local government. Those who choose not to support this motion today are choosing more debt, more chaos and more broken promises, when you could have chosen a new path forward with stable, inclusive government under Labor.
+
+Labor provided an opportunity to create a new way of working together, defined by a shared commitment to the community and united by a common purpose to put the best interests of the people of Tasmania ahead of short-term political gain. This approach shifted away from the old way of doing things in Tasmania, from transactional politics towards a values-led approach. Labor has said, 'Where we agree, we will work together. Where we disagree, we will do so with respect.' 
+
+Politics in Tasmania desperately needs to change, and Labor offered a path for change. To me, that choice for change was pretty clear, because the Liberals’ and Premier Jeremy Rockliff's track record speaks for itself. Having the Greens and crossbench so easily wooed by Premier Jeremy Rockliff's promises is disappointing. They had the chance to support a consultative Labor government but chose to return to power the Liberal government that has utterly failed Tasmanians for the last 11 years. I find that incredibly disappointing.
+
+I want to take time to look at the Liberals’ record on minority government. Do you remember Lara Alexander and John Tucker? They defected from the Liberals in 2023 due to their concerns about Premier Jeremy Rockliff's stadium deal - the cost and the lack of transparency and communication with Liberal MPs outside cabinet. To keep them on side, Premier Jeremy Rockliff initiated a Project of State Significance (POSS) process for the project. When they lost their seats in his first early election in 2024, he denigrated the Tasmanian Planning Commission and introduced enabling legislation before the consultation process on the POSS had been completed, as he had promised, breaking yet another commitment.
+
+The best predictor of future behaviour is past behaviour. What makes you think he won't do the same to the crossbench and Greens? After demonising the Jacqui Lambie Network during the 2024 election campaign - remember the traffic light ad? - Premier Jeremy Rockliff then wooed the Jacqui Lambie Network members with false promises.
+
+The Gruen report on the stadium - he threw it out and trashed the author. The review of Tasmania's finances by esteemed economist Saul Eslake - he threw it out. The review of the Integrity Commission - he threw it out. Don't forget the review into local government - he threw it out. His privatisation review - gone. There are also his pre-election campaign commitments to the racing industry, greyhound owners, the salmon industries and the hard-working regional Tasmanians that work in that industry. He ripped up the letter that he sent them before the election, and it's not worth the paper it was written on. You can't trust Premier Jeremy Rockliff. He will always put the interests of the Liberal Party before Tasmanians.
+
+Let's look at the Liberals' record on the budget. In 2014 when Labor left office, Tasmania had no net debt. When Premier Jeremy Rockliff became Premier three years ago, two years after COVID, there was barely a billion dollars of net debt. Today we're on a pathway to $13 billion in net debt. It's a runaway train of debt that is picking up speed, and the Liberals simply have no plan to fix it. 
+
+Who has Premier Jeremy Rockliff chosen to fix this mess? The honourable Eric Abetz. The Liberals have lurched so far to the extreme right that the honourable Eric Abetz is their choice for Treasurer. This is who Premier Jeremy Rockliff thinks should manage Tasmania's finances. This is who he thinks will restore confidence across the Tasmanian community. Do you know who will bear the cost with your honourable Eric Abetz running the show? Every Tasmanian public servant facing wage cuts and job losses.
+
+Let's look at the Liberals’ record on the Spirits. If there is one project that epitomises the sheer incompetence of this Liberal government - the secrecy, the broken promises, the sheer inability to deliver - it is the Spirit of Tasmania ferry fiasco. This is the biggest bungle in our state's history. The Premier bailed out a Finnish shipbuilder with $80 million, forgot to build a berth, misled tourism about delays, then spent millions hiding the ships in Scotland.
+
+The Spirit of Tasmania fiasco isn't an isolated incident. It is the perfect example of how this government operates: make an announcement for the headlines, hide the true costs, ignore the problems, hope nobody notices. When you're caught, blame someone else. Rinse and repeat, over and over again.
+
+I ask this parliament, who do you trust? We all know you can't trust the honourable Jeremy Rockliff. You only have to look at his broken promises, and here are the big ones:
+
+		Healthiest state in the nation by 2025 - broken;
+		Education results, the national average by 2022 - broken;
+		Keep Tasmania net debt-free - broken; and
+		Pathway to surplus - mythical.
+
+There are the projects:
+
+		Light rail by 2025;
+		The new Tamar Bridge;
+		Full redevelopment of the Launceston General Hospital, $580 million of it;
+		The underground bus mall;
+		Duplicating the Charles Street Bridge;
+		A new Ashley Detention Centre;
+		A second Cam River crossing; and
+		The pothole blitz.
+
+Then there are the policies:
+
+		A single statewide planning scheme;
+		Short stay levy;
+		Fire tax;
+		Keeping UTAS in Sandy Bay;
+		Treaty;
+		A ban on conversion practises;
+		Forced amalgamations of councils; and
+		A ban on ramping.
+
+Then, Honourable Speaker, there are the point-blank untruths:
+
+		Premier Jeremy Rockliff said the stadium would cost Tasmanians $375 million and not a red cent more - untrue;
+		The election ad claiming Labor would ban woodfires, close the Mersey and Scottsdale hospitals - untrue; and
+		Premier Jeremy Rockliff promised to introduce a mandatory precommitment card for pokies. Where is it? Perhaps the honourable member for Bass, Michael Ferguson, could help us with that.
+
+Since the election, Premier Jeremy Rockliff and the Liberals' track record has only worsened. You only have to look at Marinus Link to highlight that.
+
+Premier Jeremy Rockliff tried and failed to have Labor and the crossbench to rubber-stamp a multibillion-dollar decision on Marinus Link with less than 24 hours' notice, no real consultation and no chance to properly consider a complex decision, and more than 1000 pages of documents. Premier Jeremy Rockliff sat on the final business case for two months. He promised the public would see it before any decision was made. Untrue. How can the crossbench have confidence in Premier Jeremy Rockliff after that? This alone should send a shiver up the spines of every single member of this House. 
+
+This week's salmon announcement isn't about good governance or environmental protection. It's about one man portraying a billion-dollar contribution to our economy and regional workers in a desperate attempt to cling to power, risking Tasmanian jobs and business confidence to save his own. 
+
+The biggest untruth of all consistent Liberal claims: Labor would do a deal with the Greens. Do you remember that one, honourable Felix Ellis, member for Braddon? Untrue. In fact, Labor's determination to not do a deal with the Greens, to hold to our principle, has cost us government. That is the price we were willing to pay because our integrity is not for sale.
+
+The fact is, it's Premier Jeremy Rockliff who's done a deal with the Greens and the green independents to form a 'Liberal-Green coalition of chaos.' They're his words, not mine.
+
+We understand what Tasmanians told us on 19 July. No party won a majority. That means whoever governs must be willing to work collaboratively to find common ground to put Tasmanians first, but we won't sell out Tasmanians. We have confidence in Dean Winter to be the next premier of this state because he has the courage required to do things differently in Tasmania and has demonstrated that he cares more about Tasmania than his own job. 
+
+He's also, importantly, got the energy, vision and the drive required to meet head on the significant challenges Tasmania faces. 
+
+Most importantly, he has conviction, and that used to mean something in politics. It's little wonder there is so much contempt for politics in this state, given the continual cynical posturing of the Liberals.
+
+There were always going to be issues on which Labor and members of the Greens and the crossbench would disagree on. That's only natural. That's democracy. We've been honest about that, but there are many more things on which we already agree. 
+
+We had the opportunity to work on those things together in a progressive Labor government and that opportunity will be lost now if this motion fails. We had a comprehensive agenda for change, 10 free doctor clinics across the state, nurse practitioners in every regional hospital, four-year fixed terms in this place, so we can end the cycle of unstable parliaments. The most comprehensive investment in women's health by any state government, including free specialised women's and reproductive health clinics across Tasmania, particularly in regional Tasmania. A treaty for First Nations Tasmanians. A real ban on puppy farms. A legislated Human Rights Act urgently providing redress payments to people who have had historical offences of homosexuality expunged, and real consultation and a plan to fix our state budget without cuts that will hurt the vulnerable, and that's just to name a few.
+
+Tasmania cannot afford another four years of a failed Liberal government led by Premier Jeremy Rockliff, but it looks like that is what Tasmanians are going to get, and it's the Greens and the crossbench who have handed over the keys.
+
+The choice before this House is very clear. On one side, Jeremy Rockliff and Eric Abetz. More debt, more chaos, more broken promises. A Premier who, given his track record, will not be able to make this House work for the next four years. On the other side, Labor, prepared to work with every single member of this parliament, a focus on what matters to Tasmanians. That remains our commitment.
+
+To the crossbench, I know each of you ran on promising integrity, transparency and better government for Tasmania. You told your communities that you'd be different and you said that you'd put people before politics, and this is your opportunity to prove it.
+
+To the Greens, this is the chance for a real progressive agenda. You claim you do politics differently, now is your time to show it. The Governor has asked this parliament to determine confidence here today in the House. The people of Tasmania elected a progressive parliament. They expect us to work together. This motion is bigger than politics. This is about defining Tasmania's future. For our regions that deserve their fair share and healthcare that works. For our young people who deserve hope. For our state that deserves competent, stable government. This is for all Tasmanians. This is what Dean Winter and Labor are offering this parliament. Stability, competence and change.
+
+Premier Jeremy Rockliff does not deserve the confidence of this House. Tasmania is at a crossroads, and Tasmanians need their parliament to have the courage to do things differently and act in the best interests of all Tasmanians. In supporting this motion today, you have the opportunity to do that.
+
+[4.02 p.m.]
+Mr BAYLEY (Clark) - Honourable Speaker, I offer my congratulations to you and to my colleague, Helen Burnet, member for Clark, for your appointments today.
+
+I start my contribution in this 52nd parliament with an acknowledgement of the Palawa people as the original and traditional owners of the land we meet on and the islands, water, seas and skies of the place we all now call home. In my electorate, here in Nipaluna/Hobart, where we sit, the original peoples, the Muwinina, are no longer. Lost to invasion, war and disease, I cannot acknowledge their elders present. There are none. But their hopes and aspirations live on through the Tasmanian Aboriginal community and I acknowledge its struggle, survival, connection to country, and ongoing cultural practice. I acknowledge their elders and Palawa people with us today or watching online. 
+
+No matter what the makeup of this House or who sits on which benches, there is no doubt, that this parliament can do better for Lutruwita's Palawa people. For too long we have failed them. We must be bigger. We must do better.
+
+As we go into this debate, let's not argue over who'd be better placed to deliver for Aboriginal people, the land returns, the heritage laws that protect cultural landscapes and empowers Aboriginal decision-making, the truth and treaty, the funding and support needed to close the gap, and the desperate action needed to keep kids out of Ashley and adults out of Risdon. 
+
+Following lifetime after lifetime of letdown, I can well see why no one in the Aboriginal community would believe any of us. Let's just agree to do better and work together to make it so.
+
+In the Westminster system, no confidence is a serious matter and we Greens treat it as such. We weigh it up, talk it through, consult widely and come to a conclusion. We make a decision. Abstention is not an option. We are elected to make decisions, easy and hard.
+
+In early June, when presented with a motion of no confidence in the Premier, we did our due diligence, consulted, made our case, lost an amendment, and eventually cast our votes. We don't have confidence in a Rockliff Liberal government. We didn't back then and we don't now.
+
+Hansard records the debate on 5 June, our views on the failures, the broken promises, the contempt, and the cavalier approach to the budget and how taxpayers money is managed under this government. Hansard records we voted Premier Rockliff down in a successful no confidence vote that opened up the promise of a new government, a different agenda, a better way of working together, and improved outcomes for all Tasmania. But Labor, then as now, didn't step up and we went to an election.
+
+Our offer of a conversation to discuss and negotiate the opportunity to work across the chamber under a Winter government was passed up for a poll, with not so much as a simple discussion to investigate that opportunity and what we each had to do to realise it.
+
+We thought there was an alternative government, a better one, willing, able and ready to step up and work with us all in a way that can make the most of the immense opportunity that comes with a collaborative parliament. A parliament where no one person gets their way, where language is more measured, dialogue is fostered, outcomes better targeted and the electorate more content. A parliament working the way it should, the way it was voted in; a diverse mix of Tasmanians electing a diverse mix of representatives to deliver a diverse mix of outcomes. 
+
+We voted no confidence in June and waited for the phone call, but despite our best efforts to invite conversation, it never came and we went to that election. The results of that election are now recorded in history. Status quo in broad numbers, some churn in individual members and a more progressive crossbench. A recommissioned Rockliff government and a diminished Labor Party.
+
+To drive for no confidence, pass over the opportunity to govern, force an election but not be ready to win it begs questions of strategy, sense, courage, self-reflection and ability. With no gain in seat numbers, a statewide swing against them and just 25 per cent of the vote. No one can argue that the momentum is with the Leader of the Opposition and that the privilege of government can be expected and not earned.
+
+To form government, Labor need at least eight other members to back them. Five Greens and three Independents does it for them. Ten Labor, eight crossbench. Not quite a balance, but more even than any past minority arrangement. If you have just 10 of 18 views in a relationship, you can't expect to get it all your own way. If you've got just 25 per cent of the vote, why would you demand 100 per cent of the outcome? That's not how it works. Not in life, not in politics, and not in this parliament.
+
+That's how Labor went into the post-election challenge of forming government. It didn't see it as a challenge, it saw it as a right. An expectation. An entitlement. How is it that it took until two weeks ago, weeks after the election, for Mr Winter to accept the Leader of the Greens suggestion of a sit-down discussion on what it would take for us Greens to back this motion today? We did everything we could to work across the parliament and to realise the change we promised Tasmanians we'd fight for.
+
+Over the last two weeks we met with Labor multiple times and had various phone conversations about possible policy compromises and outcomes. We made it clear from the outset and repeatedly after that the Greens need at least some movement on the issues we campaigned on; something on the stadium and priority spending on health and housing instead. To protect our precious marine environment and forests.
+
+Labor left it to a mad scramble in the last two weeks. A constrained scramble where the honourable opposition leader was hobbled his and his party's own decree of never doing a deal with the Greens; of not negotiating on policy; of not being willing or able to meet the moment, to step up and finish what he started when he tabled the no confidence motion in his budget reply all those weeks ago. The votes of the Greens cannot and should not ever be taken for granted.
+
+While Labor wooed the crossbench post-election, he shut out the Greens for as long as he could. He maintained the tired old rhetoric despite the new reality. Despite the maths and the new political paradigm, he met with the crossbench with the expectations that we Greens would just cave - that not being Liberals locked in our vote for Labor, and that he was entitled to it. That's clearly not how it works.
+
+I should at this point acknowledge the work of the crossbench and the collaborative way many with aligned views on the world have communicated with us over these heavy last weeks. We Greens acknowledge the solidarity and strength that came with your position, and the articulation that Labor can talk to the crossbench all they want, but it won't get them government without the Greens, so Labor needed to talk to us. Thank you. We recognise and appreciate this approach.
+
+As is self-evident, the policy movement that has come to pass on greyhounds, forests and salmon are but a point in our collective decades-long campaigns to get movement on these contentious policy areas. They are campaigns we have worked on with you and with the community. For years we have worked with you on these issues either as members of this place or as members of the community. May that collaboration continue. I expect that it will, as it should.
+
+Labor will say we're passing up the opportunity for a more progressive government. The attack lines have started. They've leapt into the past to pull out the playbook and frame us as the villain. I read today that we are 'the enemy of working people'. Mr Winter, what does that even mean? Enemy - why is that language okay? Tassie doesn't need Trump-style politics. You really demean yourself. You can be better than that.
+
+You want to talk about enemies, Mr Winter? I'm starting to think that you are your own worst enemy. When Labor fails, it is always someone else's fault. Attack is the best form of defence, so they think - or so they are told to think. When they don't get their way, they denigrate and deride with the tired old rhetoric the electorate has just rejected by electing another minority parliament. How that gets them a better outcome next time is beyond me.
+
+We do have a more progressive parliament. The process since the election has delivered proactive ideas about how to make the parliament's work better, and how we collaborate, own problems and share solutions. Whether it's Labor's framework for collaboration or the Liberals' foundations of stability, there is now a long list of initiatives and many have merit. We can deliver many of them. With the crossbench we now have, if Labor can bring itself to support reform on the floor of the parliament, we can make it happen - on housing and rental reform, social justice, animal welfare, and electoral law reform. If 18 of us here agree, we can make it law, and make Lutruwita/Tasmania a kinder, more just place to live. If Labor can be collaborative, together we can make it happen from opposition.
+
+It seems now we are collectively at a crossroads. Labor is at a junction and it has options. As always, it has choices. I fear it has taken kneejerk steps down the path of opposition for opposition's sake, of attack and antagonism and vilification, especially of us. We all know where that will take them.
+
+The alternative is that by working together where we can, collaboration with the crossbench, achievement on progressing law reform and other positive change by weight of our collective numbers, we can build trust, a genuine relationship, a shared approach and positive outcomes for the people who voted to put us in these seats. We Greens are not seat-warmers. We're not just here to hold the government to account, although we will. We are here to effect change from whatever position we find ourselves. We'll work with anyone willing to work with us on the agenda that we can agree on. We won't agree on everything, but we can agree on much.
+
+How else does Labor think it can be any different in four years' time after the next election? Few expect majority government, especially a Labor majority, to come roaring back at the next election. Fewer again would expect that if they go down the path of aggression and automatic antithesis for the views and ideas of the crossbench and the Tasmanian people we represent.
+
+Ditch the old guard's playbook. Drop the rhetoric that boxes you into a corner and condemns you to opposition because you refuse to give yourself the space to work with others - us especially. Accept that you're not entitled to government. You need to earn it, with the public and with the crossbench. Build a bridge, communicate cross-chamber, collaborate cross-chamber. Achieve some outcomes, build trust, relationships and respect. Set up a dynamic where next time, after the next election, you don't need to win our trust and support because you've already earned it. Hating on us will never win you government. How can it, if you need us? Hate should never be rewarded. Why should it?
+
+In June we voted no confidence and today we will not. In June, we thought Labor was a viable alternative; today we do not. We don't have confidence in Jeremy Rockliff, but, as time has shown, Dean Winter has failed to step up and demonstrate why we should have confidence in him.
+
+The SPEAKER - Please use the title 'honourable.'
+
+Mr BAYLEY - My apologies, honourable Speaker. Without confidence in the alternative, we cannot vote against the Premier, newly and rightly commissioned by the Governor under the principles and conventions of our system. An imperfect system, possibly, but the best system we have, and one widely acknowledged as delivering the most accurate, representative model of democratic governance. It's one thing to bring down a Premier believing you have an alternative; it's another thing to do it knowing that you don't.
+
+We don't have confidence in a Winter-led Labor government. The actions of the last weeks have led us to that conclusion. Labor's tired, shallow rhetoric we hear in here today and see in the media only confirms, indeed, reinforces that conclusion. Jeremy Rockliff has recognised reality and stepped up to meet the moment.
+
+Honourable SPEAKER - Sorry Mr Bayley, the honourable Premier.
+
+Mr BAYLEY - Sorry. The honourable Premier Rockliff has recognised reality and stepped up to meet it. The honourable Leader of the Opposition, Mr Winter, has not. With policy compromises and his own pitch for a new way of working, the Premier is making commitments that are positive when delivered, and we will be working hard, together with the crossbench, to make sure he does deliver on those promises.
+
+While we're rightly advised to be cynical and sceptical based on past form, it gives us something to work with and hold him to. We won't stop fighting to hold the Liberals to account and to assure they deliver on their promises. They need to deliver on their promises to maintain the stability of this Parliament.
+
+No matter who formed government, the challenges ahead of us are great and getting greater. They need an honest, accountable, collaborative response. Last year's State of the Environment Report highlighted a deteriorating state of play on a whole raft of environmental measures. Summer salps and jellyfish, the mass mortality of caged salmon, and decaying fish washing up on southeast beaches pushed the emergency beyond just alarm. This week, in winter, there's a bacterial outbreak in feedlot salmon, for which the industry is now seeking approval to use hundreds of kilograms of a new antibiotic dumped in our public waterways.
+
+In South Australia, an algal bloom has devastated the coastal environment and coastal communities in a sign of things to come. Why do we think we'll be insulated from that here? Bird flu is sweeping the planet and it's coming to Tasmania. All three of our migratory parrots are now on life support for a trajectory to extinction, in no small part due to habitat loss. For the swift parrot, Tasmania still logs nesting and foraging habitat to feed the struggling, subsidised sawmills and an international woodchip market. Without an end to native forest logging, we drive species and climate change to a far worse place. We simply have to stop felling and burning our beautiful, carbon-rich and wildlife-safeguarding native forests.
+
+We need budget repair. Central to budget repair is a stadium that few want, Tasmania doesn't need, and collectively we can't afford. Neither party seems to accept this and won't even consider a position where they reject the stadium, even if the Planning Commission recommends so. There's no upper limit on cost, despite massive cost blowouts and skyrocketing debt. Meanwhile, the housing waitlist grows longer, education outcomes trail the nation and the health system cannot cope with an ageing, unhealthy population that is sicker and waits longer for care than any other jurisdiction.
+
+We have participated in the inaugural meeting of Treasurer Abetz's budget panel, noting the intention to work more collaboratively, be more accountable and share understanding of the situation at hand and the government responses to it. We're in no mind to boycott, but are yet to be convinced it rises to the challenge and that Treasurer Abetz can meet it. Discussions continue about a joint standing committee on budget repair, and a proposal may be brought to this House if we can agree here on the floor that that is a better option. It is clear that neither Liberal nor Labor command the full confidence of this House and Premier Rockliff will govern on the commission of the Governor. Issues of all types will be determined on the floor of this House. From the fate of government to the passage of bills and the establishment of committees, this House will determine the outcome of the matters we debate based on the numbers, not purely party lines.
+
+I congratulate new members and look forward to working with you, not only the crossbenchers. I look forward to getting to know the new Liberal and Labor members and finding, I hope, ways we can work together where we agree and respect where we do not. 
+
+Commiserations to those colleagues who lost their seats in the last election. This is a brutal place to work; an election is a tough performance review. I hope you are all doing okay in the face of your new professional reality and can find contentment with not being here, because it will be difficult in here. It already is.
+
+It seems Labor have lurched into a trajectory of negative attack and hostile engagement. It's viewing its own failure to be able to do what's needed to grasp the chance of governing as a renewed opportunity to blame others, resent rejection and double down on a strategy that have failed them this time and will fail them the next.
+
+Meanwhile, the Liberals have much to make up for. They are on notice, just like the salmon industry, to do better and work with this parliament in a more accountable and transparent way. This is a more progressive parliament, reflecting the will of the people to move beyond base politics, to work together for their collective good and create a Tasmania that lives up to the brand we sell to the world: clean, conserved, clever and compassionate.
+
+The opportunities are immense if we work together for the good of all Tasmanians. We must. The risks are too great and would condemn our children to a financial and environmental debt that will be impossible to repay. We cannot support this motion. We have no confidence in either, but commit to working with both, as best they will allow us, to deliver a stable parliament that works in the interests of the people that put us here.
+
+[4.21 p.m.]
+Mr GEORGE (Franklin) - Congratulations, honourable Speaker, and to your deputy as well, and thank you for the opportunity to speak before my inaugural address. I am very grateful to you. I acknowledge my two new independent colleagues, the member for Bass, Professor George Razay, and the member for Lyons, Carlo Di Falco. We are going to make a great team.
+
+I will be brief but, I hope, forthright. In the weeks since the election, we have witnessed what is the norm in so many countries around the world: a negotiation process that allows minority governments to build, operate and serve their nations well, their states and their communities. Tasmania has been through this process before, so it is strange to me to witness it being treated as an unseemly squabble over the spoils of power and influence.
+
+It shouldn't be this way, but we have ended up with two parties competing for leadership in a minority government, neither of whom have shown that they are genuinely fit for leadership. Two parties that have failed to display humility in the face of the electorate's verdict, neither party recognising that they have lost touch with the Tasmanian base and instead have become corporatised with the big end of town.
+
+What is a new crossbencher supposed to make of it? Well, I feel trapped between a rock and hard place. I frankly have little confidence in what either of the two old parties have to offer. I am reminded of Mercutio's curse to the Montagues and the Capulets, 'A plague on both your houses.'11 years of Liberal administration has left us with a debt that will likely blow out to more than $20 billion when government business enterprises are tallied. We have a health system that's creaking and failing our sick and our elderly, despite dedicated health workers. Our schools are turning out young adults that are not fit and prepared for the 21st century's challenges, despite the efforts of teachers and school staff.
+
+There are 5000 Tasmanians waiting for emergency housing. They are waiting on average 97 weeks to get a proper roof above their heads. Therefore, working to put a more progressive, competent and collaborative party into the driving seat should actually have been quite an easy task. Instead of approaching the crossbench with the humility that one might expect in the face of the electorate's damning verdict, Labor set about undermining the very notion of collaboration and compromise as it sought to lead a minority government.
+
+In all my years of reporting politics, which stretched back to the Whitlam years, never have I come across an opposition party less ready for government.
+
+I've lost count of the times I've heard the excuse, 'We will not compromise our values', when no-one was asking Labor to compromise its values. One does not abandon one's values when working towards constructive collaboration on issues and policies that are important to the state. No-one has asked Labor to sell out. No-one has asked Labor to trade its values. Unfortunately, even the appointment of a respected upper House independent as potential Treasurer could not persuade me that Labor was fit for the task of building a better outcome for Tasmanians.
+
+As for budget repair, neither party can even bring itself to face down the AFL and admit we simply can't afford a brand-new stadium. We can demand a team, but we don't need to send ourselves broke over what amounts to a vanity project.
+
+This is a state that is full of potential. Tasmanians could do any damn thing they want to.
+With its natural and human resources, our island has a bright future with the right leadership. We need a government with the wherewithal, the vision, and the ability to take us there.
+
+Despite this, I am the eternal optimist. I believe in bright futures. My hope is that in their minorities, both parties will harness the goodwill, the intellect and the abilities of a crossbench that is prepared to roll up its sleeves and contribute positively to an effective, stable parliament that endures for four long years.
+
+The Liberals' promise of a moratorium on salmon expansion has not driven my decision. The Premier's protestations of 100 per cent commitment to the industry stands in stark contrast to the notion of a transparent and independent inquiry.
+
+Was I surprised to read the letter written to Dr John Whittington, tabled by the honourable Leader of the Opposition, where the Premier undertakes not to introduce a moratorium - which amounts to committing 100 per cent to the salmon industry - when he has agreed with me and the crossbench to institute what he calls a pause? Well, that is just semantics. That is playing with words. I'm not surprised. Does it undermine my confidence? No, because frankly my confidence does not start at very high level. Does it undermine my trust? What I will say is that trust takes a very long time to build and could be destroyed in moments.
+
+On the other hand, what has driven my decision is the Leader of the Opposition's total refusal to recognise that his and my electorate, the electorate of Franklin - along with the majority of Tasmanians - wants the multinationals reigned in. Labor is blindly obsequious to the multinational fish farms that will turn their backs on Tasmanian workers and on Tasmanian communities as waters warm, diseases soar, mortalities multiply, and profits dry up.
+
+My vote will reject the no confidence motion. Sadly, this does not reflect confidence in either side of the House, in either party. Both have become so corporatised that they more closely represent the big end of town than they do ordinary Tasmanians. However, I do remain hopeful that over the next four years we can slowly build trust and goodwill across this Chamber, and ensure a good, productive, collaborative four parliamentary years. 
+
+[4.28 p.m.]
+Mr WILLIE (Clark) - Honourable Speaker, congratulations on your election as Speaker. I'm sure you'll do a fabulous job. Congratulations to the Deputy Speaker on her new position. I'd like to welcome new members to this place, particularly my new colleagues Jess Greene and Brian Mitchell, and also commend Professor Razay on his speech and contribution. It's been quite uplifting getting to know you in recent days and I share your passion for health and education and look forward to further contributions, so well done. I think you're going to be a bit of a cult hero in this place.
+
+Moving a constructive no confidence motion like this in the Tasmanian parliament is not without precedent. The 1989 example has been well documented and reflected upon in the past few weeks and I'm sure there are other examples in our history. The Tasmanian Constitution is different to many other jurisdictions, as I understand it, because the Governor has to commission a premier and therefore a government within seven days of the writs being returned, rather than leaving it to parliament to decide. With minority governments becoming more prevalent, the Tasmanian parliament may consider more of these motions in the future if the constitution remains the same.
+
+In more recent history, some members of the public might be surprised to find out that then opposition leader Will Hodgman moved no confidence in the Bartlett minority government in 2010 on the first day of the parliamentary term, a motion he lost. Members on that side who were present that day might like to reflect on that speech, and there's a few members here who were present that day. The speech predominantly concerned statements made by the Premier prior to the election and after. There were accusations of doing deals and selling out previous positions. It seems history has a habit of repeating and we really have to find a better way because it is Tasmanians’ lives that are being impacted.
+
+As I've watched on the last two weeks, there's been horse trading, political theatre and grandstanding. I've been disappointed at times and I despair of the political circus of Tasmanian politics. I don't think anyone of us in this Chamber can be proud and I understand fully why our communities have such little respect for politicians. It seems many have forgotten that the community we represent is at the heart of this. 
+
+I believe in good governance and orderly process. They give us the tools to provide the stability and certainty that Tasmanians need. In the last two weeks, I think that obligation we owe to people has been lost. In a ruthless attempt to cling to power, the Premier has lost sight of what is important - trust, honouring your words and putting people first. I would ask everyone here to imagine what it would be like to wake up one day to find your life's work and livelihood being snatched away at the stroke of a pen because someone thought their job was more important than yours. There is no conversation, no consultation, nothing, just a letter of support written a few weeks earlier that you thought you could trust.
+
+Regardless of the issue or claiming to be fighting from the moral high ground, as some do in this place on policy debates, no Tasmanian should be treated with such disrespect, especially when it is done in the pursuit of power. The Premier should feel ashamed of how he has conducted himself and so should members of his team over there. I wonder how minister Abetz and new minister Pearce really feel about the Premier’s salmon announcement.
+
+Putting the policy debate aside for a moment, the Premier has proved time and time again that his words mean nothing. He will say and do anything to cling to power and the assessment from those he's thrown under the bus could not be more damning.
+
+There is a lot of anger out there in the Tasmanian community around what's taken place the last two weeks. Salmon Tasmania put out a statement on 17 August on behalf of salmon workers and the statements in this are absolutely damning of this government and what they're prepared to sell out in the pursuit of power. 
+
+Premier Jeremy Rockliff has today broken his own written commitments to hardworking Tasmanians to appease the Greens and independents. Salmon Tasmania CEO John Whittington(ok) said: (tbc)
+
+The Premier has gone back on his word and commitments and shamefully let down every salmon worker, their families and communities across the state. 
+
+The Premier's announcement today will send a loud caution to any company in any sector that invests or is looking to invest in Tasmania.
+
+The Premier has let down the salmon aquaculture industry, strangling growth, guaranteeing a whole host of new red tape and significantly undermining confidence and investment.
+
+The Liberal Party went to the election promising 100 per cent support for Tasmania's salmon aquaculture industry.
+In a letter signed by the Premier on July 2, he made a number of policy commitments that support the future of the salmon industry, including pledging not to trade the salmon industry away in any shape or form, in order to form or retain government.
+
+Many salmon workers trusted the Liberals with their valuable vote, only to be completely betrayed six weeks later.
+
+The Premier's word has proven worthless.
+
+Every industry in Tasmania should be deeply concerned. First it was forestry, then it was the racing industry. What's next?
+
+If you have a letter from Jeremy professing support, be very, very worried - you could well be next on his political chopping block.
+
+Tasmania's workers, their families and industries deserve the support of their leaders, and not to be treated as a political plaything to be traded away for power.
+
+This is a government that does not deliver predictability, certainty, and good governance. This is a government that is harming business confidence.
+
+I was talking to someone in the business community the other day and it made me really sad after the conversation. This is someone who's done very well in business in Tasmania. They said that they were looking, prior to the Premier's actions, to invest in Tasmania further with their business and to diversify their business. They've decided not to do that now because the environment isn't very predictable. The sad thing was that he said he's contemplating an exit strategy for his five-year-old daughter and his family if things don't improve, because the political system here is unstable and this government cannot be trusted.
+
+That is an absolutely damning assessment of this government and its conduct. I know that there are many other people in the business community who feel the same. I wonder how the minister, Ms Howlett, feels about the greyhound industry announcement, having had a long association with and support for the industry. They also put out an assessment of this government.
+
+Putting the policy debate aside, what makes this horrendous decision even worse is the sheer deceit and appalling cynicism of the Premier. On 17 July, Mr Rockliff wrote to Mr Englund, stating: (all TBC)
+
+The government is committed to supporting the longevity and sustainability of the racing industry across all three codes, including greyhound racing.
+
+The letter continued:
+
+We'll continue to back Tasmania's racing community and the vital jobs in regional Tasmania and the many families and other small businesses it supports.
+
+Mr Englund described the Premier's actions as 'the ultimate betrayal'. 'He lied to us and I'd say to all Tasmanians that the Premier now cannot be trusted on any commitment he gave prior to the election.'
+
+He called on Liberal MPs to reverse the decision and restore trust in the party. He pointed to other recent reversals by the Premier on salmon farming and forestry that exposed the extent to which he's prepared to destroy local industries to remain in power. It's an appalling way to treat Tasmanians. It could have been different.
+
+The framework for collaboration that Dean Winter developed with feedback from the crossbench - I've seen some criticism that the document was released too late to make a difference. It was because there was genuine consultation across that two weeks, genuine consultation between parties back and forth. It represents a principles-based approach to working together. It seeks to establish an environment that supports stable government while preserving accountability, a diversity of views, and genuine debate on the Floor of the parliament, not secret deals behind closed doors. It seeks to find common ground, resource members of parliament to shape policy and outcomes and scrutinise government actions and, importantly, re-establish integrity and transparency as fundamental to the core of good governance.
+
+In contrast, what the crossbench is voting for today is a transactional parliament. Taking an 11-year-old government and a Premier on their word when clearly that has been demonstrated to mean nothing.
+
+Perhaps, and I'm hopeful of this parliament, perhaps the crossbench might like to pick up that document and help the government prioritise a new culture because I think that this Premier and this government are incapable of behaving any differently without the fear of losing power.
+
+Labor's framework for collaboration has some great principles and mechanisms to support collaboration and engagement and, importantly, to put in place the necessary supports to deliver budget repair, which will be the most important job in this parliament.
+
+We can't keep going on in denial like the current government has been. If anything the past 10 weeks have achieved, it is a reality check for those opposite, further education in the community around the challenges we face and that business as usual is no longer going to cut it.
+
+I reject the leader of the Greens' assessment of our fiscal statement in the campaign. It was a fiscal statement that demonstrated an openness to working together. It put forward a number of initiatives for budget repair. It was endorsed by business, unions, the community sector. It was described as fabulously courageous in an election campaign. Saul Eslake, a respected economist, said that at least one major party is taking budget repair seriously and he challenged the Liberal party to match it. I absolutely reject your assessment of that document.
+
+A pathway to surplus, just a few weeks ago, is what the former treasurer was saying. We've got the debt, it's manageable. It's not manageable. The debt is on a trajectory that is totally out of control and it will get worse every single year. That's less money for health, education and the things that matter to Tasmanians.
+
+We know that the budget that failed to pass the parliament was based on dodgy assumptions and creative accounting. The expenditure projections across the forward estimates could not be believed. I've got an example of that. The other former treasurer over there, he did exactly the same thing in his budget, and what did you have to do in that first year coming back from the election? They had to come to parliament and ask for half a billion dollars more money because they couldn't meet the targets in their budget because they weren't being honest.
+
+I have to commend the Treasury staff while I'm here, particularly, secretary Gary Swain, who is prepared to say the truth despite the political environment, and I commend him on the pre-election financial outlook where he told the truth. $13 billion is the projected debt that we are heading to and it increased from the budget the failed parliament because it was Treasury's actual honest truth without political interference from treasurers and other advisers.
+
+We cannot sustain that. It is heading for absolute disaster. And we now have the crossbench that are supporting Treasurer Abetz to try and undertake budget repair. This is a man who was responsible for WorkChoices and has a significant trust deficit with the population in managing finances and things that people care about.
+
+We also have a government that is off the back of this ferry fiasco, which has been an international embarrassment, and we're about to have Spirit IV arrive in the state, which will be great. It's something that we should all be celebrating. Forty per cent more capacity for our tourism industry, more economic growth, and it's been embarrassing that that fiasco has taken place. That we couldn't deliver the berth for our billion dollars' worth of two new ships. That's hurt confidence too in the economy.
+
+We've had businesspeople talk about that here in committees and other forums, but they weren't honest about that either. For six months, probably 12 months, leading into the election just gone, I was calling on them to be honest about TT-Line's finances. They wouldn't be honest about it. They covered up and then, after the election, I got a phone call in the caretaker period from the former treasurer saying, 'I've just approved the loan facility increase for TT-Line from $990 million to $1.4 billion.'
+
+Great timing - straight after the election. They didn't want that coming out in the election. He also said it was temporary in his release, which indicates to me that there may be required an equity injection from the Tasmanian budget. So, we're not seeing the sorts of transparency and integrity from this government that can be trusted for the crossbench to allow them to continue in government.
+
+The deputy leader of the Labor Party went through a whole list of broken promises. I'm not going to go through all of those, but I will touch on one more.
+
+You can bank that TasInsure, their signature policy in the election, is dead and buried and they will never deliver it. It was a cruel hoax to trick Tasmanians who are struggling with insurance premiums to vote for them, and they will be found out in this parliament because it is not deliverable on their financial projections.
+
+MAIB has to maintain a threshold for its own liability. It is not able to deliver another insurance company on their balance sheet. If there is a major event, it will impact our state budget. It is a serious risk to the budget and they will abandon it, because that's what this premier does. He talks a big game, he will say whatever he has to say to stay in power and then he throws things over the side, and we had that long list from the deputy leader before - all the broken promises of this government.
+
+I'm running out of time. To finish my contribution, I just want to highlight this for the crossbench, because there has been some misrepresentation of the Governor, I think, today and I'll refer to a statement. It was on 6 August. In it, Her Excellency said:
+
+I consider that the convention of incumbency which allows the parliament to have the final say in who should be the premier should apply in the present circumstances. This will be done promptly, as the Premier will face the parliament to decide who holds confidence when it is recalled on Tuesday, 19 August 2025.
+
+I've reappointed the Premier and I leave it to the House of Assembly to determine confidence.
+
+She's deferring that decision to today in the parliament to determine who holds confidence. Make no mistake, the Greens and other crossbenchers who vote with Premier Rockliff and the Liberal Party today are choosing the honourable Premier Rockliff to be the premier and are, therefore, giving him confidence. The members who vote with Premier Rockliff today are enabling his government to continue.
+
+When the government starts behaving like it always has, you will be stuck with them. There will be no trigger for an early election. You will be stuck with this government for four years because you enabled it. You will own the poor decisions, the backflips and the poor governance. Tasmania will be worse for it, and you will have to live with your decision.
+———————————————————
+Recognition of Visitors
+
+The SPEAKER - Before I call on the next speaker, I just want to acknowledge you today, the honourable Terry Aulich, a former member of this House, as well as senator.
+
+Members - Hear, hear. 
+———————————————————
+[4.47 p.m.]
+Mr Di FALCO (Lyons) - Honourable Speaker, I congratulate you for your election and also acknowledge the newly minted crossbench.
+
+I would like to deliver this speech with the same kind of boisterous enthusiasm that George did. Unfortunately, I can't because I'm not happy and many of the people in Lyons aren't happy. With that in mind, the people in Tasmania have had their say. They've sent us back to parliament with no clear winner. This means it's on all of us to make it work. My job is to make sure that we get four years of government, not four months of chaos.
+
+Right now, Tasmanians are the ones feeling the pain because the government is stuck in caretaker mode. Community grants are on hold. Local projects that should be moving ahead are gathering dust. Volunteers and community groups who depend on that support are left hanging. These aren't just numbers on a page. These are real people, real communities. They deserve better than political games.
+Now, don't get me wrong, stability doesn't mean keeping quiet. I will be on the government's back every single day for the next four years. I am not here to give the Premier a free ride. I am here to stand up for the people of Lyons and I am here to fight for the bush and the battlers.
+
+Let me be clear, I do not want radicals anywhere near power. We have already seen what happens when the extreme ideas take hold. People lose jobs, industries get smashed, communities are the ones left to pick up the pieces. I will never give them that kind of influence. I will fight hard against this ridiculous greyhound racing ban. I will stand with the salmon industry because thousands of Tasmanian families depend on these jobs. I will back our timber workers, because the bush has always built this state and always will.
+
+These aren't things I am willing to trade away and they are not up for negotiation with the bush or the battlers either. Here's the deal: for the next four years, I will keep a close eye on the government every single day. My loyalty isn't to them, it is to my community, to the bush and the bush won't forget when politicians play games at the expense of the people. Regional people already face a shorter life-expectancy and they should not be forced to suffer through poor access to healthcare.
+
+On that note, I want to acknowledge and thank the Premier for his commitment to me to deliver stronger regional healthcare. If this government or any party here keeps going after timber, salmon or greyhounds, mark my words, they will lose votes. The bush will not forget, and neither will I. That's why I am not backing this no-confidence motion. I want to hold the government to account, and I cannot do that if they are not here. Thank you.
+
+[4.50 p.m.]
+Mr GARLAND (Braddon) - Congratulations, Honourable Speaker and Deputy Speaker, and welcome to the newbies. 
+
+Three months ago, I stood in this place and supported the no confidence motion in the premier. I will not repeat what I said then, except to remind the House that it was the Premier's handling of the Macquarie Point Stadium, trying to ram it through the parliament and his mishandling of the Budget that led me to lose confidence in his leadership.
+
+So, today, I must ask what has changed? What have Jeremy Rockliff and the Liberals done to restore my confidence? On the stadium, the answer is nothing. The Premier is still pursuing his white whale or white elephant at any cost. I warned him not to try to ram this through the parliament and bypass the POSS process. On the budget, I remain deeply concerned. I have yet to hear this government even acknowledge the seriousness of Tasmania's fiscal position, let alone offer a credible repair plan.
+
+At this point, the budget matters panel is merely a gesture. It doesn't give me any confidence that the government is willing to embark on the serious reform needed. I have read PFO, I have been briefed by Treasury, and the situation is scary. Hard decisions are coming, they will be unpopular, and they will need crossbench support. If I am to support such decisions, I will need more honesty, more transparency, and far more responsible financial management from this government.
+
+Most of all, I will need access to expert advice, both from Treasury and from independent experts, and I think we all will. That is why we need a Parliamentary Budget Office. That is why I support the establishment of a joint standing committee on budget repair, supported by a panel of independent experts, an excellent Labor initiative which the government should adopt.
+
+The Premier's handling of Marinus Link was an unmitigated disaster. It was rushed, secretive, and emblematic of a government that has learned nothing, signing Tasmania up to a multi-million deal behind closed doors, without a mandate, without public scrutiny, and at great cost to Tasmanians. That is why I came out in response to that decision that I would support this motion of no confidence in the Premier.
+
+Since that low point, we have seen several positive announcements by the government on forestry, greyhound racing and salmon farming. These announcements were policy concessions in areas of real importance to me and my supporters. In the last parliament, I was frustrated by the Liberal party's refusal to engage in the urgent reform needed to protect our marine environment. The marine environment is the main reason why I'm here today. If you're aware of what's going on in South Australia, it is very scary, and if ever there was a precautionary principle to be applied, it is right now. I do not want to see what is happening in South Australia occur in our marine environment, and with proper regulation and proper management we can avoid that - and we must.
+
+In the last parliament I was frustrated by the Liberals' refusal to engage in the urgent reform needed to protect our marine environment. I might have already said that, so I welcome the Premier's announcement of a moratorium on salmon farm expansions and the commitment to a marine environment act.
+
+All through this process - trying to make government work, trying to work with the Labor Party, trying to get a government to go forward - I thought, 'What can I do that is not going to cost jobs, is not going to impact anybody and will give us much needed reform?' That's why we came up with that marine plan. There should be no job losses on any moratorium, only the halt on the expansion of this industry right now, and it's quite valid. I thought, 'Here is something that is reasonable and fair that everyone can agree on and go forward with'.
+
+It wasn't with excessive demands. I didn't come in and say, 'You do this' or 'Do that or you won't get my support.' I wanted to be reasonable and fair and give something that is concrete and workable and is to the benefit of everyone, so that's why we were working on that marine plan.
+
+These are promises, and I've heard plenty of promises from this Premier before. What creates instability, what leads to early elections, is when promises to crossbench are broken. If the Premier has now learnt that lesson, then this election will have been worthwhile.
+
+The marine environment act was a proposal I put to both Labor and the government as a way of strengthening the marine environment. I'm going over the same words, as it is something I care deeply about. I intend to work with the government to see it delivered. Short of removing salmon farms from the water altogether, a strong marine environment act is our best chance to avoid the kind of ecological disaster we are witnessing over in South Australia. 
+
+This act is not about shutting industries down. I care about the salmon jobs. I have friends that work there, and the mental anguish they're going through right now with this division - that was the other point with this marine act. It was an opportunity to bring the salmon industry into the same space as the community - put the submission out, let the community have their input and get rid of this divide.
+
+I'm sick of the division. Wherever you look in this state - the stadium, salmon farms, forestry, greyhound racing - it's not acceptable, and right now everyone is looking at this parliament for us to make it work. The Labor Party is not going to be an efficient opposition or offer an alternative to this government while they're not willing to work with the Greens and the crossbench. What I advise going forward, from this point on, is for us to take a more collaborative approach on every matter to get everyone's view for the best interests of everyone in this state, because that is the reality. You are not going to achieve government without us. That is the reality.
+
+The Liberal Party - you're in government; you've got the reins over the next four years. What I would like from you is to display the concerns that are relevant out in the community. Peter George, member for Franklin, got his vote, I doubled my primary vote, and there are others in here whose vote also went up on the environment. The environment is everything to Tasmanians. It's where we live, it's where we engage in our spare time, it's where we feed ourselves and it's where we go to get our sense of wonder. I, probably more than anybody in this room, have seen so much out in the bush and in the marine environment. It is gobsmacking. You wouldn't believe half the stories I tell you. 
+
+I know I'm a fisherman, but this is all about balance and it's all about compromise. There's been a lot of talk about compromise and collaboration over the last few weeks. With compromise and collaboration you get balance, and that's all anyone in this state wants. We want to be in the same space. 
+
+I look back to the 1970s, and there was so much diversity out there. There was a lot of disagreement on all and sundry, but that community met every Friday night in the pub. They were there together drinking and sharing a laugh. They had so much in in common and so much in opposition, but they still got on and when there was adversity, they worked together. You look back to the war effort, when we had a war cabinet. Everybody forgot their politics and converged together with a common goal. If we could do some semblance of that in this parliament going forward, a common goal for the best interests of everyone, not ramming through things that are going to benefit one and disregard the other. Everybody's view is important in this state right now. That's reflected by the people in this room. 
+
+For this environment act that we are bringing forward to be effective, it must include clear guiding principles. It must have an integrated approach across government. It must have an independent marine statutory authority. There must be improved scientific research and understanding. 
+
+The community does a lot of the science for us. Community science has greatly benefited us. In our fishing industry, on a $700 budget we got four reports done on four species, with some of them being used in stock assessments over the last few years. That's where the recreational and the commercial sectors come in:  using mature-age students in the university to get their degree. We benefited from that work they did. A classic example is the King George whiting fishery. That is a success story. We were proactive, doing the science, setting the bag limits, and now everyone's benefiting from that. That's the way we have to go.
+
+We need regional advisory councils. The advisory council I sat on, I was very disappointed. It took seven years to get the right mix of young and old, with knowledge, and then it was disbanded. The advice we put forward was never adopted, which is even more frustrating. I spent seven years of my time, all that input, just to be pushed aside, not listened to and not worked on. The end result of that was a fishery now that was shut for two months. The community has lost two months' access. We have a depleted stock. 
+
+It's no longer good enough to put your head in the sand. You have to listen to the advice that's given and, more importantly, act upon it.
+
+We need new marine protected areas. This is not about shutting industry down. We have areas with weedy seadragons, probably around Stanley, the most extensive weedy seadragon beds in the country, but there's no protection for them. We have penguins that are building up right along our coast. They were disappearing off the east coast. That's not the case on the north-west coast. We need protected areas for these penguins. That's a really easy thing to do and implement. I've been mentioning that since I've been here. 
+
+I want action on our marine environment.  I want to work closely with whoever is in government, in control of that, because the things that I'm pushing benefit everybody and the environment.
+
+Crucially, we must have a continued moratorium on salmon expansion. Right now, the division that's created here, the angst the workers are feeling, is because of that. We're not shutting the industry down. We just want to stall it for a little while, get it done right and regulated properly, and then move forward. There are benefits for everyone in that. 
+
+In other policy areas, there are significant differences between me and the Liberals, so I welcome the Foundations of Stability document as a sign of greater willingness to engage with the crossbench in policy development. If implemented in good faith, it signals a different way of working.
+
+Nevertheless, my grave concerns about the budget remain. I can't overstate how important it is that we address that budget. I was briefed by Treasury. They said, 'We can't pull one lever; we have to pull a number of levers'. We have to reduce spending on any large infrastructure project that is not absolutely essential. We have to look at dragging in revenue and tax from wherever we can. We cannot grow ourselves out of this - we're such a small state. We cannot grow economically out of this situation we are in right now. The message from Treasury is pretty dire, so we have to make some hard calls and do the work that needs to be done there.
+
+Until I see genuine action to repair the budget and real delivery on these policy commitments, on these promises, I cannot have confidence in a premier who over-promises and under-delivers. 
+
+The time is for delivery. We all have a lot of work to do, but if we all work together it will make it a lot easier for those who have that workload on their shoulders. 
+
+The second part of the motion calls on me to express confidence in Dean Winter and the Labor Party to govern our state. I want to start by saying that Tasmanian politics needs a strong Labor Party, and a strong Labor Party needs a courageous leader. A strong Labor Party represents the possibility for a fresh start for Tasmania, for the legislative reform and budget repair that is desperately needed.
+
+That is partly why in June I supported Mr Winter's no confidence motion. I naively expected after the moving of the no confidence motion, and after 11 years in opposition, he would courageously put his hand up to govern and lead his party out of the political wilderness. I was wrong. Dean acknowledged to me the other day that he should have gone that way. He chose to go to an election with his party's policies on the big issues - like the stadium, Marinus Link, salmon farming and no tax reform - identical to the Liberals. It did not end well for him.
+
+Since the election, my discussions with Mr Winter have been genuine and constructive. The framework for collaboration he produced to work with the crossbench was promising and the Liberals would do well to borrow heavily from it to improve their own framework for stability. Labor's approach to budget management is a far more realistic and promising response to the scale of the fiscal crisis we are in. However, they are still not prepared to walk away from the stadium or Marinus Link:  two of the most expensive and unnecessary projects in our history.
+
+Governing in minority requires more than just collaboration. Stability requires concessions and compromise to build trust. On that front Labor has failed. Mr Winter's unwillingness to make any concessions or compromises suggests he is more comfortable clinging to his values and principles in opposition than doing the hard work of compromise that governing in a minority parliament requires. Whether this is his own choice or the constraint of his caucus, the result is the same.
+
+At this point, Labor has not demonstrated either the desire or the capacity to form a stable government with this crossbench. I have seen today as Mr Winter has started attacking the Greens again, publicly labelling them the enemy, the whole pointless debate today seems to contrive to create division, to give ammunition to attack me and my crossbench colleagues. For those reasons I cannot support this motion.
+
+I will finish by extending this invitation to Labor, an invitation to show more of a willingness to work with the crossbench in this parliament on areas like integrity reform. We can make real progress together there now; we don't have to another four years. Use this term of parliament to demonstrate to the crossbench and to the people of Tasmania that you are ready to govern in minority and put history behind you. It's time to build bridges and not burn them.
+
+To the people of Tasmania, I want to assure you that through this parliament I will maintain my independence and consider each matter on its merits. I will work tirelessly to pursue the policies that I was elected on. I will work with all members to make this parliament work, including the government. I will work to form relationships and not rivalries.
+
+I will finish by adding that I was reading the Mercury the other day and they were talking about the Northern Territory and the ACT where they've had majority government for a long time and then it changed. The single biggest thing that made those governments progress was the major parties getting their head about the new space they were in, acknowledging that the wheels had fallen off and that there was a new way forward. As soon as they acknowledged that and got their head around it, things started to progress. Hopefully, we can all get our head around where we are as a collective and progress as one for the benefit of everyone in this state.
+Members - Hear, hear.
+
+[5.07 p.m.]
+Mr WINTER (Franklin - Leader of the Opposition) - Honourable Speaker, thank you for the contributions today from all members, those who agree with my position and those who don't. This is going to be challenging parliament - a very, very challenging parliament, to manage the desires of all parties here to try to find collaboration.
+
+As I said in my opening statement, there was quite a big divide between the crossbench and the way they saw collaboration working, and compromise and the way that I saw it working. As I also said in my initial speech, this parliament can't be a stable parliament if it's built on a ban on greyhound racing and a review on a moratorium on the salmon industry. It has to be about more than that. I fear that the establishment of another Liberal minority government in much the same fashion as the last one will not deliver the stability that some might think that it will.
+
+The entire point of today's sitting of parliament has been to test confidence in government. Sometimes Independents' existence depends on saying that both Labor and the Liberals are bad. Today they make a choice. They make a choice between a Liberal government that's been here for 11 years that has let Tasmanians down when it comes to health, housing, and cost of living, or the Labor Party. They can say here that they don't have confidence in either. But if they vote against this motion, they will be describing confidence in this Liberal government. That's how this works. You can't say you have confidence in no-one. I know that that's politically expedient, I know that suits you politically, but in the end, all of us have to make choices in this place about whether we stick to our values. 
+
+I've heard today perhaps that sticking to values and to what I believe in isn't a good idea. Well, I fundamentally disagree with that. If I don't stick to what I stood for, and to my words to the Tasmanian people, then what is the point? I wouldn't expect those that campaigned strongly against the salmon industry to all of a sudden rock up here and say that they were for it. I don't think that anyone should have expected me on Saturday night or Sunday to stand up and say 'me too' to the Premier when he decided to sell out those salmon workers. I looked at those salmon workers during the election campaign, eyeball-to-eyeball, and told them I would never, ever sell them out. 
+
+There's one political party here that did sell out: Premier Jeremy Rockliff, and so many others on the other side of this chamber that sold out their values to get to the position they're in today. People like the minister, Mr Abetz, had breakfast with those workers, and told them they wouldn't sell them out, that they wouldn't do deals to retain government, and yet they did sell out. You can call it a political game, but this is a political reality. If you're going to stand for anything, then you have to actually stand for it. When decisions get made, you need to make decisions in the best interest of your party.
+
+In the aftermath of the election, I heard Mr Abetz point out to Mr George that five out of seven members for Franklin backed the salmon industry. What a perverse outcome from this election that because of the horse-trading out of the election, Minister Abetz and Premier Rockliff sold out those workers to sit on those benches. They sold out all of those jobs, all of those workers, for their own jobs. What does that say about them?
+I've heard today that apparently it's virtuous to turn up and sell out the people to whom you made promises. It's not virtuous to do that. Compromise is okay, I understand, but capitulation is not. Breaking promises cannot be the norm. It doesn't instil confidence for Tasmanians. 
+
+Listening once again to the debate today, I was struck by the naivety of the statement that a moratorium on the salmon industry wouldn't have affected jobs or affected anything, and that it was all fine and it doesn’t matter. The reason that I couldn't do this despite the repeated asks   and I respect the asks from people   is because it destroys business confidence, not just for the salmon industry but for industries all over. 
+
+I've heard Mr. Willie's outstanding contribution about how other businesses are seriously questioning whether they can actually invest in this state. Its fine to say that a moratorium wouldn't matter, but its not true, its not reality. Business is watching this. They're watching the behaviour of this government, and they're asking what's next. One day it was forestry, then it was greyhounds, then it was salmon. Their question is: what's next? 
+
+If this is a parliament that's going to be built on horse-trading, capitulation, and letters that mean nothing, then what does that mean for our economy? At the end of the day, isn't that what must be our core issue for every parliamentarian   making sure that Tasmanians can afford to put a roof over their head, that they've got a job, and that we can afford schools and hospitals to keep them safe? If you want to do real damage to our budget, then you can wreck the economy with uncertainty and the naivety of the statement that a moratorium wouldn't have hurt jobs, or that it wouldn't have mattered. It does matter. Calling it a pause, as Mr George rightly said, is a moratorium. It is a broken promise, and it is a sell-out.
+
+On Saturday night I got word from some very distressed people within the salmon industry about the sell-out that was about to happen, and the impact it would have on their industry again. I thought about the workers over at Macquarie Harbour. I thought about Salty, I thought about Linton, I thought about all the guys that we'd been backing. I thought about what happened last week when the federal government finally closed the chapter on the Environment Protection and Biodiversity Conservation Act (EPBC) Review for workers over in Strahan. I thought about all those conversations I had with parents who were talking about not knowing where their kids were going to go to school the next year and the uncertainty that has been created by years and years and years of political litigation.
+
+They had three days of certainty before this Premier and the member for Braddon sold them out. I just don't know how he can do it. When I heard about this, I wondered how he could do it, how he could sell them out. Then today, listening to debate, I wondered how it could be presented as virtuous that you'd go to an election and tell people they had your 100 per cent support and then just do them over. How you could go to an industry that thought you had their back in racing for 20 years and then just let them down. You sold them out for your own job and put your job ahead of thousands of jobs. 
+
+What happens in this place has an impact. Collaboration is good - I understand - and we've tried to put that together, but capitulation and broken promises doesn't help anyone. It doesn't help people in this Chamber. It doesn't help people out there in the real world. They're wondering if they have a government that has their back. They're wondering if they've got a Premier who has the ticker to back them in.
+
+The SPEAKER (Mrs Petrusma) - The question is 
+
+That the motion be agreed to.
+
+	
+The House divided -
+	
+
+	
+AYES 10	
+NOES 24
+	
+	
+
+	
+		Dr Broad	
+		Mr Abetz
+	
+		Ms Brown	
+		Mrs Archer
+	
+		Ms Butler	
+		Ms Badger
+	
+		Ms Dow	
+		Mr Barnett
+	
+		Mrs Greene	
+		Mr Bayley
+	
+		Ms Finlay	
+		Ms Burnet
+	
+		Ms Haddad (Teller)	
+		Mr Di Falco
+	
+		Mr Mitchell	
+		Mr Ellis
+	
+		Mr Willie	
+		Mr Fairs (Teller)
+	
+		Mr Winter	
+		Mr Ferguson
+	
+			
+		Mr George
+	
+			
+		Mr Garland
+	
+			
+		Ms Howlett
+	
+			
+		Mr Jaensch
+	
+			
+		Ms Johnston
+	
+			
+		Mr O'Byrne
+	
+			
+		Ms Ogilvie
+	
+			
+		Mr Pearce
+	
+			
+		Mrs Petrusma
+	
+			
+		Prof Razay
+	
+			
+		Mr Rockliff
+	
+			
+		Ms Rosol
+	
+			
+		Mr Shelton
+	
+			
+		Mr Vermey
+	
+			
+		Dr Woodruff
+
+Motion negatived.
+
+
+ACTS ENUMERATION AMENDMENT BILL 2025 (pro forma) (No. 1)
+
+First Reading
+
+Bill presented by Mr Rockliff and read the first time.
+
+
+
+MOTION
+
+Leave to Move Motions Without Notice
+
+[5.24 p.m.]
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I seek leave to move certain motions without notice concerning the attendance in Question Time of members of the Legislative Council who are ministers of the Crown, and the sitting dates of the House.
+
+Leave granted.
+
+
+MOTION
+
+Attendance of Legislative Council Ministers at Question Time 
+
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I move -
+
+That, pursuant to the provisions of House of Assembly Standing Order 50, a message be transmitted to the Legislative Council requesting that the Legislative Council give leave for any member of the Legislative Council who is a minister of the Crown to attend the Assembly so as to respond specifically to questions without notice, seeking information of the kind covered by the Standing Orders of the Assembly.
+
+Motion agreed to.
+
+
+SITTING DATES
+
+[5.25 p.m.]
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I move -
+
+That the House, at its rising, adjourn until Tuesday 9 September next at 10.00 a.m.
+
+Motion agreed to.
+
+
+COMMISSIONS OF INQUIRY AMENDMENT (PRIVATE SESSIONS INFORMATION) BILL 2025 (No. 37)
+
+First Reading
+
+Bill presented by Mr Barnett and read the first time.
+
+
+JUSTICE AND RELATED LEGISLATION (MISCELLANEOUS AMENDMENTS) BILL 2025 (No. 38)
+
+JUSTICE AND RELATED LEGISLATION (MISCELLANEOUS AMENDMENTS) BILL (No. 2) 2025 (No. 39)
+
+First Reading
+
+Bills presented by Mr Barnett and read the first time.
+
+
+RESIDENTIAL TENANCY AMENDMENT (PETS) BILL 2025 (No. 40)
+
+First Reading
+
+Bill presented by Mr Barnett and read the first time.
+
+
+SENTENCING AMENDMENT (AGGRAVATING FACTORS) BILL 2025 (No. 41)
+
+First Reading
+
+Bill presented by Mr Barnett and read the first time.
+
+
+GOVERNMENT BUSINESS (SALE REFORMS) BILL 2025 (No. 42)
+
+First Reading
+
+Bill presented by Mr Abetz and read the first time.
+TAXATION AND RELATED LEGISLATION (FIRST HOME OWNER AND PAYROLL RELIEF) BILL 2025 (No. 43)
+
+First Reading
+
+Bill presented by Mr Abetz and read the first time.
+
+
+GOVERNMENT BUSINESS GOVERNANCE REFORMS BILL 2025 (No. 36)
+
+First Reading
+
+Bill presented by Mr Abetz and read the first time.
+
+
+CUSTODIAL INSPECTOR AMENDMENT (PROTECTION FROM REPRISAL) BILL 2025 (No. tbc)
+
+Bill presented by Ms Rosol and read the first time.
+
+
+ADJOURNMENT
+
+Mr ABETZ (Franklin - Leader of Government Business) - Honourable Speaker, I move what I trust will be a popular motion - 
+That the House does now adjourn.
+
+The House adjourned at 5.30 p.m.
+
+
+
+
+
+DRAFTUNCORRECTED PROOF
+
+
+
+
+
+
+
+
+
+	1	Tuesday 19 August 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]
