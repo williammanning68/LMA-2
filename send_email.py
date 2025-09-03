@@ -11,10 +11,10 @@ import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
 LOG_FILE = Path("sent.log")
 
 # --- Tunables ----------------------------------------------------------------
-MAX_SNIPPET_CHARS = 800   # upper bound after merging windows; keep readable but compact
+MAX_SNIPPET_CHARS = 800  # upper bound after merging windows; keep readable but compact
 WINDOW_PAD_SENTENCES = 1  # for non-first-sentence hits: one sentence either side
 FIRST_SENT_FOLLOWING = 2  # for first-sentence hits: include next two sentences
-MERGE_IF_GAP_GT = 2       # Only merge windows if the gap (in sentences) is > this value
+MERGE_IF_GAP_GT = 2  # Only merge windows if the gap (in sentences) is > this value
 
 # --- Helpers -----------------------------------------------------------------
 def load_keywords():
@@ -40,9 +40,9 @@ SPEAKER_HEADER_RE = re.compile(
     ^
     (?:
         (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
-        (?:[\s.]+(?P<name>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}))?
-      |
-        (?P<name_only>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})
+        (?:[\s.]+(?P<name>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}))?
+        |
+        (?P<name_only>[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})
     )
     (?:\s*\([^)]*\))?
     \s*(?::|[-–—]\s)
@@ -51,7 +51,7 @@ SPEAKER_HEADER_RE = re.compile(
 )
 CONTENT_COLON_RE = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
 TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
-UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s''—\-&,;:.()]+$")
 INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
 
 def _canonicalize(s: str) -> str:
@@ -69,7 +69,6 @@ def _canonicalize(s: str) -> str:
 def _build_utterances(text: str):
     all_lines = text.splitlines()
     utterances = []
-
     curr = {"speaker": None, "lines": [], "line_nums": []}
 
     def flush():
@@ -80,7 +79,6 @@ def _build_utterances(text: str):
             for i, ln in enumerate(curr["lines"]):
                 offs.append(total)
                 total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
-
             sents = []
             start = 0
             for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
@@ -90,7 +88,6 @@ def _build_utterances(text: str):
                 start = m.end()
             if start < len(joined):
                 sents.append((start, len(joined)))
-
             utterances.append({
                 "speaker": curr["speaker"],
                 "lines": curr["lines"][:],
@@ -104,7 +101,6 @@ def _build_utterances(text: str):
         s = raw.strip()
         if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
             continue
-
         m = SPEAKER_HEADER_RE.match(s)
         if m and not (m.group("name_only") and CONTENT_COLON_RE.match(s)):
             flush()
@@ -112,7 +108,6 @@ def _build_utterances(text: str):
             name = (m.group("name") or m.group("name_only") or "").strip()
             curr = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
             continue
-
         curr["lines"].append(raw.rstrip())
         curr["line_nums"].append(idx + 1)
 
@@ -204,7 +199,7 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
             pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
         else:
             pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
-        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+        out = pat.sub(lambda m: f"<b>{m.group(0)}</b>", out)
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -228,11 +223,11 @@ def _looks_suspicious(s: str | None) -> bool:
     s = s.strip()
     if re.match(
         r"(?i)^(Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam SPEAKER|The SPEAKER|The PRESIDENT|The CLERK|Deputy Speaker|Deputy President)"
-        r"(?:\s+[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})?$",
+        r"(?:\s+[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3})?$",
         s,
     ):
         return False
-    if re.match(r"^[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}$", s):
+    if re.match(r"^[A-Z][A-Z''\-]+(?:\s+[A-Z][A-Z''\-]+){0,3}$", s):
         return False
     return True
 
@@ -244,7 +239,6 @@ def _llm_qc_speaker(full_lines, hit_line_no, candidates, model=None, timeout=30)
     options = "\n".join(f"- {c}" for c in candidates[:50]) or "- UNKNOWN"
     prompt = f"""Choose the most likely speaker from the list (or 'UNKNOWN'):
 {options}
-
 Use the transcript context (previous lines first, then nearby):
 {context}
 """
@@ -263,38 +257,33 @@ def extract_matches(text: str, keywords):
     """
     use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
-
     utts, all_lines = _build_utterances(text)
     kw_pats = _compile_kw_patterns(keywords)
-
     results = []
     for utt in utts:
         speaker = utt["speaker"]
         if not utt["lines"]:
             continue
-
         hits = _collect_hits_in_utterance(utt, kw_pats)
         if not hits:
             continue
-
         wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
+        # Remove identical (start,end) windows to avoid duplicate excerpts
         wins = _dedup_windows(wins)
+        # Keep separate unless far apart; if far (>2), merge into a longer excerpt
         merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
-
         if use_llm and _looks_suspicious(speaker):
             candidates = sorted({u["speaker"] for u in utts if u["speaker"]})
             earliest_line = min(min(w[3]) for w in merged)
             guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=llm_timeout)
             if guess:
                 speaker = guess
-
         for win in merged:
             excerpt_html, line_list, kws_in_excerpt, win_start, win_end = _excerpt_from_window_html(utt, win, keywords)
             results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
-
     return results
 
-# --- Digest / email pipeline (HTML for Outlook on Windows) -------------------
+# --- Digest / email pipeline (HTML) ------------------------------------------
 def parse_date_from_filename(filename: str):
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
     if m:
@@ -313,185 +302,359 @@ def parse_chamber_from_filename(filename: str) -> str:
     return "Unknown"
 
 def build_digest_html(files, keywords):
-    """
-    Outlook-on-Windows-safe HTML (Word rendering engine):
-      - All layout via nested tables (no floats/flex)
-      - No CSS classes; all inline styles
-      - No border-radius reliance (Word ignores it)
-      - MSO-friendly spacing (mso-table-lspace/rspace, no margin on <p>)
-      - Matches the 'Hansard Monitor – BETA Version 18.3' layout:
-        Header with Program Run date, 'Detection Match by Chamber' table,
-        per-file sections with numbered match cards, and footer notice.
-    """
-    program_date = datetime.now().strftime("%d %B %Y")
-
+    """Build HTML specifically optimized for Outlook on Windows with MSO conditionals and VML."""
+    now_utc = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
-
-    sections_html = []
+    doc_sections = []
     total_matches = 0
 
-    # Build sections and accumulate counts
+    # Build doc sections and accumulate counts
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
         matches = extract_matches(text, keywords)
+        
+        if not matches:
+            # Still show the file title with "0 match(es)"
+            file_section = f'''
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td style="padding-bottom:20px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-left:4px solid #5C6F7F;">
+                            <tr>
+                                <td bgcolor="#F0F4F7" style="padding:12px;">
+                                    <font face="Arial, sans-serif" size="3" color="#2C3E50">
+                                        <b>{_html_escape(Path(f).name)}</b>
+                                    </font>
+                                    <br>
+                                    <font face="Arial, sans-serif" size="2" color="#7F8C8D">
+                                        0 match(es)
+                                    </font>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            '''
+            doc_sections.append(file_section)
+            continue
+
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # File header row
-        per_file = []
-        per_file.append(
-            "<tr><td style=\"padding:12px 0 6px 0;\">"
-            "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-            "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-            "<tr>"
-            f"<td style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">{_html_escape(Path(f).name)}</td>"
-            f"<td align=\"right\" style=\"font:12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">{len(matches)} match(es)</td>"
-            "</tr>"
-            "</table>"
-            "</td></tr>"
-        )
-
-        # Cards (numbered entries)
+        # Build file section with matches
+        match_rows = []
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
-
-            if line_list:
-                lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
-                line_label = "lines" if len(set(line_list)) > 1 else "line"
+            
+            # Format line numbers
+            if line_list and len(line_list) > 1:
+                lines_str = "lines " + ", ".join(str(n) for n in sorted(set(line_list)))
+            elif line_list:
+                lines_str = "line " + str(line_list[0])
             else:
-                lines_str = str(win_start)
-                line_label = "line"
-
+                lines_str = "line " + str(win_start)
+            
+            # Show Unknown if missing or looks suspicious
             speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
+            
+            match_rows.append(f'''
+            <tr>
+                <td style="padding-bottom:12px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td width="40" align="center" valign="top">
+                                <!--[if mso]>
+                                <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" 
+                                    style="height:40px;v-text-anchor:middle;width:40px;" arcsize="10%" stroke="f" fillcolor="#5C6F7F">
+                                    <w:anchorlock/>
+                                    <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">{i}</center>
+                                </v:roundrect>
+                                <![endif]-->
+                                <!--[if !mso]><!-->
+                                <table width="40" height="40" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td bgcolor="#5C6F7F" style="border-radius:4px;" align="center" valign="middle">
+                                            <font face="Arial, sans-serif" size="3" color="#FFFFFF">
+                                                <b>{i}</b>
+                                            </font>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--<![endif]-->
+                            </td>
+                            <td width="12">&nbsp;</td>
+                            <td valign="top" style="border:1px solid #D5DBDF;padding:12px;background-color:#FFFFFF;">
+                                <font face="Arial, sans-serif" size="3" color="#2C3E50">
+                                    <b>{_html_escape(speaker_display)}</b>
+                                </font>
+                                <font face="Arial, sans-serif" size="2" color="#7F8C8D">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;{lines_str}
+                                </font>
+                                <br><br>
+                                <font face="Arial, sans-serif" size="2" color="#34495E">
+                                    {excerpt_html}
+                                </font>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            ''')
 
-            per_file.append(
-                "<tr><td style=\"padding:0 0 8px 0;\">"
-                "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-                "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-                "<tr>"
-                # Number badge (square for Outlook reliability)
-                "<td width=\"36\" align=\"center\" valign=\"top\" "
-                "style=\"background:#E8ECF1;border:1px solid #D4D9E0;"
-                "font:bold 13px/32px Arial,Helvetica,sans-serif;color:#24313F;height:32px;\">"
-                f"{i}</td>"
-                # Content box
-                "<td style=\"width:10px;font-size:0;line-height:0;\">&nbsp;</td>"
-                "<td valign=\"top\" "
-                "style=\"background:#FFFFFF;border:1px solid #D4D9E0;padding:10px 12px;\">"
-                f"<div style=\"font:bold 13px/18px Arial,Helvetica,sans-serif;color:#24313F;\">{_html_escape(speaker_display)} "
-                f"<span style=\"font-weight:normal;color:#6A7682;\">— {line_label} {lines_str}</span></div>"
-                f"<div style=\"font:13px/20px Arial,Helvetica,sans-serif;color:#1F2A36;mso-line-height-rule:exactly;\">{excerpt_html}</div>"
-                "</td>"
-                "</tr>"
-                "</table>"
-                "</td></tr>"
-            )
+        file_section = f'''
+        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td style="padding-bottom:24px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-left:4px solid #5C6F7F;">
+                        <tr>
+                            <td bgcolor="#F0F4F7" style="padding:12px;">
+                                <font face="Arial, sans-serif" size="3" color="#2C3E50">
+                                    <b>{_html_escape(Path(f).name)}</b>
+                                </font>
+                                <br>
+                                <font face="Arial, sans-serif" size="2" color="#7F8C8D">
+                                    {len(matches)} match(es)
+                                </font>
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td style="padding-top:12px;padding-left:12px;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    {''.join(match_rows)}
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        '''
+        doc_sections.append(file_section)
 
-        # Divider
-        per_file.append(
-            "<tr><td style=\"padding:4px 0 0 0;\">"
-            "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-            "<tr><td style=\"border-bottom:1px solid #E0E5EB;height:1px;line-height:1px;font-size:0;\">&nbsp;</td></tr>"
-            "</table>"
-            "</td></tr>"
-        )
-
-        sections_html.append("".join(per_file))
-
-    # Summary (Detection Match by Chamber)
-    summary_rows = []
+    # Build summary table rows
+    table_rows = []
     for kw in keywords:
-        hoa = counts["House of Assembly"].get(kw, 0)
-        lc = counts["Legislative Council"].get(kw, 0)
-        tot = totals.get(kw, 0)
-        summary_rows.append(
-            "<tr>"
-            f"<td style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{_html_escape(kw)}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{hoa}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{lc}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{tot}</td>"
-            "</tr>"
-        )
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lc = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
+        table_rows.append(f'''
+        <tr>
+            <td style="padding:10px;border:1px solid #D5DBDF;background-color:#FFFFFF;">
+                <font face="Arial, sans-serif" size="2" color="#2C3E50">
+                    {_html_escape(kw)}
+                </font>
+            </td>
+            <td align="center" style="padding:10px;border:1px solid #D5DBDF;background-color:#FFFFFF;">
+                <font face="Arial, sans-serif" size="2" color="#2C3E50">
+                    <b>{hoa}</b>
+                </font>
+            </td>
+            <td align="center" style="padding:10px;border:1px solid #D5DBDF;background-color:#FFFFFF;">
+                <font face="Arial, sans-serif" size="2" color="#2C3E50">
+                    <b>{lc}</b>
+                </font>
+            </td>
+            <td align="center" style="padding:10px;border:1px solid #D5DBDF;background-color:#FFFFFF;">
+                <font face="Arial, sans-serif" size="2" color="#2C3E50">
+                    <b>{tot}</b>
+                </font>
+            </td>
+        </tr>
+        ''')
 
-    # --- Assemble strictly Outlook-friendly HTML (Word engine) ----------------
-    html = (
-        "<!DOCTYPE html>"
-        "<html xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">"
-        "<head>"
-        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-        "<meta name=\"x-apple-disable-message-reformatting\">"
-        "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"
-        "</head>"
-        "<body style=\"margin:0;padding:0;background:#F3F6F9;\">"
-
-        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-        "style=\"background:#F3F6F9;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-        "<tr><td align=\"center\" style=\"padding:20px 10px;\">"
-
-        # Constrained width wrapper (square edges for Outlook)
-        "<table role=\"presentation\" width=\"768\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-        "style=\"width:768px;max-width:768px;background:#FFFFFF;border:1px solid #D4D9E0;"
-        "mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-
-        # Header (dark band)
-        "<tr><td style=\"background:#24313F;color:#FFFFFF;padding:18px 20px;\">"
-        "<div style=\"font:bold 22px/26px Arial,Helvetica,sans-serif;\">Hansard Monitor – BETA Version 18.3</div>"
-        f"<div style=\"font:12px/16px Arial,Helvetica,sans-serif;margin-top:4px;\">Program Run: {program_date}</div>"
-        "</td></tr>"
-
-        # Detection Match by Chamber
-        "<tr><td style=\"padding:14px 20px 8px 20px;\">"
-        "<div style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">Detection Match by Chamber</div>"
-        "</td></tr>"
-        "<tr><td style=\"padding:0 20px 14px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-        "<tr>"
-        "<td style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Keyword</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">House of Assembly</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Legislative Council</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Total</td>"
-        "</tr>"
-        f"{''.join(summary_rows)}"
-        "</table>"
-        "</td></tr>"
-
-        # Per-file sections
-        "<tr><td style=\"padding:6px 20px 18px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-        f"{''.join(sections_html) if sections_html else '<tr><td style=\"font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">No new matches.</td></tr>'}"
-        "</table>"
-        "</td></tr>"
-
-        # Footer
-        "<tr><td style=\"padding:10px 20px 18px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-        "<tr><td style=\"text-align:center;font:bold 11px/16px Arial,Helvetica,sans-serif;color:#24313F;\">"
-        "**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**"
-        "</td></tr>"
-        "<tr><td style=\"text-align:center;font:11px/16px Arial,Helvetica,sans-serif;color:#6A7682;padding-top:4px;\">"
-        "Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au"
-        "</td></tr>"
-        "</table>"
-        "</td></tr>"
-
-        "</table>"  # wrapper
-        "</td></tr>"
-        "</table>"
-        "</body></html>"
-    )
-
+    # Assemble final HTML optimized for Outlook
+    html = f'''<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="x-apple-disable-message-reformatting">
+    <!--[if !mso]><!--><meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
+    <title>Hansard Monitor Report</title>
+    
+    <!--[if mso]>
+    <style type="text/css">
+        table {{font-family: Arial, sans-serif !important;}}
+        .outlook-font {{font-family: Arial, sans-serif !important;}}
+    </style>
+    <![endif]-->
+</head>
+<body style="margin:0;padding:0;word-spacing:normal;background-color:#ECF0F1;">
+    <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#ECF0F1;">
+        <table role="presentation" style="width:100%;border:none;border-spacing:0;">
+            <tr>
+                <td align="center" style="padding:0;">
+                    <!--[if mso]>
+                    <table role="presentation" align="center" style="width:700px;">
+                    <tr>
+                    <td>
+                    <![endif]-->
+                    <table role="presentation" style="width:94%;max-width:700px;border:none;border-spacing:0;text-align:left;font-family:Arial,sans-serif;font-size:14px;line-height:22px;color:#363636;">
+                        <!-- Header -->
+                        <tr>
+                            <td style="padding:20px 0;">
+                                <!--[if mso]>
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td>
+                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" 
+                                                style="v-text-anchor:middle;width:700px;height:100px;" arcsize="5%" stroke="f" fillcolor="#5C6F7F">
+                                                <w:anchorlock/>
+                                                <center style="color:#ffffff;font-family:Arial,sans-serif;">
+                                                    <div style="font-size:24px;font-weight:bold;padding-top:25px;">Hansard Monitor – BETA Version 18.3</div>
+                                                    <div style="font-size:14px;padding-top:8px;">Program Run: {now_utc}</div>
+                                                </center>
+                                            </v:roundrect>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <![endif]-->
+                                <!--[if !mso]><!-->
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td bgcolor="#5C6F7F" style="padding:30px;text-align:center;border-radius:8px 8px 0 0;">
+                                            <font face="Arial, sans-serif" size="5" color="#FFFFFF">
+                                                <b>Hansard Monitor – BETA Version 18.3</b>
+                                            </font>
+                                            <br>
+                                            <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                Program Run: {now_utc}
+                                            </font>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--<![endif]-->
+                            </td>
+                        </tr>
+                        
+                        <!-- Main Content Container -->
+                        <tr>
+                            <td style="padding:0;background-color:#FFFFFF;">
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td style="padding:24px;">
+                                            <!-- Detection Match by Chamber -->
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td style="padding-bottom:16px;">
+                                                        <font face="Arial, sans-serif" size="4" color="#2C3E50">
+                                                            <b>Detection Match by Chamber</b>
+                                                        </font>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                                                            <tr>
+                                                                <td style="padding:10px;border:1px solid #5C6F7F;background-color:#5C6F7F;">
+                                                                    <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                                        <b>Keyword</b>
+                                                                    </font>
+                                                                </td>
+                                                                <td align="center" style="padding:10px;border:1px solid #5C6F7F;background-color:#5C6F7F;">
+                                                                    <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                                        <b>House of Assembly</b>
+                                                                    </font>
+                                                                </td>
+                                                                <td align="center" style="padding:10px;border:1px solid #5C6F7F;background-color:#5C6F7F;">
+                                                                    <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                                        <b>Legislative Council</b>
+                                                                    </font>
+                                                                </td>
+                                                                <td align="center" style="padding:10px;border:1px solid #5C6F7F;background-color:#5C6F7F;">
+                                                                    <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                                        <b>Total</b>
+                                                                    </font>
+                                                                </td>
+                                                            </tr>
+                                                            {''.join(table_rows)}
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <!-- Spacer -->
+                                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                <tr>
+                                                    <td style="padding:24px 0;border-top:2px solid #D5DBDF;">&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <!-- Document Sections -->
+                                            {''.join(doc_sections)}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        
+                        <!-- Footer -->
+                        <tr>
+                            <td style="padding:0;">
+                                <!--[if mso]>
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td>
+                                            <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" 
+                                                style="v-text-anchor:middle;width:700px;height:80px;" arcsize="5%" stroke="f" fillcolor="#2C3E50">
+                                                <w:anchorlock/>
+                                                <center style="color:#ffffff;font-family:Arial,sans-serif;">
+                                                    <div style="font-size:14px;font-weight:bold;padding-top:20px;">**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**</div>
+                                                    <div style="font-size:12px;padding-top:8px;">Contact developer with any issues, queries, or suggestions:<br>William.Manning@FederalGroup.com.au</div>
+                                                </center>
+                                            </v:roundrect>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <![endif]-->
+                                <!--[if !mso]><!-->
+                                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                    <tr>
+                                        <td bgcolor="#2C3E50" style="padding:20px;text-align:center;border-radius:0 0 8px 8px;">
+                                            <font face="Arial, sans-serif" size="3" color="#FFFFFF">
+                                                <b>**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**</b>
+                                            </font>
+                                            <br><br>
+                                            <font face="Arial, sans-serif" size="2" color="#FFFFFF">
+                                                Contact developer with any issues, queries, or suggestions:<br>
+                                                William.Manning@FederalGroup.com.au
+                                            </font>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--<![endif]-->
+                            </td>
+                        </tr>
+                    </table>
+                    <!--[if mso]>
+                    </td>
+                    </tr>
+                    </table>
+                    <![endif]-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>'''
+    
     return html, total_matches, counts
 
 def load_sent_log():
@@ -510,16 +673,11 @@ def main():
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO = os.environ["EMAIL_TO"]
 
-    # Gmail defaults, overridable via env
+    # Keep Gmail defaults, allow override via env if needed
     SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
     SMTP_STARTTLS = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
     SMTP_SSL = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
-
-    # Optional: also write the HTML to disk so it can be opened in Outlook and saved as an .OFT template.
-    # Set SAVE_HTML_TEMPLATE=1 in the environment to enable.
-    SAVE_HTML = os.environ.get("SAVE_HTML_TEMPLATE", "").lower() in ("1", "true", "yes")
-    TEMPLATE_PATH = Path(os.environ.get("HTML_TEMPLATE_PATH", "Hansard_Monitor_Outlook.html"))
 
     keywords = load_keywords()
     if not keywords:
@@ -536,12 +694,8 @@ def main():
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
+    subject = f"Hansard Monitor Report — {datetime.now().strftime('%d %b %Y')}"
 
-    if SAVE_HTML:
-        TEMPLATE_PATH.write_text(body_html, encoding="utf-8")
-        print(f"Saved Outlook-safe HTML template to: {TEMPLATE_PATH.resolve()}  (Open in Outlook ➜ File ▸ Save As ▸ Outlook Template (*.oft))")
-
-    subject = f"Hansard Monitor – BETA Version 18.3 — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
     yag = yagmail.SMTP(
@@ -553,7 +707,8 @@ def main():
         smtp_ssl=SMTP_SSL,
     )
 
-    # Pass the HTML string directly (NOT a list), so yagmail doesn't inject <br> between lines.
+    # IMPORTANT: pass the HTML string directly (NOT a list), so yagmail
+    # doesn't inject <br> between lines (which can break Outlook conditionals).
     yag.send(
         to=to_list,
         subject=subject,
