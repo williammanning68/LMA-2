@@ -312,55 +312,54 @@ def parse_chamber_from_filename(filename: str) -> str:
         return "Legislative Council"
     return "Unknown"
 
+# DROP-IN REPLACEMENT: visuals-only dual-layer (universal + Outlook MSO/VML)
+# Keep the rest of the pipeline unchanged.
 def build_digest_html(files, keywords):
     """
-    Build HTML to exactly reflect the provided 'Hansard Monitor – BETA Version 18.3' layout:
-    - Dark banner title
-    - 'Program Run: [DATE]'
-    - 'Detection Match by Chamber' grid
-    - Per-file section with match count and numbered entries
-    - Footer note
+    Build HTML that matches the Hansard Monitor layout with a dual layer:
+      - Universal base (Gmail/Outlook Mac/Web) using tables + inline CSS only
+      - Outlook-for-Windows overrides (inside MSO conditionals) for pixel parity:
+        header line-height, accent rule, and rounded number chips via VML
+    Returns: (html_string, total_matches, counts_by_chamber)
     """
-    run_date = datetime.now().strftime("%d %B %Y")
+    run_date = datetime.now(UTC).strftime("%d %B %Y")
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals = {kw: 0 for kw in keywords}
     doc_sections = []
     total_matches = 0
 
-    # Build per-file sections and accumulate counts
+    # ---------- per-file sections ----------
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
         matches = extract_matches(text, keywords)
-
-        # Sort by earliest line
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # File header (filename + match count)
+        # File header bar (filename left, match count right)
         per_file_html = []
         per_file_html.append(
-            "<tr><td style=\"padding:14px 0 6px 0;\">"
-            "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-            "style=\"border-collapse:separate;\">"
+            "<tr><td style=\"padding:10px 0 6px 0;\">"
+            "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"border-collapse:separate;\">"
             "<tr>"
-            f"<td style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">{_html_escape(Path(f).name)}</td>"
-            f"<td align=\"right\" style=\"font:12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">{len(matches)} match(es)</td>"
+            f"<td style=\"padding:8px 12px;background:#EDEFF2;border-left:4px solid #CBB79A;"
+            f"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#25313F;\">{_html_escape(Path(f).name)}</td>"
+            f"<td align=\"right\" style=\"padding:8px 12px;background:#EDEFF2;font:12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">{len(matches)} match(es)</td>"
             "</tr>"
             "</table>"
             "</td></tr>"
         )
 
-        # When no matches, still show the file header but no cards
+        # Match "cards"
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
-            # Update counts by chamber
+            # update summary counts
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
-            # Lines
+            # lines display
             if line_list:
                 lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
                 line_label = "lines" if len(set(line_list)) > 1 else "line"
@@ -368,26 +367,45 @@ def build_digest_html(files, keywords):
                 lines_str = str(win_start)
                 line_label = "line"
 
-            # Speaker
+            # speaker display
             speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
 
-            # Card row
+            # number chip (dual layer)
+            vml_chip = (
+                "<!--[if mso]>"
+                "<v:roundrect xmlns:v=\"urn:schemas-microsoft-com:vml\" arcsize=\"12%\" fillcolor=\"#E8ECF1\" strokecolor=\"#D4D9E0\" strokeweight=\"1px\" "
+                "style=\"height:32px;width:34px;v-text-anchor:middle;\">"
+                "<v:textbox inset=\"0,0,0,0\">"
+                f"<div style=\"font:bold 13px/32px Arial, Helvetica, sans-serif; color:#24313F; text-align:center;\">{i}</div>"
+                "</v:textbox>"
+                "</v:roundrect>"
+                "<![endif]-->"
+            )
+            css_chip = (
+                "<!--[if !mso]><!-->"
+                "<table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"border-collapse:collapse;\">"
+                "<tr>"
+                "<td align=\"center\" style=\"background:#E8ECF1;border:1px solid #D4D9E0;border-right:none;"
+                "border-radius:6px 0 0 6px;font:bold 13px/32px Arial,Helvetica,sans-serif;color:#24313F;"
+                "height:32px;width:34px;\">"
+                f"{i}</td>"
+                "</tr></table>"
+                "<!--<![endif]-->"
+            )
+
             per_file_html.append(
                 "<tr><td style=\"padding:0 0 10px 0;\">"
-                "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-                "style=\"border-collapse:separate;\">"
+                "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"border-collapse:separate;\">"
                 "<tr>"
-                "<td width=\"34\" align=\"center\" valign=\"top\" "
-                "style=\"background:#E8ECF1;border:1px solid #D4D9E0;border-right:none;border-radius:6px 0 0 6px;"
-                "font:bold 13px/32px Arial,Helvetica,sans-serif;color:#24313F;height:32px;\">"
-                f"{i}</td>"
-                "<td valign=\"top\" "
-                "style=\"background:#FFFFFF;border:1px solid #D4D9E0;border-left:none;border-radius:0 6px 6px 0;"
-                "padding:10px 12px;\">"
-                f"<div style=\"font:bold 13px/18px Arial,Helvetica,sans-serif;color:#24313F;margin:0 0 4px 0;\">"
-                f"{_html_escape(speaker_display)} "
-                f"<span style=\"font-weight:normal;color:#6A7682;\">{line_label} {lines_str}</span>"
-                f"</div>"
+                # left chip cell (contains VML for Outlook, CSS for others)
+                "<td width=\"42\" valign=\"top\" style=\"width:42px;\">"
+                f"{vml_chip}{css_chip}"
+                "</td>"
+                # right content cell
+                "<td valign=\"top\" style=\"background:#FFFFFF;border:1px solid #D4D9E0;border-left:none;"
+                "border-radius:0 6px 6px 0;padding:10px 12px;\">"
+                f"<div style=\"font:bold 13px/18px Arial,Helvetica,sans-serif;color:#24313F;margin:0 0 4px 0;\">{_html_escape(speaker_display)} "
+                f"<span style=\"font-weight:normal;color:#6A7682;\">{line_label} {lines_str}</span></div>"
                 f"<div style=\"font:13px/20px Arial,Helvetica,sans-serif;color:#1F2A36;\">{excerpt_html}</div>"
                 "</td>"
                 "</tr>"
@@ -395,7 +413,7 @@ def build_digest_html(files, keywords):
                 "</td></tr>"
             )
 
-        # Divider after each file section
+        # section divider
         per_file_html.append(
             "<tr><td style=\"padding:6px 0 0 0;\">"
             "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">"
@@ -406,86 +424,109 @@ def build_digest_html(files, keywords):
 
         doc_sections.append("".join(per_file_html))
 
-    # Build summary rows
-    summary_rows = []
+    # ---------- summary table ----------
+    summary_rows_html = []
     for kw in keywords:
         hoa = counts["House of Assembly"].get(kw, 0)
         lc = counts["Legislative Council"].get(kw, 0)
         tot = totals.get(kw, 0)
-        summary_rows.append(
+        summary_rows_html.append(
             "<tr>"
-            f"<td style=\"padding:8px 10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{_html_escape(kw)}</td>"
-            f"<td align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{hoa}</td>"
-            f"<td align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{lc}</td>"
-            f"<td align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{tot}</td>"
+            f"<td style=\"padding:10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{_html_escape(kw)}</td>"
+            f"<td align=\"center\" style=\"padding:10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{hoa}</td>"
+            f"<td align=\"center\" style=\"padding:10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{lc}</td>"
+            f"<td align=\"center\" style=\"padding:10px;border:1px solid #D4D9E0;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{tot}</td>"
             "</tr>"
         )
 
-    # Assemble HTML based on the provided layout
+    # ---------- dual-layer header + accent ----------
+    header_html = (
+        "<tr><td align=\"center\" style=\"background:#475560;padding:28px 24px;\">"
+        "<!--[if mso]>"
+        "<div style=\"font:bold 28px/32px Arial,Helvetica,sans-serif;color:#FFFFFF;\">Hansard Monitor – BETA Version 18.3</div>"
+        f"<div style=\"font:14px/18px Arial,Helvetica,sans-serif;color:#DDE3E7;margin-top:6px;\">Program Run: {run_date}</div>"
+        "<![endif]-->"
+        "<!--[if !mso]><!-->"
+        "<div style=\"font:bold 32px/36px Arial,Helvetica,sans-serif;color:#FFFFFF;\">Hansard Monitor – BETA Version 18.3</div>"
+        f"<div style=\"font:14px/20px Arial,Helvetica,sans-serif;color:#DDE3E7;margin-top:6px;\">Program Run: {run_date}</div>"
+        "<!--<![endif]-->"
+        "</td></tr>"
+    )
+
+    accent_rule = (
+        "<!--[if mso]>"
+        "<tr><td style=\"padding:0 24px;\">"
+        "<v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\" fillcolor=\"#D1BFA6\" stroked=\"f\" style=\"height:2px;width:752px;\"></v:rect>"
+        "</td></tr>"
+        "<![endif]-->"
+        "<!--[if !mso]><!-->"
+        "<tr><td style=\"padding:0 24px;\"><div style=\"border-bottom:2px solid #D1BFA6;\"></div></td></tr>"
+        "<!--<![endif]-->"
+    )
+
+    # ---------- assemble full HTML ----------
     html = (
         "<!DOCTYPE html><html><head>"
         "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
         "<meta name=\"x-apple-disable-message-reformatting\">"
+        "<meta name=\"color-scheme\" content=\"light dark\"><meta name=\"supported-color-schemes\" content=\"light dark\">"
         "</head>"
-        "<body style=\"margin:0;padding:0;background:#F3F6F9;\">"
-        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"background:#F3F6F9;\">"
-        "<tr><td align=\"center\" style=\"padding:20px 10px;\">"
+        "<body style=\"margin:0;padding:0;background:#ECEFF1;\">"
+        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"background:#ECEFF1;\">"
+        "<tr><td align=\"center\" style=\"padding:12px;\">"
 
         "<table role=\"presentation\" width=\"800\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-        "style=\"width:800px;max-width:800px;background:#FFFFFF;border:1px solid #D4D9E0;\">"
+        "style=\"width:800px;max-width:800px;border-collapse:separate;\">"
 
-        # Header bar
-        "<tr><td style=\"background:#24313F;color:#FFFFFF;padding:20px 24px;\">"
-        "<div style=\"font:bold 24px/28px Arial,Helvetica,sans-serif;\">Hansard Monitor – BETA Version 18.3</div>"
-        f"<div style=\"font:12px/16px Arial,Helvetica,sans-serif;margin-top:4px;opacity:.9;\">Program Run: {run_date}</div>"
-        "</td></tr>"
+        f"{header_html}"
 
-        # Summary: Detection Match by Chamber
-        "<tr><td style=\"padding:18px 24px 8px 24px;\">"
-        "<div style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">Detection Match by Chamber</div>"
+        # Outer light panel + inner white card
+        "<tr><td style=\"padding:12px;background:#E9EDF0;\">"
+        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"background:#FFFFFF;border-collapse:separate;\">"
+
+        # Detection heading + accent
+        "<tr><td align=\"center\" style=\"padding:14px 24px 10px 24px;\">"
+        "<div style=\"font:bold 16px/22px Arial,Helvetica,sans-serif;color:#6A7680;\">Detection Match by Chamber</div>"
         "</td></tr>"
-        "<tr><td style=\"padding:0 24px 10px 24px;\">"
+        f"{accent_rule}"
+
+        # Summary grid: dark header row like the screenshot
+        "<tr><td style=\"padding:8px 24px 16px 24px;\">"
         "<table role=\"presentation\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" width=\"100%\" style=\"border-collapse:collapse;\">"
         "<tr>"
-        "<th align=\"left\" style=\"padding:8px 10px;border:1px solid #D4D9E0;background:#F6F8FA;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Keyword</th>"
-        "<th align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;background:#F6F8FA;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">House of Assembly</th>"
-        "<th align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;background:#F6F8FA;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Legislative Council</th>"
-        "<th align=\"center\" style=\"padding:8px 10px;border:1px solid #D4D9E0;background:#F6F8FA;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Total</th>"
+        "<th align=\"left\" style=\"padding:12px;border:1px solid #596873;background:#596873;font:bold 13px/18px Arial,Helvetica,sans-serif;color:#FFFFFF;\">Keyword</th>"
+        "<th align=\"center\" style=\"padding:12px;border:1px solid #596873;background:#596873;font:bold 13px/18px Arial,Helvetica,sans-serif;color:#FFFFFF;\">House of Assembly</th>"
+        "<th align=\"center\" style=\"padding:12px;border:1px solid #596873;background:#596873;font:bold 13px/18px Arial,Helvetica,sans-serif;color:#FFFFFF;\">Legislative Council</th>"
+        "<th align=\"center\" style=\"padding:12px;border:1px solid #596873;background:#596873;font:bold 13px/18px Arial,Helvetica,sans-serif;color:#FFFFFF;\">Total</th>"
         "</tr>"
-        f"{''.join(summary_rows)}"
+        f"{''.join(summary_rows_html)}"
         "</table>"
         "</td></tr>"
 
-        # Per-file sections
-        "<tr><td style=\"padding:12px 24px 18px 24px;\">"
+        # File sections (cards)
+        "<tr><td style=\"padding:0 24px 16px 24px;\">"
         "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">"
         f"{''.join(doc_sections) if doc_sections else '<tr><td style=\"font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">No matches in new transcripts.</td></tr>'}"
         "</table>"
         "</td></tr>"
 
-        # Footer disclaimer
-        "<tr><td style=\"padding:12px 24px 20px 24px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\">"
-        "<tr><td style=\"text-align:center;font:bold 11px/16px Arial,Helvetica,sans-serif;color:#24313F;opacity:.85;\">"
-        "**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**"
-        "</td></tr>"
-        "<tr><td style=\"text-align:center;font:11px/16px Arial,Helvetica,sans-serif;color:#6A7682;padding-top:4px;\">"
-        "Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au"
-        "</td></tr>"
-        "</table>"
+        "</table>"  # inner white card
         "</td></tr>"
 
-        "</table>"  # outer content table
+        # Footer bar
+        "<tr><td align=\"center\" style=\"background:#2D3943;padding:20px 16px;\">"
+        "<div style=\"font:bold 12px/18px Arial,Helvetica,sans-serif;color:#FFFFFF;\">**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**</div>"
+        "<div style=\"font:12px/18px Arial,Helvetica,sans-serif;color:#D0D6DB;margin-top:4px;\">Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au</div>"
+        "</td></tr>"
+
+        "</table>"  # outer 800px table
         "</td></tr>"
         "</table>"
         "</body></html>"
     )
 
     return html, total_matches, counts
+
 
 def load_sent_log():
     if LOG_FILE.exists():
