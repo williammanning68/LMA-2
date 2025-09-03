@@ -17,11 +17,10 @@ FIRST_SENT_FOLLOWING = 2  # for first-sentence hits: include next two sentences
 MERGE_IF_GAP_GT = 2       # Only merge windows if the gap (in sentences) is > this value
 
 # --- Template inputs ---------------------------------------------------------
-# Point to your uploaded Outlook/Word HTML template
-TEMPLATE_HTML_PATH = Path(os.environ.get(
-    "TEMPLATE_HTML_PATH",
-    "Hansard Monitor - Email Format - Version 3.htm"
-))
+# Point to the bundled Outlook/Word HTML template (can be overridden via env)
+TEMPLATE_HTML_PATH = Path(
+    os.environ.get("TEMPLATE_HTML_PATH", "email_template.html")
+)
 DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
 
 # --- Helpers -----------------------------------------------------------------
