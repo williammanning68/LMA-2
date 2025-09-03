@@ -144,6 +144,21 @@ def _compile_kw_patterns(keywords):
             pats.append((kw, re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)))
     return pats
 
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
+        # Outlook-friendly highlight (matches the template)
+        out = pat.sub(lambda m: "<b><span style='background:lightgrey;mso-highlight:lightgrey'>"
+                                 + m.group(0) + "</span></b>", out)
+    return out
+
 def _collect_hits_in_utterance(utt, kw_pats):
     hits = []
     joined = utt["joined"]
@@ -174,7 +189,6 @@ def _windows_for_hits(hits, sent_count):
     return wins
 
 def _dedup_windows(wins):
-    """Collapse windows with identical (start,end); union keywords and line numbers."""
     if not wins:
         return []
     bucket = {}
@@ -200,27 +214,6 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
         else:
             merged.append([s, e, kws, lines])
     return merged
-
-def _html_escape(s: str) -> str:
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
-    out = text_html
-    for kw in sorted(keywords, key=len, reverse=True):
-        if " " in kw:
-            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
-        else:
-            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
-        # Highlight with the same markup used in the Outlook template
-        out = pat.sub(
-            lambda m: (
-                "<b><span style='background:lightgrey;mso-highlight:lightgrey'>"
-                + m.group(0)
-                + "</span></b>"
-            ),
-            out,
-        )
-    return out
 
 def _excerpt_from_window_html(utt, win, keywords):
     sents = utt["sents"]
@@ -307,6 +300,22 @@ def extract_matches(text: str, keywords):
 
     return results
 
+# --- Outlook whitespace tighter ----------------------------------------------
+_EMPTY_MSOP_RE = re.compile(
+    r"<p[^>]*>\s*(?:&nbsp;|<o:p>\s*&nbsp;\s*</o:p>|<br[^>]*>|\s)*</p>",
+    flags=re.I,
+)
+def _tighten_outlook_whitespace(html: str) -> str:
+    # 1) Remove empty Word/Outlook paragraphs like <p class=MsoNormal>&nbsp;</p>
+    html = _EMPTY_MSOP_RE.sub("", html)
+    # 2) Collapse runs of <br> into a single nothing (we provide spacing via padding)
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "", html, flags=re.I)
+    # 3) Remove whitespace between adjacent tables (common around our sections)
+    html = re.sub(r"</table>\s+(?=<table\b)", "</table>", html, flags=re.I)
+    # 4) Remove blank space just inside table cells
+    html = re.sub(r">(?:\s|&nbsp;|<br[^>]*>)+</td>", "></td>", html, flags=re.I)
+    return html
+
 # --- Digest / visual assembly (injecting into your HTML) ---------------------
 def parse_date_from_filename(filename: str):
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
@@ -325,31 +334,15 @@ def parse_chamber_from_filename(filename: str) -> str:
         return "Legislative Council"
     return "Unknown"
 
-
-def load_sent_log() -> set[str]:
-    """Return a set of transcript filenames that have already been sent."""
-    if LOG_FILE.exists():
-        with open(LOG_FILE, encoding="utf-8") as f:
-            return {ln.strip() for ln in f if ln.strip()}
-    return set()
-
-
-def update_sent_log(files: list[str]):
-    """Append the given transcript filenames to the sent log."""
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        for fp in files:
-            f.write(Path(fp).name + "\n")
-
-
+# Summary table row (make <p> margins zero to avoid Outlook padding)
 SUMMARY_ROW_TMPL = """
 <tr>
- <td width="28%" style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{kw}</span></b></p></td>
- <td width="28%" style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{ha}</span></b></p></td>
- <td width="28%" style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{lc}</span></b></p></td>
- <td width="15%" style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{total}</span></b></p></td>
+ <td width="28%" style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal style='margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{kw}</span></b></p></td>
+ <td width="28%" style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{ha}</span></b></p></td>
+ <td width="28%" style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{lc}</span></b></p></td>
+ <td width="15%" style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{total}</span></b></p></td>
 </tr>
 """
-
 
 def _build_file_section_html(filename: str, matches):
     """Return HTML for a single transcript section."""
@@ -363,30 +356,31 @@ def _build_file_section_html(filename: str, matches):
         rows.append(
             f"""
 <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;border:solid #D8DCE0 1.0pt;mso-border-alt:solid #D8DCE0 .75pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm">
- <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+ <tr>
   <td style='border:none;border-bottom:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #D8DCE0 .75pt;background:#ECF0F1;padding:7.5pt 9.0pt 7.5pt 9.0pt'>
    <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
-    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;height:24.0pt'>
-     <td width=32 style='width:24.0pt;background:#4A5A6A;padding:0cm 0cm 0cm 0cm;height:24.0pt'>
-      <p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:white'>{idx}</span></b></p>
+    <tr style='height:24.0pt'>
+     <td width=32 style='width:24.0pt;background:#4A5A6A;height:24.0pt;border:0;mso-border-alt:none;'>
+      <p class=MsoNormal align=center style='text-align:center;margin:0;line-height:24px;mso-line-height-rule:exactly;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:white'>{idx}</span></b></p>
      </td>
      <td width=426 style='width:319.4pt;padding:0cm 0cm 0cm 9.0pt;height:24.0pt'>
-      <p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{_html_escape(speaker)}</span></b></p>
+      <p class=MsoNormal style='margin:0;line-height:16px;mso-line-height-rule:exactly;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;text-transform:uppercase;'>{_html_escape(speaker) if speaker else "UNKNOWN"}</span></b></p>
      </td>
      <td width=358 style='width:268.6pt;padding:0cm 0cm 0cm 0cm;height:24.0pt'>
-      <p class=MsoNormal align=right style='text-align:right'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{line_txt}</span></p>
+      <p class=MsoNormal align=right style='text-align:right;margin:0;line-height:16px;mso-line-height-rule:exactly;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{line_txt}</span></p>
      </td>
     </tr>
    </table>
   </td>
  </tr>
- <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+ <tr>
   <td style='border:none;padding:10.5pt 12.0pt 10.5pt 12.0pt'>
-   <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{excerpt_html}</span></p>
+   <p class=MsoNormal style='margin:0;line-height:20px;mso-line-height-rule:exactly;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{excerpt_html}</span></p>
   </td>
  </tr>
 </table>
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'><o:p>&nbsp;</o:p></span></p>
+<!-- tight spacer between cards -->
+<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td style='height:6px;line-height:6px;font-size:0;'>&nbsp;</td></tr></table>
 """
         )
     section_html = (
@@ -394,8 +388,8 @@ def _build_file_section_html(filename: str, matches):
 <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
  <tr>
   <td style='border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;padding:9.0pt 10.5pt 9.0pt 10.5pt'>
-   <p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{filename}</span></b></p>
-   <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{len(matches)} match(es)</span></p>
+   <p class=MsoNormal style='margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{filename}</span></b></p>
+   <p class=MsoNormal style='margin:0;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{len(matches)} match(es)</span></p>
   </td>
  </tr>
  <tr>
@@ -408,19 +402,33 @@ def _build_file_section_html(filename: str, matches):
     )
     return section_html
 
-
 def build_digest_html(files: list[str], keywords: list[str]):
     """Assemble the full email HTML body using the Word/Outlook template."""
-    template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8")
+    # Read as Windows-1252 to match the template meta and avoid mojibake for special chars
+    template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
     run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
+
+    # Make sure the section title uses Segoe UI even if the template was missing it
+    template_html = template_html.replace(
+        "<span style=\"font-size:12.0pt;color:black\">Detection Match by Chamber</span>",
+        "<span style=\"font-size:12.0pt;font-family:'Segoe UI',sans-serif;color:black\">Detection Match by Chamber</span>",
+    )
 
     counts = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
     sections = []
     total_hits = 0
 
+    def parse_chamber_from_filename(filename: str) -> str:
+        name = filename.lower()
+        if "house_of_assembly" in name:
+            return "House of Assembly"
+        if "legislative_council" in name:
+            return "Legislative Council"
+        return "Unknown"
+
     for f in files:
-        text = Path(f).read_text(encoding="utf-8")
+        text = Path(f).read_text(encoding="utf-8", errors="ignore")
         matches = extract_matches(text, keywords)
         if not matches:
             continue
@@ -445,7 +453,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
         r"<tr>\s*<td[^>]*>\s*<p[^>]*><b><span[^>]*>pokies</span>.*?</tr>",
         summary_html,
         template_html,
-        flags=re.DOTALL,
+        flags=re.DOTALL | re.IGNORECASE,
     )
 
     # Replace the sample section block
@@ -454,12 +462,25 @@ def build_digest_html(files: list[str], keywords: list[str]):
         r"<!-- Sample section to be replaced -->.*<!-- End sample section -->",
         sections_html,
         template_html,
-        flags=re.DOTALL,
+        flags=re.DOTALL | re.IGNORECASE,
     )
+
+    # Tighten Outlook/Word whitespace before returning/sending
+    template_html = _tighten_outlook_whitespace(template_html)
 
     return template_html, total_hits, counts
 
+# --- Sent log helpers --------------------------------------------------------
+def load_sent_log() -> set[str]:
+    if LOG_FILE.exists():
+        with open(LOG_FILE, encoding="utf-8") as f:
+            return {ln.strip() for ln in f if ln.strip()}
+    return set()
 
+def update_sent_log(files: list[str]):
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        for fp in files:
+            f.write(Path(fp).name + "\n")
 
 # --- Main --------------------------------------------------------------------
 def main():
