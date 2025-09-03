@@ -332,12 +332,10 @@ def parse_chamber_from_filename(filename: str) -> str:
 
 def build_digest_html(files, keywords):
     """
-    Build an Outlook-safe HTML email that matches the provided 'Hansard Monitor – BETA Version 18.3'
-    visual layout exactly (title, program run date, 'Detection Match by Chamber' summary table,
-    followed by per-file match cards). Only visual structure is changed; keyword extraction remains
-    identical to the original logic.
+    Build HTML using the uploaded 'Hansard Monitor - Email Format - Version 3.htm'
+    layout. Only the *visual format* changes; keyword matching/extraction stays intact.
     """
-    # Timestamps
+    # Header date/time
     program_run_date = datetime.now().strftime("%A, %d %B %Y")
     program_run_time = datetime.now(UTC).strftime("%H:%M UTC")
 
@@ -346,83 +344,68 @@ def build_digest_html(files, keywords):
     counts   = {ch: {kw: 0 for kw in keywords} for ch in chambers}
     totals   = {kw: 0 for kw in keywords}
 
-    # Build per-file sections & accumulate counts
-    doc_sections = []
+    # Per-file sections & accumulation
+    sections = []
     total_matches = 0
 
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text    = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
         matches = extract_matches(text, keywords)
-
-        # Sort by first line number for stable ordering
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # Section header (file name + match count)
-        per_file = []
-        per_file.append(
-            "<tr>"
-            "<td style='padding:12px 16px 0 16px;'>"
-            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-            "<tr>"
-            f"<td align='left' style='font:600 16px/20px Arial,Helvetica,sans-serif;color:#000000;'>{_html_escape(Path(f).name)}</td>"
-            f"</tr>"
-            "<tr>"
-            f"<td align='left' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;padding-top:4px;'>{len(matches)} match(es)</td>"
-            "</tr>"
+        # File header (matches count)
+        sec = []
+        sec.append(
+            "<tr><td style='padding:9pt 12pt 0 12pt'>"
+            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+            f"<tr><td style='font:600 12pt/16pt \"Segoe UI\", Aptos, Arial, sans-serif;color:#000'>{_html_escape(Path(f).name)}</td></tr>"
+            f"<tr><td style='font:10pt/14pt \"Segoe UI\", Aptos, Arial, sans-serif;color:#6b7280;padding-top:3pt'>{len(matches)} match(es)</td></tr>"
             "</table>"
-            "</td>"
-            "</tr>"
+            "</td></tr>"
         )
 
-        # Cards for each match
+        # Cards
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
-            # aggregate counts
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
-            # speaker / lines text
             first_line = min(line_list) if line_list else win_start
             line_label = "line" if len(line_list) <= 1 else "lines"
-            if line_list:
-                lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
-            else:
-                lines_str = str(first_line)
+            lines_str  = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
+            speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
 
-            speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Mr/Ms UNKNOWN"
-
-            per_file.append(
-                "<tr><td style='padding:8px 16px;'>"
-                "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:separate;'>"
+            sec.append(
+                "<tr><td style='padding:6pt 12pt'>"
+                "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
                 "<tr>"
-                    # Number badge
-                    "<td width='44' align='center' valign='top' style='background:#dbeafe;border:1px solid #93c5fd;"
-                    "border-radius:6px;width:44px;height:44px;font:700 14px/44px Arial,Helvetica,sans-serif;color:#1e3a8a;'>"
-                    f"{i}</td>"
-                    "<td style='width:12px'>&nbsp;</td>"
-                    # Card content
-                    "<td valign='top' style='background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;padding:12px;'>"
-                        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-                        "<tr>"
-                            f"<td align='left' style='font:700 14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{_html_escape(speaker_display)}</td>"
-                            f"<td align='right' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>{line_label} {lines_str}</td>"
-                        "</tr>"
-                        "<tr><td colspan='2' height='6' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
-                        f"<tr><td colspan='2' style='font:14px/22px Arial,Helvetica,sans-serif;color:#111827'>{excerpt_html}</td></tr>"
-                        "</table>"
-                    "</td>"
+                # number badge (left)
+                "<td width='40' style='background:#ECF0F1;border:1px solid #D8DCE0;border-radius:4px;"
+                "text-align:center;font:700 10pt/40px \"Segoe UI\", Aptos, Arial, sans-serif;color:#4A5A6A;height:40px;'>"
+                f"{i}</td>"
+                "<td style='width:9pt'>&nbsp;</td>"
+                # card body
+                "<td style='background:#FFFFFF;border:1px solid #D8DCE0;border-radius:6px;padding:9pt;'>"
+                "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+                "<tr>"
+                f"<td style='font:700 10pt/14pt \"Segoe UI\", Aptos, Arial, sans-serif;color:#000'>{_html_escape(speaker_display)}</td>"
+                f"<td align='right' style='font:9pt/14pt \"Segoe UI\", Aptos, Arial, sans-serif;color:#6b7280'>{line_label} {lines_str}</td>"
+                "</tr>"
+                "<tr><td colspan='2' style='height:4pt;font-size:0;line-height:0'>&nbsp;</td></tr>"
+                f"<tr><td colspan='2' style='font:10pt/16pt \"Segoe UI\", Aptos, Arial, sans-serif;color:#111827'>{excerpt_html}</td></tr>"
+                "</table>"
+                "</td>"
                 "</tr>"
                 "</table>"
                 "</td></tr>"
             )
 
-        # When no matches, still show the section header only (as in the layout)
-        doc_sections.append("".join(per_file))
+        sections.append("".join(sec))
 
-    # Build Detection Match by Chamber summary rows
+    # Detection summary rows (by the provided table look)
     summary_rows = []
     for kw in keywords:
         hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
@@ -430,94 +413,118 @@ def build_digest_html(files, keywords):
         tot = totals[kw]
         summary_rows.append(
             "<tr>"
-            f"<td style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{_html_escape(kw)}</td>"
-            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{hoa}</td>"
-            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{lco}</td>"
-            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{tot}</td>"
+            "<td style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1pt;border-bottom:solid #ECF0F1 1pt;"
+            "border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;"
+            "padding:6pt 7.5pt'><p style='margin:0'><b>"
+            f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000'>{_html_escape(kw)}</span>"
+            "</b></p></td>"
+            "<td style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1pt;padding:6pt 7.5pt'>"
+            f"<p style='margin:0;text-align:center'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000'>{hoa}</span></b></p>"
+            "</td>"
+            "<td style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1pt;padding:6pt 7.5pt'>"
+            f"<p style='margin:0;text-align:center'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000'>{lco}</span></b></p>"
+            "</td>"
+            "<td style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1pt;border-right:solid #D8DCE0 1pt;"
+            "mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6pt 7.5pt'>"
+            f"<p style='margin:0;text-align:center'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000'>{tot}</span></b></p>"
+            "</td>"
             "</tr>"
         )
 
-    # --- Assemble HTML in the requested layout (Outlook-safe; table-based) ---
+    # Assemble HTML to match the uploaded layout (Word/Outlook-friendly)
     html = (
-        "<!DOCTYPE html><html><head>"
-        "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
-        "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+        "<!DOCTYPE html><html xmlns:v='urn:schemas-microsoft-com:vml' "
+        "xmlns:o='urn:schemas-microsoft-com:office:office' "
+        "xmlns:w='urn:schemas-microsoft-com:office:word' "
+        "xmlns:m='http://schemas.microsoft.com/office/2004/12/omml' "
+        "xmlns='http://www.w3.org/TR/REC-html40'>"
+        "<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+        "<meta name='ProgId' content='Word.Document'>"
+        "<meta name='Generator' content='Microsoft Word 15'>"
+        "<meta name='Originator' content='Microsoft Word 15'>"
         "</head>"
-        "<body style='margin:0;padding:0;background:#f3f4f6;'>"
-        "<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0' style='background:#f3f4f6;'>"
-        "<tr><td align='center' style='padding:16px;'>"
+        "<body style='word-wrap:break-word;background:#F5F7F9' link='#467886' vlink='#96607D'>"
+        "<div align='center'>"
+        "<table border='0' cellspacing='0' cellpadding='0' width='900' style='width:675pt;background:#FFFFFF;'>"
+        "<tr><td style='padding:0'>"
 
-        # Outer container
-        "<table role='presentation' width='760' cellspacing='0' cellpadding='0' border='0' "
-        "style='width:760px;max-width:760px;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;'>"
+        # Top dark banner (exact colors/spacing from template)
+        "<table border='0' cellspacing='0' cellpadding='0' width='91%' "
+        "style='width:91.36%;background:#475560;'>"
+        "<tr><td style='padding:18pt 21pt;'>"
+        "<p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:20pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>"
+        "Hansard Monitor – BETA Version 18.3</span></b></p>"
+        f"<p style='margin:0;text-align:center'><span style='font-size:12pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>"
+        f"Program Run: {program_run_date} — {program_run_time}</span></p>"
+        "</td></tr></table>"
 
-        # Header: Title + Program run
-        "<tr><td style='padding:24px 24px 8px 24px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-        "<tr>"
-        "<td align='left' style='font:700 28px/32px Arial,Helvetica,sans-serif;color:#111827;'>Hansard Monitor – BETA Version 18.3</td>"
-        "</tr>"
-        "<tr>"
-        f"<td align='left' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Program Run: {program_run_date} — {program_run_time}</td>"
-        "</tr>"
-        "</table>"
+        # Light grey background panel
+        "<table border='0' cellspacing='0' cellpadding='0' width='91%' "
+        "style='width:91.36%;background:#ECF0F1;'><tr><td style='padding:0 12pt'>"
+
+        # Summary card title
+        "<table border='1' cellspacing='0' cellpadding='0' width='100%' "
+        "style='border:solid #D8DCE0 1pt;background:#FFFFFF;'>"
+        "<tr><td style='border:none;border-bottom:solid #C5A572 2.25pt;padding:12pt 13.5pt'>"
+        "<p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:12pt;font-family:\"Segoe UI\",sans-serif;color:#000'>"
+        "Detection Match by Chamber</span></b></p>"
         "</td></tr>"
 
-        # Spacer
-        "<tr><td height='8' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
+        # Summary table proper
+        "<tr><td style='border:none;padding:9pt 12pt'>"
+        "<table border='1' cellspacing='0' cellpadding='0' width='100%' "
+        "style='border-collapse:collapse;border:none;background:#FFFFFF;'>"
 
-        # Summary table heading
-        "<tr><td style='padding:0 24px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
-        "style='border-collapse:separate;background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;'>"
-        "<tr><td style='padding:12px 12px 0 12px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+        # Header row
         "<tr>"
-        "<td align='left' style='font:700 14px/18px Arial,Helvetica,sans-serif;color:#374151;'>Detection Match by Chamber</td>"
+        "<td style='width:28.12%;border-top:solid #D8DCE0 1pt;border-left:solid #D8DCE0 1pt;"
+        "background:#4A5A6A;padding:9pt 7.5pt'><p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>Keyword</span>"
+        "</b></p></td>"
+        "<td style='width:28.12%;border-top:solid #D8DCE0 1pt;background:#4A5A6A;padding:9pt 7.5pt'>"
+        "<p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>House of Assembly</span>"
+        "</b></p></td>"
+        "<td style='width:28.14%;border-top:solid #D8DCE0 1pt;background:#4A5A6A;padding:9pt 7.5pt'>"
+        "<p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>Legislative Council</span>"
+        "</b></p></td>"
+        "<td style='width:15.62%;border-top:solid #D8DCE0 1pt;border-right:solid #D8DCE0 1pt;"
+        "background:#4A5A6A;padding:9pt 7.5pt'><p style='margin:0;text-align:center'><b>"
+        "<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF'>Total</span>"
+        "</b></p></td>"
         "</tr>"
-        "</table>"
-        "</td></tr>"
 
-        # Summary table
-        "<tr><td style='padding:8px 12px 12px 12px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-        "<tr>"
-        "<th align='left'  style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Keyword</th>"
-        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>House of Assembly</th>"
-        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Legislative Council</th>"
-        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Total</th>"
-        "</tr>"
         f"{''.join(summary_rows)}"
-        "</table>"
+
+        "</table>"  # end summary inner table
         "</td></tr>"
         "</table>"  # end summary card
-        "</td></tr>"
+        "</td></tr></table>"  # end grey panel
 
-        # Spacer
-        "<tr><td height='12' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
-
-        # Files and matches list container
-        "<tr><td style='padding:0 24px 16px 24px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
-        "style='border-collapse:separate;background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;'>"
-        f"{''.join(doc_sections)}"
+        # Files & matches container (white card on grey background)
+        "<table border='0' cellspacing='0' cellpadding='0' width='91%' "
+        "style='width:91.36%;background:#ECF0F1;'><tr><td style='padding:0 12pt 12pt 12pt'>"
+        "<table border='1' cellspacing='0' cellpadding='0' width='100%' "
+        "style='border:solid #D8DCE0 1pt;background:#FFFFFF;'>"
+        f"{''.join(sections)}"
         "</table>"
-        "</td></tr>"
+        "</td></tr></table>"
 
-        # Footer / beta notice
-        "<tr><td style='padding:8px 24px 20px 24px;'>"
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-        "<tr><td align='center' style='font:700 10px/14px Arial,Helvetica,sans-serif;color:#111827;'>"
-        "**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**"
-        "</td></tr>"
-        "<tr><td align='center' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;padding-top:4px;'>"
-        "Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au"
-        "</td></tr>"
-        "</table>"
-        "</td></tr>"
+        # Footer notice
+        "<table border='0' cellspacing='0' cellpadding='0' width='91%' style='width:91.36%;'>"
+        "<tr><td style='padding:8pt 12pt 18pt 12pt;text-align:center'>"
+        "<div style='font:700 10pt/14pt \"Segoe UI\",sans-serif;color:#000'>"
+        "THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD</div>"
+        "<div style='font:10pt/14pt \"Segoe UI\",sans-serif;color:#6b7280;padding-top:3pt'>"
+        "Contact developer with any issues, queries, or suggestions: "
+        "William.Manning@FederalGroup.com.au</div>"
+        "</td></tr></table>"
 
-        "</table>"  # end outer container
-        "</td></tr></table>"  # end background wrapper
+        "</td></tr></table>"
+        "</div>"
         "</body></html>"
     )
 
