@@ -9,8 +9,57 @@ import subprocess  # only used if ATTRIB_WITH_LLM=1
 
 # ---------------------------- CONFIG / PATHS ---------------------------------
 
-# Your Outlook/Word HTML template (default to your current filename)
-TEMPLATE_HTML_PATH = Path(os.environ.get("TEMPLATE_HTML_PATH", "email_template (1).html"))
+# Robust template resolver: checks env, common names, then searches repo
+def _resolve_template_path() -> Path:
+    # 1) environment override
+    env_path = os.environ.get("TEMPLATE_HTML_PATH")
+    if env_path:
+        p = Path(env_path)
+        if p.exists():
+            return p
+
+    # 2) common filenames used in this project
+    common_names = [
+        "email_template.html",
+        "email_template.htm",
+        "email_template (1).html",
+        "email_template (1).htm",
+        "Hansard Monitor - Email Format - Version 3.htm",
+        "Hansard Monitor - Email Format - Version 3.html",
+        # in a templates/ subfolder
+        "templates/email_template.html",
+        "templates/email_template.htm",
+        "templates/email_template (1).html",
+        "templates/email_template (1).htm",
+        "templates/Hansard Monitor - Email Format - Version 3.htm",
+        "templates/Hansard Monitor - Email Format - Version 3.html",
+    ]
+    script_dir = Path(__file__).resolve().parent
+    for name in common_names:
+        cand = script_dir / name
+        if cand.exists():
+            return cand
+
+    # 3) fallback: search repo (script directory) for any plausible .htm(l)
+    patterns = ["**/*.htm", "**/*.html"]
+    keywords = ("email_template", "Email Format", "Hansard Monitor")
+    for pat in patterns:
+        for fp in script_dir.glob(pat):
+            # prefer matches with likely keywords in filename
+            if any(k.lower() in fp.name.lower() for k in keywords):
+                return fp
+    # last resort: first .htm(l) we find
+    for pat in patterns:
+        for fp in script_dir.glob(pat):
+            return fp
+
+    raise FileNotFoundError(
+        "Could not locate an HTML template. Provide TEMPLATE_HTML_PATH env var, "
+        "or place one of the common files next to send_email.py "
+        "(e.g., 'Hansard Monitor - Email Format - Version 3.htm')."
+    )
+
+TEMPLATE_HTML_PATH = _resolve_template_path()
 
 # Sent-log to avoid re-sending the same transcripts
 LOG_FILE = Path("sent.log")
@@ -118,7 +167,6 @@ def _build_utterances(text: str):
     return utterances, all_lines
 
 def _line_for_char_offset(line_offsets, line_nums, pos):
-    from bisect import bisect_right
     i = bisect_right(line_offsets, pos) - 1
     i = max(0, min(i, len(line_nums) - 1))
     return line_nums[i]
@@ -442,8 +490,11 @@ def _parse_chamber_from_filename(filename: str) -> str:
     return "Unknown"
 
 def build_digest_html(files: list[str], keywords: list[str]):
-    # Read template (Word/Outlook uses Windows-1252 in your file)
-    template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
+    # Read template (prefer Windows-1252; fallback to UTF-8)
+    try:
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
+    except Exception:
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
     # Program date
     run_date = datetime.now().strftime("%d %B %Y")
