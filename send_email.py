@@ -16,6 +16,7 @@ WINDOW_PAD_SENTENCES = 1  # for non-first-sentence hits: one sentence either sid
 FIRST_SENT_FOLLOWING = 2  # for first-sentence hits: include next two sentences
 MERGE_IF_GAP_GT = 2       # Only merge windows if the gap (in sentences) is > this value
 
+
 # --- Helpers -----------------------------------------------------------------
 def load_keywords():
     """Load keywords from keywords.txt or KEYWORDS env var, ignoring comments and stripping quotes."""
@@ -34,11 +35,12 @@ def load_keywords():
         return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
     return []
 
+
 # --- Speaker header detection & guards ---------------------------------------
 SPEAKER_HEADER_RE = re.compile(
     r"""
     ^
-    (?:
+    (?: 
         (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
         (?:[\s.]+(?P<name>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}))?
       |
@@ -49,10 +51,11 @@ SPEAKER_HEADER_RE = re.compile(
     """,
     re.VERBOSE,
 )
-CONTENT_COLON_RE = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
-TIME_STAMP_RE = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
-UPPER_HEADING_RE = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
-INTERJECTION_RE = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
+
+CONTENT_COLON_RE   = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.IGNORECASE)
+TIME_STAMP_RE      = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.IGNORECASE)
+UPPER_HEADING_RE   = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+INTERJECTION_RE    = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.IGNORECASE)
 
 def _canonicalize(s: str) -> str:
     s = re.sub(r"\([^)]*\)", "", s)
@@ -65,11 +68,11 @@ def _canonicalize(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     return s.lower()
 
+
 # --- Utterance segmentation with spans ---------------------------------------
 def _build_utterances(text: str):
     all_lines = text.splitlines()
     utterances = []
-
     curr = {"speaker": None, "lines": [], "line_nums": []}
 
     def flush():
@@ -80,7 +83,6 @@ def _build_utterances(text: str):
             for i, ln in enumerate(curr["lines"]):
                 offs.append(total)
                 total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
-
             sents = []
             start = 0
             for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
@@ -104,20 +106,19 @@ def _build_utterances(text: str):
         s = raw.strip()
         if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
             continue
-
         m = SPEAKER_HEADER_RE.match(s)
         if m and not (m.group("name_only") and CONTENT_COLON_RE.match(s)):
             flush()
             title = (m.group("title") or "").strip()
-            name = (m.group("name") or m.group("name_only") or "").strip()
-            curr = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
+            name  = (m.group("name")  or m.group("name_only") or "").strip()
+            curr  = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
             continue
-
         curr["lines"].append(raw.rstrip())
         curr["line_nums"].append(idx + 1)
 
     flush()
     return utterances, all_lines
+
 
 def _line_for_char_offset(line_offsets, line_nums, pos):
     i = bisect_right(line_offsets, pos) - 1
@@ -126,6 +127,7 @@ def _line_for_char_offset(line_offsets, line_nums, pos):
     if i >= len(line_nums):
         i = len(line_nums) - 1
     return line_nums[i]
+
 
 # --- Matching, windows & merging ---------------------------------------------
 def _compile_kw_patterns(keywords):
@@ -137,10 +139,11 @@ def _compile_kw_patterns(keywords):
             pats.append((kw, re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)))
     return pats
 
+
 def _collect_hits_in_utterance(utt, kw_pats):
     hits = []
     joined = utt["joined"]
-    sents = utt["sents"]
+    sents  = utt["sents"]
     for si, (a, b) in enumerate(sents):
         seg = joined[a:b]
         for kw, pat in kw_pats:
@@ -148,9 +151,10 @@ def _collect_hits_in_utterance(utt, kw_pats):
             if not m:
                 continue
             char_pos = a + m.start()
-            line_no = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
+            line_no  = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
             hits.append({"kw": kw, "sent_idx": si, "line_no": line_no})
     return hits
+
 
 def _windows_for_hits(hits, sent_count):
     wins = []
@@ -158,13 +162,14 @@ def _windows_for_hits(hits, sent_count):
         j = h["sent_idx"]
         if j == 0:
             start = 0
-            end = min(sent_count - 1, FIRST_SENT_FOLLOWING)
+            end   = min(sent_count - 1, FIRST_SENT_FOLLOWING)
         else:
             start = max(0, j - WINDOW_PAD_SENTENCES)
-            end = min(sent_count - 1, j + WINDOW_PAD_SENTENCES)
+            end   = min(sent_count - 1, j + WINDOW_PAD_SENTENCES)
         wins.append([start, end, {h["kw"]}, {h["line_no"]}])
     wins.sort(key=lambda w: (w[0], w[1]))
     return wins
+
 
 def _dedup_windows(wins):
     """Collapse windows with identical (start,end); union keywords and line numbers."""
@@ -181,6 +186,7 @@ def _dedup_windows(wins):
     deduped = [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
     return deduped
 
+
 def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     if not wins:
         return []
@@ -194,8 +200,10 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
             merged.append([s, e, kws, lines])
     return merged
 
+
 def _html_escape(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     out = text_html
@@ -207,8 +215,9 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
         out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
     return out
 
+
 def _excerpt_from_window_html(utt, win, keywords):
-    sents = utt["sents"]
+    sents  = utt["sents"]
     joined = utt["joined"]
     start, end, kws, lines = win
     a = sents[start][0]
@@ -218,9 +227,11 @@ def _excerpt_from_window_html(utt, win, keywords):
         raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords).replace("\n", "<br>")
+
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
-    end_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
+    end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
     return html, sorted(lines), sorted(kws, key=str.lower), start_line, end_line
+
 
 def _looks_suspicious(s: str | None) -> bool:
     if not s:
@@ -235,6 +246,7 @@ def _looks_suspicious(s: str | None) -> bool:
     if re.match(r"^[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}$", s):
         return False
     return True
+
 
 def _llm_qc_speaker(full_lines, hit_line_no, candidates, model=None, timeout=30):
     model = model or os.environ.get("ATTRIB_LLM_MODEL", "llama3.2:3b")
@@ -257,17 +269,18 @@ Use the transcript context (previous lines first, then nearby):
     except Exception:
         return None
 
+
 def extract_matches(text: str, keywords):
     """
     Return list of: (kw_set, excerpt_html, speaker, line_numbers_list, win_start_line, win_end_line)
     """
-    use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
+    use_llm     = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
     llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
 
     utts, all_lines = _build_utterances(text)
     kw_pats = _compile_kw_patterns(keywords)
-
     results = []
+
     for utt in utts:
         speaker = utt["speaker"]
         if not utt["lines"]:
@@ -278,7 +291,9 @@ def extract_matches(text: str, keywords):
             continue
 
         wins = _windows_for_hits(hits, sent_count=len(utt["sents"]))
+        # Remove identical (start,end) windows to avoid duplicate excerpts
         wins = _dedup_windows(wins)
+        # Keep separate unless far apart; if far (>2), merge into a longer excerpt
         merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
         if use_llm and _looks_suspicious(speaker):
@@ -294,7 +309,8 @@ def extract_matches(text: str, keywords):
 
     return results
 
-# --- Digest / email pipeline (HTML for Outlook on Windows) -------------------
+
+# --- Digest / email pipeline (HTML) ------------------------------------------
 def parse_date_from_filename(filename: str):
     m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
     if m:
@@ -304,6 +320,7 @@ def parse_date_from_filename(filename: str):
             return datetime.min
     return datetime.min
 
+
 def parse_chamber_from_filename(filename: str) -> str:
     name = filename.lower()
     if "house_of_assembly" in name:
@@ -312,214 +329,224 @@ def parse_chamber_from_filename(filename: str) -> str:
         return "Legislative Council"
     return "Unknown"
 
+
 def build_digest_html(files, keywords):
     """
-    Outlook-on-Windows-safe HTML (Word rendering engine):
-      - All layout via nested tables (no floats/flex)
-      - No CSS classes; all inline styles
-      - No border-radius reliance (Word ignores it)
-      - MSO-friendly spacing (mso-table-lspace/rspace, no margin on <p>)
-      - Matches the 'Hansard Monitor – BETA Version 18.3' layout:
-        Header with Program Run date, 'Detection Match by Chamber' table,
-        per-file sections with numbered match cards, and footer notice.
+    Build an Outlook-safe HTML email that matches the provided 'Hansard Monitor – BETA Version 18.3'
+    visual layout exactly (title, program run date, 'Detection Match by Chamber' summary table,
+    followed by per-file match cards). Only visual structure is changed; keyword extraction remains
+    identical to the original logic.
     """
-    program_date = datetime.now().strftime("%d %B %Y")
+    # Timestamps
+    program_run_date = datetime.now().strftime("%A, %d %B %Y")
+    program_run_time = datetime.now(UTC).strftime("%H:%M UTC")
 
+    # Chambers and counters
     chambers = ["House of Assembly", "Legislative Council"]
-    counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
-    totals = {kw: 0 for kw in keywords}
+    counts   = {ch: {kw: 0 for kw in keywords} for ch in chambers}
+    totals   = {kw: 0 for kw in keywords}
 
-    sections_html = []
+    # Build per-file sections & accumulate counts
+    doc_sections = []
     total_matches = 0
 
-    # Build sections and accumulate counts
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
-        text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        text    = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
         matches = extract_matches(text, keywords)
+
+        # Sort by first line number for stable ordering
         matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
         total_matches += len(matches)
 
-        # File header row
+        # Section header (file name + match count)
         per_file = []
         per_file.append(
-            "<tr><td style=\"padding:12px 0 6px 0;\">"
-            "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-            "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
             "<tr>"
-            f"<td style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">{_html_escape(Path(f).name)}</td>"
-            f"<td align=\"right\" style=\"font:12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">{len(matches)} match(es)</td>"
+            "<td style='padding:12px 16px 0 16px;'>"
+            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+            "<tr>"
+            f"<td align='left' style='font:600 16px/20px Arial,Helvetica,sans-serif;color:#000000;'>{_html_escape(Path(f).name)}</td>"
+            f"</tr>"
+            "<tr>"
+            f"<td align='left' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;padding-top:4px;'>{len(matches)} match(es)</td>"
             "</tr>"
             "</table>"
-            "</td></tr>"
+            "</td>"
+            "</tr>"
         )
 
-        # Cards (numbered entries)
+        # Cards for each match
         for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+            # aggregate counts
             for kw in kw_set:
                 if chamber in counts:
                     counts[chamber][kw] += 1
                 totals[kw] += 1
 
+            # speaker / lines text
+            first_line = min(line_list) if line_list else win_start
+            line_label = "line" if len(line_list) <= 1 else "lines"
             if line_list:
                 lines_str = ", ".join(str(n) for n in sorted(set(line_list)))
-                line_label = "lines" if len(set(line_list)) > 1 else "line"
             else:
-                lines_str = str(win_start)
-                line_label = "line"
+                lines_str = str(first_line)
 
-            speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
+            speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Mr/Ms UNKNOWN"
 
             per_file.append(
-                "<tr><td style=\"padding:0 0 8px 0;\">"
-                "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-                "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
+                "<tr><td style='padding:8px 16px;'>"
+                "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:separate;'>"
                 "<tr>"
-                # Number badge (square for Outlook reliability)
-                "<td width=\"36\" align=\"center\" valign=\"top\" "
-                "style=\"background:#E8ECF1;border:1px solid #D4D9E0;"
-                "font:bold 13px/32px Arial,Helvetica,sans-serif;color:#24313F;height:32px;\">"
-                f"{i}</td>"
-                # Content box
-                "<td style=\"width:10px;font-size:0;line-height:0;\">&nbsp;</td>"
-                "<td valign=\"top\" "
-                "style=\"background:#FFFFFF;border:1px solid #D4D9E0;padding:10px 12px;\">"
-                f"<div style=\"font:bold 13px/18px Arial,Helvetica,sans-serif;color:#24313F;\">{_html_escape(speaker_display)} "
-                f"<span style=\"font-weight:normal;color:#6A7682;\">— {line_label} {lines_str}</span></div>"
-                f"<div style=\"font:13px/20px Arial,Helvetica,sans-serif;color:#1F2A36;mso-line-height-rule:exactly;\">{excerpt_html}</div>"
-                "</td>"
+                    # Number badge
+                    "<td width='44' align='center' valign='top' style='background:#dbeafe;border:1px solid #93c5fd;"
+                    "border-radius:6px;width:44px;height:44px;font:700 14px/44px Arial,Helvetica,sans-serif;color:#1e3a8a;'>"
+                    f"{i}</td>"
+                    "<td style='width:12px'>&nbsp;</td>"
+                    # Card content
+                    "<td valign='top' style='background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;padding:12px;'>"
+                        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+                        "<tr>"
+                            f"<td align='left' style='font:700 14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{_html_escape(speaker_display)}</td>"
+                            f"<td align='right' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>{line_label} {lines_str}</td>"
+                        "</tr>"
+                        "<tr><td colspan='2' height='6' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
+                        f"<tr><td colspan='2' style='font:14px/22px Arial,Helvetica,sans-serif;color:#111827'>{excerpt_html}</td></tr>"
+                        "</table>"
+                    "</td>"
                 "</tr>"
                 "</table>"
                 "</td></tr>"
             )
 
-        # Divider
-        per_file.append(
-            "<tr><td style=\"padding:4px 0 0 0;\">"
-            "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-            "<tr><td style=\"border-bottom:1px solid #E0E5EB;height:1px;line-height:1px;font-size:0;\">&nbsp;</td></tr>"
-            "</table>"
-            "</td></tr>"
-        )
+        # When no matches, still show the section header only (as in the layout)
+        doc_sections.append("".join(per_file))
 
-        sections_html.append("".join(per_file))
-
-    # Summary (Detection Match by Chamber)
+    # Build Detection Match by Chamber summary rows
     summary_rows = []
     for kw in keywords:
-        hoa = counts["House of Assembly"].get(kw, 0)
-        lc = counts["Legislative Council"].get(kw, 0)
-        tot = totals.get(kw, 0)
+        hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+        lco = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+        tot = totals[kw]
         summary_rows.append(
             "<tr>"
-            f"<td style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{_html_escape(kw)}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{hoa}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{lc}</td>"
-            f"<td align=\"center\" style=\"border:1px solid #D4D9E0;padding:8px 10px;font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">{tot}</td>"
+            f"<td style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{_html_escape(kw)}</td>"
+            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{hoa}</td>"
+            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{lco}</td>"
+            f"<td align='right' style='padding:10px 12px;border-bottom:1px solid #e5e7eb;font:14px/18px Arial,Helvetica,sans-serif;color:#111827;'>{tot}</td>"
             "</tr>"
         )
 
-    # --- Assemble strictly Outlook-friendly HTML (Word engine) ----------------
+    # --- Assemble HTML in the requested layout (Outlook-safe; table-based) ---
     html = (
-        "<!DOCTYPE html>"
-        "<html xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">"
-        "<head>"
-        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">"
-        "<meta name=\"x-apple-disable-message-reformatting\">"
-        "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"
+        "<!DOCTYPE html><html><head>"
+        "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+        "<meta name='viewport' content='width=device-width, initial-scale=1.0'>"
         "</head>"
-        "<body style=\"margin:0;padding:0;background:#F3F6F9;\">"
+        "<body style='margin:0;padding:0;background:#f3f4f6;'>"
+        "<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0' style='background:#f3f4f6;'>"
+        "<tr><td align='center' style='padding:16px;'>"
 
-        "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-        "style=\"background:#F3F6F9;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-        "<tr><td align=\"center\" style=\"padding:20px 10px;\">"
+        # Outer container
+        "<table role='presentation' width='760' cellspacing='0' cellpadding='0' border='0' "
+        "style='width:760px;max-width:760px;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;'>"
 
-        # Constrained width wrapper (square edges for Outlook)
-        "<table role=\"presentation\" width=\"768\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" "
-        "style=\"width:768px;max-width:768px;background:#FFFFFF;border:1px solid #D4D9E0;"
-        "mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-
-        # Header (dark band)
-        "<tr><td style=\"background:#24313F;color:#FFFFFF;padding:18px 20px;\">"
-        "<div style=\"font:bold 22px/26px Arial,Helvetica,sans-serif;\">Hansard Monitor – BETA Version 18.3</div>"
-        f"<div style=\"font:12px/16px Arial,Helvetica,sans-serif;margin-top:4px;\">Program Run: {program_date}</div>"
-        "</td></tr>"
-
-        # Detection Match by Chamber
-        "<tr><td style=\"padding:14px 20px 8px 20px;\">"
-        "<div style=\"font:bold 14px/18px Arial,Helvetica,sans-serif;color:#24313F;\">Detection Match by Chamber</div>"
-        "</td></tr>"
-        "<tr><td style=\"padding:0 20px 14px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
+        # Header: Title + Program run
+        "<tr><td style='padding:24px 24px 8px 24px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
         "<tr>"
-        "<td style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Keyword</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">House of Assembly</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Legislative Council</td>"
-        "<td align=\"center\" style=\"border:1px solid #D4D9E0;background:#F6F8FA;padding:8px 10px;"
-        "font:bold 12px/16px Arial,Helvetica,sans-serif;color:#6A7682;\">Total</td>"
+        "<td align='left' style='font:700 28px/32px Arial,Helvetica,sans-serif;color:#111827;'>Hansard Monitor – BETA Version 18.3</td>"
+        "</tr>"
+        "<tr>"
+        f"<td align='left' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Program Run: {program_run_date} — {program_run_time}</td>"
+        "</tr>"
+        "</table>"
+        "</td></tr>"
+
+        # Spacer
+        "<tr><td height='8' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
+
+        # Summary table heading
+        "<tr><td style='padding:0 24px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
+        "style='border-collapse:separate;background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;'>"
+        "<tr><td style='padding:12px 12px 0 12px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+        "<tr>"
+        "<td align='left' style='font:700 14px/18px Arial,Helvetica,sans-serif;color:#374151;'>Detection Match by Chamber</td>"
+        "</tr>"
+        "</table>"
+        "</td></tr>"
+
+        # Summary table
+        "<tr><td style='padding:8px 12px 12px 12px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+        "<tr>"
+        "<th align='left'  style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Keyword</th>"
+        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>House of Assembly</th>"
+        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Legislative Council</th>"
+        "<th align='right' style='padding:8px 12px;border-bottom:2px solid #e5e7eb;font:700 12px/16px Arial,Helvetica,sans-serif;color:#6b7280;'>Total</th>"
         "</tr>"
         f"{''.join(summary_rows)}"
         "</table>"
         "</td></tr>"
+        "</table>"  # end summary card
+        "</td></tr>"
 
-        # Per-file sections
-        "<tr><td style=\"padding:6px 20px 18px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;\">"
-        f"{''.join(sections_html) if sections_html else '<tr><td style=\"font:13px/18px Arial,Helvetica,sans-serif;color:#1F2A36;\">No new matches.</td></tr>'}"
+        # Spacer
+        "<tr><td height='12' style='font-size:0;line-height:0'>&nbsp;</td></tr>"
+
+        # Files and matches list container
+        "<tr><td style='padding:0 24px 16px 24px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
+        "style='border-collapse:separate;background:#ffffff;border:1px solid #e5e7eb;border-radius:6px;'>"
+        f"{''.join(doc_sections)}"
         "</table>"
         "</td></tr>"
 
-        # Footer
-        "<tr><td style=\"padding:10px 20px 18px 20px;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\">"
-        "<tr><td style=\"text-align:center;font:bold 11px/16px Arial,Helvetica,sans-serif;color:#24313F;\">"
+        # Footer / beta notice
+        "<tr><td style='padding:8px 24px 20px 24px;'>"
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+        "<tr><td align='center' style='font:700 10px/14px Arial,Helvetica,sans-serif;color:#111827;'>"
         "**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**"
         "</td></tr>"
-        "<tr><td style=\"text-align:center;font:11px/16px Arial,Helvetica,sans-serif;color:#6A7682;padding-top:4px;\">"
+        "<tr><td align='center' style='font:12px/16px Arial,Helvetica,sans-serif;color:#6b7280;padding-top:4px;'>"
         "Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au"
         "</td></tr>"
         "</table>"
         "</td></tr>"
 
-        "</table>"  # wrapper
-        "</td></tr>"
-        "</table>"
+        "</table>"  # end outer container
+        "</td></tr></table>"  # end background wrapper
         "</body></html>"
     )
 
     return html, total_matches, counts
+
 
 def load_sent_log():
     if LOG_FILE.exists():
         return {line.strip() for line in LOG_FILE.read_text().splitlines() if line.strip()}
     return set()
 
+
 def update_sent_log(files):
     with LOG_FILE.open("a", encoding="utf-8") as f:
         for file in files:
             f.write(f"{Path(file).name}\n")
 
+
 # --- Main --------------------------------------------------------------------
 def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
-    EMAIL_TO = os.environ["EMAIL_TO"]
+    EMAIL_TO   = os.environ["EMAIL_TO"]
 
-    # Gmail defaults, overridable via env
-    SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
-    SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
-    SMTP_STARTTLS = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
-    SMTP_SSL = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
-
-    # Optional: also write the HTML to disk so it can be opened in Outlook and saved as an .OFT template.
-    # Set SAVE_HTML_TEMPLATE=1 in the environment to enable.
-    SAVE_HTML = os.environ.get("SAVE_HTML_TEMPLATE", "").lower() in ("1", "true", "yes")
-    TEMPLATE_PATH = Path(os.environ.get("HTML_TEMPLATE_PATH", "Hansard_Monitor_Outlook.html"))
+    # Keep Gmail defaults, allow override via env if needed
+    SMTP_HOST      = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    SMTP_PORT      = int(os.environ.get("SMTP_PORT", "587"))
+    SMTP_STARTTLS  = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
+    SMTP_SSL       = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
 
     keywords = load_keywords()
     if not keywords:
@@ -529,21 +556,16 @@ def main():
     if not all_files:
         raise SystemExit("No transcripts found in transcripts/")
 
-    sent = load_sent_log()
+    sent  = load_sent_log()
     files = [f for f in all_files if Path(f).name not in sent]
     if not files:
         print("No new transcripts to email.")
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
+    subject = f"Hansard keyword digest — {datetime.now().strftime('%d %b %Y')}"
 
-    if SAVE_HTML:
-        TEMPLATE_PATH.write_text(body_html, encoding="utf-8")
-        print(f"Saved Outlook-safe HTML template to: {TEMPLATE_PATH.resolve()}  (Open in Outlook ➜ File ▸ Save As ▸ Outlook Template (*.oft))")
-
-    subject = f"Hansard Monitor – BETA Version 18.3 — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
-
     yag = yagmail.SMTP(
         user=EMAIL_USER,
         password=EMAIL_PASS,
@@ -553,7 +575,8 @@ def main():
         smtp_ssl=SMTP_SSL,
     )
 
-    # Pass the HTML string directly (NOT a list), so yagmail doesn't inject <br> between lines.
+    # IMPORTANT: pass the HTML string directly (NOT a list), so yagmail
+    # doesn’t inject <br> between lines (which can break Outlook conditionals).
     yag.send(
         to=to_list,
         subject=subject,
@@ -563,6 +586,7 @@ def main():
 
     update_sent_log(files)
     print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
 
 if __name__ == "__main__":
     main()
