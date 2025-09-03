@@ -346,7 +346,7 @@ SUMMARY_ROW_TMPL = """
 
 def _build_file_section_html(filename: str, matches):
     """Return HTML for a single transcript section."""
-    rows = []
+    rows: list[str] = []
     for idx, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
         if len(line_list) == 1:
             line_txt = f"line {line_list[0]}"
@@ -377,12 +377,18 @@ def _build_file_section_html(filename: str, matches):
   <td style='border:none;padding:10.5pt 12.0pt 10.5pt 12.0pt'>
    <p class=MsoNormal style='margin:0;line-height:20px;mso-line-height-rule:exactly;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{excerpt_html}</span></p>
   </td>
- </tr>
-</table>
-<!-- tight spacer between cards -->
-<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0'><tr><td style='height:6px;line-height:6px;font-size:0;'>&nbsp;</td></tr></table>
-"""
+  </tr>
+  </table>
+  """
         )
+        if idx < len(matches):
+            rows.append(
+                """
+<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0'>
+ <tr><td height='6' style='line-height:0;font-size:0;'>&nbsp;</td></tr>
+</table>
+"""
+            )
     section_html = (
         f"""
 <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
