@@ -217,13 +217,17 @@ def _html_escape(s: str) -> str:
 
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    """
+    Visual-only change: match your template's silver highlight while preserving the same
+    extraction method — we just wrap hits in a styled span.
+    """
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
         if " " in kw:
             pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
         else:
             pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
-        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+        out = pat.sub(lambda m: f"<b><span style=\"background:silver;mso-highlight:silver\">{m.group(0)}</span></b>", out)
     return out
 
 
@@ -348,16 +352,21 @@ def parse_chamber_from_filename(filename: str) -> str:
     return "Unknown"
 
 
+def _mso_td(content: str, style: str) -> str:
+    return f"<td style='{style}'>{content}</td>"
+
+
 def build_digest_html(files, keywords):
     """
-    Build HTML matching the attached Outlook-friendly layout:
-    - Hero bar (“Hansard Monitor BETA Version 18.3” + “Program Run: [DATE]”)
-    - “Detection Match by Chamber” summary table (#4A5A6A header, #D8DCE0 borders)
-    - Per-file blocks with a left accent bar (#C5A572) and light background
+    Build HTML using your exact Outlook/Word layout:
+      - Hero bar (dark slate) with title and Program Run date
+      - Grey section containing 'Detection Match by Chamber' with gold underline and a 4-column summary
+      - Per-file match blocks in white tables styled to match the doc
+      - Bottom dark beta banner
     """
-    # Program run date in Hobart time (matches the template’s [DATE] label)
-    now_hobart = datetime.now(ZoneInfo("Australia/Hobart"))
-    program_run_str = now_hobart.strftime("%d %b %Y")
+    # Program run time in Hobart local time (as your doc is AU-centric)
+    hobart = ZoneInfo("Australia/Hobart")
+    now_local = datetime.now(hobart).strftime("%d %B %Y %I:%M %p %Z")
 
     chambers = ["House of Assembly", "Legislative Council"]
     counts = {ch: {kw: 0 for kw in keywords} for ch in chambers}
@@ -366,158 +375,206 @@ def build_digest_html(files, keywords):
     doc_sections = []
     total_matches = 0
 
-    # Build per-file sections and accumulate counts
+    # Build per-file blocks and accumulate counts
     for f in sorted(files, key=lambda x: (parse_date_from_filename(Path(x).name), Path(x).name)):
         text = Path(f).read_text(encoding="utf-8", errors="ignore")
         chamber = parse_chamber_from_filename(Path(f).name)
-
         matches = extract_matches(text, keywords)
 
-        # Per-file header (accent bar + filename + match count), even if 0
-        match_count = len(matches)
-        file_header = (
-            "<tr><td>"
-            "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-            "style=\"border-collapse:separate;\">"
-            "<tr><td style=\"border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;"
-            "padding:9.0pt 10.5pt;\">"
-            f"<div style=\"font:bold 14px/20px 'Segoe UI', Arial, Helvetica, sans-serif; color:#000;\">{_html_escape(Path(f).name)}</div>"
-            f"<div style=\"font:13px/18px 'Segoe UI', Arial, Helvetica, sans-serif; color:#000;\">{match_count} match(es)</div>"
-            "</td></tr></table>"
-            "</td></tr>"
-        )
-
-        per_file_rows = [file_header]
-
-        if matches:
-            matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
-            total_matches += len(matches)
-
-            # Match “cards” list
-            for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
-                # bump counters per chamber
-                for kw in kw_set:
-                    if chamber in counts:
-                        counts[chamber][kw] += 1
-                    totals[kw] += 1
-
-                first_line = min(line_list) if line_list else win_start
-                line_label = "line" if len(line_list) <= 1 else "lines"
-                lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
-
-                speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
-
-                per_file_rows.append(
-                    "<tr><td style=\"padding:8px 0 0 0;\">"
-                    "<table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"border-collapse:separate;\">"
-                    "<tr>"
-                    "<td width=\"40\" align=\"center\" valign=\"top\" "
-                    "style=\"background:#ECF0F1;border-radius:8px;font:bold 14px/40px 'Segoe UI', Arial, Helvetica, sans-serif;"
-                    "color:#4A5A6A;height:40px;\">"
-                    f"{i}</td>"
-                    "<td style=\"width:12px;\">&nbsp;</td>"
-                    "<td valign=\"top\" style=\"background:#FFFFFF;border:1px solid #ECF0F1;border-radius:12px;padding:12px;\">"
-                    f"<div style=\"font:bold 14px/20px 'Segoe UI', Arial, Helvetica, sans-serif;color:#4A5A6A;margin:0 0 6px 0;\">"
-                    f"{_html_escape(speaker_display)} "
-                    f"<span style=\"font-weight:normal;color:#8795A1;\">— {line_label} {lines_str}</span></div>"
-                    f"<div style=\"font:14px/22px 'Segoe UI', Arial, Helvetica, sans-serif;color:#475560;\">{excerpt_html}</div>"
-                    "</td>"
-                    "</tr></table>"
-                    "</td></tr>"
-                )
-
-        doc_sections.append("".join(per_file_rows))
-
-    # --- Build the “Detection Match by Chamber” summary table ------------------
-    # rows per keyword
-    summary_rows = []
-    for kw in keywords:
-        hoa = counts["House of Assembly"].get(kw, 0)
-        lc = counts["Legislative Council"].get(kw, 0)
-        tot = totals.get(kw, 0)
-        summary_rows.append(
+        # Per-file header (white box with border like doc)
+        header = (
+            "<table class='MsoNormalTable' border='1' cellspacing='0' cellpadding='0' width='100%' "
+            "style='width:100.0%;mso-cellspacing:0cm;background:white;border:solid #D8DCE0 1.0pt;"
+            "mso-border-alt:solid #D8DCE0 .75pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>"
             "<tr>"
-            f"<td style=\"width:28.12%;border-top:none;border-left:1px solid #D8DCE0;border-bottom:1px solid #ECF0F1;border-right:none;"
-            "padding:6.0pt 7.5pt;\">"
-            f"<b><span style=\"font-family:'Segoe UI',sans-serif;color:#000;\">{_html_escape(kw)}</span></b></td>"
-            f"<td align=\"center\" style=\"width:28.12%;border-bottom:1px solid #ECF0F1;padding:6.0pt 7.5pt;\">"
-            f"<b><span style=\"font-family:'Segoe UI',sans-serif;color:#000;\">{hoa}</span></b></td>"
-            f"<td align=\"center\" style=\"width:28.14%;border-bottom:1px solid #ECF0F1;padding:6.0pt 7.5pt;\">"
-            f"<b><span style=\"font-family:'Segoe UI',sans-serif;color:#000;\">{lc}</span></b></td>"
-            f"<td align=\"center\" style=\"width:15.62%;border-right:1px solid #D8DCE0;border-bottom:1px solid #ECF0F1;padding:6.0pt 7.5pt;\">"
-            f"<b><span style=\"font-family:'Segoe UI',sans-serif;color:#000;\">{tot}</span></b></td>"
+            "<td style='border:none;border-bottom:solid #C5A572 2.25pt;padding:12.0pt 13.5pt 12.0pt 13.5pt'>"
+            f"<p class='MsoNormal' style='margin-bottom:0cm;line-height:normal'>"
+            f"<b><span style='font-family:\"Segoe UI\",sans-serif;color:black;mso-color-alt:windowtext'>{_html_escape(Path(f).name)}</span></b>"
+            f"<span style='font-family:\"Segoe UI\",sans-serif;color:#8795A1'> — {len(matches)} match(es)</span>"
+            "</p>"
+            "</td>"
             "</tr>"
         )
 
-    # --- Assemble HTML strictly per the template’s structure/colors -----------
-    html = (
-        "<!DOCTYPE html><html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>"
-        "<body style=\"margin:0;padding:0;word-wrap:break-word;background:#FFFFFF;\">"
+        if not matches:
+            doc_sections.append(header + "</table>")
+            continue
 
-        "<div align=\"center\">"
-        "<table role=\"presentation\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"600\" "
-        "style=\"width:600px;border-collapse:separate;\">"
-        "<tr><td style=\"padding:0;\">"
+        matches.sort(key=lambda item: min(item[3]) if item[3] else 10**9)
+        total_matches += len(matches)
 
-        # HERO BAR (#475560) with title + program run date
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"background:#475560;border-collapse:separate;\">"
-        "<tr><td style=\"padding:18pt 21pt;\">"
-        "<div style=\"font:bold 28pt 'Segoe UI', Arial, Helvetica, sans-serif;color:#FFFFFF;text-align:center;\">"
-        "Hansard Monitor&nbsp;&nbsp;BETA Version 18.3</div>"
-        f"<div style=\"font:16pt 'Segoe UI', Arial, Helvetica, sans-serif;color:#FFFFFF;text-align:center;\">Program Run: {program_run_str}</div>"
-        "</td></tr>"
-        "</table>"
+        # Match blocks
+        block_rows = []
+        for i, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+            for kw in kw_set:
+                if chamber in counts:
+                    counts[chamber][kw] += 1
+                totals[kw] += 1
 
-        # spacer
-        "<div style=\"display:none; mso-hide:all; font-size:0; line-height:0;\">&nbsp;</div>"
+            first_line = min(line_list) if line_list else win_start
+            line_label = "line" if len(line_list) <= 1 else "lines"
+            lines_str = ", ".join(str(n) for n in sorted(set(line_list))) if line_list else str(first_line)
 
-        # Summary “Detection Match by Chamber”
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"background:#ECF0F1;border-collapse:separate;\">"
-        "<tr><td style=\"padding:0 12pt;\">"
+            # Speaker label; if suspicious/missing → "Unknown"
+            speaker_display = speaker if (speaker and not _looks_suspicious(speaker)) else "Unknown"
 
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"1\" "
-        "style=\"width:100%;background:#FFFFFF;border:1px solid #D8DCE0;border-collapse:separate;\">"
+            block_rows.append(
+                "<tr><td style='border:none;padding:9.0pt 12.0pt 9.0pt 12.0pt'>"
+                "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='100%' "
+                "style='width:100.0%;background:white;border-collapse:collapse;border:solid #D8DCE0 1.0pt;"
+                "mso-border-alt:solid #D8DCE0 .75pt;'>"
+                "<tr>"
+                "<td style='border-left:solid #C5A572 3.0pt;border-top:none;border-bottom:none;border-right:none;"
+                "padding:7.5pt 9.0pt 7.5pt 9.0pt'>"
+                f"<p class='MsoNormal' style='margin-bottom:6.0pt;line-height:normal'>"
+                f"<b><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{_html_escape(speaker_display)}</span></b>"
+                f"<span style='font-family:\"Segoe UI\",sans-serif;color:#8795A1'> — {line_label} {lines_str}</span>"
+                f"</p>"
+                f"<p class='MsoNormal' style='margin:0;line-height:22px'><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{excerpt_html}</span></p>"
+                "</td>"
+                "</tr>"
+                "</table>"
+                "</td></tr>"
+            )
 
-        # Section title with gold underline
-        "<tr><td style=\"border:none;border-bottom:2.25pt solid #C5A572;padding:12pt 13.5pt;\">"
-        "<div style=\"font:bold 16pt Aptos, 'Segoe UI', Arial, Helvetica, sans-serif;color:#000;text-align:center;\">"
-        "Detection Match by Chamber</div></td></tr>"
+        doc_sections.append(header + "".join(block_rows) + "</table>")
 
-        # Table header
-        "<tr><td style=\"border:none;padding:9pt 12pt;\">"
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"1\" "
-        "style=\"width:100%;background:#FFFFFF;border:none;border-collapse:collapse;\">"
+    # Summary table rows (exact widths/borders and header colors per your doc)
+    def _summary_rows():
+        out = []
+        for kw in keywords:
+            hoa = counts["House of Assembly"][kw] if "House of Assembly" in counts else 0
+            lc = counts["Legislative Council"][kw] if "Legislative Council" in counts else 0
+            tot = totals[kw]
+            out.append(
+                "<tr>"
+                f"<td width='28%' style='width:28.12%;border-left:solid #D8DCE0 1.0pt;border-right:none;border-top:none;"
+                f"border-bottom:solid #D8DCE0 1.0pt;padding:7.5pt 9.0pt 7.5pt 9.0pt'>"
+                f"<p class='MsoNormal' style='margin:0;line-height:normal'><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{_html_escape(kw)}</span></p></td>"
+                f"<td width='28%' align='right' style='width:28.12%;border-top:none;border-bottom:solid #D8DCE0 1.0pt;"
+                f"border-left:none;border-right:none;padding:7.5pt 9.0pt 7.5pt 9.0pt'>"
+                f"<p class='MsoNormal' style='margin:0;line-height:normal'><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{hoa}</span></p></td>"
+                f"<td width='28%' align='right' style='width:28.14%;border-top:none;border-bottom:solid #D8DCE0 1.0pt;"
+                f"border-left:none;border-right:none;padding:7.5pt 9.0pt 7.5pt 9.0pt'>"
+                f"<p class='MsoNormal' style='margin:0;line-height:normal'><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{lc}</span></p></td>"
+                f"<td width='16%' align='right' style='width:15.62%;border-right:solid #D8DCE0 1.0pt;border-left:none;border-top:none;"
+                f"border-bottom:solid #D8DCE0 1.0pt;padding:7.5pt 9.0pt 7.5pt 9.0pt'>"
+                f"<p class='MsoNormal' style='margin:0;line-height:normal'><span style='font-family:\"Segoe UI\",sans-serif;color:#475560'>{tot}</span></p></td>"
+                "</tr>"
+            )
+        return "".join(out)
+
+    # Build the 'Detection Match by Chamber' block exactly like the doc
+    summary_table = (
+        "<table class='MsoNormalTable' border='1' cellspacing='0' cellpadding='0' width='100%' "
+        "style='width:100.0%;mso-cellspacing:0cm;background:white;border:solid #D8DCE0 1.0pt;"
+        "mso-border-alt:solid #D8DCE0 .75pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>"
         "<tr>"
-        "<td style=\"width:28.12%;background:#4A5A6A;padding:9pt 7.5pt;\"><div style=\"text-align:center;"
-        "font:bold 12pt 'Segoe UI', sans-serif;color:#FFFFFF;\">Keyword</div></td>"
-        "<td style=\"width:28.12%;background:#4A5A6A;padding:9pt 7.5pt;\"><div style=\"text-align:center;"
-        "font:bold 12pt 'Segoe UI', sans-serif;color:#FFFFFF;\">House of Assembly</div></td>"
-        "<td style=\"width:28.14%;background:#4A5A6A;padding:9pt 7.5pt;\"><div style=\"text-align:center;"
-        "font:bold 12pt 'Segoe UI', sans-serif;color:#FFFFFF;\">Legislative Council</div></td>"
-        "<td style=\"width:15.62%;background:#4A5A6A;padding:9pt 7.5pt;\"><div style=\"text-align:center;"
-        "font:bold 12pt 'Segoe UI', sans-serif;color:#FFFFFF;\">Total</div></td>"
+        "<td style='border:none;border-bottom:solid #C5A572 2.25pt;padding:12.0pt 13.5pt 12.0pt 13.5pt'>"
+        "<p class='MsoNormal' align='center' style='margin-bottom:0cm;text-align:center;line-height:normal'>"
+        "<b><span style='font-size:16.0pt;mso-ascii-font-family:Aptos;mso-hansi-font-family:Aptos;"
+        "mso-bidi-font-family:\"Segoe UI\";color:black;mso-color-alt:windowtext'>Detection Match by Chamber</span></b>"
+        "</p>"
+        "</td>"
         "</tr>"
-        f"{''.join(summary_rows)}"
+        "<tr>"
+        "<td style='border:none;padding:9.0pt 12.0pt 9.0pt 12.0pt'>"
+        "<table class='MsoNormalTable' border='1' cellspacing='0' cellpadding='0' width='100%' "
+        "style='width:100.0%;background:white;border-collapse:collapse;border:none;mso-border-alt:solid #D8DCE0 .75pt;"
+        "mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>"
+        # Header row
+        "<tr>"
+        "<td width='28%' style='width:28.12%;border-top:solid #D8DCE0 1.0pt;border-left:solid #D8DCE0 1.0pt;"
+        "border-bottom:none;border-right:none;mso-border-top-alt:solid #D8DCE0 .75pt;mso-border-left-alt:solid #D8DCE0 .75pt;"
+        "padding:9.0pt 7.5pt 9.0pt 7.5pt;background:#4A5A6A;'>"
+        "<p class='MsoNormal' align='center' style='margin:0;text-align:center;line-height:normal'>"
+        "<b><span style='font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>Keyword</span></b></p></td>"
+        "<td width='28%' style='width:28.12%;border-top:solid #D8DCE0 1.0pt;border-left:none;border-bottom:none;border-right:none;"
+        "mso-border-top-alt:solid #D8DCE0 .75pt;padding:9.0pt 7.5pt 9.0pt 7.5pt;background:#4A5A6A;'>"
+        "<p class='MsoNormal' align='right' style='margin:0;text-align:right;line-height:normal'>"
+        "<b><span style='font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>House of Assembly</span></b></p></td>"
+        "<td width='28%' style='width:28.14%;border-top:solid #D8DCE0 1.0pt;border-left:none;border-bottom:none;border-right:none;"
+        "mso-border-top-alt:solid #D8DCE0 .75pt;padding:9.0pt 7.5pt 9.0pt 7.5pt;background:#4A5A6A;'>"
+        "<p class='MsoNormal' align='right' style='margin:0;text-align:right;line-height:normal'>"
+        "<b><span style='font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>Legislative Council</span></b></p></td>"
+        "<td width='16%' style='width:15.62%;border-top:solid #D8DCE0 1.0pt;border-right:solid #D8DCE0 1.0pt;"
+        "border-left:none;border-bottom:none;mso-border-top-alt:solid #D8DCE0 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;"
+        "padding:9.0pt 7.5pt 9.0pt 7.5pt;background:#4A5A6A;'>"
+        "<p class='MsoNormal' align='right' style='margin:0;text-align:right;line-height:normal'>"
+        "<b><span style='font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>Total</span></b></p></td>"
+        "</tr>"
+        f"{_summary_rows()}"
         "</table>"
-        "</td></tr>"  # end inner table cell
-        "</table>"     # end outer white box
+        "</td>"
+        "</tr>"
+        "</table>"
+    )
+
+    # Compose full HTML using your wrapper tables and footer banner
+    # (We avoid external <link> references that Word inserts; they aren’t needed for rendering.)
+    html = (
+        "<!DOCTYPE html><html xmlns:v='urn:schemas-microsoft-com:vml' "
+        "xmlns:o='urn:schemas-microsoft-com:office:office'>"
+        "<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'></head>"
+        "<body lang='EN-AU' link='#467886' vlink='#96607D' style='tab-interval:36.0pt;word-wrap:break-word'>"
+        "<div class='WordSection1'>"
+        "<div align='center'>"
+        "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='600' "
+        "style='width:450.0pt;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>"
+        "<tr><td style='padding:0'>"
+        "<div align='center'>"
+        "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='900' "
+        "style='width:675.0pt;mso-cellspacing:0cm;background:white;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>"
+        "<tr><td style='padding:0'>"
+
+        # HERO
+        "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='100%' "
+        "style='width:100.0%;mso-cellspacing:0cm;background:#475560;mso-yfti-tbllook:1184;'>"
+        "<tr><td style='padding:18.0pt 21.0pt'>"
+        "<p class='MsoNormal' align='center' style='margin-bottom:0cm;text-align:center;line-height:normal'>"
+        "<b><span style='font-size:28.0pt;font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>"
+        "Hansard Monitor   BETA Version 18.3</span></b></p>"
+        "<p class='MsoNormal' align='center' style='margin-bottom:0cm;text-align:center;line-height:normal'>"
+        f"<span style='font-size:16.0pt;font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>"
+        f"Program Run: {now_local}</span></p>"
+        "</td></tr></table>"
+
+        # GREY SECTION
+        "<p class='MsoNormal' style='margin-bottom:0cm;line-height:0'><span style='display:none;mso-hide:all'>&nbsp;</span></p>"
+        "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='100%' "
+        "style='width:100.0%;mso-cellspacing:0cm;background:#ECF0F1;mso-yfti-tbllook:1184;'>"
+        "<tr><td style='padding:0cm 12.0pt'>"
+        "<p class='MsoNormal' style='margin-bottom:0cm;line-height:0'>&nbsp;</p>"
+
+        # SUMMARY BLOCK
+        f"{summary_table}"
+
+        # FILES & MATCHES (each as white box with gold heading rule)
+        f"{''.join('<p class=\"MsoNormal\" style=\"margin:0;line-height:0\">&nbsp;</p>'+s for s in doc_sections)}"
+
         "</td></tr>"
-        "</table>"     # end grey background wrapper
-
-        # spacer
-        "<div style=\"display:none; mso-hide:all; font-size:0; line-height:0;\">&nbsp;</div>"
-
-        # Files & matches
-        "<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" "
-        "style=\"border-collapse:separate;\">"
-        f"{''.join(doc_sections)}"
+        "<tr style='height:12.0pt'><td style='height:12.0pt;padding:0'><p class='MsoNormal' style='margin:0;line-height:0'>&nbsp;</p></td></tr>"
         "</table>"
+
+        # FOOTER BETA BANNER
+        "<p class='MsoNormal' style='margin-bottom:0cm;line-height:0'><span style='display:none;mso-hide:all'>&nbsp;</span></p>"
+        "<table class='MsoNormalTable' border='0' cellspacing='0' cellpadding='0' width='100%' "
+        "style='width:100.0%;mso-cellspacing:0cm;background:#4A5A6A;mso-yfti-tbllook:1184;'>"
+        "<tr><td style='padding:12.0pt'>"
+        "<p class='MsoNormal' align='center' style='margin-bottom:0cm;text-align:center;line-height:normal'>"
+        "<b><span style='font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>"
+        "**THIS PROGRAM IS IN BETA TESTING DO NOT FORWARD**</span></b></p>"
+        "<p class='MsoNormal' align='center' style='margin-bottom:0cm;text-align:center;line-height:normal'>"
+        "<span style='font-size:11.0pt;font-family:\"Segoe UI\",sans-serif;color:white;mso-themecolor:background1'>"
+        "Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au</span></p>"
+        "</td></tr></table>"
 
         "</td></tr></table>"
         "</div>"
-
+        "</td></tr></table>"
+        "</div>"
+        "<p class='MsoNormal' style='margin-bottom:0cm;line-height:normal'><span>&nbsp;</span></p>"
+        "</div>"
         "</body></html>"
     )
 
