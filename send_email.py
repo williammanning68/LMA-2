@@ -211,7 +211,15 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
             pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
         else:
             pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
-        out = pat.sub(lambda m: f"<strong>{m.group(0)}</strong>", out)
+        # Highlight with the same markup used in the Outlook template
+        out = pat.sub(
+            lambda m: (
+                "<b><span style='background:lightgrey;mso-highlight:lightgrey'>"
+                + m.group(0)
+                + "</span></b>"
+            ),
+            out,
+        )
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -316,6 +324,140 @@ def parse_chamber_from_filename(filename: str) -> str:
     if "legislative_council" in name:
         return "Legislative Council"
     return "Unknown"
+
+
+def load_sent_log() -> set[str]:
+    """Return a set of transcript filenames that have already been sent."""
+    if LOG_FILE.exists():
+        with open(LOG_FILE, encoding="utf-8") as f:
+            return {ln.strip() for ln in f if ln.strip()}
+    return set()
+
+
+def update_sent_log(files: list[str]):
+    """Append the given transcript filenames to the sent log."""
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        for fp in files:
+            f.write(Path(fp).name + "\n")
+
+
+SUMMARY_ROW_TMPL = """
+<tr>
+ <td width="28%" style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{kw}</span></b></p></td>
+ <td width="28%" style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{ha}</span></b></p></td>
+ <td width="28%" style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{lc}</span></b></p></td>
+ <td width="15%" style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{total}</span></b></p></td>
+</tr>
+"""
+
+
+def _build_file_section_html(filename: str, matches):
+    """Return HTML for a single transcript section."""
+    rows = []
+    for idx, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
+        if len(line_list) == 1:
+            line_txt = f"line {line_list[0]}"
+        else:
+            line_txt = "lines " + ", ".join(str(n) for n in line_list)
+
+        rows.append(
+            f"""
+<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;border:solid #D8DCE0 1.0pt;mso-border-alt:solid #D8DCE0 .75pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm">
+ <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+  <td style='border:none;border-bottom:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #D8DCE0 .75pt;background:#ECF0F1;padding:7.5pt 9.0pt 7.5pt 9.0pt'>
+   <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
+    <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;height:24.0pt'>
+     <td width=32 style='width:24.0pt;background:#4A5A6A;padding:0cm 0cm 0cm 0cm;height:24.0pt'>
+      <p class=MsoNormal align=center style='text-align:center'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:white'>{idx}</span></b></p>
+     </td>
+     <td width=426 style='width:319.4pt;padding:0cm 0cm 0cm 9.0pt;height:24.0pt'>
+      <p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{_html_escape(speaker)}</span></b></p>
+     </td>
+     <td width=358 style='width:268.6pt;padding:0cm 0cm 0cm 0cm;height:24.0pt'>
+      <p class=MsoNormal align=right style='text-align:right'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{line_txt}</span></p>
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
+  <td style='border:none;padding:10.5pt 12.0pt 10.5pt 12.0pt'>
+   <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{excerpt_html}</span></p>
+  </td>
+ </tr>
+</table>
+<p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'><o:p>&nbsp;</o:p></span></p>
+"""
+        )
+    section_html = (
+        f"""
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
+ <tr>
+  <td style='border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;padding:9.0pt 10.5pt 9.0pt 10.5pt'>
+   <p class=MsoNormal><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{filename}</span></b></p>
+   <p class=MsoNormal><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{len(matches)} match(es)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td style='border:solid #D8DCE0 1.0pt;border-top:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #D8DCE0 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;background:white;padding:7.5pt 9.0pt 7.5pt 9.0pt'>
+   {''.join(rows)}
+  </td>
+ </tr>
+</table>
+"""
+    )
+    return section_html
+
+
+def build_digest_html(files: list[str], keywords: list[str]):
+    """Assemble the full email HTML body using the Word/Outlook template."""
+    template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8")
+    run_date = datetime.now().strftime("%d %B %Y")
+    template_html = template_html.replace("[DATE]", run_date)
+
+    counts = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
+    sections = []
+    total_hits = 0
+
+    for f in files:
+        text = Path(f).read_text(encoding="utf-8")
+        matches = extract_matches(text, keywords)
+        if not matches:
+            continue
+        total_hits += len(matches)
+        chamber = parse_chamber_from_filename(Path(f).name)
+        for kw_set, _, _, _, _, _ in matches:
+            for kw in kw_set:
+                counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
+                counts[kw][chamber] += 1
+        sections.append(_build_file_section_html(Path(f).name, matches))
+
+    # Summary table rows
+    summary_rows = []
+    for kw in keywords:
+        ha = counts.get(kw, {}).get("House of Assembly", 0)
+        lc = counts.get(kw, {}).get("Legislative Council", 0)
+        summary_rows.append(SUMMARY_ROW_TMPL.format(kw=_html_escape(kw), ha=ha, lc=lc, total=ha + lc))
+    summary_html = "".join(summary_rows)
+
+    # Replace the sample summary row
+    template_html = re.sub(
+        r"<tr>\s*<td[^>]*>\s*<p[^>]*><b><span[^>]*>pokies</span>.*?</tr>",
+        summary_html,
+        template_html,
+        flags=re.DOTALL,
+    )
+
+    # Replace the sample section block
+    sections_html = "".join(sections)
+    template_html = re.sub(
+        r"<!-- Sample section to be replaced -->.*<!-- End sample section -->",
+        sections_html,
+        template_html,
+        flags=re.DOTALL,
+    )
+
+    return template_html, total_hits, counts
 
 
 
