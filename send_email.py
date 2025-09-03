@@ -10,22 +10,18 @@ import subprocess  # optional: only used if ATTRIB_WITH_LLM=1
 # File that records which transcripts have already been emailed
 LOG_FILE = Path("sent.log")
 
-# --- Tunables (extraction behaviour stays the same) --------------------------
-MAX_SNIPPET_CHARS = 800   # upper bound after merging windows; keep readable but compact
-WINDOW_PAD_SENTENCES = 1  # for non-first-sentence hits: one sentence either side
-FIRST_SENT_FOLLOWING = 2  # for first-sentence hits: include next two sentences
-MERGE_IF_GAP_GT = 2       # Only merge windows if the gap (in sentences) is > this value
+# --- Tunables ---------------------------------------------------------------
+MAX_SNIPPET_CHARS = 800
+WINDOW_PAD_SENTENCES = 1
+FIRST_SENT_FOLLOWING = 2
+MERGE_IF_GAP_GT = 2
 
 # --- Template inputs ---------------------------------------------------------
-# Point to the bundled Outlook/Word HTML template (can be overridden via env)
-TEMPLATE_HTML_PATH = Path(
-    os.environ.get("TEMPLATE_HTML_PATH", "email_template.html")
-)
+TEMPLATE_HTML_PATH = Path(os.environ.get("TEMPLATE_HTML_PATH", "email_template (1).html"))
 DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
 
 # --- Helpers -----------------------------------------------------------------
 def load_keywords():
-    """Load keywords from keywords.txt or KEYWORDS env var, ignoring comments and stripping quotes."""
     if os.path.exists("keywords.txt"):
         kws = []
         with open("keywords.txt", encoding="utf-8") as f:
@@ -144,21 +140,6 @@ def _compile_kw_patterns(keywords):
             pats.append((kw, re.compile(rf"\b{re.escape(kw)}\b", re.IGNORECASE)))
     return pats
 
-def _html_escape(s: str) -> str:
-    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-
-def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
-    out = text_html
-    for kw in sorted(keywords, key=len, reverse=True):
-        if " " in kw:
-            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
-        else:
-            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
-        # Outlook-friendly highlight (matches the template)
-        out = pat.sub(lambda m: "<b><span style='background:lightgrey;mso-highlight:lightgrey'>"
-                                 + m.group(0) + "</span></b>", out)
-    return out
-
 def _collect_hits_in_utterance(utt, kw_pats):
     hits = []
     joined = utt["joined"]
@@ -199,8 +180,7 @@ def _dedup_windows(wins):
             bucket[key][1] |= lines
         else:
             bucket[key] = [set(kws), set(lines)]
-    deduped = [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
-    return deduped
+    return [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
 
 def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     if not wins:
@@ -214,6 +194,20 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
         else:
             merged.append([s, e, kws, lines])
     return merged
+
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        if " " in kw:
+            pat = re.compile(re.escape(_html_escape(kw)), re.IGNORECASE)
+        else:
+            pat = re.compile(rf"\b{re.escape(_html_escape(kw))}\b", re.IGNORECASE)
+        out = pat.sub(lambda m: "<b><span style='background:lightgrey;mso-highlight:lightgrey'>"
+                                 + m.group(0) + "</span></b>", out)
+    return out
 
 def _excerpt_from_window_html(utt, win, keywords):
     sents = utt["sents"]
@@ -266,10 +260,6 @@ Use the transcript context (previous lines first, then nearby):
         return None
 
 def extract_matches(text: str, keywords):
-    """Return list of: (kw_set, excerpt_html, speaker, line_numbers_list, win_start_line, win_end_line)"""
-    use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
-    llm_timeout = int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30"))
-
     utts, all_lines = _build_utterances(text)
     kw_pats = _compile_kw_patterns(keywords)
 
@@ -287,10 +277,11 @@ def extract_matches(text: str, keywords):
         wins = _dedup_windows(wins)
         merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
 
+        use_llm = os.environ.get("ATTRIB_WITH_LLM", "").lower() in ("1", "true", "yes")
         if use_llm and _looks_suspicious(speaker):
             candidates = sorted({u["speaker"] for u in utts if u["speaker"]})
             earliest_line = min(min(w[3]) for w in merged)
-            guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=llm_timeout)
+            guess = _llm_qc_speaker(all_lines, earliest_line, candidates, timeout=int(os.environ.get("ATTRIB_LLM_TIMEOUT", "30")))
             if guess:
                 speaker = guess
 
@@ -300,125 +291,92 @@ def extract_matches(text: str, keywords):
 
     return results
 
-# --- Outlook whitespace tighter ----------------------------------------------
+# --- Aggressive Outlook whitespace cleaner -----------------------------------
 _EMPTY_MSOP_RE = re.compile(
-    r"<p[^>]*>\s*(?:&nbsp;|<o:p>\s*&nbsp;\s*</o:p>|<br[^>]*>|\s)*</p>",
+    r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+    r"<o:p>\s*&nbsp;\s*</o:p>|"
+    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
     flags=re.I,
 )
 def _tighten_outlook_whitespace(html: str) -> str:
-    # 1) Remove empty Word/Outlook paragraphs like <p class=MsoNormal>&nbsp;</p>
-    html = _EMPTY_MSOP_RE.sub("", html)
-    # 2) Collapse runs of <br> into a single nothing (we provide spacing via padding)
-    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "", html, flags=re.I)
-    # 3) Remove whitespace between adjacent tables (common around our sections)
-    html = re.sub(r"</table>\s+(?=<table\b)", "</table>", html, flags=re.I)
-    # 4) Remove blank space just inside table cells
-    html = re.sub(r">(?:\s|&nbsp;|<br[^>]*>)+</td>", "></td>", html, flags=re.I)
+    html = _EMPTY_MSOP_RE.sub("", html)  # remove empty paras (even wrapped)
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){1,}", "", html, flags=re.I)  # kill stray <br>
+    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)  # tighten table-to-table
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)  # trim inside <td>
     return html
 
-# --- Digest / visual assembly (injecting into your HTML) ---------------------
-def parse_date_from_filename(filename: str):
-    m = re.search(r"(\d{1,2} \w+ \d{4})", filename)
-    if m:
-        try:
-            return datetime.strptime(m.group(1), "%d %B %Y")
-        except ValueError:
-            return datetime.min
-    return datetime.min
-
-def parse_chamber_from_filename(filename: str) -> str:
-    name = filename.lower()
-    if "house_of_assembly" in name:
-        return "House of Assembly"
-    if "legislative_council" in name:
-        return "Legislative Council"
-    return "Unknown"
-
-# Summary table row (make <p> margins zero to avoid Outlook padding)
+# --- Visual assembly ----------------------------------------------------------
 SUMMARY_ROW_TMPL = """
 <tr>
- <td width="28%" style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal style='margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{kw}</span></b></p></td>
- <td width="28%" style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{ha}</span></b></p></td>
- <td width="28%" style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{lc}</span></b></p></td>
- <td width="15%" style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{total}</span></b></p></td>
+ <td width="28%" style='width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal style='margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;color:black'>{kw}</span></b></p></td>
+ <td width="28%" style='width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;color:black'>{ha}</span></b></p></td>
+ <td width="28%" style='width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;color:black'>{lc}</span></b></p></td>
+ <td width="15%" style='width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #ECF0F1 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;padding:6.0pt 7.5pt 6.0pt 7.5pt'><p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;color:black'>{total}</span></b></p></td>
 </tr>
 """
 
 def _build_file_section_html(filename: str, matches):
-    """Return HTML for a single transcript section."""
-    rows: list[str] = []
-    for idx, (kw_set, excerpt_html, speaker, line_list, win_start, win_end) in enumerate(matches, 1):
-        if len(line_list) == 1:
-            line_txt = f"line {line_list[0]}"
-        else:
-            line_txt = "lines " + ", ".join(str(n) for n in line_list)
+    """Tight, Outlook-safe section with fixed line-heights and no MsoNormal paras."""
+    def _esc(s): return _html_escape(s) if s else ""
 
-        rows.append(
-            f"""
-<table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;border:solid #D8DCE0 1.0pt;mso-border-alt:solid #D8DCE0 .75pt;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm">
- <tr>
-  <td style='border:none;border-bottom:solid #D8DCE0 1.0pt;mso-border-bottom-alt:solid #D8DCE0 .75pt;background:#ECF0F1;padding:7.5pt 9.0pt 7.5pt 9.0pt'>
-   <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
-    <tr style='height:24.0pt'>
-     <td width=32 style='width:24.0pt;background:#4A5A6A;height:24.0pt;border:0;mso-border-alt:none;'>
-      <p class=MsoNormal align=center style='text-align:center;margin:0;line-height:24px;mso-line-height-rule:exactly;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:white'>{idx}</span></b></p>
-     </td>
-     <td width=426 style='width:319.4pt;padding:0cm 0cm 0cm 9.0pt;height:24.0pt'>
-      <p class=MsoNormal style='margin:0;line-height:16px;mso-line-height-rule:exactly;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;text-transform:uppercase;'>{_html_escape(speaker) if speaker else "UNKNOWN"}</span></b></p>
-     </td>
-     <td width=358 style='width:268.6pt;padding:0cm 0cm 0cm 0cm;height:24.0pt'>
-      <p class=MsoNormal align=right style='text-align:right;margin:0;line-height:16px;mso-line-height-rule:exactly;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{line_txt}</span></p>
-     </td>
-    </tr>
-   </table>
-  </td>
- </tr>
- <tr>
-  <td style='border:none;padding:10.5pt 12.0pt 10.5pt 12.0pt'>
-   <p class=MsoNormal style='margin:0;line-height:20px;mso-line-height-rule:exactly;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos'>{excerpt_html}</span></p>
-  </td>
+    rows = []
+    for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
+        line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
+
+        rows.append(f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;border:1px solid #D8DCE0;">
+  <tr>
+    <td style="background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:6px 10px;font-size:0;line-height:0;mso-line-height-rule:exactly;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td width="36" align="center" valign="middle" style="background:#4A5A6A;border:0;height:24px;">
+            <div style="font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;">{idx}</div>
+          </td>
+          <td width="10" style="font-size:0;line-height:0;">&nbsp;</td>
+          <td valign="middle">
+            <div style="font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;line-height:16px;mso-line-height-rule:exactly;">{_esc(speaker) or 'UNKNOWN'}</div>
+          </td>
+          <td align="right" valign="middle">
+            <div style="font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;">{line_txt}</div>
+          </td>
+        </tr>
+      </table>
+    </td>
   </tr>
-  </table>
-  """
-        )
-        if idx < len(matches):
-            rows.append(
-                """
-<table role='presentation' width='100%' cellspacing='0' cellpadding='0' border='0'>
- <tr><td height='6' style='line-height:0;font-size:0;'>&nbsp;</td></tr>
+  <tr>
+    <td style="padding:10px 12px;">
+      <div style="font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:19px;mso-line-height-rule:exactly;">{excerpt_html}</div>
+    </td>
+  </tr>
+</table>
+<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='height:4px;line-height:4px;font-size:0;'>&nbsp;</td></tr></table>
+""")
+
+    return f"""
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+  <tr>
+    <td style="border-left:3px solid #C5A572;background:#F7F9FA;padding:8px 12px;">
+      <div style="font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:16px;mso-line-height-rule:exactly;">{_esc(filename)}</div>
+      <div style="font:10pt 'Segoe UI',sans-serif;color:#000;line-height:16px;mso-line-height-rule:exactly;">{len(matches)} match(es)</div>
+    </td>
+  </tr>
+  <tr>
+    <td style="border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:8px 9px;">
+      {''.join(rows)}
+    </td>
+  </tr>
 </table>
 """
-            )
-    section_html = (
-        f"""
-<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style='width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0cm 0cm 0cm 0cm'>
- <tr>
-  <td style='border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;padding:9.0pt 10.5pt 9.0pt 10.5pt'>
-   <p class=MsoNormal style='margin:0;'><b><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{filename}</span></b></p>
-   <p class=MsoNormal style='margin:0;'><span style='font-size:10.0pt;font-family:"Segoe UI",sans-serif;mso-fareast-font-family:Aptos;color:black;mso-color-alt:windowtext'>{len(matches)} match(es)</span></p>
-  </td>
- </tr>
- <tr>
-  <td style='border:solid #D8DCE0 1.0pt;border-top:none;mso-border-left-alt:solid #D8DCE0 .75pt;mso-border-bottom-alt:solid #D8DCE0 .75pt;mso-border-right-alt:solid #D8DCE0 .75pt;background:white;padding:7.5pt 9.0pt 7.5pt 9.0pt'>
-   {''.join(rows)}
-  </td>
- </tr>
-</table>
-"""
-    )
-    return section_html
 
 def build_digest_html(files: list[str], keywords: list[str]):
-    """Assemble the full email HTML body using the Word/Outlook template."""
-    # Read as Windows-1252 to match the template meta and avoid mojibake for special chars
     template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
     run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
 
-    # Make sure the section title uses Segoe UI even if the template was missing it
+    # Ensure section title font family is Segoe UI (belt-and-suspenders)
     template_html = template_html.replace(
-        "<span style=\"font-size:12.0pt;color:black\">Detection Match by Chamber</span>",
-        "<span style=\"font-size:12.0pt;font-family:'Segoe UI',sans-serif;color:black\">Detection Match by Chamber</span>",
+        '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
+        '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
     )
 
     counts = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
@@ -427,10 +385,8 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     def parse_chamber_from_filename(filename: str) -> str:
         name = filename.lower()
-        if "house_of_assembly" in name:
-            return "House of Assembly"
-        if "legislative_council" in name:
-            return "Legislative Council"
+        if "house_of_assembly" in name: return "House of Assembly"
+        if "legislative_council" in name: return "Legislative Council"
         return "Unknown"
 
     for f in files:
@@ -443,10 +399,11 @@ def build_digest_html(files: list[str], keywords: list[str]):
         for kw_set, _, _, _, _, _ in matches:
             for kw in kw_set:
                 counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
-                counts[kw][chamber] += 1
+                if chamber in counts[kw]:
+                    counts[kw][chamber] += 1
         sections.append(_build_file_section_html(Path(f).name, matches))
 
-    # Summary table rows
+    # Build summary table rows with tight paragraph margins
     summary_rows = []
     for kw in keywords:
         ha = counts.get(kw, {}).get("House of Assembly", 0)
@@ -454,9 +411,9 @@ def build_digest_html(files: list[str], keywords: list[str]):
         summary_rows.append(SUMMARY_ROW_TMPL.format(kw=_html_escape(kw), ha=ha, lc=lc, total=ha + lc))
     summary_html = "".join(summary_rows)
 
-    # Replace the sample summary row
+    # Replace the sample summary row (first data row after the header)
     template_html = re.sub(
-        r"<tr>\s*<td[^>]*>\s*<p[^>]*><b><span[^>]*>pokies</span>.*?</tr>",
+        r"<tr>\s*<td[^>]*>\s*<p[^>]*>\s*<b>\s*<span[^>]*>\s*pokies\s*</span>.*?</tr>",
         summary_html,
         template_html,
         flags=re.DOTALL | re.IGNORECASE,
@@ -465,15 +422,14 @@ def build_digest_html(files: list[str], keywords: list[str]):
     # Replace the sample section block
     sections_html = "".join(sections)
     template_html = re.sub(
-        r"<!-- Sample section to be replaced -->.*<!-- End sample section -->",
+        r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->",
         sections_html,
         template_html,
         flags=re.DOTALL | re.IGNORECASE,
     )
 
-    # Tighten Outlook/Word whitespace before returning/sending
+    # Final pass: strip Outlook/Word ghost spacing
     template_html = _tighten_outlook_whitespace(template_html)
-
     return template_html, total_hits, counts
 
 # --- Sent log helpers --------------------------------------------------------
@@ -494,7 +450,6 @@ def main():
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO = os.environ["EMAIL_TO"]
 
-    # Gmail defaults, overridable via env
     SMTP_HOST = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     SMTP_PORT = int(os.environ.get("SMTP_PORT", "587"))
     SMTP_STARTTLS = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
@@ -528,12 +483,12 @@ def main():
         smtp_ssl=SMTP_SSL,
     )
 
-    # Pass HTML string directly so yagmail doesn't inject <br> separators.
+    # Pass the HTML string directly so yagmail doesn't insert <br> separators.
     yag.send(
         to=to_list,
         subject=subject,
-        contents=body_html,  # HTML string
-        attachments=files,   # also attach the transcripts
+        contents=body_html,
+        attachments=files,
     )
 
     update_sent_log(files)
