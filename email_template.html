@@ -1,155 +1,151 @@
-<!doctype html>
-<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
+<html>
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Hansard Monitor</title>
-
-  <!-- Basic resets that play well with Outlook; MSO-specific rules are injected by the Python -->
-  <style>
-    /* General */
-    html,body{margin:0;padding:0;background:#F5F7F9}
-    img{border:0;height:auto;line-height:100%;outline:none;text-decoration:none}
-    table{border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt}
-    .wrap{width:100%}
-    .container{width:675px;max-width:675px}
-    .font{font-family:'Segoe UI',Arial,Helvetica,sans-serif}
-    .muted{color:#6A7682}
-    .title{color:#FFFFFF}
-    .hmsurface{background:#475560}
-    .panel{background:#ECF0F1}
-    .panel-inner{background:#FFFFFF;border:1px solid #D8DCE0}
-    .section-hdr{border-bottom:2px solid #C5A572}
-    .pad-0{padding:0}
-    .pad-xs{padding:4px 8px}
-    .pad-sm{padding:6px 10px}
-    .pad-md{padding:12px 14px}
-    .pad-lg{padding:18px 21px}
-    .lh-tight{line-height:16px}
-    .lh-base{line-height:18px}
-    .lh-loose{line-height:22px}
-    .small{font-size:13px}
-    .base{font-size:15px}
-    .lg{font-size:16px}
-    .xl{font-size:27px}
-    .tbl-hdr{background:#4A5A6A;color:#FFFFFF}
-    .tbl-cell{border-bottom:1px solid #ECF0F1}
-    .tbl-left{border-left:1px solid #D8DCE0}
-    .tbl-right{border-right:1px solid #D8DCE0}
-    .num{font-weight:700;color:#000;text-align:center}
-    .kw{font-weight:700;color:#000}
-    .badge{background:#4A5A6A;color:#FFF;font-weight:700;font-size:13px;height:18px;line-height:18px;display:inline-block;text-align:center;width:32px}
-    .card-hdr{background:#ECF0F1;border-bottom:1px solid #D8DCE0}
-    .section-rail{border-left:3px solid #C5A572;background:#F7F9FA}
-    /* Make paragraphs tight in Outlook as well; Python also injects an MSO reset */
-    p{margin:0}
-  </style>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Hansard Monitor Template</title>
 </head>
-<body class="font" style="mso-line-height-rule:exactly;">
+<body>
+<div class="WordSection1">
+<div align="center">
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="900" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+ <tr>
+  <td>
+   <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="900" style="background:white;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+    <tr>
+     <td>
 
-  <!-- Outer wrapper -->
-  <table class="wrap" role="presentation" width="100%" cellpadding="0" cellspacing="0">
-    <tr><td align="center">
-
-      <!-- Fixed container -->
-      <table class="container" role="presentation" width="675" cellpadding="0" cellspacing="0">
-        <tr><td class="pad-0">
-
-          <!-- Header -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="hmsurface">
-            <tr>
-              <td class="pad-lg">
-                <p class="xl title" style="mso-line-height-rule:exactly;"><b>Hansard Monitor – BETA Version 18.3</b></p>
-                <p class="lg title" style="mso-line-height-rule:exactly;">Program Run: [DATE]</p>
-              </td>
-            </tr>
-          </table>
-
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="6" style="height:6px;line-height:6px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td></tr></table>
-
-          <!-- Detection panel -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="panel">
-            <tr>
-              <td class="pad-0" style="padding:6px 0;">
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="panel-inner">
-                  <!-- Section heading -->
-                  <tr>
-                    <td class="pad-md section-hdr" align="center">
-                      <p class="lg" style="color:#000;"><b>Detection Match by Chamber</b></p>
-                    </td>
-                  </tr>
-
-                  <!-- Table -->
-                  <tr>
-                    <td class="pad-sm">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                        <tr class="tbl-hdr">
-                          <td class="pad-sm tbl-left small"><b>Keyword</b></td>
-                          <td class="pad-sm small" align="center"><b>House of Assembly</b></td>
-                          <td class="pad-sm small" align="center"><b>Legislative Council</b></td>
-                          <td class="pad-sm tbl-right small" align="center"><b>Total</b></td>
-                        </tr>
-
-                        <!-- Python will keep the header row above and replace everything beneath it -->
-                        <tr>
-                          <td class="pad-sm tbl-left tbl-cell small kw">sample keyword</td>
-                          <td class="pad-sm tbl-cell small num" align="center">0</td>
-                          <td class="pad-sm tbl-cell small num" align="center">0</td>
-                          <td class="pad-sm tbl-right tbl-cell small num" align="center">0</td>
-                        </tr>
-
-                      </table>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="6" style="height:6px;line-height:6px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td></tr></table>
-
-          <!-- Sample section to be replaced (Python removes this block entirely) -->
-          <!-- Sample section to be replaced -->
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-            <tr><td class="pad-0">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td class="pad-sm section-rail">
-                    <p class="small" style="color:#000;"><b>transcript_file.txt</b></p>
-                    <p class="small muted">0 match(es)</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="pad-sm panel-inner">
-                    <!-- Example card -->
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #D8DCE0;">
-                      <tr class="card-hdr">
-                        <td class="pad-xs" width="32" align="center"><span class="badge">1</span></td>
-                        <td class="pad-xs"><p class="small" style="color:#24313F;text-transform:uppercase;"><b>SPEAKER NAME</b></p></td>
-                        <td class="pad-xs" align="right"><p class="small muted">lines 12–14</p></td>
-                      </tr>
-                      <tr>
-                        <td class="pad-sm" colspan="3">
-                          <p class="small" style="color:#1F2A36;">This is an example excerpt that will be replaced by the Python generator.</p>
-                        </td>
-                      </tr>
-                    </table>
-
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="2" style="height:2px;line-height:2px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td></tr></table>
-                  </td>
-                </tr>
-              </table>
-            </td></tr>
-          </table>
-          <!-- End sample section -->
-
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td height="6" style="height:6px;line-height:6px;font-size:0;mso-line-height-rule:exactly;">&nbsp;</td></tr></table>
-
-        </td></tr>
+      <!-- HEADER -->
+      <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="91%" style="background:#475560;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;" align="center">
+       <tr>
+        <td style="padding:18.0pt 21.0pt 18.0pt 21.0pt">
+         <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:20.0pt;font-family:'Segoe UI',sans-serif;color:white">Hansard Monitor – BETA Version 18.3</span></b></p>
+         <p class="MsoNormal" align="center" style="text-align:center"><span style="font-size:12.0pt;font-family:'Segoe UI',sans-serif;color:white">Program Run: [DATE]</span></p>
+        </td>
+       </tr>
       </table>
 
-    </td></tr>
-  </table>
+      <!-- SPACER -->
+      <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="91%" align="center">
+       <tr><td style="height:10.0pt;line-height:10.0pt;font-size:0;">&nbsp;</td></tr>
+      </table>
+
+      <!-- DETECTION SUMMARY WRAPPER -->
+      <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="91%" style="background:#ECF0F1;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;" align="center">
+       <tr>
+        <td style="padding:12.0pt 12.0pt 12.0pt 12.0pt">
+         <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="background:white;border:solid #D8DCE0 1.0pt;border-collapse:collapse;">
+          <tr>
+           <td style="border-bottom:solid #C5A572 2.25pt;padding:12.0pt 16.0pt 12.0pt 16.0pt">
+            <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:12.0pt;color:black">Detection Match by Chamber</span></b></p>
+           </td>
+          </tr>
+          <tr>
+           <td style="padding:10.0pt 12.0pt 10.0pt 12.0pt">
+            <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="background:white;border-collapse:collapse;">
+             <tr>
+              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Keyword</span></b></p>
+              </td>
+              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">House of Assembly</span></b></p>
+              </td>
+              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Legislative Council</span></b></p>
+              </td>
+              <td width="15%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Total</span></b></p>
+              </td>
+             </tr>
+             <tr>
+              <td width="28%" style="border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;padding:7.5pt 10.0pt 7.5pt 10.0pt">
+                <p class="MsoNormal" style="margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">pokies</span></b></p>
+              </td>
+              <td width="28%" style="border-bottom:solid #ECF0F1 1.0pt;padding:7.5pt 10.0pt 7.5pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">3</span></b></p>
+              </td>
+              <td width="28%" style="border-bottom:solid #ECF0F1 1.0pt;padding:7.5pt 10.0pt 7.5pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">0</span></b></p>
+              </td>
+              <td width="15%" style="border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;padding:7.5pt 10.0pt 7.5pt 10.0pt">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">3</span></b></p>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+      </table>
+
+      <!-- SPACER -->
+      <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="91%" align="center">
+       <tr><td style="height:10.0pt;line-height:10.0pt;font-size:0;">&nbsp;</td></tr>
+      </table>
+
+      <!-- Sample section to be replaced -->
+      <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="91%" align="center" style="border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;">
+       <tr>
+        <td style="border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;padding:10.5pt 12.0pt 10.5pt 12.0pt">
+         <p class="MsoNormal" style="margin:0 0 2pt 0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">Sample_File.txt</span></b></p>
+         <p class="MsoNormal" style="margin:0;"><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black">1 match(es)</span></p>
+        </td>
+       </tr>
+       <tr>
+        <td style="border:solid #D8DCE0 1.0pt;border-top:none;background:white;padding:9.0pt 10.5pt 9.0pt 10.5pt">
+         <table class="MsoNormalTable" border="1" cellspacing="0" cellpadding="0" width="100%" style="border:solid #D8DCE0 1.0pt;border-collapse:collapse;">
+          <tr>
+           <td style="border:none;border-bottom:solid #D8DCE0 1.0pt;background:#ECF0F1;padding:7.5pt 9.0pt 7.5pt 9.0pt">
+            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="border-collapse:collapse;">
+             <tr style="height:24.0pt">
+              <!-- NUMBER BADGE: dark slate, no border -->
+              <td width="32" style="background:#4A5A6A;height:24.0pt;border:0;mso-border-alt:none;line-height:24.0pt;">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;line-height:24.0pt;mso-line-height-rule:exactly;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">1</span></b></p>
+              </td>
+              <td style="padding:0 0 0 9.0pt;height:24.0pt">
+                <!-- SPEAKER: force uppercase rendering -->
+                <p class="MsoNormal" style="margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;text-transform:uppercase;">Speaker</span></b></p>
+              </td>
+              <td style="height:24.0pt" align="right">
+                <p class="MsoNormal" style="text-align:right;margin:0;"><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif">line 1</span></p>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+          <tr>
+           <td style="padding:12.0pt 12.0pt 12.0pt 12.0pt">
+            <!-- KEYWORD HIGHLIGHT: bold + light grey background -->
+            <p class="MsoNormal" style="margin:0;"><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif">Excerpt with <b><span style="background:lightgrey">keyword</span></b>.</span></p>
+           </td>
+          </tr>
+         </table>
+        </td>
+       </tr>
+      </table>
+      <!-- End sample section -->
+
+      <!-- SPACER -->
+      <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="91%" align="center">
+       <tr><td style="height:10.0pt;line-height:10.0pt;font-size:0;">&nbsp;</td></tr>
+      </table>
+
+      <!-- FOOTER -->
+      <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="91%" style="background:#4A5A6A;border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;" align="center">
+       <tr>
+        <td style="padding:12.0pt 12.0pt 12.0pt 12.0pt">
+         <p class="MsoNormal" align="center" style="text-align:center;margin:0 0 3pt 0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">**THIS PROGRAM IS IN BETA TESTING – DO NOT FORWARD**</span></b></p>
+         <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><span style="font-size:9.0pt;font-family:'Segoe UI',sans-serif;color:white">Contact developer with any issues, queries, or suggestions: William.Manning@FederalGroup.com.au</span></p>
+        </td>
+       </tr>
+      </table>
+
+     </td>
+    </tr>
+   </table>
+  </td>
+ </tr>
+</table>
+</div>
+</div>
 </body>
 </html>
