@@ -383,6 +383,22 @@ def _load_template_text(path: Path = TEMPLATE_HTML_PATH) -> str:
         except UnicodeDecodeError as e:
             raise RuntimeError("Template must be decodable as Windows-1252 or UTF-8") from e
 
+
+def _load_transcript_text(path: Path) -> str:
+    raw = path.read_bytes()
+    try:
+        cp_text = raw.decode("windows-1252")
+    except UnicodeDecodeError:
+        cp_text = None
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError as e:
+        if cp_text is not None:
+            return cp_text
+        raise RuntimeError(
+            f"Transcript {path} must be decodable as Windows-1252 or UTF-8"
+        ) from e
+
 # =============================================================================
 # Per-file sections (“cards”) — Outlook-safe, tight
 # =============================================================================
@@ -485,7 +501,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
     sections, total_matches = [], 0
 
     for f in files:
-        text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        text = _load_transcript_text(Path(f))
         matches = extract_matches(text, keywords)
         if not matches:
             continue

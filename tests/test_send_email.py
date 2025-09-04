@@ -46,6 +46,16 @@ class TemplateDecodeTest(unittest.TestCase):
         self.assertEqual(send_email._load_template_text(DummyPath()), "ok")
 
 
+class TranscriptDecodeTest(unittest.TestCase):
+    def test_invalid_bytes_raise(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bad = Path(tmp) / "bad.txt"
+            bad.write_bytes(b"\x81")
+            with self.assertRaises(RuntimeError) as cm:
+                send_email.build_digest_html([str(bad)], ["kw"])
+            self.assertIn("Windows-1252 or UTF-8", str(cm.exception))
+
+
 class EncodingIntegrationTest(unittest.TestCase):
     def test_dash_preserved(self):
         with tempfile.TemporaryDirectory() as tmp:
