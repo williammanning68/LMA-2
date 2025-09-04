@@ -149,15 +149,15 @@ def _build_detection_rows(counts: Dict[str, Dict[str, int]]) -> str:
     return "\n".join(rows) if rows else """<tr><td colspan=4 style="padding:8pt; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; color:#6B7280;">No detections.</td></tr>"""
 
 
-def _build_sections(per_file_hits: Dict[str, Dict[str, List[Tuple[int, str]]]]) -> str:
+def _build_sections(per_file_hits: Dict[Path, Dict[str, List[Tuple[int, str]]]]) -> str:
     blocks = []
     for file, by_kw in per_file_hits.items():
-        chamber = _chamber_from_filename(Path(file).name)
+        chamber = _chamber_from_filename(file.name)
         # Header for file
         header = f"""
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="91%" align="center" style="margin:0 auto 6pt auto;">
           <tr>
-            <td style="font-family:'Segoe UI', Arial, sans-serif; font-size:11pt; color:#111827; padding:4pt 0 2pt 0;">{html.escape(Path(file).name)} — {html.escape(chamber)}</td>
+            <td style="font-family:'Segoe UI', Arial, sans-serif; font-size:11pt; color:#111827; padding:4pt 0 2pt 0;">{html.escape(file.name)} — {html.escape(chamber)}</td>
           </tr>
         </table>
         """
@@ -210,8 +210,8 @@ def _build_message(subject: str, html_body: str, attachments: List[Path]) -> Ema
 
     # Provide a minimal plain text fallback
     plain = re.sub(r"<[^>]+>", "", html_body)
-    msg.set_content(plain, charset="utf-8")
-    msg.add_alternative(html_body, subtype="html", charset="utf-8")
+    msg.set_content(plain, charset="windows-1252")
+    msg.add_alternative(html_body, subtype="html", charset="windows-1252")
 
     for p in attachments:
         try:
@@ -261,13 +261,13 @@ def main() -> int:
 
     # Aggregate detections per keyword and per file
     per_kw_counts: Dict[str, Dict[str, int]] = {}
-    per_file_hits: Dict[str, Dict[str, List[Tuple[int, str]]]] = {}
+    per_file_hits: Dict[Path, Dict[str, List[Tuple[int, str]]]] = {}
 
     for p in transcripts:
         text = p.read_text(encoding="utf-8", errors="ignore")
         by_kw = _find_hits(text, keywords) if keywords else {}
         if by_kw:
-            per_file_hits[str(p)] = by_kw
+            per_file_hits[p] = by_kw
             # Update counts per chamber
             chamber = _chamber_from_filename(p.name)
             for kw, items in by_kw.items():
