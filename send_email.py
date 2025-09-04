@@ -334,19 +334,22 @@ def _inject_mso_css_reset(html: str) -> str:
 # =============================================================================
 
 def _build_detection_row(kw, hoa, lc, tot) -> str:
-    # Use pixel paddings; margin:0 paragraphs
-    return (
-        "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;border-right:none;padding:8px 10px;'>"
-        f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
-        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
-        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
-        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
-        "</tr>"
-    )
+return (
+"<tr>"
+"<td class='fs-sm' style=\"padding:8px 12px;border-bottom:1px solid #ECF0F1;font:10pt 'Segoe UI',sans-serif;color:#000;\"><b>"
+f"{_html_escape(kw)}"
+"</b></td>"
+"<td class='fs-sm' align='center' style=\"padding:8px 12px;border-bottom:1px solid #ECF0F1;font:10pt 'Segoe UI',sans-serif;color:#000;\"><b>"
+f"{hoa}"
+"</b></td>"
+"<td class='fs-sm' align='center' style=\"padding:8px 12px;border-bottom:1px solid #ECF0F1;font:10pt 'Segoe UI',sans-serif;color:#000;\"><b>"
+f"{lc}"
+"</b></td>"
+"<td class='fs-sm' align='center' style=\"padding:8px 12px;border-bottom:1px solid #ECF0F1;font:10pt 'Segoe UI',sans-serif;color:#000;\"><b>"
+f"{tot}"
+"</b></td>"
+"</tr>"
+)
 
 def _replace_detection_rows_in_template(html, row_html):
     # Find "Detection Match by Chamber" then the next inner table, keep header row, replace the rest.
@@ -394,71 +397,66 @@ def _inject_sections_after_detection(html, sections_html):
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
-    esc = _html_escape
-    cards = []
+esc = _html_escape
+cards = []
 
-    for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
-        line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Card header + body (top-aligned, pixel line-heights)
-        card = (
-            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
-            "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
-            "<tr>"
-            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:4px 8px;"
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
-              "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-              "<tr>"
-                "<td width='32' align='center' valign='top' style='background:#4A5A6A;border:0;height:18px;vertical-align:top;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:18px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{idx}</div>"
-                "</td>"
-                "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
-                "<td valign='top' style='vertical-align:top;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
-                  "line-height:15px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
-                "</td>"
-                "<td align='right' valign='top' style='vertical-align:top;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:15px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{line_txt}</div>"
-                "</td>"
-              "</tr>"
-              "</table>"
-            "</td>"
-            "</tr>"
-            "<tr>"
-            "<td valign='top' style='padding:6px 8px;vertical-align:top;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
-              f"{excerpt_html}</div>"
-            "</td>"
-            "</tr>"
-            "</table>"
-        )
-        cards.append(card)
+for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
+line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-    # 2px spacer BETWEEN cards (none after the last)
-    spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-              "<tr><td style='height:2px;line-height:2px;font-size:0;'>&nbsp;</td></tr></table>")
-    cards_html = spacer.join(cards)
 
-    section = (
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-        "<tr>"
-        "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
-        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
-        "</td>"
-        "</tr>"
-        "<tr>"
-        "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
-        f"{cards_html}"
-        "</td>"
-        "</tr>"
-        "</table>"
-    )
-    return section
+card = (
+"<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
+"style='border-collapse:collapse;border:1px solid #D8DCE0;background:#FFFFFF;'>"
+"<tr class='card-hdr'>"
+"<td width='32' align='center' valign='top' style='background:#4A5A6A;height:18px;vertical-align:top;padding:0;'>"
+"<div class='badge' style=\"font:bold 10pt 'Segoe UI',sans-serif;\">" f"{idx}" "</div>"
+"</td>"
+"<td style='width:8px;font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
+"<td valign='top' style='vertical-align:top;padding:6px 0;'>"
+"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;line-height:16px;mso-line-height-rule:exactly;\">"
+f"{esc(speaker) if speaker else 'UNKNOWN'}"
+"</div>"
+"</td>"
+"<td align='right' valign='top' style='vertical-align:top;padding:6px 10px 6px 0;'>"
+"<div class='muted' style=\"font:10pt 'Segoe UI',sans-serif;line-height:16px;mso-line-height-rule:exactly;\">"
+f"{esc(line_txt)}"
+"</div>"
+"</td>"
+"</tr>"
+"<tr>"
+"<td colspan='4' style='padding:12px;vertical-align:top;'>"
+"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:18px;mso-line-height-rule:exactly;\">"
+f"{excerpt_html}"
+"</div>"
+"</td>"
+"</tr>"
+"</table>"
+)
+cards.append(card)
 
+
+spacer2 = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+"<tr><td height='12' style='height:12px;line-height:12px;font-size:0;mso-line-height-rule:exactly;'>&nbsp;</td></tr></table>")
+cards_html = spacer2.join(cards)
+
+
+section = (
+"<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+"<tr>"
+"<td class='file-rail' style='border-left:3px solid #C5A572;background:#F7F9FA;padding:8px 12px;'>"
+f"<div style=\\\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;line-height:16px;mso-line-height-rule:exactly;\\\">{esc(filename)}</div>"
+f"<div class='muted' style=\\\"font:10pt 'Segoe UI',sans-serif;line-height:16px;mso-line-height-rule:exactly;\\\">{len(matches)} match(es)</div>"
+"</td>"
+"</tr>"
+"<tr>"
+"<td class='panel-inner' style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:8px 12px;'>"
+f"{cards_html}"
+"</td>"
+"</tr>"
+"</table>"
+)
+return section
 # =============================================================================
 # Build the full HTML
 # =============================================================================
