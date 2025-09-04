@@ -65,6 +65,9 @@ TEMPLATE_HTML_PATH = _resolve_template_path()
 LOG_FILE = Path("sent.log")
 DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
 
+# Single encoding used throughout the module
+ENCODING = "utf-8"
+
 # excerpt/windowing
 MAX_SNIPPET_CHARS = 800
 WINDOW_PAD_SENTENCES = 1
@@ -78,7 +81,7 @@ MERGE_IF_GAP_GT = 2
 def load_keywords():
     if os.path.exists("keywords.txt"):
         kws = []
-        with open("keywords.txt", encoding="utf-8") as f:
+        with open("keywords.txt", encoding=ENCODING) as f:
             for line in f:
                 s = line.strip()
                 if not s or s.startswith("#"):
@@ -376,12 +379,9 @@ def _inject_sections_after_detection(html, sections_html):
 def _load_template_text(path: Path = TEMPLATE_HTML_PATH) -> str:
     raw = path.read_bytes()
     try:
-        return raw.decode("windows-1252")
-    except UnicodeDecodeError:
-        try:
-            return raw.decode("utf-8")
-        except UnicodeDecodeError as e:
-            raise RuntimeError("Template must be decodable as Windows-1252 or UTF-8") from e
+        return raw.decode(ENCODING)
+    except UnicodeDecodeError as e:
+        raise RuntimeError(f"Template must be decodable as {ENCODING}") from e
 
 # =============================================================================
 # Per-file sections (“cards”) — Outlook-safe, tight
@@ -467,7 +467,11 @@ def _parse_chamber_from_filename(filename: str) -> str:
 
 def build_digest_html(files: list[str], keywords: list[str]):
     template_html = _load_template_text()
-    template_html = re.sub(r"charset=windows-1252", "charset=utf-8", template_html, flags=re.I)
+    meta_tag = f'<meta http-equiv="Content-Type" content="text/html; charset={ENCODING}">'
+    if re.search(r"(?i)<meta[^>]+charset=", template_html):
+        template_html = re.sub(r"(?i)<meta[^>]+charset=[^>]+>", meta_tag, template_html)
+    else:
+        template_html = template_html.replace("<head>", "<head>" + meta_tag, 1)
 
     # Date & small font fix for section title
     run_date = datetime.now().strftime("%d %B %Y")
@@ -485,7 +489,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
     sections, total_matches = [], 0
 
     for f in files:
-        text = Path(f).read_text(encoding="utf-8", errors="ignore")
+        text = Path(f).read_text(encoding=ENCODING, errors="ignore")
         matches = extract_matches(text, keywords)
         if not matches:
             continue
@@ -525,12 +529,12 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
 def load_sent_log() -> set[str]:
     if LOG_FILE.exists():
-        with open(LOG_FILE, encoding="utf-8") as f:
+        with open(LOG_FILE, encoding=ENCODING) as f:
             return {ln.strip() for ln in f if ln.strip()}
     return set()
 
 def update_sent_log(files: list[str]):
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
+    with open(LOG_FILE, "a", encoding=ENCODING) as f:
         for fp in files:
             f.write(Path(fp).name + "\n")
 
@@ -564,6 +568,7 @@ def main():
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
     subject = f"{DEFAULT_TITLE} — {datetime.now().strftime('%d %b %Y')}"
+    encoded_html = body_html.encode(ENCODING)
 
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
@@ -576,11 +581,11 @@ def main():
         smtp_ssl=SMTP_SSL,
     )
 
-    # IMPORTANT: pass ONE HTML string to avoid yagmail inserting extra <br>
+    # IMPORTANT: pass ONE HTML blob to avoid yagmail inserting extra <br>
     yag.send(
         to=to_list,
         subject=subject,
-        contents=body_html,
+        contents=[encoded_html],
         attachments=files,  # optional: attach transcripts
     )
 
