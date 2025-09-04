@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 import tempfile
+import re
 import send_email
 
 
@@ -53,6 +54,44 @@ class EncodingIntegrationTest(unittest.TestCase):
             html, _total, _counts = send_email.build_digest_html([str(transcript)], ["dash"])
             self.assertIn("charset=utf-8", html)
             self.assertTrue("–" in html, "dash missing")
+
+
+class BuildDigestHtmlTest(unittest.TestCase):
+    def test_detection_table_contains_expected_rows(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            transcript = Path(tmp) / "House_of_Assembly_simple.txt"
+            transcript.write_text("Mr SPEAKER:\napple banana apple.", encoding="utf-8")
+            html, _total, _counts = send_email.build_digest_html(
+                [str(transcript)], ["apple", "banana", "cherry"]
+            )
+            expected_rows = "".join(
+                [
+                    send_email._build_detection_row("apple", 1, 0, 1),
+                    send_email._build_detection_row("banana", 1, 0, 1),
+                    send_email._build_detection_row("cherry", 0, 0, 0),
+                ]
+            )
+            m = re.search(
+                r"<!--\s*DETECTION_SUMMARY_TABLE_START\s*-->.*?Keyword.*?</tr>(.*?)</table>",
+                html,
+                re.S,
+            )
+            self.assertIsNotNone(m)
+            self.assertEqual(m.group(1), expected_rows)
+
+    def test_sample_section_replaced_with_file_sections(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            transcript = Path(tmp) / "House_of_Assembly_sample.txt"
+            transcript.write_text("Mr SPEAKER:\napple.", encoding="utf-8")
+            html, _total, _counts = send_email.build_digest_html([str(transcript)], ["apple"])
+            self.assertNotIn("SAMPLE_SECTION_START", html)
+            self.assertNotIn("SAMPLE_SECTION_END", html)
+            self.assertNotIn("Sample_file.txt", html)
+            self.assertIn(transcript.name, html)
+            self.assertGreater(
+                html.index(transcript.name),
+                html.index("<!-- DETECTION_SUMMARY_TABLE_END -->"),
+            )
 
 
 if __name__ == "__main__":
