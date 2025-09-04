@@ -244,16 +244,23 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
+    """
+    Make snippet HTML with *controlled* whitespace:
+      - 3+ blank lines -> 2
+      - 3+ <br> -> 2 <br>
+      - trim leading/trailing <br>
+    This preserves Version-1-style rhythm but avoids runaway gaps.
+    """
     sents  = utt["sents"]
     joined = utt["joined"]
     start, end, kws, lines = win
     a = sents[start][0]
     b = sents[end][1]
 
-    # Normalize newlines to avoid stacked <br>
+    # Normalize newlines
     raw = joined[a:b]
-    raw = re.sub(r"\r\n?", "\n", raw)   # unify CRLF/CR
-   # raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
+    raw = re.sub(r"\r\n?", "\n", raw)       # unify CRLF/CR
+    raw = re.sub(r"\n{3,}", "\n\n", raw)    # cap blank lines at 2 (keep intentional gap)
     raw = raw.strip()
 
     if len(raw) > MAX_SNIPPET_CHARS:
@@ -262,8 +269,10 @@ def _excerpt_from_window_html(utt, win, keywords):
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords)
     html = html.replace("\n", "<br>")
-   # html = re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)                 # collapse runs
-   # html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)    # trim leading/trailing
+    # Cap extreme <br> runs but allow a clear gap (2)
+    html = re.sub(r"(?:<br\s*/?>\s*){3,}", "<br><br>", html, flags=re.I)
+    # Trim leading/trailing <br> inside the snippet
+    html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html, flags=re.I)
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
@@ -292,6 +301,7 @@ def extract_matches(text: str, keywords):
 # Outlook/Gmail whitespace fixes
 # =============================================================================
 
+# Empty Word/Outlook <p> ... </p> blocks (including &nbsp; or <o:p> junk)
 _EMPTY_MSOP_RE = re.compile(
     r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
     r"<o:p>\s*&nbsp;\s*</o:p>|"
@@ -300,27 +310,27 @@ _EMPTY_MSOP_RE = re.compile(
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
-    # 1) Remove empty Word/Outlook paragraphs (even if wrapped)
-    html = _EMPTY_MSOP_RE.sub("", html)
-    # 2) Collapse runs of <br> to a single <br>
-    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
-    # 3) Remove whitespace/comments between adjacent tables
-    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    # 4) Trim blank space just inside table cells
-    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
-    return html
+    """
+    LIGHT pass: only remove empty MSO paragraphs.
+    Do NOT collapse <br> runs or strip cell content, to preserve spacer tables.
+    """
+    return _EMPTY_MSOP_RE.sub("", html)
 
 def _minify_inter_tag_whitespace(html: str) -> str:
-    # Critical for Outlook: remove inter-tag newlines/indentation
+    # Mostly cosmetic; does not affect vertical spacing created by tables
     return re.sub(r">\s+<", "><", html)
 
 def _inject_mso_css_reset(html: str) -> str:
-    # MSO conditional CSS to kill default MsoNormal margins/line-height
+    """
+    Gentle Outlook-only reset:
+      - predictable small paragraph bottom margin (6pt)
+      - avoids 'mso-line-height-rule:exactly' clamp
+    """
     mso_block = (
         "<!--[if mso]>"
         "<style>"
-        "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
-        "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
+        "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 0 6pt 0 !important;line-height:normal !important;}"
+        "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;}"
         "</style>"
         "<![endif]-->"
     )
@@ -390,7 +400,7 @@ def _inject_sections_after_detection(html, sections_html):
     return html[:insert_at] + sections_html + html[insert_at:]
 
 # =============================================================================
-# Per-file sections (“cards”) — Outlook-safe, tight
+# Per-file sections (“cards”) — keep original tight metrics (Version-1 look)
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
@@ -409,8 +419,8 @@ def _build_file_section_html(filename: str, matches):
             "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
-                "<td width='32' align='center' valign='top' style='background:#4A5A6A;border:0;height:1px;vertical-align:top;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:1px;mso-line-height-rule:exactly;display:block;\">"
+                "<td width='32' align='center' valign='top' style='background:#4A5A6A;border:0;height:18px;vertical-align:top;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:18px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
                 "</td>"
                 "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
@@ -420,7 +430,7 @@ def _build_file_section_html(filename: str, matches):
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
                 "<td align='right' valign='top' style='vertical-align:top;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:1px;mso-line-height-rule:exactly;display:block;\">"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:15px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
               "</tr>"
@@ -429,7 +439,7 @@ def _build_file_section_html(filename: str, matches):
             "</tr>"
             "<tr>"
             "<td valign='top' style='padding:6px 8px;vertical-align:top;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:1px;mso-line-height-rule:exactly;display:block;\">"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
               f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
@@ -437,7 +447,7 @@ def _build_file_section_html(filename: str, matches):
         )
         cards.append(card)
 
-    # 2px spacer BETWEEN cards (none after the last)
+    # 2px spacer BETWEEN cards (none after the last) — preserved
     spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
               "<tr><td style='height:2px;line-height:2px;font-size:0;'>&nbsp;</td></tr></table>")
     cards_html = spacer.join(cards)
@@ -446,8 +456,8 @@ def _build_file_section_html(filename: str, matches):
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr>"
         "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:1px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
-        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:1px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
         "</td>"
         "</tr>"
         "<tr>"
@@ -486,8 +496,8 @@ def build_digest_html(files: list[str], keywords: list[str]):
         '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
     )
 
-    # Inject MSO CSS reset (safe for Outlook only)
-    # template_html = _inject_mso_css_reset(template_html)
+    # Inject *gentle* MSO CSS reset (predictable margins; no exact line-height clamp)
+    template_html = _inject_mso_css_reset(template_html)
 
     # Collect matches + counts
     counts = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
@@ -522,9 +532,11 @@ def build_digest_html(files: list[str], keywords: list[str]):
     template_html = _strip_sample_section(template_html)
     template_html = _inject_sections_after_detection(template_html, "".join(sections))
 
-    # Final whitespace controls: scrub ghost paragraphs then minify inter-tag whitespace
-    # template_html = _tighten_outlook_whitespace(template_html)
-    # template_html = _minify_inter_tag_whitespace(template_html)
+    # Final whitespace controls:
+    # - remove ghost paragraphs (keeps spacer tables untouched)
+    # - allow cosmetic inter-tag minify (no effect on vertical rhythm)
+    template_html = _tighten_outlook_whitespace(template_html)
+    template_html = _minify_inter_tag_whitespace(template_html)
 
     return template_html, total_matches, counts
 
