@@ -406,7 +406,7 @@ def _build_file_section_html(filename: str, matches):
         "<tr>"
         "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
         f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
-        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches) match(es)</div>"
         "</td>"
         "</tr>"
         "<tr>"
