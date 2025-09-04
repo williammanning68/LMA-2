@@ -306,8 +306,8 @@ def _tighten_outlook_whitespace(html: str) -> str:
     html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
     # 3) Remove whitespace/comments between adjacent tables
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    # 4) Trim blank space just inside table cells
-    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    # 4) Trim blank space just inside table cells but preserve spacer &nbsp;/<br>
+    html = re.sub(r">\s+</td>", "></td>", html, flags=re.I)
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
