@@ -1,0 +1,31 @@
+name: Send OFT via SMTP (hosted, one-file)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install extract_msg olefile
+      - name: Send using OFT (verbatim HTML -> MIME)
+        env:
+          OFT_PATH: email_template.oft
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          SMTP_STARTTLS: ${{ secrets.SMTP_STARTTLS }}   # "1" or "0"
+          SMTP_SSL: ${{ secrets.SMTP_SSL }}             # "1" for SMTPS/465
+          FROM_ADDR: ${{ secrets.FROM_ADDR }}
+          TO: ${{ secrets.EMAIL_TO }}
+          SUBJECT: "Hansard Monitor"
+        run: |
+          python scripts/oft_to_mime_send.py
