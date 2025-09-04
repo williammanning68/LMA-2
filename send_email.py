@@ -226,7 +226,7 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     for s, e, kws, lines in wins[1:]:
         ps, pe, pk, pl = merged[-1]
         gap = s - pe
-        if gap <= gap_gt:
+        if gap > gap_gt:
             merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
         else:
             merged.append([s, e, kws, lines])
@@ -306,9 +306,8 @@ def _tighten_outlook_whitespace(html: str) -> str:
     html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
     # 3) Remove whitespace/comments between adjacent tables
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    # 4) Trim blank space just inside table cells but preserve non-breaking spaces
-    html = re.sub(r">\s*&nbsp;\s*</td>", ">&nbsp;</td>", html, flags=re.I)
-    html = re.sub(r">\s*(?:<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    # 4) Trim blank space just inside table cells
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
@@ -335,34 +334,34 @@ def _inject_mso_css_reset(html: str) -> str:
 # =============================================================================
 
 def _build_detection_row(kw, hoa, lc, tot) -> str:
+    # Use pixel paddings; margin:0 paragraphs
     return (
         "<tr>"
-        "<td width=\"28%\" class='kw' "
-        "style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;"
-        "border-right:none;padding:9px 12px;font:10pt \"Segoe UI\",sans-serif;color:#000;'>"
-        f"<b>{_html_escape(kw)}</b></td>"
-
-        "<td width=\"28%\" "
-        "style='border-bottom:solid #ECF0F1 1px;padding:9px 12px;font:10pt \"Segoe UI\",sans-serif;color:#000;text-align:center;'>"
-        f"<b>{hoa}</b></td>"
-
-        "<td width=\"28%\" "
-        "style='border-bottom:solid #ECF0F1 1px;padding:9px 12px;font:10pt \"Segoe UI\",sans-serif;color:#000;text-align:center;'>"
-        f"<b>{lc}</b></td>"
-
-        "<td width=\"15%\" "
-        "style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;"
-        "padding:9px 12px;font:10pt \"Segoe UI\",sans-serif;color:#000;text-align:center;'>"
-        f"<b>{tot}</b></td>"
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;border-right:none;padding:8px 10px;'>"
+        f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
+        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
+        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
+        "<td width=\"15%\" style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
 
 def _replace_detection_rows_in_template(html, row_html):
-    start_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_START\s*-->", html, flags=re.I)
-    end_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_END\s*-->", html, flags=re.I)
-    if not start_m or not end_m or end_m.start() < start_m.end():
+    # Find "Detection Match by Chamber" then the next inner table, keep header row, replace the rest.
+    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
+    if not hdr:
         return html
-    tbl_start, tbl_end = start_m.end(), end_m.start()
+    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
+    if not m_table_start:
+        return html
+    tbl_start = hdr.end() + m_table_start.start()
+    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
+    if not m_table_end:
+        return html
+    tbl_end = tbl_start + m_table_end.end()
+
     table_html = html[tbl_start:tbl_end]
     m_header_row = re.search(r"<tr[^>]*>.*?Keyword.*?</tr\s*>", table_html, flags=re.I | re.S)
     if not m_header_row:
@@ -372,41 +371,23 @@ def _replace_detection_rows_in_template(html, row_html):
     return html[:tbl_start] + new_table + html[tbl_end:]
 
 def _strip_sample_section(html):
-    pattern = re.compile(r"<!--\s*SAMPLE_SECTION_START\s*-->.*?<!--\s*SAMPLE_SECTION_END\s*-->", re.I | re.S)
+    # Remove the sample block marked in the template
+    pattern = re.compile(r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->", re.I | re.S)
     return re.sub(pattern, "", html)
 
 def _inject_sections_after_detection(html, sections_html):
-    end_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_END\s*-->", html, flags=re.I)
-    if not end_m:
+    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
+    if not hdr:
         return html + sections_html
-    insert_at = end_m.end()
+    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
+    if not m_table_start:
+        return html + sections_html
+    tbl_start = hdr.end() + m_table_start.start()
+    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
+    if not m_table_end:
+        return html + sections_html
+    insert_at = tbl_start + m_table_end.end()
     return html[:insert_at] + sections_html + html[insert_at:]
-
-def _load_template_text(path: Path = TEMPLATE_HTML_PATH) -> str:
-    raw = path.read_bytes()
-    try:
-        return raw.decode("windows-1252")
-    except UnicodeDecodeError:
-        try:
-            return raw.decode("utf-8")
-        except UnicodeDecodeError as e:
-            raise RuntimeError("Template must be decodable as Windows-1252 or UTF-8") from e
-
-
-def _load_transcript_text(path: Path) -> str:
-    raw = path.read_bytes()
-    try:
-        cp_text = raw.decode("windows-1252")
-    except UnicodeDecodeError:
-        cp_text = None
-    try:
-        return raw.decode("utf-8")
-    except UnicodeDecodeError as e:
-        if cp_text is not None:
-            return cp_text
-        raise RuntimeError(
-            f"Transcript {path} must be decodable as Windows-1252 or UTF-8"
-        ) from e
 
 # =============================================================================
 # Per-file sections (“cards”) — Outlook-safe, tight
@@ -419,42 +400,44 @@ def _build_file_section_html(filename: str, matches):
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Card markup (tight, Outlook-safe)
+        # Card header + body (top-aligned, pixel line-heights)
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
-
-              "<tr class='card-hdr'>"
-                "<td width='32' align='center' valign='top' "
-                "style='background:#4A5A6A;height:18px;vertical-align:top;padding:0;'>"
-                  "<div class='badge' style=\"font:bold 10pt 'Segoe UI',sans-serif;\">"
+            "<tr>"
+            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:4px 8px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
+              "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+              "<tr>"
+                "<td width='32' align='center' valign='top' style='background:#4A5A6A;border:0;height:18px;vertical-align:top;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:18px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
                 "</td>"
-                "<td style='width:8px;font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
-                "<td valign='top' style='vertical-align:top;padding:4px 0;'>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
+                "<td valign='top' style='vertical-align:top;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
-                  "line-height:16px;mso-line-height-rule:exactly;\">"
+                  "line-height:15px;mso-line-height-rule:exactly;display:block;\">"
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
-                "<td align='right' valign='top' style='vertical-align:top;padding:4px 8px 4px 0;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;\">"
+                "<td align='right' valign='top' style='vertical-align:top;'>"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:15px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
               "</tr>"
-
-              "<tr>"
-                "<td colspan='4' style='padding:10px 12px;vertical-align:top;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:18px;"
-                  "mso-line-height-rule:exactly;\">"
-                  f"{excerpt_html}</div>"
-                "</td>"
-              "</tr>"
-
+              "</table>"
+            "</td>"
+            "</tr>"
+            "<tr>"
+            "<td valign='top' style='padding:6px 8px;vertical-align:top;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
+              f"{excerpt_html}</div>"
+            "</td>"
+            "</tr>"
             "</table>"
         )
         cards.append(card)
 
-    # 2px spacer BETWEEN cards
+    # 2px spacer BETWEEN cards (none after the last)
     spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
               "<tr><td style='height:2px;line-height:2px;font-size:0;'>&nbsp;</td></tr></table>")
     cards_html = spacer.join(cards)
@@ -462,20 +445,20 @@ def _build_file_section_html(filename: str, matches):
     section = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr>"
-          "<td class='section-rail' style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-            f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:16px;mso-line-height-rule:exactly;\">{esc(filename)}</div>"
-            f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:16px;mso-line-height-rule:exactly;\">{len(matches)} match(es)</div>"
-          "</td>"
+        "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
+        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        "</td>"
         "</tr>"
         "<tr>"
-          "<td class='panel-inner' style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
-            f"{cards_html}"
-          "</td>"
+        "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
+        f"{cards_html}"
+        "</td>"
         "</tr>"
         "</table>"
     )
     return section
-    
+
 # =============================================================================
 # Build the full HTML
 # =============================================================================
@@ -489,8 +472,11 @@ def _parse_chamber_from_filename(filename: str) -> str:
     return "Unknown"
 
 def build_digest_html(files: list[str], keywords: list[str]):
-    template_html = _load_template_text()
-    template_html = re.sub(r"charset=windows-1252", "charset=utf-8", template_html, flags=re.I)
+    # Load template (Word/Outlook often uses Windows-1252)
+    try:
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
+    except Exception:
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
     # Date & small font fix for section title
     run_date = datetime.now().strftime("%d %B %Y")
@@ -508,7 +494,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
     sections, total_matches = [], 0
 
     for f in files:
-        text = _load_transcript_text(Path(f))
+        text = Path(f).read_text(encoding="utf-8", errors="ignore")
         matches = extract_matches(text, keywords)
         if not matches:
             continue
