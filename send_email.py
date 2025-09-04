@@ -253,7 +253,7 @@ def _excerpt_from_window_html(utt, win, keywords):
     # Normalize newlines to avoid stacked <br>
     raw = joined[a:b]
     raw = re.sub(r"\r\n?", "\n", raw)   # unify CRLF/CR
-    raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
+   # raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
     raw = raw.strip()
 
     if len(raw) > MAX_SNIPPET_CHARS:
@@ -262,8 +262,8 @@ def _excerpt_from_window_html(utt, win, keywords):
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords)
     html = html.replace("\n", "<br>")
-    html = re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)                 # collapse runs
-    html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)    # trim leading/trailing
+   # html = re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)                 # collapse runs
+   # html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)    # trim leading/trailing
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
