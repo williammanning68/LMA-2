@@ -487,7 +487,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
     )
 
     # Inject MSO CSS reset (safe for Outlook only)
-    template_html = _inject_mso_css_reset(template_html)
+    # template_html = _inject_mso_css_reset(template_html)
 
     # Collect matches + counts
     counts = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
@@ -523,8 +523,8 @@ def build_digest_html(files: list[str], keywords: list[str]):
     template_html = _inject_sections_after_detection(template_html, "".join(sections))
 
     # Final whitespace controls: scrub ghost paragraphs then minify inter-tag whitespace
-    template_html = _tighten_outlook_whitespace(template_html)
-    template_html = _minify_inter_tag_whitespace(template_html)
+    # template_html = _tighten_outlook_whitespace(template_html)
+    # template_html = _minify_inter_tag_whitespace(template_html)
 
     return template_html, total_matches, counts
 
