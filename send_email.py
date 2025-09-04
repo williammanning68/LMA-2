@@ -226,7 +226,7 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     for s, e, kws, lines in wins[1:]:
         ps, pe, pk, pl = merged[-1]
         gap = s - pe
-        if gap > gap_gt:
+        if gap <= gap_gt:
             merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
         else:
             merged.append([s, e, kws, lines])
@@ -349,19 +349,11 @@ def _build_detection_row(kw, hoa, lc, tot) -> str:
     )
 
 def _replace_detection_rows_in_template(html, row_html):
-    # Find "Detection Match by Chamber" then the next inner table, keep header row, replace the rest.
-    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
-    if not hdr:
+    start_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_START\s*-->", html, flags=re.I)
+    end_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_END\s*-->", html, flags=re.I)
+    if not start_m or not end_m or end_m.start() < start_m.end():
         return html
-    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
-    if not m_table_start:
-        return html
-    tbl_start = hdr.end() + m_table_start.start()
-    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
-    if not m_table_end:
-        return html
-    tbl_end = tbl_start + m_table_end.end()
-
+    tbl_start, tbl_end = start_m.end(), end_m.start()
     table_html = html[tbl_start:tbl_end]
     m_header_row = re.search(r"<tr[^>]*>.*?Keyword.*?</tr\s*>", table_html, flags=re.I | re.S)
     if not m_header_row:
@@ -371,23 +363,25 @@ def _replace_detection_rows_in_template(html, row_html):
     return html[:tbl_start] + new_table + html[tbl_end:]
 
 def _strip_sample_section(html):
-    # Remove the sample block marked in the template
-    pattern = re.compile(r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->", re.I | re.S)
+    pattern = re.compile(r"<!--\s*SAMPLE_SECTION_START\s*-->.*?<!--\s*SAMPLE_SECTION_END\s*-->", re.I | re.S)
     return re.sub(pattern, "", html)
 
 def _inject_sections_after_detection(html, sections_html):
-    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
-    if not hdr:
+    end_m = re.search(r"<!--\s*DETECTION_SUMMARY_TABLE_END\s*-->", html, flags=re.I)
+    if not end_m:
         return html + sections_html
-    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
-    if not m_table_start:
-        return html + sections_html
-    tbl_start = hdr.end() + m_table_start.start()
-    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
-    if not m_table_end:
-        return html + sections_html
-    insert_at = tbl_start + m_table_end.end()
+    insert_at = end_m.end()
     return html[:insert_at] + sections_html + html[insert_at:]
+
+def _load_template_text(path: Path = TEMPLATE_HTML_PATH) -> str:
+    raw = path.read_bytes()
+    try:
+        return raw.decode("windows-1252")
+    except UnicodeDecodeError:
+        try:
+            return raw.decode("utf-8")
+        except UnicodeDecodeError as e:
+            raise RuntimeError("Template must be decodable as Windows-1252 or UTF-8") from e
 
 # =============================================================================
 # Per-file sections (“cards”) — Outlook-safe, tight
@@ -472,11 +466,8 @@ def _parse_chamber_from_filename(filename: str) -> str:
     return "Unknown"
 
 def build_digest_html(files: list[str], keywords: list[str]):
-    # Load template (Word/Outlook often uses Windows-1252)
-    try:
-        template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
-    except Exception:
-        template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
+    template_html = _load_template_text()
+    template_html = re.sub(r"charset=windows-1252", "charset=utf-8", template_html, flags=re.I)
 
     # Date & small font fix for section title
     run_date = datetime.now().strftime("%d %B %Y")
