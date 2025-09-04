@@ -30,6 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
           python -m playwright install chromium
+          python -m pip install pywin32
           
       # - name: Setup Ollama CLI
       #  uses: ai-action/setup-ollama@v1
