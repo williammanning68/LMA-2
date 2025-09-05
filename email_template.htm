@@ -1,167 +1,155 @@
 <!DOCTYPE html>
-<html>
-  <body style="margin:0; padding:0; background:#ffffff;">
-    <!-- Outer container -->
-    <table role="presentation" width="900" align="center" cellpadding="0" cellspacing="0" border="0"
-           style="width:675pt; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; background:#ffffff;">
-      <tr><td style="padding:0; margin:0;">
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hansard Monitor BETA</title>
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no">
+</head>
+<body style="margin:0;padding:0;background:#ffffff;font-family:'Segoe UI', Arial, sans-serif;line-height:1.35;color:#000;">
 
-        <!-- HEADER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-               style="border-collapse:collapse; background:#475560;">
+  <!-- Outer container -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#ffffff;">
+    <tr>
+      <td align="center" style="padding:0;margin:0;">
+        <table role="presentation" width="900" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;max-width:900px;width:900px;">
+          
+          <!-- Banner -->
           <tr>
-            <td align="center" style="padding:18pt 21pt 0 21pt;">
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:20pt; line-height:26pt; color:#ffffff; mso-line-height-rule:exactly; font-weight:bold;">
-                Hansard Monitor&nbsp;&nbsp;&nbsp;BETA
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td align="center" style="padding:6pt 21pt 18pt 21pt;">
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#ffffff; mso-line-height-rule:exactly;">
-                Program Run: [DATE]
-              </span>
-            </td>
-          </tr>
-        </table>
-
-        <!-- SPACER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#ECF0F1;">
-          <tr><td height="12" style="height:12px; line-height:12px; font-size:0; mso-line-height-rule:exactly;">&nbsp;</td></tr>
-        </table>
-
-        <!-- DETECTION SUMMARY -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-               style="border-collapse:collapse; background:#ffffff; border:1pt solid #D8DCE0;">
-          <tr>
-            <td style="padding:12pt 13.5pt; border-bottom:2.25pt solid #C5A572;">
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10.5pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">
-                Detection Match by Chamber
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0 12pt 12pt 12pt;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-                     style="border-collapse:collapse; background:#ffffff;">
-                <!-- Header row -->
+            <td style="padding:0;margin:0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#475560;">
                 <tr>
-                  <td width="28%" style="width:28.12%; background:#4A5A6A; padding:9pt 7.5pt; border-top:1pt solid #D8DCE0;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#fff; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">Keyword</span>
-                  </td>
-                  <td width="28%" style="width:28.12%; background:#4A5A6A; padding:9pt 7.5pt; border-top:1pt solid #D8DCE0;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#fff; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">House of Assembly</span>
-                  </td>
-                  <td width="28%" style="width:28.14%; background:#4A5A6A; padding:9pt 7.5pt; border-top:1pt solid #D8DCE0;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#fff; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">Legislative Council</span>
-                  </td>
-                  <td width="15%" style="width:15.62%; background:#4A5A6A; padding:9pt 7.5pt; border-top:1pt solid #D8DCE0; border-right:1pt solid #D8DCE0;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#fff; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">Total</span>
+                  <td align="center" style="padding:24px 28px;">
+                    <div style="font-size:20px;font-weight:700;color:#ffffff;">Hansard Monitor&nbsp;&nbsp;BETA</div>
+                    <div style="height:6px;line-height:6px;font-size:0;">&nbsp;</div>
+                    <div style="font-size:12px;color:#ffffff;">Program Run:&nbsp;<span>{{RUN_DATE}}</span></div>
                   </td>
                 </tr>
-
-                <!-- Keyword row template (duplicated by Python) -->
-                <tr>
-                  <td style="padding:6pt 7.5pt; border-top:none; border-left:1pt solid #D8DCE0; border-bottom:1pt solid #ECF0F1;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold; text-align:left;">[Keyword]</span>
-                  </td>
-                  <td style="padding:6pt 7.5pt; border-top:1pt solid #D8DCE0; border-bottom:1pt solid #ECF0F1;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">[House of Assembly count]</span>
-                  </td>
-                  <td style="padding:6pt 7.5pt; border-top:1pt solid #D8DCE0; border-bottom:1pt solid #ECF0F1;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">[Legislative Council count]</span>
-                  </td>
-                  <td style="padding:6pt 7.5pt; border-top:1pt solid #D8DCE0; border-right:1pt solid #D8DCE0; border-bottom:1pt solid #ECF0F1;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold; text-align:center;">[Total count]</span>
-                  </td>
-                </tr>
-                <!-- end keyword row -->
               </table>
             </td>
           </tr>
-        </table>
 
-        <!-- SPACER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#ECF0F1;">
-          <tr><td height="12" style="height:12px; line-height:12px; font-size:0; mso-line-height-rule:exactly;">&nbsp;</td></tr>
-        </table>
+          <!-- Spacer -->
+          <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
 
-        <!-- TRANSCRIPT CARD (duplicated per file) -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-               style="border-collapse:collapse; background:#F7F9FA; border-left:3pt solid #C5A572;">
+          <!-- Detection summary: header -->
           <tr>
-            <td style="padding:9pt 10.5pt;">
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold;">
-                [Transcript filename]
-              </span>
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly;">
-                [Match count] match(es)
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding:0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="1"
-                     style="border-collapse:collapse; border:1pt solid #D8DCE0; background:#ffffff;">
-
-                <!-- MATCH HEADER (repeated per match) -->
+            <td style="padding:0 12px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;background:#ffffff;border:1px solid #D8DCE0;">
                 <tr>
-                  <td width="32" valign="middle"
-                      style="width:24pt; background:#4A5A6A; padding:0; text-align:center;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:24px; height:24px; color:#ffffff; mso-line-height-rule:exactly; font-weight:bold;">
-                      [Match #]
-                    </span>
-                  </td>
-                  <td style="padding:6pt 9pt;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly; font-weight:bold;">
-                      [SPEAKER NAME]
-                    </span>
-                  </td>
-                  <td align="right" style="padding:6pt 9pt;">
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#000; mso-line-height-rule:exactly;">
-                      [Line number(s)]
-                    </span>
+                  <td colspan="4" align="center" style="border-bottom:2px solid #C5A572;padding:12px 14px;">
+                    <div style="font-weight:700;color:#000000;">Detection Match by Chamber</div>
                   </td>
                 </tr>
-
-                <!-- MATCH SNIPPET -->
                 <tr>
-                  <td colspan="3" style="padding:10.5pt 12pt;">
-                    <!-- Avoid <p>. Snippet goes here; single, fixed line-height -->
-                    <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14px; color:#000; mso-line-height-rule:exactly;">
-                      [Snippet]
-                    </span>
-                  </td>
+                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Keyword</td>
+                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">House of Assembly</td>
+                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Legislative Council</td>
+                  <td width="16%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Total</td>
                 </tr>
-                <!-- end match rows -->
+
+                <!-- >>> send_email.py will inject rows here -->
+                {{DETECTION_ROWS}}
 
               </table>
             </td>
           </tr>
-        </table>
 
-        <!-- SPACER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#ECF0F1;">
-          <tr><td height="12" style="height:12px; line-height:12px; font-size:0; mso-line-height-rule:exactly;">&nbsp;</td></tr>
-        </table>
+          <!-- Spacer -->
+          <tr><td style="height:16px;line-height:16px;font-size:0;">&nbsp;</td></tr>
 
-        <!-- FOOTER -->
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-               style="border-collapse:collapse; background:#4A5A6A;">
+          <!-- Sections (one per transcript) -->
           <tr>
-            <td align="center" style="padding:12pt;">
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:10pt; line-height:14pt; color:#ffffff; mso-line-height-rule:exactly; font-weight:bold;">
-                **THIS PROGRAM IS IN BETA TESTING &nbsp;&nbsp; DO NOT FORWARD**
-              </span>
-              <span style="display:block; margin:0; font-family:'Segoe UI', Arial, sans-serif; font-size:9pt; line-height:13pt; color:#ffffff; mso-line-height-rule:exactly;">
-                Contact developer with any issues, queries, or suggestions:
-                <a href="mailto:William.Manning@FederalGroup.com.au" style="color:#ffffff; text-decoration:underline;">William.Manning@FederalGroup.com.au</a>
-              </span>
+            <td style="padding:0 12px;">
+              <!-- >>> send_email.py will inject full file sections here -->
+              {{SECTIONS}}
             </td>
           </tr>
-        </table>
 
-      </td></tr>
-    </table>
-  </body>
+          <!-- Bottom spacer -->
+          <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+
+          <!-- Footer -->
+          <tr>
+            <td>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#4A5A6A;">
+                <tr>
+                  <td align="center" style="padding:12px 12px;">
+                    <div style="font-size:10px;color:#ffffff;font-weight:700;">**THIS PROGRAM IS IN BETA TESTING &nbsp;&nbsp; DO NOT FORWARD**</div>
+                    <div style="height:6px;line-height:6px;font-size:0;">&nbsp;</div>
+                    <div style="font-size:9px;color:#ffffff;">
+                      Contact developer with any issues, queries, or suggestions:
+                      <a href="mailto:William.Manning@FederalGroup.com.au" style="color:#ffffff;text-decoration:underline;">William.Manning@FederalGroup.com.au</a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Extra bottom spacer to avoid Gmail trimming -->
+          <tr><td style="height:10px;line-height:10px;font-size:0;">&nbsp;</td></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- =========================
+       SUB-TEMPLATES (REQUIRED)
+       ========================= -->
+
+  <!-- BEGIN:DETECTION_ROW_TEMPLATE -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+    <tr>
+      <td width="28%" align="left"   style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[Keyword]</td>
+      <td width="28%" align="center" style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[House of Assembly count]</td>
+      <td width="28%" align="center" style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[Legislative Council count]</td>
+      <td width="16%" align="center" style="border-top:1px solid #ECF0F1;border-right:1px solid #D8DCE0;padding:8px 8px;color:#000000;font-weight:700;">[Total count]</td>
+    </tr>
+  </table>
+  <!-- END:DETECTION_ROW_TEMPLATE -->
+
+  <!-- BEGIN:FILE_SECTION_TEMPLATE -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;margin:0 0 16px 0;">
+    <tr>
+      <td style="border-left:3px solid #C5A572;background:#F7F9FA;padding:10px 12px;">
+        <div style="font-size:10px;font-weight:700;color:#000000;">[Transcript filename]</div>
+        <div style="font-size:10px;color:#000000;">[Match count]</div>
+      </td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #D8DCE0;border-top:none;background:#ffffff;padding:0;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+          <!-- >>> send_email.py will inject one or more MATCH_CARD_TEMPLATEs here -->
+          {{CARDS}}
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!-- END:FILE_SECTION_TEMPLATE -->
+
+  <!-- BEGIN:MATCH_CARD_TEMPLATE -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+    <!-- Card header row -->
+    <tr style="height:24px;">
+      <!-- Match number cell -->
+      <td width="32" align="center" valign="middle" style="width:32px;background:#4A5A6A;color:#ffffff;font-weight:700;padding:0;">[Match #]</td>
+      <!-- Header/title text (kept generic; your code can reuse the same label) -->
+      <td align="left" valign="middle" style="padding:0 9px;color:#000000;font-weight:700;">Match</td>
+      <!-- Line numbers right-aligned -->
+      <td align="right" valign="middle" style="padding:0 0;color:#000000;">[Line numbers]</td>
+    </tr>
+    <!-- Snippet row -->
+    <tr>
+      <td colspan="3" style="padding:10px 12px 12px 12px;border-bottom:1px solid #D8DCE0;">
+        <!-- Keep paragraph margins zero to avoid blown-out spacing -->
+        <div style="margin:0;font-size:10pt;color:#000000;">
+          [excerpt snippet]
+        </div>
+      </td>
+    </tr>
+  </table>
+  <!-- END:MATCH_CARD_TEMPLATE -->
+
+</body>
 </html>
