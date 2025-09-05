@@ -222,6 +222,72 @@
     </tr>
     -->
     <!-- END: MATCH_ROW_TEMPLATE -->
+<!-- =========================
+     SUB-TEMPLATES (DO NOT REMOVE)
+     These are hidden patterns that send_email.py clones.
+     They must remain inside HTML comments and keep these exact markers.
+========================= -->
+
+<!-- SR_TPL -->
+<tr>
+  <td style="width:28.12%;border-top:none;border-left:solid #D8DCE0 1.0pt;border-bottom:solid #ECF0F1 1.0pt;border-right:none;padding:6.0pt 7.5pt 6.0pt 7.5pt;">
+    <p class="MsoNormal" style="margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{KEYWORD}}</span></b></p>
+  </td>
+  <td style="width:28.12%;border:none;border-bottom:solid #ECF0F1 1.0pt;padding:6.0pt 7.5pt 6.0pt 7.5pt;">
+    <p class="MsoNormal" align="center" style="margin:0;text-align:center;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{HOA}}</span></b></p>
+  </td>
+  <td style="width:28.14%;border:none;border-bottom:solid #ECF0F1 1.0pt;padding:6.0pt 7.5pt 6.0pt 7.5pt;">
+    <p class="MsoNormal" align="center" style="margin:0;text-align:center;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{LC}}</span></b></p>
+  </td>
+  <td style="width:15.62%;border-top:none;border-left:none;border-bottom:solid #ECF0F1 1.0pt;border-right:solid #D8DCE0 1.0pt;padding:6.0pt 7.5pt 6.0pt 7.5pt;">
+    <p class="MsoNormal" align="center" style="margin:0;text-align:center;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{TOTAL}}</span></b></p>
+  </td>
+</tr>
+<!-- /SR_TPL -->
+
+<!-- FS_TPL -->
+<!-- One file section: heading chip (filename + match count) and a bordered table that will receive {{MATCH_ROWS}} -->
+<table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:0;">
+  <tr>
+    <td style="border:none;border-left:solid #C5A572 3.0pt;background:#F7F9FA;padding:9.0pt 10.5pt;">
+      <p class="MsoNormal" style="margin:0;">
+        <b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{FILENAME}}</span></b>
+      </p>
+      <p class="MsoNormal" style="margin:0;">
+        <span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:black;">{{MATCHES_COUNT}} match(es)</span>
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td style="border:solid #D8DCE0 1.0pt;border-top:none;background:white;padding:7.5pt 9.0pt;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;border:solid #D8DCE0 1.0pt;">
+        {{MATCH_ROWS}}
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- /FS_TPL -->
+
+<!-- MR_TPL -->
+<!-- One match row inside a file section’s inner table -->
+<tr>
+  <td style="border:none;border-bottom:solid #D8DCE0 1.0pt;background:#ECF0F1;padding:7.5pt 9.0pt;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="width:100.0%;mso-cellspacing:0cm;">
+      <tr style="height:24.0pt;">
+        <td style="width:24.0pt;background:#4A5A6A;padding:0;height:24.0pt;">
+          <p class="MsoNormal" align="center" style="margin:0;text-align:center;">
+            <b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white;">{{MATCH_INDEX}}</span></b>
+          </p>
+        </td>
+        <td style="width:319.4pt;padding:0 0 0 9.0pt;height:24.0pt;">
+          <p class="MsoNormal" style="margin:0;">
+            <b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;">{{MATCH_TITLE}}</span></b>
+          </p>
+        </td>
+        <td style="width:268.6pt;padding:0;height:24.0pt;">
+          <p class="MsoNormal" align="right" style="margin:0;text-align:right;">
+            <span style="font-size:10.0pt;fo
 
   </body>
 </html>
+
