@@ -9,11 +9,10 @@ from datetime import datetime
 from bisect import bisect_right
 import yagmail
 
-# Silence cssutils (used by premailer via yagmail) to stop Word/MSO CSS noise
+# Silence cssutils (used by premailer via yagmail) – just to clean CI logs
 try:
-    import logging
-    import cssutils  # provided via premailer in requirements.txt
-    cssutils.log.setLevel(logging.FATAL)  # or logging.CRITICAL
+    import logging, cssutils
+    cssutils.log.setLevel(logging.FATAL)
 except Exception:
     pass
 
@@ -481,66 +480,40 @@ def _parse_chamber_from_filename(filename: str) -> str:
 
 def build_digest_html(files: list[str], keywords: list[str]):
     """
-    Build the complete digest HTML by loading the template once and then
-    injecting dynamic data into the appropriate placeholder locations.  This
-    implementation avoids hard‑coding any of the visual presentation in
-    Python: instead it discovers the patterns from the template itself and
-    replicates them as required.  The process is as follows:
+    Build the complete digest HTML by loading the Word/Outlook template,
+    injecting dynamic data, and returning a ready-to-send HTML fragment.
 
-    1. Load the HTML template and substitute the program run date.
-    2. Discover the row in the detection table containing the keyword
-       placeholder (e.g. "[Keyword]") and use this as a row template.  We
-       remove that row from the template and replace it with one row per
-       keyword containing the counts for each chamber.
-    3. Discover the transcript section template surrounding the
-       "[Transcript filename]" placeholder.  Within that section we locate
-       the pair of rows used for an individual match (one row for the
-       match header and one for the excerpt).  Those rows are removed
-       from the template and replaced with dynamically generated rows for
-       each match in each file.  One transcript section is produced per
-       input file.
-    4. After injecting detection rows and transcript sections the HTML is
-       cleaned up for Outlook compatibility using the helper functions
-       defined elsewhere in this module.
-
-    Parameters
-    ----------
-    files : list[str]
-        Paths to transcript text files.
-    keywords : list[str]
-        List of keywords to search for in the transcripts.
-
-    Returns
-    -------
-    tuple[str, int, dict]
-        The rendered HTML, the total number of matches across all files and
-        a dictionary mapping each keyword to per‑chamber hit counts.
+    Steps:
+      1) Load the HTML template and substitute the run date.
+      2) Extract only the <body> inner HTML (prevents <head>/XML from rendering).
+      3) Build keyword counts and per-file matches.
+      4) Replace the single detection-row template with N rows (one per keyword).
+      5) Replace the single transcript-card template with one per file; for each
+         card, replicate the two-row match block for every match.
+      6) Light whitespace cleanup for Outlook safety.
     """
     # ----------------------------------------------------------------------
-    # 1. Load the template and perform simple replacements
+    # 1. Load the template and basic substitutions
     # ----------------------------------------------------------------------
     try:
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
     except Exception:
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
+    # Keep only the <body> inner HTML (prevents head/XML junk from showing)
+    m = re.search(r'<body\b[^>]*>(?P<body>[\s\S]*?)</body>', template_html, flags=re.I)
+    if m:
+        template_html = m.group('body')
+
     # Insert the current date
     run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
-    # Normalise the Detection Match heading font (fixes Word font fallback)
-    template_html = template_html.replace(
-        '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
-        '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
-    )
-
-    # Inject MSO CSS reset to override default paragraph and table spacing in Outlook
-    template_html = _inject_mso_css_reset(template_html)
 
     # ----------------------------------------------------------------------
     # 2. Collect matches and build keyword counts
     # ----------------------------------------------------------------------
     counts: dict[str, dict[str, int]] = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
-    file_matches = []  # list of tuples (filename, matches)
+    file_matches = []  # list[(filename, matches)]
     total_matches = 0
 
     for f in files:
@@ -552,7 +525,6 @@ def build_digest_html(files: list[str], keywords: list[str]):
         chamber = _parse_chamber_from_filename(Path(f).name)
         for kw_set, _excerpt_html, _speaker, _lines, _s, _e in matches:
             for kw in kw_set:
-                # Ensure keyword exists in counts mapping
                 counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
                 if chamber in counts[kw]:
                     counts[kw][chamber] += 1
@@ -561,130 +533,82 @@ def build_digest_html(files: list[str], keywords: list[str]):
     # ----------------------------------------------------------------------
     # 3. Detection table row substitution
     # ----------------------------------------------------------------------
-    # Find the template row containing the keyword placeholder.  We allow
-    # arbitrary whitespace within the brackets to tolerate line wrapping in
-    # Word's HTML.
     m_kw = re.search(r"\[\s*Keyword\s*\]", template_html, flags=re.I)
     if m_kw:
         idx_kw = m_kw.start()
-        # Find the start of the enclosing <tr> tag preceding the placeholder
         tr_start = template_html.rfind("<tr", 0, idx_kw)
-        # Find the end of that row (the end of the closing </tr> tag)
         tr_end = template_html.find("</tr>", idx_kw) + len("</tr>")
         det_row_template = template_html[tr_start:tr_end]
-        # Build detection rows from the template
-        detection_rows_html_parts = []
+
+        rows = []
         for kw in keywords:
             hoa = counts.get(kw, {}).get("House of Assembly", 0)
             lc = counts.get(kw, {}).get("Legislative Council", 0)
             total = hoa + lc
-            # Copy the template for each keyword and replace placeholders
             row_html = det_row_template
-            # Replace keyword placeholder
             row_html = re.sub(r"\[\s*Keyword\s*\]", _html_escape(kw), row_html, flags=re.I)
-            # Replace House of Assembly count
             row_html = re.sub(r"\[\s*House\s+of\s+Assembly\s+count\s*\]", str(hoa), row_html, flags=re.I)
-            # Replace Legislative Council count
             row_html = re.sub(r"\[\s*Legislative\s+Council\s+count\s*\]", str(lc), row_html, flags=re.I)
-            # Replace total count
             row_html = re.sub(r"\[\s*Total\s+count\s*\]", str(total), row_html, flags=re.I)
-            detection_rows_html_parts.append(row_html)
-        detection_rows_html = "".join(detection_rows_html_parts)
-        # Replace the original template row with all of our generated rows (once)
-        template_html = template_html.replace(det_row_template, detection_rows_html, 1)
+            rows.append(row_html)
+
+        template_html = template_html.replace(det_row_template, "".join(rows), 1)
 
     # ----------------------------------------------------------------------
     # 4. Transcript section substitution
     # ----------------------------------------------------------------------
-    # Locate the outer <table> that contains the transcript card.  We look
-    # backwards from the first occurrence of the transcript filename placeholder
-    # and then find the matching closing </table> tag using a simple stack.
     trans_match = re.search(r"\[\s*Transcript\s+filename\s*\]", template_html, flags=re.I)
     if trans_match:
         idx_t = trans_match.start()
-        # Find the start of the enclosing <table> by scanning backwards for
-        # '<table'.  This should find the smallest table that encloses the
-        # placeholder.
         table_start = template_html.rfind("<table", 0, idx_t)
-        # Now walk forward to find the matching closing </table> tag.
+
         open_tables = 0
         pos = table_start
         end_table = None
-        html_len = len(template_html)
-        while pos < html_len:
+        while pos < len(template_html):
             if template_html.startswith("<table", pos):
-                open_tables += 1
-                pos += 6
-                continue
+                open_tables += 1; pos += 6; continue
             if template_html.startswith("</table>", pos):
-                open_tables -= 1
-                pos += 8
+                open_tables -= 1; pos += 8
                 if open_tables == 0:
-                    end_table = pos
-                    break
+                    end_table = pos; break
                 continue
             pos += 1
+
         if end_table is not None:
             card_template = template_html[table_start:end_table]
-            # Within the card template find the two rows that define a single
-            # match: the header row containing [Match #] and the snippet row.
-            # First locate the header placeholder [Match #].
             m_match = re.search(r"\[\s*Match\s*#\s*\]", card_template, flags=re.I)
-            # For the snippet row we cannot rely on a simple placeholder
-            # because Word inserts additional markup (e.g. <span class=SpellE>).
-            # Instead search for '/snippet' (case‑insensitive) which appears in
-            # the placeholder text.
-            snippet_idx = None
-            lower_card = card_template.lower()
-            snip_token = "/snippet"
-            si = lower_card.find(snip_token)
-            if si != -1:
-                snippet_idx = si
-            if m_match and snippet_idx is not None:
+            snippet_idx = card_template.lower().find("/snippet")
+            if m_match and snippet_idx != -1:
                 idx_m = m_match.start()
-                # Row containing the match header
                 start_tr1 = card_template.rfind("<tr", 0, idx_m)
                 end_tr1 = card_template.find("</tr>", idx_m) + len("</tr>")
-                # Row containing the snippet (look backwards from the snippet placeholder)
                 start_tr2 = card_template.rfind("<tr", 0, snippet_idx)
                 end_tr2 = card_template.find("</tr>", snippet_idx) + len("</tr>")
                 match_template = card_template[start_tr1:end_tr2]
-                # The card is everything before the first match row + MATCH_ROWS placeholder + everything after the second row
                 card_before = card_template[:start_tr1]
-                card_after = card_template[end_tr2:]
-                # Generate one card per file with one row per match
-                cards_html_parts = []
+                card_after  = card_template[end_tr2:]
+
+                cards = []
                 for fname, matches in file_matches:
-                    # Skip files with no matches (should not happen)
                     if not matches:
                         continue
-                    # Build match rows for this file
-                    match_rows_parts = []
+                    match_rows = []
                     for i, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, start=1):
                         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
                         row_html = match_template
-                        # Replace [Match #]
                         row_html = re.sub(r"\[\s*Match\s*#\s*\]", str(i), row_html, flags=re.I)
-                        # Replace [SPEAKER NAME]
                         row_html = re.sub(r"\[\s*SPEAKER\s+NAME\s*\]", _html_escape(speaker) if speaker else "UNKNOWN", row_html, flags=re.I)
-                        # Replace [Line number(s)] (allow optional plural and whitespace)
                         row_html = re.sub(r"\[\s*Line\s+number\(s\)\s*\]", _html_escape(line_txt), row_html, flags=re.I)
-                        # Replace the excerpt/snippet placeholder.  Because
-                        # Word inserts markup inside the brackets (e.g. a
-                        # <span class=SpellE>) we collapse the placeholder to
-                        # anything between a '[' and a ']' that contains the
-                        # word 'snippet' and replace that region.
                         row_html = re.sub(r"\[[^\]]*snippet[^\]]*\]", excerpt_html, row_html, flags=re.I)
-                        match_rows_parts.append(row_html)
-                    # Assemble the card: header and match rows and remainder
-                    card_html = card_before + "".join(match_rows_parts) + card_after
-                    # Replace [Transcript filename] (allow newline and spaces)
+                        match_rows.append(row_html)
+
+                    card_html = card_before + "".join(match_rows) + card_after
                     card_html = re.sub(r"\[\s*Transcript\s+filename\s*\]", _html_escape(fname), card_html, flags=re.I)
-                    # Replace [Match count]
                     card_html = re.sub(r"\[\s*Match\s+count\s*\]", str(len(matches)), card_html, flags=re.I)
-                    cards_html_parts.append(card_html)
-                # Replace the original card template with all generated cards
-                template_html = template_html.replace(card_template, "".join(cards_html_parts), 1)
+                    cards.append(card_html)
+
+                template_html = template_html.replace(card_template, "".join(cards), 1)
 
     # ----------------------------------------------------------------------
     # 5. Whitespace and Outlook fixes
