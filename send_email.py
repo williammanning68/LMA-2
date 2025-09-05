@@ -299,42 +299,59 @@ def _extract_detection_row_template(html: str) -> str:
     return m.group(1)
 
 def _extract_section_template(html: str) -> str:
-    """Locate the outer table used for each transcript section (block with [Transcript filename])."""
-    pattern = re.compile(
-        r"(<table\b[^>]*>.*?\[Transcript filename\].*?</table>"
-        r"(?:\s*</td>\s*</tr>\s*</table>)?)",
-        re.I | re.S,
-    )
-    m = pattern.search(html)
-    if not m:
+    """Locate the entire table block for a transcript section."""
+    token = "[Transcript filename]"
+    idx = html.find(token)
+    if idx == -1:
         raise ValueError("Transcript section placeholder not found")
-    return m.group(1)
+    start = html.rfind("<table", 0, idx)
+    if start == -1:
+        raise ValueError("Transcript section placeholder not found")
+    count = 0
+    for m in re.finditer(r"<(/?)table\b", html[start:], flags=re.I):
+        if m.group(1):
+            count -= 1
+            if count == 0:
+                end = start + m.end()
+                end = html.find(">", end) + 1
+                return html[start:end]
+        else:
+            count += 1
+    raise ValueError("Transcript section placeholder not found")
 
 def _extract_match_template(section_html: str) -> str:
     """
     Grab the whole match "card" block: a header table containing [Match #]
-    followed by another table containing the Excerpt/snippet token.
-    Supports Word SpellE wrapper and both Excerpt/Exerpt spellings.
+    and a row containing the Excerpt/snippet token. Supports Word SpellE
+    wrapper and both Excerpt/Exerpt spellings.
     """
-    pattern = re.compile(
-        r"("  # capture the whole card block
-        r"<table\b[^>]*>.*?\[Match\s*#\].*?</table>"        # header table
-        r".*?"                                              # anything between
-        r"<table\b[^>]*>.*?\["                              # start snippet token
-        r"(?:<span\b[^>]*class=['\"]?SpellE['\"]?[^>]*>\s*)?"  # optional SpellE open
-        r"Excer?p?t"                                        # Excerpt/Exerpt
-        r"(?:\s*</span>)?\s*/snippet\]"                     # optional SpellE close + /snippet
-        r".*?</table>"
-        r")",
-        re.I | re.S,
-    )
-    m = pattern.search(section_html)
-    if not m:
+    token = "[Match #]"
+    idx = section_html.find(token)
+    if idx == -1:
         raise ValueError("Match template not found")
-    return m.group(1)
+    header_start = section_html.rfind("<table", 0, idx)
+    if header_start == -1:
+        raise ValueError("Match template not found")
+    start = section_html.rfind("<table", 0, header_start)
+    if start == -1:
+        start = header_start
+    count = 0
+    for m in re.finditer(r"<(/?)table\b", section_html[start:], flags=re.I):
+        if m.group(1):
+            count -= 1
+            if count == 0:
+                end = start + m.end()
+                end = section_html.find(">", end) + 1
+                table_html = section_html[start:end]
+                if _SNIPPET_TOKEN_RE.search(table_html):
+                    return table_html
+                break
+        else:
+            count += 1
+    raise ValueError("Match template not found")
 
 _SNIPPET_TOKEN_RE = re.compile(
-    r"\[(?:<span\b[^>]*class=['\"]?SpellE['\"]?[^>]*>\s*)?Excer?p?t(?:\s*</span>)?\s*/snippet\]",
+    r"\[(?:<span\b[^>]*class=['\"]?SpellE['\"]?[^>]*>\s*)?Ex(?:cer|er)pt(?:\s*</span>)?\s*/snippet\]",
     re.I,
 )
 
