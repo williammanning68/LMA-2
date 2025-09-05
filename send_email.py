@@ -9,6 +9,17 @@ from datetime import datetime
 from bisect import bisect_right
 import yagmail
 
+# Silence cssutils warnings that arise during premailer CSS parsing.  Without
+# this the logs become extremely noisy when Word‑generated styles contain
+# line breaks or other unexpected characters.  If cssutils is not available
+# (e.g. when using a pure smtplib sender), the import will fail silently.
+try:
+    import logging as _logging  # type: ignore
+    import cssutils as _cssutils  # type: ignore
+    _cssutils.log.setLevel(_logging.FATAL)
+except Exception:
+    pass
+
 # =============================================================================
 # Template resolution (robust)
 # =============================================================================
@@ -531,9 +542,42 @@ def build_digest_html(files: list[str], keywords: list[str]) -> tuple[str, int, 
     # 1. Load the template and insert the current date
     # ------------------------------------------------------------------
     try:
-        template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
+        raw_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
     except Exception:
-        template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
+        raw_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
+
+    # Extract only the content between <body> and </body> to avoid sending
+    # Word/Outlook <head> and style definitions that often leak into the
+    # rendered email.  If no <body> tags are found we fall back to the
+    # entire document.
+    m_body = re.search(r"<body\b[^>]*>(?P<body>[\s\S]*?)</body\s*>", raw_html, flags=re.I)
+    template_html = m_body.group("body") if m_body else raw_html
+
+    # Remove any <style> blocks that contain '<br>' or '&lt;br' which are
+    # often introduced by Word and cause cssutils to throw parse errors.
+    def _remove_broken_style_blocks(html: str) -> str:
+        out, pos = [], 0
+        while True:
+            start = html.find("<style", pos)
+            if start == -1:
+                out.append(html[pos:])
+                break
+            out.append(html[pos:start])
+            end = html.find("</style>", start)
+            if end == -1:
+                # unmatched style: drop remainder
+                break
+            block = html[start:end + len("</style>")]
+            # remove block if it contains <br> or &lt;br
+            if "<br" in block.lower() or "&lt;br" in block.lower():
+                # skip this block
+                pass
+            else:
+                out.append(block)
+            pos = end + len("</style>")
+        return "".join(out)
+
+    template_html = _remove_broken_style_blocks(template_html)
 
     # Substitute the run date into the [DATE] placeholder.
     run_date = datetime.now().strftime("%d %B %Y")
@@ -680,7 +724,9 @@ def build_digest_html(files: list[str], keywords: list[str]) -> tuple[str, int, 
     # ------------------------------------------------------------------
     template_html = _tighten_outlook_whitespace(template_html)
     template_html = _minify_inter_tag_whitespace(template_html)
-    return template_html, total_matches, counts
+    # Wrap in minimal HTML shell for sending; Outlook requires a root element
+    full_html = f"<!DOCTYPE html><html><body>{template_html}</body></html>"
+    return full_html, total_matches, counts
 
 # =============================================================================
 # Sent-log helpers
@@ -701,52 +747,81 @@ def update_sent_log(files: list[str]):
 # Main
 # =============================================================================
 
-def main():
-    EMAIL_USER = os.environ["EMAIL_USER"]
-    EMAIL_PASS = os.environ["EMAIL_PASS"]
-    EMAIL_TO   = os.environ["EMAIL_TO"]
+def main() -> None:
+    """
+    Entry point for sending the digest email.  This function loads
+    keywords and unsent transcripts, renders the HTML using
+    ``build_digest_html``, assembles a multipart message with
+    attachments and sends it using the standard library ``smtplib``.
+    Using ``smtplib`` avoids any implicit HTML processing (e.g.
+    CSS inlining) that third‑party mailers perform, preserving the
+    Word/Outlook template verbatim and preventing stray CSS parse
+    warnings.  Sent transcripts are appended to the sent log to
+    prevent repeat emails.
+    """
+    EMAIL_USER = os.environ.get("EMAIL_USER")
+    EMAIL_PASS = os.environ.get("EMAIL_PASS")
+    EMAIL_TO   = os.environ.get("EMAIL_TO")
+    if not (EMAIL_USER and EMAIL_PASS and EMAIL_TO):
+        raise SystemExit("EMAIL_USER, EMAIL_PASS and EMAIL_TO environment variables must be set.")
 
     SMTP_HOST      = os.environ.get("SMTP_HOST", "smtp.gmail.com")
     SMTP_PORT      = int(os.environ.get("SMTP_PORT", "587"))
     SMTP_STARTTLS  = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
     SMTP_SSL       = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
 
+    # Load keywords from file or environment
     keywords = load_keywords()
     if not keywords:
         raise SystemExit("No keywords found (keywords.txt or KEYWORDS env var).")
 
+    # Discover transcript files
     all_files = sorted(glob.glob("transcripts/*.txt"))
     if not all_files:
         raise SystemExit("No transcripts found in transcripts/")
 
+    # Filter out previously sent transcripts
     sent = load_sent_log()
     files = [f for f in all_files if Path(f).name not in sent]
     if not files:
         print("No new transcripts to email.")
         return
 
+    # Render HTML and collect counts
     body_html, total_hits, _counts = build_digest_html(files, keywords)
     subject = f"{DEFAULT_TITLE} — {datetime.now().strftime('%d %b %Y')}"
 
-    to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
+    # Build email message
+    from email.message import EmailMessage
+    msg = EmailMessage()
+    msg['Subject'] = subject
+    msg['From'] = EMAIL_USER
+    # The To header should be a comma‑separated string
+    msg['To'] = ", ".join([addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()])
+    # Plain text fallback can be empty or a short note
+    msg.set_content("This email requires an HTML capable client.")
+    msg.add_alternative(body_html, subtype='html')
+    # Attach transcripts as plain text
+    for fp in files:
+        with open(fp, 'rb') as f:
+            data = f.read()
+            # Use plain text maintype/subtype for transcripts
+            msg.add_attachment(data, maintype='text', subtype='plain', filename=Path(fp).name)
 
-    yag = yagmail.SMTP(
-        user=EMAIL_USER,
-        password=EMAIL_PASS,
-        host=SMTP_HOST,
-        port=SMTP_PORT,
-        smtp_starttls=SMTP_STARTTLS,
-        smtp_ssl=SMTP_SSL,
-    )
+    # Send via smtplib
+    import smtplib
+    if SMTP_SSL:
+        with smtplib.SMTP_SSL(host=SMTP_HOST, port=SMTP_PORT) as server:
+            server.login(EMAIL_USER, EMAIL_PASS)
+            server.send_message(msg)
+    else:
+        with smtplib.SMTP(host=SMTP_HOST, port=SMTP_PORT) as server:
+            if SMTP_STARTTLS:
+                server.starttls()
+            server.login(EMAIL_USER, EMAIL_PASS)
+            server.send_message(msg)
 
-    # IMPORTANT: pass ONE HTML string to avoid yagmail inserting extra <br>
-    yag.send(
-        to=to_list,
-        subject=subject,
-        contents=body_html,
-        attachments=files,  # optional: attach transcripts
-    )
-
+    # Update sent log to avoid resending
     update_sent_log(files)
     print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
