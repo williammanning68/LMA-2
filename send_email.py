@@ -292,6 +292,9 @@ def extract_matches(text: str, keywords):
 # Template block extraction
 # =============================================================================
 
+# The HTML structure lives in email_template.htm; these helpers merely locate
+# placeholder blocks that we then populate with data.
+
 def _extract_detection_row_template(html: str) -> str:
     """Locate the <tr> used for keyword counts."""
     m = re.search(r"<tr[^>]*>.*?\[Keyword\].*?</tr>", html, flags=re.I | re.S)
