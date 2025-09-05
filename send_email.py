@@ -405,7 +405,7 @@ def _build_file_section_html(filename: str, matches):
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:4px 8px;"
+            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
             "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
@@ -416,11 +416,11 @@ def _build_file_section_html(filename: str, matches):
                 "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
                 "<td valign='top' style='vertical-align:top;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
-                  "line-height:15px;mso-line-height-rule:exactly;display:block;\">"
+                  "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
                 "<td align='right' valign='top' style='vertical-align:top;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:15px;mso-line-height-rule:exactly;display:block;\">"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
               "</tr>"
@@ -428,8 +428,8 @@ def _build_file_section_html(filename: str, matches):
             "</td>"
             "</tr>"
             "<tr>"
-            "<td valign='top' style='padding:6px 8px;vertical-align:top;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
+            "<td valign='top' style='padding:8px 10px 9px 10px;vertical-align:top;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
               f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
@@ -438,8 +438,9 @@ def _build_file_section_html(filename: str, matches):
         cards.append(card)
 
     # 2px spacer BETWEEN cards (none after the last)
+    # Increase spacer height between cards for improved vertical rhythm
     spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-              "<tr><td style='height:2px;line-height:2px;font-size:0;'>&nbsp;</td></tr></table>")
+              "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>")
     cards_html = spacer.join(cards)
 
     section = (
