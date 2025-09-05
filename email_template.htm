@@ -1,222 +1,159 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <!-- TEMPLATE_ID: CLEAN-700-FINAL -->
-    <meta name="x-apple-disable-message-reformatting">
-    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  </head>
-  <body style="margin:0; padding:0; background:#F2F4F6;">
-    <!--[if mso]>
-    <style type="text/css">
-      /* Force Outlook to honor line heights in inline styles */
-      span, td, div { mso-line-height-rule:exactly; }
-    </style>
-    <![endif]-->
-
-    <!-- ===== OUTER WRAPPER ===== -->
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%; background:#F2F4F6;">
-      <tr>
-        <td align="center" style="padding:24px 10px;">
-          <!-- ===== FIXED-WIDTH CONTAINER ===== -->
-          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="700" style="width:700px; background:#FFFFFF; border-collapse:collapse;">
-            <!-- Header Bar -->
-            <tr>
-              <td align="center" bgcolor="#475560" style="background:#475560; padding:24px 28px;">
-                <div style="font-family:Calibri, Arial, sans-serif; font-size:22px; line-height:26px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700;">
-                  Hansard Monitor&nbsp;&nbsp;BETA
-                </div>
-                <div style="font-family:Calibri, Arial, sans-serif; font-size:13px; line-height:18px; color:#FFFFFF; mso-line-height-rule:exactly; margin-top:6px;">
-                  Program Run: [DATE]
-                </div>
-              </td>
-            </tr>
-
-            <!-- Small spacer -->
-            <tr><td style="height:16px; line-height:16px; font-size:0;">&nbsp;</td></tr>
-
-            <!-- Summary Panel Wrapper -->
-            <tr>
-              <td style="padding:0 20px 0 20px;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse; background:#ECF0F1;">
-                  <tr>
-                    <td style="height:12px; line-height:12px; font-size:0;">&nbsp;</td>
-                  </tr>
-                  <tr>
-                    <td style="padding:0 12px 12px 12px;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse; background:#FFFFFF; border:1px solid #D8DCE0;">
-                        <!-- Section Title -->
-                        <tr>
-                          <td style="border-bottom:2px solid #C5A572; padding:12px 14px;">
-                            <div style="font-family:Calibri, Arial, sans-serif; font-size:14px; line-height:18px; color:#000000; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-                              Detection Match by Chamber
-                            </div>
-                          </td>
-                        </tr>
-
-                        <!-- Summary Table Headers -->
-                        <tr>
-                          <td style="padding:0 12px 12px 12px;">
-                            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-                              <tr>
-                                <td width="28%" bgcolor="#4A5A6A" style="width:28%; background:#4A5A6A; padding:9px 8px;">
-                                  <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:14px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">Keyword</div>
-                                </td>
-                                <td width="28%" bgcolor="#4A5A6A" style="width:28%; background:#4A5A6A; padding:9px 8px;">
-                                  <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:14px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">House of Assembly</div>
-                                </td>
-                                <td width="28%" bgcolor="#4A5A6A" style="width:28%; background:#4A5A6A; padding:9px 8px;">
-                                  <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:14px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">Legislative Council</div>
-                                </td>
-                                <td width="16%" bgcolor="#4A5A6A" style="width:16%; background:#4A5A6A; padding:9px 8px; border-right:1px solid #D8DCE0;">
-                                  <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:14px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">Total</div>
-                                </td>
-                              </tr>
-
-                              <!-- Summary rows inserted by script -->
-                              {{DETECTION_ROWS}}
-
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="height:12px; line-height:12px; font-size:0;">&nbsp;</td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-
-            <!-- Spacer between summary and details -->
-            <tr><td style="height:18px; line-height:18px; font-size:0;">&nbsp;</td></tr>
-
-            <!-- File sections inserted by script -->
-            {{SECTIONS}}
-
-            <!-- Bottom Banner -->
-            <tr>
-              <td bgcolor="#4A5A6A" style="background:#4A5A6A; padding:14px 12px;">
-                <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-                  **THIS PROGRAM IS IN BETA TESTING &nbsp;&nbsp; DO NOT FORWARD**
-                </div>
-                <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#FFFFFF; mso-line-height-rule:exactly; text-align:center; margin-top:6px;">
-                  Contact developer with any issues, queries, or suggestions:&nbsp;
-                  <a href="mailto:William.Manning@FederalGroup.com.au" style="color:#FFFFFF; text-decoration:underline;">William.Manning@FederalGroup.com.au</a>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <!-- /CONTAINER -->
-        </td>
-      </tr>
-    </table>
-
-    <!-- ========================= SUB-TEMPLATES (for the script) ========================= -->
-    <!-- These are comment-delimited templates the script clones and injects into the placeholders. -->
-    <!-- Keep exactly three sub-templates: DETECTION_ROW, FILE_SECTION, MATCH_CARD. -->
-
-    <!-- BEGIN:DETECTION_ROW_TEMPLATE -->
-    <!--
-    <tr>
-      <td width="28%" style="width:28%; border-top:1px solid #ECF0F1; border-left:1px solid #D8DCE0; border-right:none; border-bottom:1px solid #ECF0F1; padding:6px 8px; background:#FFFFFF;">
-        <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700; text-align:left;">
-          {{KW}}
-        </div>
-      </td>
-      <td width="28%" style="width:28%; border-top:1px solid #ECF0F1; border-left:none; border-right:none; border-bottom:1px solid #ECF0F1; padding:6px 8px; background:#FFFFFF;">
-        <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-          {{HOA}}
-        </div>
-      </td>
-      <td width="28%" style="width:28%; border-top:1px solid #ECF0F1; border-left:none; border-right:none; border-bottom:1px solid #ECF0F1; padding:6px 8px; background:#FFFFFF;">
-        <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-          {{LC}}
-        </div>
-      </td>
-      <td width="16%" style="width:16%; border-top:1px solid #ECF0F1; border-left:none; border-right:1px solid #D8DCE0; border-bottom:1px solid #ECF0F1; padding:6px 8px; background:#FFFFFF;">
-        <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-          {{TOTAL}}
-        </div>
-      </td>
-    </tr>
-    -->
-    <!-- END:DETECTION_ROW_TEMPLATE -->
-
-    <!-- BEGIN:FILE_SECTION_TEMPLATE -->
-    <!--
-    <tr>
-      <td style="padding:0 20px 0 20px;">
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse; background:#F7F9FA;">
-          <tr>
-            <td style="border-left:3px solid #C5A572; padding:10px 12px;">
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700;">
-                {{FILENAME}}
-              </div>
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly;">
-                {{MATCHCOUNT}} match(es)
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td style="border:1px solid #D8DCE0; border-top:none; background:#FFFFFF; padding:10px 12px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-                {{CARDS}}
-              </table>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <!-- spacer after each file section -->
-    <tr><td style="height:14px; line-height:14px; font-size:0;">&nbsp;</td></tr>
-    -->
-    <!-- END:FILE_SECTION_TEMPLATE -->
-
-    <!-- BEGIN:MATCH_CARD_TEMPLATE -->
-    <!--
-    <!-- One match: number bar + title on top, then excerpt block -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Hansard Monitor BETA</title>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body style="margin:0;padding:0;background:#ffffff;">
+  <!-- Outer container -->
+  <table role="presentation" align="center" width="900" cellpadding="0" cellspacing="0" border="0" style="width:900px;border-collapse:collapse;background:#ffffff;">
     <tr>
       <td style="padding:0;">
-        <!-- Mini header row (number + title + line refs) -->
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+        <!-- Header band -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#475560;">
           <tr>
-            <td width="28" bgcolor="#4A5A6A" style="width:28px; background:#4A5A6A; padding:0;">
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:24px; color:#FFFFFF; mso-line-height-rule:exactly; font-weight:700; text-align:center;">
-                {{INDEX}}
+            <td style="padding:24px 28px;text-align:center;">
+              <div style="font:bold 20pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:26px;display:block;">Hansard Monitor&nbsp;&nbsp;BETA</div>
+              <div style="font:12pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:18px;display:block;margin-top:6px;">Program Run: [DATE]</div>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Spacer -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+        </table>
+
+        <!-- Detection summary table -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;background:#ffffff;border:1px solid #D8DCE0;">
+          <!-- Title row -->
+          <tr>
+            <td colspan="4" style="border-bottom:2px solid #C5A572;padding:12pt 13.5pt;">
+              <div style="text-align:center;font:bold 12pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:16pt;display:block;">
+                Detection Match by Chamber
               </div>
             </td>
-            <td style="padding:0 9px;">
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; font-weight:700;">
-                {{SPEAKER}}
-              </div>
+          </tr>
+          <!-- Header row -->
+          <tr>
+            <td width="28%" style="background:#4A5A6A;padding:9pt 7.5pt;">
+              <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:14pt;display:block;">Keyword</div>
             </td>
-            <td width="180" style="width:180px; padding:0; text-align:right;">
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#000000; mso-line-height-rule:exactly; text-align:right;">
-                {{LINETEXT}}
+            <td width="28%" style="background:#4A5A6A;padding:9pt 7.5pt;">
+              <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:14pt;display:block;">House of Assembly</div>
+            </td>
+            <td width="28%" style="background:#4A5A6A;padding:9pt 7.5pt;">
+              <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:14pt;display:block;">Legislative Council</div>
+            </td>
+            <td width="16%" style="background:#4A5A6A;padding:9pt 7.5pt;">
+              <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:14pt;display:block;">Total</div>
+            </td>
+          </tr>
+
+          <!-- ===== Dynamic detection rows injected here ===== -->
+          {{DETECTION_ROWS}}
+          <!-- ============================================== -->
+        </table>
+
+        <!-- Spacer -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+          <tr><td style="height:10px;line-height:10px;font-size:0;background:#ECF0F1;">&nbsp;</td></tr>
+        </table>
+
+        <!-- ===== Dynamic file sections (each with cards) injected here ===== -->
+        {{SECTIONS}}
+        <!-- ================================================================= -->
+
+        <!-- Footer -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#4A5A6A;">
+          <tr>
+            <td style="padding:12pt 12pt;text-align:center;">
+              <div style="font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:14pt;display:block;">
+                **THIS PROGRAM IS IN BETA TESTING&nbsp;&nbsp;DO NOT FORWARD**
+              </div>
+              <div style="font:9pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:13pt;display:block;margin-top:4px;">
+                Contact developer with any issues, queries, or suggestions:
+                <a href="mailto:William.Manning@FederalGroup.com.au" style="color:#ffffff;text-decoration:underline;">William.Manning@FederalGroup.com.au</a>
               </div>
             </td>
           </tr>
         </table>
-        <!-- Excerpt block -->
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- ===================================================================== -->
+  <!-- Below are hidden sub-templates used by send_email.py. They are wrapped
+       in comments so they don't render in the email. Do not remove markers. -->
+  <!-- ===================================================================== -->
+
+  <!-- BEGIN:DETECTION_ROW_TEMPLATE -->
+  <tr>
+    <td width="28%" style="border-top:none;border-left:1px solid #D8DCE0;border-bottom:1px solid #ECF0F1;border-right:none;padding:6pt 7.5pt;background:#ffffff;">
+      <div style="font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{KW}}</div>
+    </td>
+    <td width="28%" style="border-top:1px solid #D8DCE0;border-left:none;border-bottom:1px solid #ECF0F1;border-right:none;padding:6pt 7.5pt;background:#ffffff;">
+      <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{HOA}}</div>
+    </td>
+    <td width="28%" style="border-top:1px solid #D8DCE0;border-left:none;border-bottom:1px solid #ECF0F1;border-right:none;padding:6pt 7.5pt;background:#ffffff;">
+      <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{LC}}</div>
+    </td>
+    <td width="16%" style="border-top:none;border-left:none;border-bottom:1px solid #ECF0F1;border-right:1px solid #D8DCE0;padding:6pt 7.5pt;background:#ffffff;">
+      <div style="text-align:center;font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{TOTAL}}</div>
+    </td>
+  </tr>
+  <!-- END:DETECTION_ROW_TEMPLATE -->
+
+  <!-- BEGIN:FILE_SECTION_TEMPLATE -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;background:#ffffff;">
+    <tr>
+      <td style="border-left:3px solid #C5A572;background:#F7F9FA;padding:9pt 10.5pt;">
+        <div style="font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{FILENAME}}</div>
+        <div style="font:10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#000000;line-height:14pt;display:block;">{{MATCHCOUNT}} match(es)</div>
+      </td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #D8DCE0;border-top:none;background:#ffffff;padding:7.5pt 9pt;">
+        {{CARDS}}
+      </td>
+    </tr>
+    <!-- section spacer -->
+    <tr><td style="height:10px;line-height:10px;font-size:0;background:#ffffff;">&nbsp;</td></tr>
+  </table>
+  <!-- END:FILE_SECTION_TEMPLATE -->
+
+  <!-- BEGIN:MATCH_CARD_TEMPLATE -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;border:1px solid #D8DCE0;background:#ffffff;">
+    <tr>
+      <td valign="top" style="background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:6px 8px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
           <tr>
-            <td style="padding:10px 0 6px 0;">
-              <div style="font-family:Segoe UI, Calibri, Arial, sans-serif; font-size:12px; line-height:18px; color:#000000; mso-line-height-rule:exactly;">
-                {{EXCERPT_HTML}}
-              </div>
+            <td width="32" align="center" valign="middle" style="background:#4A5A6A;">
+              <div style="font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#ffffff;line-height:18px;display:block;">{{INDEX}}</div>
+            </td>
+            <td width="8" style="font-size:0;line-height:0;">&nbsp;</td>
+            <td valign="middle">
+              <div style="font:bold 10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#24313F;line-height:15px;text-transform:uppercase;display:block;">{{SPEAKER}}</div>
+            </td>
+            <td valign="middle" align="right">
+              <div style="font:10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#6A7682;line-height:15px;display:block;">{{LINETEXT}}</div>
             </td>
           </tr>
-        </table>
-        <!-- spacer after each match -->
-        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="border-collapse:collapse;">
-          <tr><td style="height:8px; line-height:8px; font-size:0;">&nbsp;</td></tr>
         </table>
       </td>
     </tr>
-    -->
-    <!-- END:MATCH_CARD_TEMPLATE -->
+    <tr>
+      <td valign="top" style="padding:8px 10px;">
+        <div style="font:10pt 'Segoe UI',Calibri,Arial,sans-serif;color:#1F2A36;line-height:16px;display:block;">
+          {{EXCERPT_HTML}}
+        </div>
+      </td>
+    </tr>
+  </table>
+  <!-- END:MATCH_CARD_TEMPLATE -->
 
-  </body>
+</body>
 </html>
