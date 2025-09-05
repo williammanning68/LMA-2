@@ -10,10 +10,11 @@ from bisect import bisect_right
 from typing import List, Tuple, Dict, Set
 from email.mime.text import MIMEText
 
-import yagmail  # mail transport (we will feed a raw HTML MIME part)
+import yagmail  # transport
+from yagmail.raw import raw as yag_raw  # <- use this to pass raw MIME parts (no rewriting)
 
-# Optionally silence cssutils (pulled in by premailer via yagmail)
-# With the raw MIMEText we shouldn't hit premailer, but muting keeps CI logs tidy.
+# Optionally silence cssutils (pulled by premailer via yagmail); with raw MIME we shouldn't hit it,
+# but keeping this avoids noisy CI logs in any case.
 try:
     import logging, cssutils  # type: ignore
     cssutils.log.setLevel(logging.FATAL)
@@ -23,7 +24,7 @@ except Exception:
 # -----------------------------------------------------------------------------
 # Constants / paths
 # -----------------------------------------------------------------------------
-TEMPLATE_HTML_PATH = Path("email_template.htm")  # keep as provided (Word export)
+TEMPLATE_HTML_PATH = Path("email_template.htm")
 KEYWORDS_PATH      = Path("keywords.txt")
 LOG_FILE           = Path("sent.log")
 TRANSCRIPTS_DIR    = Path("transcripts")
@@ -32,7 +33,7 @@ DEFAULT_TITLE = "Hansard Monitor – BETA"
 VERSION_STR   = os.environ.get("VERSION_STR", "18.3")
 
 # -----------------------------------------------------------------------------
-# Utility helpers (no visuals here)
+# Utility helpers (template-agnostic; no visual HTML here)
 # -----------------------------------------------------------------------------
 
 def _html_escape(s: str) -> str:
@@ -51,61 +52,48 @@ def _tighten_outlook_whitespace(html: str) -> str:
     - Collapse runs of <br>.
     - Remove whitespace between adjacent tables (safe).
     """
-    # 1) Empty MSO paragraphs (only &nbsp;/br/spans with no visible text)
     EMPTY_MSOP_RE = re.compile(
         r"<p\b[^>]*>\s*(?:&nbsp;|\s|<span\b[^>]*>\s*</span>|<o:p>\s*</o:p>|<br[^>]*>)*\s*</p>",
         flags=re.I
     )
     html = EMPTY_MSOP_RE.sub("", html)
-
-    # 2) Collapse <br> runs
     html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
-
-    # 3) Remove whitespace between adjacent tables
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
-    # Keep it light; just compress >   < into ><
     return re.sub(r">\s+<", "><", html)
 
 def _parse_chamber_from_filename(name: str) -> str:
-    # Very light inference based on file name text
     lower = name.lower()
     if "legislative" in lower:
         return "Legislative Council"
     if "assembly" in lower:
         return "House of Assembly"
-    # Default bucket if unclear
     return "House of Assembly"
 
 def load_keywords() -> List[str]:
-    # 1) env var KEYWORDS="foo,bar"
     env_kw = os.environ.get("KEYWORDS", "").strip()
     parts = []
     if env_kw:
         parts.extend([p.strip() for p in env_kw.split(",") if p.strip()])
-
-    # 2) keywords.txt (one per line)
     if KEYWORDS_PATH.exists():
         for ln in KEYWORDS_PATH.read_text(encoding="utf-8", errors="ignore").splitlines():
             ln = ln.strip()
             if not ln or ln.startswith("#"):
                 continue
             parts.append(ln)
-
-    # Deduplicate but preserve order
     seen = set()
     uniq = []
     for p in parts:
-        if p.lower() not in seen:
-            seen.add(p.lower())
+        key = p.lower()
+        if key not in seen:
+            seen.add(key)
             uniq.append(p)
     return uniq
 
 # -----------------------------------------------------------------------------
-# Matching logic (no visuals, only data)
+# Matching (data only)
 # -----------------------------------------------------------------------------
 
 Match = Tuple[Set[str], str, str, List[int], int, int]
@@ -114,9 +102,7 @@ Match = Tuple[Set[str], str, str, List[int], int, int]
 def _keyword_regexes(keywords: List[str]) -> List[Tuple[str, re.Pattern]]:
     regs = []
     for kw in keywords:
-        # Preserve exact phrases; do a case-insensitive search for the literal text
-        pat = re.compile(re.escape(kw), flags=re.I)
-        regs.append((kw, pat))
+        regs.append((kw, re.compile(re.escape(kw), flags=re.I)))
     return regs
 
 def extract_matches(text: str, keywords: List[str]) -> List[Match]:
@@ -134,21 +120,18 @@ def extract_matches(text: str, keywords: List[str]) -> List[Match]:
                 found.add(kw)
         if not found:
             continue
-
-        speaker = ""  # Unknown; repository scan logic may fill this in future
-        # Short excerpt (escape now; we’ll inject directly)
+        speaker = ""  # unknown; can be enhanced later
         snippet = _html_escape(line.strip())
         matches.append((found, snippet, speaker, [i], 0, 0))
     return matches
 
 # -----------------------------------------------------------------------------
-# Template-driven HTML builder (no layout strings, only placeholder filling)
+# Template-driven builder (discover & duplicate rows; no hard-coded layout)
 # -----------------------------------------------------------------------------
 
 def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, Dict[str, Dict[str, int]]]:
     """
     Build final HTML strictly by filling placeholders in email_template.htm.
-    No hard-coded layout: we discover and duplicate the template's own rows.
     """
     # Load template (Word/Outlook often uses Windows-1252)
     try:
@@ -156,7 +139,7 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
     except Exception:
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
-    # Keep only the <body> inner HTML (prevents <head>/XML from showing as text)
+    # Keep only the <body> inner HTML (prevents head/XML from showing as text)
     m_body = re.search(r'<body\b[^>]*>(?P<body>[\s\S]*?)</body>', template_html, flags=re.I)
     if m_body:
         template_html = m_body.group('body')
@@ -165,9 +148,7 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
     run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
 
-    # -----------------------------------------
-    # Scan files → counts per keyword+chamber
-    # -----------------------------------------
+    # Scan files → counts
     counts: Dict[str, Dict[str, int]] = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
     file_matches: List[Tuple[str, List[Match]]] = []
     total_matches = 0
@@ -186,9 +167,7 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
                     counts[kw][chamber] += 1
         file_matches.append((Path(f).name, matches))
 
-    # ----------------------------------------------------------
-    # Detection table: clone the row with [Keyword] placeholder
-    # ----------------------------------------------------------
+    # Detection table rows
     m_kw = re.search(r"\[\s*Keyword\s*\]", template_html, flags=re.I)
     if m_kw:
         idx_kw = m_kw.start()
@@ -210,16 +189,13 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
 
         template_html = template_html.replace(det_row_template, "".join(det_rows_html), 1)
 
-    # -----------------------------------------------------------------
-    # Transcript cards: duplicate the table with [Transcript filename]
-    # Within each card, duplicate the two-row match block
-    # -----------------------------------------------------------------
+    # Transcript cards
     trans_match = re.search(r"\[\s*Transcript\s+filename\s*\]", template_html, flags=re.I)
     if trans_match:
         idx_t = trans_match.start()
         table_start = template_html.rfind("<table", 0, idx_t)
 
-        # find matching </table> using a simple stack
+        # find matching </table>
         open_tables = 0
         pos = table_start
         end_table = None
@@ -235,10 +211,8 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
 
         if end_table is not None:
             card_template = template_html[table_start:end_table]
-
-            # Inside the card, find the row containing [Match #] and the snippet row
             m_match_no = re.search(r"\[\s*Match\s*#\s*\]", card_template, flags=re.I)
-            snippet_idx = card_template.lower().find("/snippet")  # robust to Word spans inside []
+            snippet_idx = card_template.lower().find("/snippet")
             if m_match_no and snippet_idx != -1:
                 idx_m = m_match_no.start()
                 start_tr1 = card_template.rfind("<tr", 0, idx_m)
@@ -261,7 +235,6 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
                         row_html = re.sub(r"\[\s*Match\s*#\s*\]", str(i), row_html, flags=re.I)
                         row_html = re.sub(r"\[\s*SPEAKER\s+NAME\s*\]", _html_escape(speaker) if speaker else "UNKNOWN", row_html, flags=re.I)
                         row_html = re.sub(r"\[\s*Line\s+number\(s\)\s*\]", _html_escape(line_txt), row_html, flags=re.I)
-                        # Replace snippet (the placeholder often has extra spans inside [])
                         row_html = re.sub(r"\[[^\]]*snippet[^\]]*\]", excerpt_html, row_html, flags=re.I)
                         rows.append(row_html)
 
@@ -272,9 +245,7 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
 
                 template_html = template_html.replace(card_template, "".join(cards_html), 1)
 
-    # --------------------------------
-    # Final safe whitespace cleanups
-    # --------------------------------
+    # Final safe cleanups
     template_html = _tighten_outlook_whitespace(template_html)
     template_html = _minify_inter_tag_whitespace(template_html)
 
@@ -284,7 +255,7 @@ def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, 
 # Sent-log helpers
 # -----------------------------------------------------------------------------
 
-def load_sent_log() -> Set[str]:
+def load_sent_log():  # -> Set[str]
     if LOG_FILE.exists():
         with open(LOG_FILE, encoding="utf-8") as f:
             return {ln.strip() for ln in f if ln.strip()}
@@ -296,7 +267,7 @@ def update_sent_log(files: List[str]) -> None:
             f.write(Path(fp).name + "\n")
 
 # -----------------------------------------------------------------------------
-# Main (input → sort → send). No template visuals here.
+# Main: input → sort → send (no visual HTML here; template controls visuals)
 # -----------------------------------------------------------------------------
 
 def main() -> None:
@@ -304,7 +275,6 @@ def main() -> None:
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO   = os.environ["EMAIL_TO"]
 
-    # Note: we will feed yagmail a raw HTML MIME part, so no premailer rewriting.
     yag = yagmail.SMTP(
         user=EMAIL_USER,
         password=EMAIL_PASS,
@@ -318,7 +288,6 @@ def main() -> None:
     if not keywords:
         raise SystemExit("No keywords found (keywords.txt or KEYWORDS env var).")
 
-    # Gather unsent transcripts
     TRANSCRIPTS_DIR.mkdir(exist_ok=True)
     all_files = sorted(glob.glob(str(TRANSCRIPTS_DIR / "*.txt")))
     if not all_files:
@@ -331,17 +300,18 @@ def main() -> None:
         print("No new transcripts to email.")
         return
 
-    # Build HTML (body fragment only), then send as raw HTML MIME part
+    # Build HTML (body fragment only)
     body_html, total_hits, _counts = build_digest_html(files, keywords)
-    html_part = MIMEText(body_html, "html", "utf-8")
 
+    # Wrap as raw HTML MIME part and mark raw for yagmail to send without processing
+    html_part = MIMEText(body_html, "html", "utf-8")
     subject = f"{DEFAULT_TITLE} – Version {VERSION_STR} — {datetime.now().strftime('%d %b %Y')}"
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
     yag.send(
         to=to_list,
         subject=subject,
-        contents=[html_part],   # <<< raw HTML part prevents premailer/cssutils rewriting
+        contents=[yag_raw(html_part)],   # <- CRITICAL: pass-through raw MIME; no premailer/cssutils
         attachments=files,
     )
 
