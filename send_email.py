@@ -289,6 +289,43 @@ def extract_matches(text: str, keywords):
     return results
 
 # =============================================================================
+# Outlook/Gmail whitespace fixes
+# =============================================================================
+
+_EMPTY_MSOP_RE = re.compile(
+    r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+    r"<o:p>\s*&nbsp;\s*</o:p>|"
+    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
+    re.I,
+)
+
+def _tighten_outlook_whitespace(html: str) -> str:
+    """Scrub empty Outlook paragraphs and extra spacing."""
+    html = _EMPTY_MSOP_RE.sub("", html)
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
+    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    return html
+
+def _minify_inter_tag_whitespace(html: str) -> str:
+    """Collapse inter-tag whitespace to keep Outlook happy."""
+    return re.sub(r">\s+<", "><", html)
+
+def _inject_mso_css_reset(html: str) -> str:
+    """Insert conditional CSS to reset default Word/Outlook styles."""
+    mso_block = (
+        "<!--[if mso]>"
+        "<style>"
+        "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
+        "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
+        "</style>"
+        "<![endif]>"
+    )
+    if re.search(r"</head\s*>", html, re.I):
+        return re.sub(r"</head\s*>", mso_block + "</head>", html, flags=re.I, count=1)
+    return mso_block + html
+
+# =============================================================================
 # Template block extraction
 # =============================================================================
 
@@ -367,6 +404,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
+    template_html = _inject_mso_css_reset(template_html)
 
     det_row_tpl = _extract_detection_row_template(template_html)
     section_tpl = _extract_section_template(template_html)
@@ -416,6 +454,8 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     html = template_html.replace(det_row_tpl, "".join(det_rows))
     html = html.replace(section_tpl, "".join(sections_html))
+    html = _tighten_outlook_whitespace(html)
+    html = _minify_inter_tag_whitespace(html)
     return html, total_matches, counts
 
 # =============================================================================
