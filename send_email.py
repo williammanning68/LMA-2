@@ -9,6 +9,14 @@ from datetime import datetime
 from bisect import bisect_right
 import yagmail
 
+# Silence cssutils (used by premailer via yagmail) to stop Word/MSO CSS noise
+try:
+    import logging
+    import cssutils  # provided via premailer in requirements.txt
+    cssutils.log.setLevel(logging.FATAL)  # or logging.CRITICAL
+except Exception:
+    pass
+
 # =============================================================================
 # Template resolution (robust)
 # =============================================================================
