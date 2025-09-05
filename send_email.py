@@ -239,9 +239,8 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
         pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
-        # Use a pale yellow highlight to match the template colour. The mso-highlight value
-        # of 'yellow' ensures Outlook honours the highlight colour.
-        out = pat.sub(lambda m: "<b><span style='background:#fff0a6;mso-highlight:yellow'>" + m.group(0) + "</span></b>", out)
+        out = pat.sub(lambda m: "<b><span style='background:lightgrey;mso-highlight:lightgrey'>" +
+                                 m.group(0) + "</span></b>", out)
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -338,13 +337,13 @@ def _build_detection_row(kw, hoa, lc, tot) -> str:
     # Use pixel paddings; margin:0 paragraphs
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;border-right:none;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
@@ -406,21 +405,21 @@ def _build_file_section_html(filename: str, matches):
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
-                "<td width='24' align='center' valign='top' style='background:#4A5A6A;border:0;height:24px;vertical-align:top;'>"
+                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
                 "</td>"
-                "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
-                "<td valign='top' style='vertical-align:top;'>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
+                "<td valign='middle' style='vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
                   "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
-                "<td align='right' valign='top' style='vertical-align:top;'>"
+                "<td align='right' valign='middle' style='vertical-align:middle;'>"
                   "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
@@ -430,7 +429,7 @@ def _build_file_section_html(filename: str, matches):
             "</tr>"
             "<tr>"
             "<td valign='top' style='padding:8px 10px 9px 10px;vertical-align:top;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:17px;margin:0;mso-line-height-rule:exactly;display:block;\">"
               f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
@@ -520,19 +519,21 @@ def build_digest_html(files: list[str], keywords: list[str]):
     # Replace detection rows in template
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
 
+    # Ensure the Detection Match header underline uses the gold colour (#C5A572).
+    # Some Word/Outlook templates may collapse the header border with the row below
+    # and thus change the underline colour.  We force any border-bottom colour on
+    # the header cell to our gold by substituting the hex code after the
+    # 'border-bottom:solid' token within the header row containing our title.
+    template_html = re.sub(
+        r"(Detection\s+Match\s+by\s+Chamber.*?border-bottom:solid\s+)#[A-Fa-f0-9]{6}",
+        lambda m: m.group(1) + "C5A572",
+        template_html,
+        flags=re.I | re.S,
+    )
+
     # Remove sample section, then inject ours after the detection table
     template_html = _strip_sample_section(template_html)
-    # Increase vertical space between detection table and first file section by adding a spacer
-    sections_html = "".join(sections)
-    # Increase the vertical spacer between the detection table and the first file section
-    # from 12px to 16px to better separate the summary table from the transcript sections.
-    spacer_before_sections = (
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-        "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
-    )
-    # Prepend the spacer before file sections
-    sections_with_spacer = spacer_before_sections + sections_html
-    template_html = _inject_sections_after_detection(template_html, sections_with_spacer)
+    template_html = _inject_sections_after_detection(template_html, "".join(sections))
 
     # Final whitespace controls: scrub ghost paragraphs then minify inter-tag whitespace
     template_html = _tighten_outlook_whitespace(template_html)
