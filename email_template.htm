@@ -1,155 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Hansard Monitor BETA</title>
-  <meta name="x-apple-disable-message-reformatting">
-  <meta name="format-detection" content="telephone=no">
-</head>
-<body style="margin:0;padding:0;background:#ffffff;font-family:'Segoe UI', Arial, sans-serif;line-height:1.35;color:#000;">
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <!-- Prevent iOS/Gmail reformatting -->
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hansard Monitor – BETA</title>
+    <!--[if mso]>
+      <style type="text/css">
+        body, table, td, p, a, span { font-family: Calibri, Arial, sans-serif !important; }
+      </style>
+    <![endif]-->
+  </head>
+  <body style="margin:0; padding:0; background:#ffffff; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">
+    <!-- Outer full-width table -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; background:#ffffff;">
+      <tr>
+        <td align="center" style="padding:0; margin:0;">
 
-  <!-- Outer container -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#ffffff;">
-    <tr>
-      <td align="center" style="padding:0;margin:0;">
-        <table role="presentation" width="900" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;max-width:900px;width:900px;">
-          
-          <!-- Banner -->
-          <tr>
-            <td style="padding:0;margin:0;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#475560;">
-                <tr>
-                  <td align="center" style="padding:24px 28px;">
-                    <div style="font-size:20px;font-weight:700;color:#ffffff;">Hansard Monitor&nbsp;&nbsp;BETA</div>
-                    <div style="height:6px;line-height:6px;font-size:0;">&nbsp;</div>
-                    <div style="font-size:12px;color:#ffffff;">Program Run:&nbsp;<span>{{RUN_DATE}}</span></div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+          <!-- Constrained container -->
+          <table role="presentation" width="700" cellpadding="0" cellspacing="0" border="0" style="width:700px; max-width:700px; border-collapse:collapse;">
+            <!-- Top spacer -->
+            <tr>
+              <td height="20" style="height:20px; line-height:20px; font-size:0;">&nbsp;</td>
+            </tr>
 
-          <!-- Spacer -->
-          <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+            <!-- Banner -->
+            <tr>
+              <td style="background:#475560; padding:24px 28px; text-align:center;">
+                <div style="font-family:Calibri, Arial, sans-serif; font-size:22px; line-height:26px; color:#ffffff; font-weight:700; mso-line-height-rule:exactly;">
+                  Hansard Monitor&nbsp;&nbsp;BETA
+                </div>
+                <div style="font-family:Calibri, Arial, sans-serif; font-size:12px; line-height:16px; color:#ffffff; mso-line-height-rule:exactly; margin-top:6px;">
+                  Program Run:&nbsp;<span style="font-weight:600;">{{RUN_DATE}}</span>
+                </div>
+              </td>
+            </tr>
 
-          <!-- Detection summary: header -->
-          <tr>
-            <td style="padding:0 12px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;background:#ffffff;border:1px solid #D8DCE0;">
-                <tr>
-                  <td colspan="4" align="center" style="border-bottom:2px solid #C5A572;padding:12px 14px;">
-                    <div style="font-weight:700;color:#000000;">Detection Match by Chamber</div>
-                  </td>
-                </tr>
-                <tr>
-                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Keyword</td>
-                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">House of Assembly</td>
-                  <td width="28%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Legislative Council</td>
-                  <td width="16%" align="center" style="background:#4A5A6A;color:#ffffff;font-weight:700;padding:9px 8px;">Total</td>
-                </tr>
+            <!-- Spacer -->
+            <tr>
+              <td height="18" style="height:18px; line-height:18px; font-size:0;">&nbsp;</td>
+            </tr>
 
-                <!-- >>> send_email.py will inject rows here -->
-                {{DETECTION_ROWS}}
+            <!-- Detection summary: header rule + title -->
+            <tr>
+              <td style="padding:0 14px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; border:1px solid #D8DCE0; background:#ffffff;">
+                  <tr>
+                    <td colspan="4" style="border-bottom:1.5px solid #C5A572; padding:12px 14px; text-align:center;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:16px; line-height:20px; color:#000000; font-weight:700; mso-line-height-rule:exactly;">
+                        Detection Match by Chamber
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td width="28%" style="width:28%; background:#4A5A6A; padding:10px 8px; text-align:center;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:13px; line-height:16px; color:#ffffff; font-weight:700; mso-line-height-rule:exactly;">Keyword</div>
+                    </td>
+                    <td width="28%" style="width:28%; background:#4A5A6A; padding:10px 8px; text-align:center;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:13px; line-height:16px; color:#ffffff; font-weight:700; mso-line-height-rule:exactly;">House of Assembly</div>
+                    </td>
+                    <td width="28%" style="width:28%; background:#4A5A6A; padding:10px 8px; text-align:center;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:13px; line-height:16px; color:#ffffff; font-weight:700; mso-line-height-rule:exactly;">Legislative Council</div>
+                    </td>
+                    <td width="16%" style="width:16%; background:#4A5A6A; padding:10px 8px; text-align:center;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:13px; line-height:16px; color:#ffffff; font-weight:700; mso-line-height-rule:exactly;">Total</div>
+                    </td>
+                  </tr>
 
-              </table>
-            </td>
-          </tr>
+                  <!-- >>> send_email.py will inject rows here -->
+                  <!--
+                    Expected markup per row (example only; send_email.py will generate these):
+                    <tr>
+                      <td style="border-top:1px solid #ECF0F1; padding:12px 8px;">
+                        <div style="font-family:Calibri, Arial, sans-serif; font-size:14px; line-height:18px; color:#000; font-weight:700; mso-line-height-rule:exactly;">[Keyword]</div>
+                      </td>
+                      <td style="border-top:1px solid #ECF0F1; padding:12px 8px; text-align:center;">
+                        <div style="font-family:Calibri, Arial, sans-serif; font-size:14px; line-height:18px; color:#000; font-weight:700; mso-line-height-rule:exactly;">[HoA count]</div>
+                      </td>
+                      <td style="border-top:1px solid #ECF0F1; padding:12px 8px; text-align:center;">
+                        <div style="font-family:Calibri, Arial, sans-serif; font-size:14px; line-height:18px; color:#000; font-weight:700; mso-line-height-rule:exactly;">[LC count]</div>
+                      </td>
+                      <td style="border-top:1px solid #ECF0F1; border-left:1px solid #D8DCE0; padding:12px 8px; text-align:center;">
+                        <div style="font-family:Calibri, Arial, sans-serif; font-size:14px; line-height:18px; color:#000; font-weight:700; mso-line-height-rule:exactly;">[Total]</div>
+                      </td>
+                    </tr>
+                  -->
 
-          <!-- Spacer -->
-          <tr><td style="height:16px;line-height:16px;font-size:0;">&nbsp;</td></tr>
+                </table>
+              </td>
+            </tr>
 
-          <!-- Sections (one per transcript) -->
-          <tr>
-            <td style="padding:0 12px;">
-              <!-- >>> send_email.py will inject full file sections here -->
-              {{SECTIONS}}
-            </td>
-          </tr>
+            <!-- Spacer -->
+            <tr>
+              <td height="22" style="height:22px; line-height:22px; font-size:0;">&nbsp;</td>
+            </tr>
 
-          <!-- Bottom spacer -->
-          <tr><td style="height:12px;line-height:12px;font-size:0;">&nbsp;</td></tr>
+            <!-- Details header -->
+            <tr>
+              <td style="padding:0 14px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+                  <tr>
+                    <td style="padding:0 0 6px 0;">
+                      <div style="font-family:Calibri, Arial, sans-serif; font-size:16px; line-height:20px; color:#000000; font-weight:700; mso-line-height-rule:exactly;">
+                        Matches by Transcript
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
 
-          <!-- Footer -->
-          <tr>
-            <td>
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:#4A5A6A;">
-                <tr>
-                  <td align="center" style="padding:12px 12px;">
-                    <div style="font-size:10px;color:#ffffff;font-weight:700;">**THIS PROGRAM IS IN BETA TESTING &nbsp;&nbsp; DO NOT FORWARD**</div>
-                    <div style="height:6px;line-height:6px;font-size:0;">&nbsp;</div>
-                    <div style="font-size:9px;color:#ffffff;">
-                      Contact developer with any issues, queries, or suggestions:
-                      <a href="mailto:William.Manning@FederalGroup.com.au" style="color:#ffffff;text-decoration:underline;">William.Manning@FederalGroup.com.au</a>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+            <!-- Details body (cards/rows injected) -->
+            <tr>
+              <td style="padding:0 14px;">
+                <!-- >>> send_email.py will inject details here -->
+                <!--
+                  Guidance (send_email.py output should be built with the same spacing rhythm):
+                  - Wrap each transcript block in its own table with border:1px solid #D8DCE0 and a header row.
+                  - Use spacer rows like:
+                      <tr><td height="14" style="height:14px; line-height:14px; font-size:0;">&nbsp;</td></tr>
+                  - Keep fonts: 14px/18px for body; 13px/16px in small meta rows; mso-line-height-rule:exactly on all text containers.
+                -->
+              </td>
+            </tr>
 
-          <!-- Extra bottom spacer to avoid Gmail trimming -->
-          <tr><td style="height:10px;line-height:10px;font-size:0;">&nbsp;</td></tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+            <!-- Bottom spacer -->
+            <tr>
+              <td height="26" style="height:26px; line-height:26px; font-size:0;">&nbsp;</td>
+            </tr>
 
-  <!-- =========================
-       SUB-TEMPLATES (REQUIRED)
-       ========================= -->
+            <!-- Footer (optional, keep minimal to avoid reflow) -->
+            <tr>
+              <td style="padding:10px 14px 20px 14px; text-align:center;">
+                <div style="font-family:Calibri, Arial, sans-serif; font-size:11px; line-height:14px; color:#6b6f75; mso-line-height-rule:exactly;">
+                  Hansard Monitor – BETA
+                </div>
+              </td>
+            </tr>
 
-  <!-- BEGIN:DETECTION_ROW_TEMPLATE -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
-    <tr>
-      <td width="28%" align="left"   style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[Keyword]</td>
-      <td width="28%" align="center" style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[House of Assembly count]</td>
-      <td width="28%" align="center" style="border-top:1px solid #ECF0F1;padding:8px 8px;color:#000000;font-weight:700;">[Legislative Council count]</td>
-      <td width="16%" align="center" style="border-top:1px solid #ECF0F1;border-right:1px solid #D8DCE0;padding:8px 8px;color:#000000;font-weight:700;">[Total count]</td>
-    </tr>
-  </table>
-  <!-- END:DETECTION_ROW_TEMPLATE -->
+          </table>
+          <!-- /container -->
 
-  <!-- BEGIN:FILE_SECTION_TEMPLATE -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;margin:0 0 16px 0;">
-    <tr>
-      <td style="border-left:3px solid #C5A572;background:#F7F9FA;padding:10px 12px;">
-        <div style="font-size:10px;font-weight:700;color:#000000;">[Transcript filename]</div>
-        <div style="font-size:10px;color:#000000;">[Match count]</div>
-      </td>
-    </tr>
-    <tr>
-      <td style="border:1px solid #D8DCE0;border-top:none;background:#ffffff;padding:0;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
-          <!-- >>> send_email.py will inject one or more MATCH_CARD_TEMPLATEs here -->
-          {{CARDS}}
-        </table>
-      </td>
-    </tr>
-  </table>
-  <!-- END:FILE_SECTION_TEMPLATE -->
-
-  <!-- BEGIN:MATCH_CARD_TEMPLATE -->
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
-    <!-- Card header row -->
-    <tr style="height:24px;">
-      <!-- Match number cell -->
-      <td width="32" align="center" valign="middle" style="width:32px;background:#4A5A6A;color:#ffffff;font-weight:700;padding:0;">[Match #]</td>
-      <!-- Header/title text (kept generic; your code can reuse the same label) -->
-      <td align="left" valign="middle" style="padding:0 9px;color:#000000;font-weight:700;">Match</td>
-      <!-- Line numbers right-aligned -->
-      <td align="right" valign="middle" style="padding:0 0;color:#000000;">[Line numbers]</td>
-    </tr>
-    <!-- Snippet row -->
-    <tr>
-      <td colspan="3" style="padding:10px 12px 12px 12px;border-bottom:1px solid #D8DCE0;">
-        <!-- Keep paragraph margins zero to avoid blown-out spacing -->
-        <div style="margin:0;font-size:10pt;color:#000000;">
-          [excerpt snippet]
-        </div>
-      </td>
-    </tr>
-  </table>
-  <!-- END:MATCH_CARD_TEMPLATE -->
-
-</body>
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>
