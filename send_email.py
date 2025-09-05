@@ -1,468 +1,754 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Hansard Monitor — send_email.py
-Template-driven email renderer/sender.
-
-Key guarantees:
-- No visual HTML constructed in Python; we only inject dynamic data into
-  placeholders discovered from the HTML template itself.
-- Prefer the Gmail-round-tripped template ('gmail sent.htm') if present, as
-  it renders best in Outlook/Gmail; otherwise fall back to 'email_template.htm'.
-- Strip <head> and any broken <style> blocks (e.g., Word CSS with <br>) to
-  prevent "code showing in the email".
-- Force UTF-8 when sending (do not pass a custom 'encoding' to yagmail).
-
-Placeholders expected in the template body:
-  [DATE]
-  [Keyword]
-  [House of Assembly count]
-  [Legislative Council count]
-  [Total count]
-  [Transcript filename]
-  [Match count]
-  [Match #]
-  [SPEAKER NAME]
-  [Line number(s)]
-  [...snippet...]   (any placeholder containing the word 'snippet' inside [ ])
-
-This script assumes your pipeline has already created .txt transcripts under
-./transcripts/ and a keywords list in keywords.txt (one per line).
-"""
-
-from __future__ import annotations
 
 import os
 import re
 import glob
-import html
-from dataclasses import dataclass
-from datetime import datetime
 from pathlib import Path
-from typing import Iterable, List, Tuple, Dict, Set
+from datetime import datetime
+from bisect import bisect_right
+import yagmail
 
-import yagmail  # requirements.txt includes yagmail
-
-# ---------------------------------------------------------------------------
-# Paths & constants
-# ---------------------------------------------------------------------------
-
-BASE_DIR = Path(__file__).parent
-TRANSCRIPT_DIR = BASE_DIR / "transcripts"
-KEYWORDS_PATH = BASE_DIR / "keywords.txt"
-LOG_PATH = BASE_DIR / "sent.log"
-
-GMAIL_TEMPLATE_CANDIDATES = [
-    BASE_DIR / "gmail sent.htm",
-    BASE_DIR / "gmail sent.html",
-]
-FALLBACK_TEMPLATE = BASE_DIR / "email_template.htm"
-
-# Snippet/extraction tunables (kept close to your previous semantics)
-MAX_SNIPPET_CHARS = 800
-CONTEXT_CHARS = 280  # chars before/after a match if speaker/utterance not found
-
-# Regex to find a plausible speaker header. We keep this liberal and ASCII-safe.
-SPEAKER_HEADER_RE = re.compile(r"^(?P<speaker>[A-Z][A-Za-z .,'()\-]+):\s*$", re.M)
-
-# ---------------------------------------------------------------------------
-# Utilities
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Template resolution (robust)
+# =============================================================================
 
 def _resolve_template_path() -> Path:
-    """Prefer the Gmail-round-tripped template, else fallback."""
-    for p in GMAIL_TEMPLATE_CANDIDATES:
+    # 1) Allow env override
+    env_path = os.environ.get("TEMPLATE_HTML_PATH")
+    if env_path:
+        p = Path(env_path)
         if p.exists():
             return p
-    return FALLBACK_TEMPLATE
 
-def _html_escape(s: str) -> str:
-    return html.escape(s, quote=True)
+    # 2) Common names (what you've used)
+    script_dir = Path(__file__).resolve().parent
+    candidates = [
+        "email_template.html",
+        "email_template.htm",
+        "email_template (1).html",
+        "email_template (1).htm",
+        "Hansard Monitor - Email Format - Version 3.htm",
+        "Hansard Monitor - Email Format - Version 3.html",
+        "templates/email_template.html",
+        "templates/email_template.htm",
+        "templates/email_template (1).html",
+        "templates/email_template (1).htm",
+        "templates/Hansard Monitor - Email Format - Version 3.htm",
+        "templates/Hansard Monitor - Email Format - Version 3.html",
+    ]
+    for name in candidates:
+        p = script_dir / name
+        if p.exists():
+            return p
 
-def _only_body(html_text: str) -> str:
-    """
-    Return only inner <body> HTML to avoid Word XML/CSS in <head> rendering as text.
-    """
-    m = re.search(r"<body\b[^>]*>(?P<body>[\s\S]*?)</body\s*>", html_text, flags=re.I)
-    return m.group("body") if m else html_text
+    # 3) Fallback: find any plausible .htm(l)
+    for pat in ("**/*.htm", "**/*.html"):
+        for fp in script_dir.glob(pat):
+            if any(k in fp.name.lower() for k in ("email", "template", "hansard", "format")):
+                return fp
+    for pat in ("**/*.htm", "**/*.html"):
+        for fp in script_dir.glob(pat):
+            return fp
 
-def _remove_broken_style_blocks(body_html: str) -> str:
-    """
-    Remove <style>...</style> blocks that contain <br> or look invalid.
-    This is safe because we're relying on the Gmail/Word inline styles already.
-    """
-    out = []
-    pos = 0
-    while True:
-        start = body_html.find("<style", pos)
-        if start == -1:
-            out.append(body_html[pos:])
-            break
-        out.append(body_html[pos:start])
-        end = body_html.find("</style>", start)
-        if end == -1:
-            # No closing tag; drop the remainder (safer than showing CSS as text)
-            break
-        block = body_html[start:end + len("</style>")]
-        if "<br" in block.lower() or "&lt;br" in block.lower():
-            # Drop this broken style block
-            pass
-        else:
-            # Keep valid style blocks
-            out.append(block)
-        pos = end + len("</style>")
-    return "".join(out)
-
-def _minify_inter_tag_whitespace(body_html: str) -> str:
-    """
-    Collapse pure inter-tag whitespace to keep Outlook from injecting odd gaps.
-    """
-    return re.sub(r">\s+<", "><", body_html)
-
-def _tighten_outlook_whitespace(body_html: str) -> str:
-    # Strip <o:p> wrappers commonly emitted by Word/Outlook
-    body_html = re.sub(r"</?o:p>", "", body_html, flags=re.I)
-    # Normalize multiple non-breaking spaces
-    body_html = body_html.replace("&nbsp;&nbsp;", "&nbsp;")
-    return body_html
-
-def _parse_chamber_from_filename(fname: str) -> str:
-    fn = fname.lower()
-    if "legislative council" in fn or "lc_" in fn or "legislative_council" in fn:
-        return "Legislative Council"
-    return "House of Assembly"
-
-def _load_keywords(path: Path) -> List[str]:
-    kws: List[str] = []
-    if not path.exists():
-        return kws
-    for line in path.read_text(encoding="utf-8", errors="ignore").splitlines():
-        s = line.strip()
-        if not s or s.startswith("#"):
-            continue
-        kws.append(s)
-    return kws
-
-def _read_transcripts() -> List[Path]:
-    files = sorted(Path(p) for p in glob.glob(str(TRANSCRIPT_DIR / "*.txt")))
-    return [f for f in files if f.is_file()]
-
-# ---------------------------------------------------------------------------
-# Extraction (kept simple & robust; does not touch formatting/template)
-# ---------------------------------------------------------------------------
-
-@dataclass
-class Match:
-    keywords: Set[str]
-    excerpt_html: str
-    speaker: str
-    line_numbers: List[int]
-    start_idx: int
-    end_idx: int
-
-def _highlight(text: str, keywords: Iterable[str]) -> str:
-    """
-    Highlight keywords safely in HTML, case-insensitive, whole-word-ish.
-    """
-    esc = _html_escape(text)
-
-    # Build a combined regex of all keywords, longest-first
-    kws = sorted(set(k for k in keywords if k), key=len, reverse=True)
-    if not kws:
-        return esc
-
-    def repl(m: re.Match) -> str:
-        return f"<span style=\"background:#fff0a6\">{m.group(0)}</span>"
-
-    # Use case-insensitive, word-boundary-ish (tolerate punctuation)
-    pat = r"(?i)(?<![A-Za-z0-9])(" + "|".join(re.escape(k) for k in kws) + r")(?![A-Za-z0-9])"
-    return re.sub(pat, repl, esc)
-
-def _compute_line_number_indices(text: str) -> List[int]:
-    """
-    Return a list of indices where each line starts for fast line-number lookup.
-    """
-    starts = [0]
-    for m in re.finditer(r"\n", text):
-        starts.append(m.end())
-    return starts
-
-def _idx_to_line(starts: List[int], idx: int) -> int:
-    # Binary search manually (avoid bisect import if not needed)
-    lo, hi = 0, len(starts) - 1
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        if starts[mid] <= idx:
-            lo = mid + 1
-        else:
-            hi = mid - 1
-    return hi + 1  # 1-based line number
-
-def extract_matches(text: str, keywords: List[str]) -> List[Match]:
-    """
-    Minimal, robust matching:
-    - Find occurrences of any keyword (case-insensitive, word-ish)
-    - Try to attribute to a 'speaker:' line above the hit if present
-    - Build an excerpt with ~±CONTEXT_CHARS around the hit (merged if overlapping)
-    - Cap to MAX_SNIPPET_CHARS and highlight keywords
-    """
-    matches: List[Match] = []
-    if not text or not keywords:
-        return matches
-
-    # Precompute regex for all keywords
-    kw_pat = re.compile(
-        r"(?i)(?<![A-Za-z0-9])(" + "|".join(re.escape(k) for k in keywords if k) + r")(?![A-Za-z0-9])"
+    raise FileNotFoundError(
+        "HTML template not found. Set TEMPLATE_HTML_PATH or place the template "
+        "next to send_email.py (e.g., 'Hansard Monitor - Email Format - Version 3.htm')."
     )
 
-    # Find all hits
-    hits = [m for m in kw_pat.finditer(text)]
-    if not hits:
-        return matches
+TEMPLATE_HTML_PATH = _resolve_template_path()
 
-    # Speaker headers, if present
-    speaker_by_line: Dict[int, str] = {}
-    for sm in SPEAKER_HEADER_RE.finditer(text):
-        line_no = text.count("\n", 0, sm.start()) + 1
-        speaker_by_line[line_no] = sm.group("speaker").strip()
+# =============================================================================
+# Config
+# =============================================================================
 
-    # Prepare line starts for mapping indices to line numbers
-    line_starts = _compute_line_number_indices(text)
+LOG_FILE = Path("sent.log")
+DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
 
-    # Merge nearby hits into windows and create excerpts
-    windows: List[Tuple[int, int, Set[str]]] = []
+# excerpt/windowing
+MAX_SNIPPET_CHARS = 800
+WINDOW_PAD_SENTENCES = 1
+FIRST_SENT_FOLLOWING = 2
+MERGE_IF_GAP_GT = 2
+
+# =============================================================================
+# Keyword loading
+# =============================================================================
+
+def load_keywords():
+    if os.path.exists("keywords.txt"):
+        kws = []
+        with open("keywords.txt", encoding="utf-8") as f:
+            for line in f:
+                s = line.strip()
+                if not s or s.startswith("#"):
+                    continue
+                if s.startswith('"') and s.endswith('"') and len(s) >= 2:
+                    s = s[1:-1]
+                kws.append(s)
+        return kws
+    if "KEYWORDS" in os.environ:
+        return [kw.strip().strip('"') for kw in os.environ["KEYWORDS"].split(",") if kw.strip()]
+    return []
+
+# =============================================================================
+# Transcript segmentation (utterances)
+# =============================================================================
+
+SPEAKER_HEADER_RE = re.compile(
+    r"""
+    ^
+    (?:
+        (?P<title>(?i:Mr|Ms|Mrs|Miss|Hon|Dr|Prof|Professor|Premier|Madam\s+SPEAKER|The\s+SPEAKER|The\s+PRESIDENT|The\s+CLERK|Deputy\s+Speaker|Deputy\s+President))
+        (?:[\s.]+(?P<name>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3}))?
+      |
+        (?P<name_only>[A-Z][A-Z'’\-]+(?:\s+[A-Z][A-Z'’\-]+){0,3})
+    )
+    (?:\s*\([^)]*\))?
+    \s*(?::|[-–—]\s)
+    """,
+    re.VERBOSE,
+)
+CONTENT_COLON_RE   = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.I)
+TIME_STAMP_RE      = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.I)
+UPPER_HEADING_RE   = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+INTERJECTION_RE    = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.I)
+
+def _build_utterances(text: str):
+    all_lines = text.splitlines()
+    utterances = []
+    curr = {"speaker": None, "lines": [], "line_nums": []}
+
+    def flush():
+        if not curr["lines"]:
+            return
+        joined = "\n".join(curr["lines"])
+        offs, total = [], 0
+        for i, ln in enumerate(curr["lines"]):
+            offs.append(total)
+            total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
+
+        # very simple sentence segmentation: split on punctuation + whitespace
+        sents, start = [], 0
+        for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
+            end = m.start()
+            if end > start:
+                sents.append((start, end))
+            start = m.end()
+        if start < len(joined):
+            sents.append((start, len(joined)))
+
+        utterances.append({
+            "speaker": curr["speaker"],
+            "lines": curr["lines"][:],
+            "line_nums": curr["line_nums"][:],
+            "joined": joined,
+            "line_offsets": offs,
+            "sents": sents
+        })
+
+    for idx, raw in enumerate(all_lines):
+        s = raw.strip()
+        if not s or TIME_STAMP_RE.match(s) or UPPER_HEADING_RE.match(s) or INTERJECTION_RE.match(s):
+            continue
+        m = SPEAKER_HEADER_RE.match(s)
+        if m and not (m.group("name_only") and CONTENT_COLON_RE.match(s)):
+            flush()
+            title = (m.group("title") or "").strip()
+            name  = (m.group("name") or m.group("name_only") or "").strip()
+            curr  = {"speaker": " ".join(x for x in (title, name) if x).strip(), "lines": [], "line_nums": []}
+            continue
+        curr["lines"].append(raw.rstrip())
+        curr["line_nums"].append(idx + 1)
+
+    flush()
+    return utterances, all_lines
+
+def _line_for_char_offset(line_offsets, line_nums, pos):
+    i = bisect_right(line_offsets, pos) - 1
+    i = max(0, min(i, len(line_nums) - 1))
+    return line_nums[i]
+
+# =============================================================================
+# Matching and excerpt building
+# =============================================================================
+
+def _compile_kw_patterns(keywords):
+    pats = []
+    for kw in sorted(keywords, key=len, reverse=True):
+        pats.append((kw, re.compile(re.escape(kw) if " " in kw else rf"\b{re.escape(kw)}\b", re.I)))
+    return pats
+
+def _collect_hits_in_utterance(utt, kw_pats):
+    hits, joined = [], utt["joined"]
+    for si, (a, b) in enumerate(utt["sents"]):
+        seg = joined[a:b]
+        for kw, pat in kw_pats:
+            m = pat.search(seg)
+            if not m:
+                continue
+            char_pos = a + m.start()
+            line_no  = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], char_pos)
+            hits.append({"kw": kw, "sent_idx": si, "line_no": line_no})
+    return hits
+
+def _windows_for_hits(hits, sent_count):
+    wins = []
     for h in hits:
-        start = max(0, h.start() - CONTEXT_CHARS)
-        end = min(len(text), h.end() + CONTEXT_CHARS)
-        kws = {h.group(0)}
-        # Merge with prior window if overlapping
-        if windows and start <= windows[-1][1]:
-            prev_s, prev_e, prev_k = windows[-1]
-            windows[-1] = (prev_s, max(prev_e, end), prev_k.union(kws))
+        j = h["sent_idx"]
+        if j == 0:
+            start = 0
+            end   = min(sent_count - 1, FIRST_SENT_FOLLOWING)
         else:
-            windows.append((start, end, kws))
+            start = max(0, j - WINDOW_PAD_SENTENCES)
+            end   = min(sent_count - 1, j + WINDOW_PAD_SENTENCES)
+        wins.append([start, end, {h["kw"]}, {h["line_no"]}])
+    wins.sort(key=lambda w: (w[0], w[1]))
+    return wins
 
-    for i, (s, e, kws) in enumerate(windows, start=1):
-        raw = text[s:e]
-        # Determine speaker (nearest header above start index)
-        start_line = _idx_to_line(line_starts, s)
-        speaker_lines = [ln for ln in speaker_by_line.keys() if ln <= start_line]
-        speaker = speaker_by_line[max(speaker_lines)] if speaker_lines else ""
+def _dedup_windows(wins):
+    if not wins:
+        return []
+    bucket = {}
+    for s, e, kws, lines in wins:
+        key = (s, e)
+        if key in bucket:
+            bucket[key][0] |= kws
+            bucket[key][1] |= lines
+        else:
+            bucket[key] = [set(kws), set(lines)]
+    return [[s, e, bucket[(s, e)][0], bucket[(s, e)][1]] for (s, e) in sorted(bucket.keys())]
 
-        # Bound size
-        if len(raw) > MAX_SNIPPET_CHARS:
-            mid = (e + s) // 2
-            half = MAX_SNIPPET_CHARS // 2
-            raw = text[max(0, mid - half):min(len(text), mid + half)]
+def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
+    if not wins:
+        return []
+    merged = [wins[0]]
+    for s, e, kws, lines in wins[1:]:
+        ps, pe, pk, pl = merged[-1]
+        gap = s - pe
+        if gap > gap_gt:
+            merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
+        else:
+            merged.append([s, e, kws, lines])
+    return merged
 
-        snippet = _highlight(raw, kws)
-        # Line numbers covered by this window (simple: first line only, or a small range)
-        first_line = _idx_to_line(line_starts, s)
-        last_line = _idx_to_line(line_starts, e - 1)
-        line_numbers = [first_line] if first_line == last_line else list(range(first_line, min(first_line + 3, last_line + 1)))
+def _html_escape(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
-        matches.append(Match(keywords=set(k.strip() for k in kws if k.strip()),
-                             excerpt_html=snippet,
-                             speaker=speaker,
-                             line_numbers=line_numbers,
-                             start_idx=s,
-                             end_idx=e))
-    return matches
+def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    out = text_html
+    for kw in sorted(keywords, key=len, reverse=True):
+        pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
+        out = pat.sub(lambda m: "<b><span style='background:lightgrey;mso-highlight:lightgrey'>" +
+                                 m.group(0) + "</span></b>", out)
+    return out
 
-# ---------------------------------------------------------------------------
-# Template-driven rendering
-# ---------------------------------------------------------------------------
+def _excerpt_from_window_html(utt, win, keywords):
+    sents  = utt["sents"]
+    joined = utt["joined"]
+    start, end, kws, lines = win
+    a = sents[start][0]
+    b = sents[end][1]
 
-def build_digest_html(files: List[str], keywords: List[str]) -> Tuple[str, int, Dict[str, Dict[str, int]]]:
+    # Normalize newlines to avoid stacked <br>
+    raw = joined[a:b]
+    raw = re.sub(r"\r\n?", "\n", raw)   # unify CRLF/CR
+    raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
+    raw = raw.strip()
+
+    if len(raw) > MAX_SNIPPET_CHARS:
+        raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
+
+    html = _html_escape(raw)
+    html = _highlight_keywords_html(html, keywords)
+    html = html.replace("\n", "<br>")
+    html = re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)                 # collapse runs
+    html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)    # trim leading/trailing
+
+    start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
+    end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
+    return html, sorted(lines), sorted(kws, key=str.lower), start_line, end_line
+
+def extract_matches(text: str, keywords):
+    utts, _all_lines = _build_utterances(text)
+    kw_pats = _compile_kw_patterns(keywords)
+    results = []
+    for utt in utts:
+        speaker = utt["speaker"]
+        if not utt["lines"]:
+            continue
+        hits = _collect_hits_in_utterance(utt, kw_pats)
+        if not hits:
+            continue
+        wins   = _windows_for_hits(hits, sent_count=len(utt["sents"]))
+        wins   = _dedup_windows(wins)
+        merged = _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT)
+        for win in merged:
+            excerpt_html, line_list, kws_in_excerpt, win_start, win_end = _excerpt_from_window_html(utt, win, keywords)
+            results.append((set(kws_in_excerpt), excerpt_html, speaker, line_list, win_start, win_end))
+    return results
+
+# =============================================================================
+# Outlook/Gmail whitespace fixes
+# =============================================================================
+
+_EMPTY_MSOP_RE = re.compile(
+    r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+    r"<o:p>\s*&nbsp;\s*</o:p>|"
+    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
+    re.I,
+)
+
+def _tighten_outlook_whitespace(html: str) -> str:
+    # 1) Remove empty Word/Outlook paragraphs (even if wrapped)
+    html = _EMPTY_MSOP_RE.sub("", html)
+    # 2) Collapse runs of <br> to a single <br>
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
+    # 3) Remove whitespace/comments between adjacent tables
+    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
+    # 4) Trim blank space just inside table cells
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    return html
+
+def _minify_inter_tag_whitespace(html: str) -> str:
+    # Critical for Outlook: remove inter-tag newlines/indentation
+    return re.sub(r">\s+<", "><", html)
+
+def _inject_mso_css_reset(html: str) -> str:
+    # MSO conditional CSS to kill default MsoNormal margins/line-height
+    mso_block = (
+        "<!--[if mso]>"
+        "<style>"
+        "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
+        "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
+        "</style>"
+        "<![endif]-->"
+    )
+    # Insert before </head> if possible; else prepend
+    if re.search(r"</head\s*>", html, re.I):
+        return re.sub(r"</head\s*>", mso_block + "</head>", html, flags=re.I, count=1)
+    return mso_block + html
+
+# =============================================================================
+# Template operations (summary & sections)
+# =============================================================================
+
+def _build_detection_row(kw, hoa, lc, tot) -> str:
+    # Use pixel paddings; margin:0 paragraphs
+    return (
+        "<tr>"
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;border-right:none;padding:8px 10px;'>"
+        f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
+        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
+        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
+        "<td width=\"15%\" style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
+        "</tr>"
+    )
+
+def _replace_detection_rows_in_template(html, row_html):
+    # Find "Detection Match by Chamber" then the next inner table, keep header row, replace the rest.
+    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
+    if not hdr:
+        return html
+    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
+    if not m_table_start:
+        return html
+    tbl_start = hdr.end() + m_table_start.start()
+    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
+    if not m_table_end:
+        return html
+    tbl_end = tbl_start + m_table_end.end()
+
+    table_html = html[tbl_start:tbl_end]
+    m_header_row = re.search(r"<tr[^>]*>.*?Keyword.*?</tr\s*>", table_html, flags=re.I | re.S)
+    if not m_header_row:
+        return html
+    before = table_html[:m_header_row.end()]
+    new_table = before + row_html + "</table>"
+    return html[:tbl_start] + new_table + html[tbl_end:]
+
+def _strip_sample_section(html):
+    # Remove the sample block marked in the template
+    pattern = re.compile(r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->", re.I | re.S)
+    return re.sub(pattern, "", html)
+
+def _inject_sections_after_detection(html, sections_html):
+    hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
+    if not hdr:
+        return html + sections_html
+    m_table_start = re.search(r"<table[^>]*>", html[hdr.end():], flags=re.I | re.S)
+    if not m_table_start:
+        return html + sections_html
+    tbl_start = hdr.end() + m_table_start.start()
+    m_table_end = re.search(r"</table\s*>", html[tbl_start:], flags=re.I | re.S)
+    if not m_table_end:
+        return html + sections_html
+    insert_at = tbl_start + m_table_end.end()
+    return html[:insert_at] + sections_html + html[insert_at:]
+
+# =============================================================================
+# Per-file sections (“cards”) — Outlook-safe, tight
+# =============================================================================
+
+def _build_file_section_html(filename: str, matches):
+    esc = _html_escape
+    cards = []
+
+    for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
+        line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
+
+        # Card header + body (top-aligned, pixel line-heights)
+        card = (
+            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
+            "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
+            "<tr>"
+            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:4px 8px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
+              "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+              "<tr>"
+                "<td width='32' align='center' valign='top' style='background:#4A5A6A;border:0;height:18px;vertical-align:top;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:18px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{idx}</div>"
+                "</td>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
+                "<td valign='top' style='vertical-align:top;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
+                  "line-height:15px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
+                "</td>"
+                "<td align='right' valign='top' style='vertical-align:top;'>"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:15px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{line_txt}</div>"
+                "</td>"
+              "</tr>"
+              "</table>"
+            "</td>"
+            "</tr>"
+            "<tr>"
+            "<td valign='top' style='padding:6px 8px;vertical-align:top;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
+              f"{excerpt_html}</div>"
+            "</td>"
+            "</tr>"
+            "</table>"
+        )
+        cards.append(card)
+
+    # 2px spacer BETWEEN cards (none after the last)
+    spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+              "<tr><td style='height:2px;line-height:2px;font-size:0;'>&nbsp;</td></tr></table>")
+    cards_html = spacer.join(cards)
+
+    section = (
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+        "<tr>"
+        "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
+        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        "</td>"
+        "</tr>"
+        "<tr>"
+        "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
+        f"{cards_html}"
+        "</td>"
+        "</tr>"
+        "</table>"
+    )
+    return section
+
+# =============================================================================
+# Build the full HTML
+#
+# The goal of this implementation is to avoid embedding any visual HTML
+# directly in Python.  Instead we treat the shipped Word/Outlook template
+# (``email_template.htm`` or another override) as the single source of
+# presentation markup.  The placeholders defined in the template (e.g.
+# ``[Keyword]``, ``[House of Assembly count]``, ``[Transcript filename]``,
+# etc.) are replaced and cloned at runtime to produce the final digest.
+#
+# This function performs the following high level steps:
+#
+# 1. Read the template into a string, falling back from Windows‑1252 to
+#    UTF‑8 as necessary.  Substitute the current date into the ``[DATE]``
+#    placeholder.
+# 2. Parse the provided transcript files and compute keyword hit counts
+#    for each chamber as well as detailed match records for each file.
+# 3. Locate the keyword row template (the table row containing
+#    ``[Keyword]`` and the count placeholders) and duplicate it once per
+#    keyword, substituting each of the count values.
+# 4. Locate the transcript card template (the outermost table
+#    containing ``[Transcript filename]``) and, within that table,
+#    locate the two row match template (the rows containing
+#    ``[Match #]`` and the snippet placeholder).  For each transcript
+#    file we produce a copy of the card with the appropriate filename
+#    and match count, duplicating the match rows for each match in that
+#    file.
+# 5. Replace the single keyword row and transcript card in the template
+#    with all of the generated rows/cards.  Finally apply minor
+#    whitespace fixups to accommodate Outlook quirks.
+
+def _parse_chamber_from_filename(filename: str) -> str:
     """
-    Render the final HTML by cloning structures from the template itself.
-    We do NOT hard-code any visual HTML; we only replace placeholders.
+    Infer the parliamentary chamber from the transcript filename.  The
+    repository convention prefixes files with ``House_of_Assembly`` or
+    ``Legislative_Council``; fall back to "Unknown" otherwise.
     """
-    template_path = _resolve_template_path()
-    # Word/Outlook exports are often Windows-1252, but the Gmail copy may be UTF-8-ish.
-    # Read permissively; we'll *send* as UTF-8 regardless.
+    lower = filename.lower()
+    if "house_of_assembly" in lower:
+        return "House of Assembly"
+    if "legislative_council" in lower:
+        return "Legislative Council"
+    return "Unknown"
+
+
+def build_digest_html(files: list[str], keywords: list[str]) -> tuple[str, int, dict[str, dict[str, int]]]:
+    """
+    Build the HTML digest by reading the email template once and
+    injecting dynamic data into placeholder slots.  This function does
+    **not** construct any presentation markup itself; it simply clones
+    structures from the template.
+
+    Parameters
+    ----------
+    files : list[str]
+        Paths to transcript text files to include in the digest.
+    keywords : list[str]
+        List of keywords to search for within the transcripts.
+
+    Returns
+    -------
+    html : str
+        The fully rendered HTML email body.
+    total_matches : int
+        The total number of keyword hits across all provided transcripts.
+    counts : dict[str, dict[str, int]]
+        A mapping of each keyword to per‑chamber hit counts.
+    """
+    # ------------------------------------------------------------------
+    # 1. Load the template and insert the current date
+    # ------------------------------------------------------------------
     try:
-        raw_html = template_path.read_text(encoding="windows-1252", errors="ignore")
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="windows-1252", errors="ignore")
     except Exception:
-        raw_html = template_path.read_text(encoding="utf-8", errors="ignore")
+        template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
-    # Keep only <body> content
-    body = _only_body(raw_html)
-
-    # Remove style blocks that contain <br> (Word sometimes sprays these)
-    body = _remove_broken_style_blocks(body)
-
-    # Insert date
+    # Substitute the run date into the [DATE] placeholder.
     run_date = datetime.now().strftime("%d %B %Y")
-    body = re.sub(r"\[\s*DATE\s*\]", _html_escape(run_date), body, flags=re.I)
+    template_html = re.sub(r"\[\s*DATE\s*\]", _html_escape(run_date), template_html, flags=re.I)
 
-    # Pass 1: extract matches and keyword counts
-    counts: Dict[str, Dict[str, int]] = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
-    file_matches: List[Tuple[str, List[Match]]] = []
+    # ------------------------------------------------------------------
+    # 2. Collect matches and per‑keyword/chamber counts
+    # ------------------------------------------------------------------
+    counts: dict[str, dict[str, int]] = {kw: {"House of Assembly": 0, "Legislative Council": 0} for kw in keywords}
+    file_matches: list[tuple[str, list[tuple[set[str], str, str, list[int], int, int]]]] = []
     total_matches = 0
 
-    for f in files:
-        text = Path(f).read_text(encoding="utf-8", errors="ignore")
-        ms = extract_matches(text, keywords)
-        if not ms:
+    for fpath in files:
+        text = Path(fpath).read_text(encoding="utf-8", errors="ignore")
+        matches = extract_matches(text, keywords)
+        if not matches:
             continue
-        total_matches += len(ms)
-        ch = _parse_chamber_from_filename(Path(f).name)
-        for m in ms:
-            for kw in m.keywords:
-                # Map kw back to one of the original keywords for counting (case-insensitive)
-                for target in keywords:
-                    if kw.lower() == target.lower():
-                        counts.setdefault(target, {"House of Assembly": 0, "Legislative Council": 0})
-                        counts[target][ch] = counts[target].get(ch, 0) + 1
-                        break
-        file_matches.append((Path(f).name, ms))
+        total_matches += len(matches)
+        chamber = _parse_chamber_from_filename(Path(fpath).name)
+        for kw_set, _excerpt_html, _speaker, _lines, _s, _e in matches:
+            for kw in kw_set:
+                # ensure counts mapping exists even if keyword not originally provided
+                counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
+                if chamber in counts[kw]:
+                    counts[kw][chamber] += 1
+        file_matches.append((Path(fpath).name, matches))
 
-    # Pass 2: detection table rows
-    # Find a <tr> that contains [Keyword] — use that as our row template.
-    m_kw = re.search(r"\[\s*Keyword\s*\]", body, flags=re.I)
+    # ------------------------------------------------------------------
+    # 3. Duplicate the detection match row (one row per keyword)
+    # ------------------------------------------------------------------
+    # Find the <tr> element in the template that contains [Keyword]; treat
+    # this row as the pattern for keyword counts.  We use a simple
+    # substring search to locate the placeholder and then scan outward
+    # to encompass the entire <tr>...</tr> block.
+    m_kw = re.search(r"\[\s*Keyword\s*\]", template_html, flags=re.I)
     if m_kw:
-        tr_start = body.rfind("<tr", 0, m_kw.start())
-        tr_end = body.find("</tr>", m_kw.end())
+        # Locate the start of the containing <tr>
+        tr_start = template_html.rfind("<tr", 0, m_kw.start())
+        # Locate the end of the </tr>
+        tr_end = template_html.find("</tr", m_kw.end())
         if tr_start != -1 and tr_end != -1:
-            tr_end += len("</tr>")
-            det_row_tpl = body[tr_start:tr_end]
-            det_rows = []
-            for kw in keywords:
-                hoa = counts.get(kw, {}).get("House of Assembly", 0)
-                lc = counts.get(kw, {}).get("Legislative Council", 0)
-                total = hoa + lc
-                row = det_row_tpl
-                row = re.sub(r"\[\s*Keyword\s*\]", _html_escape(kw), row, flags=re.I)
-                row = re.sub(r"\[\s*House\s+of\s+Assembly\s+count\s*\]", str(hoa), row, flags=re.I)
-                row = re.sub(r"\[\s*Legislative\s+Council\s+count\s*\]", str(lc), row, flags=re.I)
-                row = re.sub(r"\[\s*Total\s+count\s*\]", str(total), row, flags=re.I)
-                det_rows.append(row)
-            # Replace the first template row with all rows
-            body = body.replace(det_row_tpl, "".join(det_rows), 1)
+            tr_end = template_html.find(">", tr_end)  # end of closing tag
+            if tr_end != -1:
+                # Extract the original row template
+                row_template = template_html[tr_start:tr_end + 1]
+                # Build new rows by replacing placeholders
+                rows_html_parts: list[str] = []
+                for kw in keywords:
+                    hoa = counts.get(kw, {}).get("House of Assembly", 0)
+                    lc = counts.get(kw, {}).get("Legislative Council", 0)
+                    total = hoa + lc
+                    row_html = row_template
+                    row_html = re.sub(r"\[\s*Keyword\s*\]", _html_escape(kw), row_html, flags=re.I)
+                    row_html = re.sub(r"\[\s*House\s+of\s+Assembly\s+count\s*\]", str(hoa), row_html, flags=re.I)
+                    row_html = re.sub(r"\[\s*Legislative\s+Council\s+count\s*\]", str(lc), row_html, flags=re.I)
+                    row_html = re.sub(r"\[\s*Total\s+count\s*\]", str(total), row_html, flags=re.I)
+                    rows_html_parts.append(row_html)
+                detection_rows_html = "".join(rows_html_parts)
+                # Replace the first occurrence of the template row with all generated rows
+                template_html = template_html.replace(row_template, detection_rows_html, 1)
 
-    # Pass 3: transcript "card" sections
-    # Locate the outermost <table> that encloses [Transcript filename]
-    m_tf = re.search(r"\[\s*Transcript\s+filename\s*\]", body, flags=re.I)
-    if m_tf:
-        # Find the start of enclosing <table>
-        tbl_start = body.rfind("<table", 0, m_tf.start())
-        if tbl_start != -1:
-            # Find the matching closing </table> using a simple stack
-            pos = tbl_start
-            depth = 0
-            end_tbl = None
-            while pos < len(body):
-                if body.startswith("<table", pos):
-                    depth += 1
-                    pos += 6
-                    continue
-                if body.startswith("</table>", pos):
-                    depth -= 1
-                    pos += 8
-                    if depth == 0:
-                        end_tbl = pos
-                        break
-                    continue
-                pos += 1
-            if end_tbl:
-                card_template = body[tbl_start:end_tbl]
+    # ------------------------------------------------------------------
+    # 4. Duplicate transcript sections (cards)
+    # ------------------------------------------------------------------
+    # Find the first [Transcript filename] placeholder
+    m_file = re.search(r"\[\s*Transcript\s+filename\s*\]", template_html, flags=re.I)
+    if m_file:
+        idx = m_file.start()
+        # Scan backwards to find the start of the enclosing <table>
+        table_start = template_html.rfind("<table", 0, idx)
+        # Scan forward to find the matching closing </table> tag using a simple stack
+        pos = table_start
+        depth = 0
+        end_idx = None
+        while pos < len(template_html):
+            if template_html.startswith("<table", pos):
+                depth += 1
+                pos += 6
+                continue
+            if template_html.startswith("</table", pos):
+                depth -= 1
+                pos += 7  # skip "</table"
+                # find the end of this closing tag
+                close_gt = template_html.find(">", pos)
+                if close_gt != -1:
+                    pos = close_gt + 1
+                if depth == 0:
+                    end_idx = pos
+                    break
+                continue
+            pos += 1
 
-                # Inside the card, find the match sub-rows: the row that holds [Match #]
-                # and the following row that holds the snippet placeholder (something with 'snippet' inside [ ])
-                m_mn = re.search(r"\[\s*Match\s*#\s*\]", card_template, flags=re.I)
-                # Find any [...] that contains 'snippet'
-                m_sn = re.search(r"\[[^\]]*snippet[^\]]*\]", card_template, flags=re.I)
-                if m_mn and m_sn:
-                    # Extract the two rows that form one "match entry"
-                    r1_start = card_template.rfind("<tr", 0, m_mn.start())
-                    r1_end = card_template.find("</tr>", m_mn.end())
-                    r2_start = card_template.rfind("<tr", 0, m_sn.start())
-                    r2_end = card_template.find("</tr>", m_sn.end())
-                    if -1 not in (r1_start, r1_end, r2_start, r2_end):
-                        r1_end += len("</tr>")
-                        r2_end += len("</tr>")
-                        match_rows_tpl = card_template[r1_start:r2_end]
-                        card_before = card_template[:r1_start]
-                        card_after = card_template[r2_end:]
+        if table_start != -1 and end_idx is not None:
+            card_template = template_html[table_start:end_idx]
+            # Within card template find the row containing [Match #]
+            match_header_match = re.search(r"\[\s*Match\s*#\s*\]", card_template, flags=re.I)
+            # Find the snippet placeholder (it might contain markup, but always within brackets containing the word 'snippet')
+            snippet_match = re.search(r"\[[^\]]*snippet[^\]]*\]", card_template, flags=re.I)
+            if match_header_match and snippet_match:
+                # Find the <tr> boundaries for the two rows that make up one match entry
+                r1_start = card_template.rfind("<tr", 0, match_header_match.start())
+                r1_end   = card_template.find("</tr", match_header_match.end())
+                if r1_end != -1:
+                    # end index of closing tag
+                    r1_end = card_template.find(">", r1_end) + 1
+                r2_start = card_template.rfind("<tr", 0, snippet_match.start())
+                r2_end   = card_template.find("</tr", snippet_match.end())
+                if r2_end != -1:
+                    r2_end = card_template.find(">", r2_end) + 1
+                # Extract the match rows template
+                match_rows_template = card_template[r1_start:r2_end]
+                # Split card template into prefix, match rows placeholder, and suffix
+                card_before = card_template[:r1_start]
+                card_after  = card_template[r2_end:]
+                # Build all cards
+                cards_html_parts: list[str] = []
+                for fname, matches in file_matches:
+                    if not matches:
+                        continue
+                    match_rows_html_parts: list[str] = []
+                    for i, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
+                        row_html = match_rows_template
+                        row_html = re.sub(r"\[\s*Match\s*#\s*\]", str(i), row_html, flags=re.I)
+                        row_html = re.sub(r"\[\s*SPEAKER\s+NAME\s*\]", _html_escape(speaker) if speaker else "UNKNOWN", row_html, flags=re.I)
+                        # Line number(s) placeholder; support singular or plural text
+                        if line_list:
+                            line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
+                        else:
+                            line_txt = ""
+                        row_html = re.sub(r"\[\s*Line\s+number\(s\)\s*\]", _html_escape(line_txt), row_html, flags=re.I)
+                        # Replace the snippet/excerpt placeholder; Word sometimes introduces additional markup inside []
+                        row_html = re.sub(r"\[[^\]]*snippet[^\]]*\]", excerpt_html, row_html, flags=re.I)
+                        match_rows_html_parts.append(row_html)
+                    # Assemble card
+                    card_html = card_before + "".join(match_rows_html_parts) + card_after
+                    card_html = re.sub(r"\[\s*Transcript\s+filename\s*\]", _html_escape(fname), card_html, flags=re.I)
+                    card_html = re.sub(r"\[\s*Match\s+count\s*\]", str(len(matches)), card_html, flags=re.I)
+                    cards_html_parts.append(card_html)
+                # Replace the single card in the original template with all generated cards
+                template_html = template_html.replace(card_template, "".join(cards_html_parts), 1)
 
-                        # Build one card per file, one duplicated set of rows per match
-                        cards = []
-                        for fname, ms in file_matches:
-                            if not ms:
-                                continue
-                            rows = []
-                            for idx, m in enumerate(ms, start=1):
-                                row_html = match_rows_tpl
-                                row_html = re.sub(r"\[\s*Match\s*#\s*\]", str(idx), row_html, flags=re.I)
-                                row_html = re.sub(r"\[\s*SPEAKER\s+NAME\s*\]",
-                                                  _html_escape(m.speaker) if m.speaker else "UNKNOWN",
-                                                  row_html, flags=re.I)
-                                # Allow [Line number(s)] with any whitespace
-                                line_txt = "line " + ", ".join(str(n) for n in m.line_numbers) if len(m.line_numbers) == 1 \
-                                           else "lines " + ", ".join(str(n) for n in m.line_numbers)
-                                row_html = re.sub(r"\[\s*Line\s+number\(s\)\s*\]", _html_escape(line_txt),
-                                                  row_html, flags=re.I)
-                                # Replace the snippet placeholder (any [...] containing 'snippet')
-                                row_html = re.sub(r"\[[^\]]*snippet[^\]]*\]", m.excerpt_html, row_html, flags=re.I)
-                                rows.append(row_html)
-                            card_html = card_before + "".join(rows) + card_after
-                            card_html = re.sub(r"\[\s*Transcript\s+filename\s*\]", _html_escape(fname),
-                                               card_html, flags=re.I)
-                            card_html = re.sub(r"\[\s*Match\s+count\s*\]", str(len(ms)),
-                                               card_html, flags=re.I)
-                            cards.append(card_html)
+    # ------------------------------------------------------------------
+    # 5. Final whitespace cleanup for Outlook
+    # ------------------------------------------------------------------
+    template_html = _tighten_outlook_whitespace(template_html)
+    template_html = _minify_inter_tag_whitespace(template_html)
+    return template_html, total_matches, counts
 
-                        # Replace the original template card with all cards
-                        body = body.replace(card_template, "".join(cards), 1)
+# =============================================================================
+# Sent-log helpers
+# =============================================================================
 
-    # Final: small whitespace cleanup
-    body = _tighten_outlook_whitespace(body)
-    body = _minify_inter_tag_whitespace(body)
+def load_sent_log() -> set[str]:
+    if LOG_FILE.exists():
+        with open(LOG_FILE, encoding="utf-8") as f:
+            return {ln.strip() for ln in f if ln.strip()}
+    return set()
 
-    # Wrap in minimal HTML shell (safe; doesn’t change visuals)
-    final_html = f"<!DOCTYPE html><html><body>{body}</body></html>"
-    return final_html, total_matches, counts
+def update_sent_log(files: list[str]):
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        for fp in files:
+            f.write(Path(fp).name + "\n")
 
-# ---------------------------------------------------------------------------
-# Sender
-# ---------------------------------------------------------------------------
+# =============================================================================
+# Main
+# =============================================================================
 
-def main() -> None:
-    # Gather transcripts and keywords
-    files = [str(p) for p in _read_transcripts()]
-    keywords = _load_keywords(KEYWORDS_PATH)
+def main():
+    EMAIL_USER = os.environ["EMAIL_USER"]
+    EMAIL_PASS = os.environ["EMAIL_PASS"]
+    EMAIL_TO   = os.environ["EMAIL_TO"]
 
-    # Render HTML
-    html_out, total_matches, counts = build_digest_html(files, keywords)
+    SMTP_HOST      = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    SMTP_PORT      = int(os.environ.get("SMTP_PORT", "587"))
+    SMTP_STARTTLS  = os.environ.get("SMTP_STARTTLS", "1").lower() in ("1", "true", "yes")
+    SMTP_SSL       = os.environ.get("SMTP_SSL", "0").lower() in ("1", "true", "yes")
 
-    # Prepare subject
-    today = datetime.now().strftime("%d %b %Y")
-    subject = f"Hansard Monitor — BETA — {today} ({total_matches} match{'es' if total_matches != 1 else ''})"
+    keywords = load_keywords()
+    if not keywords:
+        raise SystemExit("No keywords found (keywords.txt or KEYWORDS env var).")
 
-    # Recipients/credentials from env
-    user = os.environ.get("EMAIL_USER")
-    pwd = os.environ.get("EMAIL_PASS")
-    to_raw = os.environ.get("EMAIL_TO", "")
-    if not user or not pwd or not to_raw:
-        raise SystemExit("EMAIL_USER, EMAIL_PASS, and EMAIL_TO must be set in env.")
+    all_files = sorted(glob.glob("transcripts/*.txt"))
+    if not all_files:
+        raise SystemExit("No transcripts found in transcripts/")
 
-    to_list = [addr.strip() for addr in re.split(r"[;,]", to_raw) if addr.strip()]
+    sent = load_sent_log()
+    files = [f for f in all_files if Path(f).name not in sent]
+    if not files:
+        print("No new transcripts to email.")
+        return
 
-    # Send with yagmail; DO NOT pass custom 'encoding' (avoids 3.13 set_charset issues)
-    yag = yagmail.SMTP(user, pwd)
+    body_html, total_hits, _counts = build_digest_html(files, keywords)
+    subject = f"{DEFAULT_TITLE} — {datetime.now().strftime('%d %b %Y')}"
+
+    to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
+
+    yag = yagmail.SMTP(
+        user=EMAIL_USER,
+        password=EMAIL_PASS,
+        host=SMTP_HOST,
+        port=SMTP_PORT,
+        smtp_starttls=SMTP_STARTTLS,
+        smtp_ssl=SMTP_SSL,
+    )
+
+    # IMPORTANT: pass ONE HTML string to avoid yagmail inserting extra <br>
     yag.send(
         to=to_list,
         subject=subject,
-        contents=html_out,  # HTML body
-        attachments=files,  # attach source transcripts if desired
+        contents=body_html,
+        attachments=files,  # optional: attach transcripts
     )
 
-    # Log
-    LOG_PATH.write_text(
-        f"{datetime.utcnow().isoformat()}Z - sent to {', '.join(to_list)} - files {len(files)} - matches {total_matches}\n",
-        encoding="utf-8",
-    )
+    update_sent_log(files)
+    print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
 
 if __name__ == "__main__":
     main()
