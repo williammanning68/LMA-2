@@ -234,16 +234,29 @@ def _html_escape(s: str) -> str:
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     """
-    Outlook-safe inline highlight: use template gold (#C5A572).
-    Adds mso-highlight:gold for Word-based clients; the background hex keeps the colour exact elsewhere.
+    Highlight keywords using the same gold as the template (#C5A572).
+    Avoid mso-highlight so Outlook on Windows renders the hex background correctly.
     """
     GOLD = "#C5A572"
+
     out = text_html
+    # Highlight longer phrases first
     for kw in sorted(keywords, key=len, reverse=True):
-        pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
-        out = pat.sub(lambda m: (
-            "<b><span style='background:%s;mso-highlight:gold;color:#000000'>%s</span></b>" % (GOLD, m.group(0))
-        ), out)
+        esc_kw = _html_escape(kw)
+        # Whole word for single words; substring for phrases
+        pat = re.compile(re.escape(esc_kw) if " " in kw else rf"\b{re.escape(esc_kw)}\b", re.I)
+
+        out = pat.sub(
+            lambda m: (
+                "<b><span style=\""
+                f"background:{GOLD};"
+                f"background-color:{GOLD};"
+                "color:#000000;\">"
+                f"{m.group(0)}"
+                "</span></b>"
+            ),
+            out,
+        )
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
