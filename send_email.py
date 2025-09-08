@@ -441,29 +441,31 @@ def _build_file_section_html(filename: str, matches):
         cards.append(card)
 
     # 2px spacer BETWEEN cards (none after the last)
-    # Increase spacer height between cards for improved vertical rhythm
-    spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-              "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>")
+    spacer = (
+        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+        "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>"
+    )
     cards_html = spacer.join(cards)
 
-section = (
-    "<div align='center'>"
-    "<table role='presentation' width='91%' cellpadding='0' cellspacing='0' border='0' "
-    "style='width:91%;border-collapse:collapse;'>"
-    "<tr>"
-    "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-    f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
-    f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
-    "</td>"
-    "</tr>"
-    "<tr>"
-    "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
-    f"{cards_html}"
-    "</td>"
-    "</tr>"
-    "</table>"
-    "</div>"
-)
+    # Center the whole section column to match the "centred" template
+    section = (
+        "<div align='center'>"
+        "<table role='presentation' width='91%' cellpadding='0' cellspacing='0' border='0' "
+        "style='width:91%;border-collapse:collapse;'>"
+        "<tr>"
+        "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
+        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        "</td>"
+        "</tr>"
+        "<tr>"
+        "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
+        f"{cards_html}"
+        "</td>"
+        "</tr>"
+        "</table>"
+        "</div>"
+    )
     return section
 
 # =============================================================================
