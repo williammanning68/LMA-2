@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 from datetime import datetime
 from bisect import bisect_right
-from zoneinfo import ZoneInfo  # AU timezone support
+from zoneinfo import ZoneInfo  # AU timezone
 import yagmail
 
 # =============================================================================
@@ -93,7 +93,9 @@ def load_keywords():
 # Transcript segmentation (utterances)
 # =============================================================================
 
-SPEAKER_HEADER_RE = re.compile(
+import re as _re
+
+SPEAKER_HEADER_RE = _re.compile(
     r"""
     ^
     (?:
@@ -105,12 +107,12 @@ SPEAKER_HEADER_RE = re.compile(
     (?:\s*\([^)]*\))?
     \s*(?::|[-–—]\s)
     """,
-    re.VERBOSE,
+    _re.VERBOSE,
 )
-CONTENT_COLON_RE   = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.I)
-TIME_STAMP_RE      = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.I)
-UPPER_HEADING_RE   = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
-INTERJECTION_RE    = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.I)
+CONTENT_COLON_RE   = _re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", _re.I)
+TIME_STAMP_RE      = _re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", _re.I)
+UPPER_HEADING_RE   = _re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+INTERJECTION_RE    = _re.compile(r"^(Members interjecting\.|The House suspended .+)$", _re.I)
 
 def _build_utterances(text: str):
     all_lines = text.splitlines()
@@ -127,7 +129,7 @@ def _build_utterances(text: str):
             total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
 
         sents, start = [], 0
-        for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
+        for m in _re.finditer(r"(?<=[\.!\?])\s+", joined):
             end = m.start()
             if end > start:
                 sents.append((start, end))
@@ -162,7 +164,8 @@ def _build_utterances(text: str):
     return utterances, all_lines
 
 def _line_for_char_offset(line_offsets, line_nums, pos):
-    i = bisect_right(line_offsets, pos) - 1
+    from bisect import bisect_right as _br
+    i = _br(line_offsets, pos) - 1
     i = max(0, min(i, len(line_nums) - 1))
     return line_nums[i]
 
@@ -173,7 +176,7 @@ def _line_for_char_offset(line_offsets, line_nums, pos):
 def _compile_kw_patterns(keywords):
     pats = []
     for kw in sorted(keywords, key=len, reverse=True):
-        pats.append((kw, re.compile(re.escape(kw) if " " in kw else rf"\b{re.escape(kw)}\b", re.I)))
+        pats.append((kw, _re.compile(_re.escape(kw) if " " in kw else rf"\b{_re.escape(kw)}\b", _re.I)))
     return pats
 
 def _collect_hits_in_utterance(utt, kw_pats):
@@ -233,16 +236,14 @@ def _html_escape(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
-    """
-    Outlook-safe inline highlight: use template gold (#f5eddc).
-    Adds mso-highlight:goldish for Word-based clients; the background hex keeps the colour exact elsewhere.
-    """
-    GOLDish = "#f5eddc"
+    """Inline gold highlight that renders in Outlook (background color)."""
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
-        pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
+        pat = _re.compile(_re.escape(_html_escape(kw)) if " " in kw else rf"\b{_re.escape(_html_escape(kw))}\b", _re.I)
         out = pat.sub(lambda m: (
-            "<b><span style='background:%s;mso-highlight:goldish;color:#000000'>%s</span></b>" % (GOLDish, m.group(0))
+            "<b><span style='background:#C5A572;color:#000;'>"
+            + m.group(0) +
+            "</span></b>"
         ), out)
     return out
 
@@ -253,20 +254,20 @@ def _excerpt_from_window_html(utt, win, keywords):
     a = sents[start][0]
     b = sents[end][1]
 
-    # Normalize newlines and collapse to a *single block* (no paragraph spacing)
+    # Normalize newlines and collapse blank paragraphs -> single block
     raw = joined[a:b]
-    raw = re.sub(r"\r\n?", "\n", raw)       # unify CRLF/CR
-    raw = re.sub(r"\n{2,}", "\n", raw)      # collapse blank lines
+    raw = _re.sub(r"\r\n?", "\n", raw)
+    raw = _re.sub(r"\n{2,}", "\n", raw)
     raw = raw.strip()
 
     if len(raw) > MAX_SNIPPET_CHARS:
         raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
 
-    # HTML-escape and join all line breaks with single spaces to avoid paragraph gaps
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords)
-    html = re.sub(r"\s*\n\s*", " ", html)          # join lines to one paragraph
-    html = re.sub(r"\s{2,}", " ", html).strip()    # compress whitespace
+    html = html.replace("\n", "<br>")
+    html = _re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)
+    html = _re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
@@ -295,22 +296,22 @@ def extract_matches(text: str, keywords):
 # Outlook/Gmail whitespace fixes
 # =============================================================================
 
-_EMPTY_MSOP_RE = re.compile(
+_EMPTY_MSOP_RE = _re.compile(
     r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
     r"<o:p>\s*&nbsp;\s*</o:p>|"
     r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
-    re.I,
+    _re.I,
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
     html = _EMPTY_MSOP_RE.sub("", html)
-    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
-    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    html = _re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=_re.I)
+    html = _re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=_re.I | _re.S)
+    html = _re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=_re.I)
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
-    return re.sub(r">\s+<", "><", html)
+    return _re.sub(r">\s+<", "><", html)
 
 def _inject_mso_css_reset(html: str) -> str:
     mso_block = (
@@ -321,8 +322,8 @@ def _inject_mso_css_reset(html: str) -> str:
         "</style>"
         "<![endif]-->"
     )
-    if re.search(r"</head\s*>", html, re.I):
-        return re.sub(r"</head\s*>", mso_block + "</head>", html, flags=re.I, count=1)
+    if _re.search(r"</head\s*>", html, _re.I):
+        return _re.sub(r"</head\s*>", mso_block + "</head>", html, flags=_re.I, count=1)
     return mso_block + html
 
 # =============================================================================
@@ -330,14 +331,14 @@ def _inject_mso_css_reset(html: str) -> str:
 # =============================================================================
 
 def _build_detection_row(kw, hoa, lc, tot) -> str:
-    # Grey lines inside the table match the outer frame colour (#D8DCE0)
+    # Uniform grey borders (inside & outside) to match the surrounding frame
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
         "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
@@ -384,7 +385,7 @@ def _inject_sections_after_detection(html, sections_html):
     return html[:insert_at] + sections_html + html[insert_at:]
 
 # =============================================================================
-# Per-file sections (“cards”) — Outlook-safe, vertical-centred header
+# Per-file sections (“cards”) — Outlook-safe, vertically centered
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
@@ -394,40 +395,36 @@ def _build_file_section_html(filename: str, matches):
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Card header + body
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"  # header cell
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;'>"
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;"
+            "padding:9px 12px 9px 12px;font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
-                "<td width='24' height='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
-                  "<p class='MsoNormal' align='center' style='margin:0;text-align:center;mso-line-height-rule:exactly;line-height:24px;'>"
-                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF;'>{idx}</span></b>"  # badge number
-                  "</p>"
+                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{idx}</div>"
                 "</td>"
-                "<td width='8' style='font-size:0;line-height:0;'>&nbsp;</td>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
                 "<td valign='middle' style='vertical-align:middle;'>"
-                  "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:16px;'>"
-                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#24313F;text-transform:uppercase;'>{esc(speaker) if speaker else 'UNKNOWN'}</span></b>"
-                  "</p>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
+                  "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
                 "<td align='right' valign='middle' style='vertical-align:middle;'>"
-                  "<p class='MsoNormal' align='right' style='margin:0;text-align:right;mso-line-height-rule:exactly;line-height:16px;'>"
-                  f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#6A7682;'>{line_txt}</span>"
-                  "</p>"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{line_txt}</div>"
                 "</td>"
               "</tr>"
               "</table>"
             "</td>"
             "</tr>"
             "<tr>"
-            "<td style='padding:8px 10px 9px 10px;'>"  # excerpt cell
-              "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:17px;'>"
-              f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#1F2A36;'>{excerpt_norm}</span>"
-              "</p>"
+            "<td valign='middle' style='padding:8px 10px 9px 10px;vertical-align:middle;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
+              f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
             "</table>"
@@ -475,18 +472,16 @@ def build_digest_html(files: list[str], keywords: list[str]):
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
     # AU run date
-    aus_tz = os.environ.get("AUS_TZ", "Australia/Hobart")
-    now_au = datetime.now(ZoneInfo(aus_tz))
-    run_date = now_au.strftime("%d %B %Y")
+    run_date = datetime.now(ZoneInfo("Australia/Hobart")).strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
 
-    # Keep the heading font consistent
+    # Ensure font declaration for section title (safe)
     template_html = template_html.replace(
         '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
         '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
     )
 
-    # Outlook-only CSS reset
+    # MSO reset
     template_html = _inject_mso_css_reset(template_html)
 
     # Collect matches + counts
@@ -507,7 +502,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
                     counts[kw][chamber] += 1
         sections.append(_build_file_section_html(Path(f).name, matches))
 
-    # Detection rows (internal lines match the outer frame)
+    # Detection rows
     det_rows = []
     for kw in keywords:
         hoa = counts.get(kw, {}).get("House of Assembly", 0)
@@ -515,16 +510,17 @@ def build_digest_html(files: list[str], keywords: list[str]):
         det_rows.append(_build_detection_row(kw, hoa, lc, hoa + lc))
     detection_rows_html = "".join(det_rows)
 
+    # Replace detection rows
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
 
-    # Remove sample section and inject our sections with a clear spacer
+    # Remove sample section and inject our sections with a spacer
     template_html = _strip_sample_section(template_html)
+    sections_html = "".join(sections)
     spacer_before_sections = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
     )
-    sections_html = spacer_before_sections + "".join(sections)
-    template_html = _inject_sections_after_detection(template_html, sections_html)
+    template_html = _inject_sections_after_detection(template_html, spacer_before_sections + sections_html)
 
     # Final whitespace controls
     template_html = _tighten_outlook_whitespace(template_html)
@@ -576,11 +572,8 @@ def main():
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
-
-    # AU date in subject too
-    aus_tz = os.environ.get("AUS_TZ", "Australia/Hobart")
-    now_au = datetime.now(ZoneInfo(aus_tz))
-    subject = f"{DEFAULT_TITLE} — {now_au.strftime('%d %b %Y')}"
+    # AU date in subject
+    subject = f"{DEFAULT_TITLE} — {datetime.now(ZoneInfo('Australia/Hobart')).strftime('%d %b %Y')}"
 
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
