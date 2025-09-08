@@ -338,13 +338,13 @@ def _build_detection_row(kw, hoa, lc, tot) -> str:
     # Use pixel paddings; margin:0 paragraphs
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #ECF0F1 1px;border-right:none;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"  # unify bottom border colour with the left border
         f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"  # use grey border consistent with template
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #ECF0F1 1px;padding:8px 10px;'>"
+        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"  # use grey border consistent with template
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #ECF0F1 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"  # unify bottom border colour
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
@@ -406,21 +406,23 @@ def _build_file_section_html(filename: str, matches):
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='top' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:top;'>"
+            # Vertically centre the entire header row
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
-                "<td width='24' align='center' valign='top' style='background:#4A5A6A;border:0;height:24px;vertical-align:top;'>"
+                # Make the number badge square and vertically centered
+                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
                 "</td>"
-                "<td width='8' style='font-size:0;line-height:0;vertical-align:top;'>&nbsp;</td>"
-                "<td valign='top' style='vertical-align:top;'>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
+                "<td valign='middle' style='vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
                   "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
-                "<td align='right' valign='top' style='vertical-align:top;'>"
+                "<td align='right' valign='middle' style='vertical-align:middle;'>"
                   "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
@@ -429,8 +431,8 @@ def _build_file_section_html(filename: str, matches):
             "</td>"
             "</tr>"
             "<tr>"
-            "<td valign='top' style='padding:8px 10px 9px 10px;vertical-align:top;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
+            "<td valign='middle' style='padding:8px 10px 9px 10px;vertical-align:middle;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
               f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
