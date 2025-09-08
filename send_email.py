@@ -234,29 +234,16 @@ def _html_escape(s: str) -> str:
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     """
-    Highlight keywords using the same gold as the template (#f5eddc).
-    Avoid mso-highlight so Outlook on Windows renders the hex background correctly.
+    Outlook-safe inline highlight: use template gold (#C5A572).
+    Adds mso-highlight:gold for Word-based clients; the background hex keeps the colour exact elsewhere.
     """
-    GOLDish = "#f5eddc"
-
+    GOLD = "#C5A572"
     out = text_html
-    # Highlight longer phrases first
     for kw in sorted(keywords, key=len, reverse=True):
-        esc_kw = _html_escape(kw)
-        # Whole word for single words; substring for phrases
-        pat = re.compile(re.escape(esc_kw) if " " in kw else rf"\b{re.escape(esc_kw)}\b", re.I)
-
-        out = pat.sub(
-            lambda m: (
-                "<b><span style=\""
-                f"background:{GOLDish};"
-                f"background-color:{GOLDish};"
-                "color:#000000;\">"
-                f"{m.group(0)}"
-                "</span></b>"
-            ),
-            out,
-        )
+        pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
+        out = pat.sub(lambda m: (
+            "<b><span style='background:%s;mso-highlight:gold;color:#000000'>%s</span></b>" % (GOLD, m.group(0))
+        ), out)
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -412,10 +399,16 @@ def _build_file_section_html(filename: str, matches):
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
+            # The outer cell of the card header previously forced font-size and line-height to zero
+            # to collapse spacing, which caused vertical misalignment of the badge, speaker name
+            # and line numbers when rendered in Outlook on Windows.  Removing those properties
+            # and relying on equal top/bottom padding along with explicit vertical-align ensures
+            # the entire header content is centred vertically.  We retain the mso-line-height-rule
+            # for compatibility with Outlook.
             "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
+            "mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-              "<tr style='height:24px;'>"
+              "<tr style='height:24px;' valign='middle'>"
                 # Square number badge (24×24) and vertically centered content
                 "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
