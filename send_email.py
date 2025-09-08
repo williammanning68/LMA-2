@@ -405,10 +405,13 @@ def _build_file_section_html(filename: str, matches):
             "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr style='height:24px;'>"
-                f"<td width='24' align='center' valign='middle' style='background:{SLATE};border:0;height:24px;vertical-align:middle;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{idx}</div>"
-                "</td>"
+                 <td width='24' align='center' valign='middle'
+                    style='background:#4A5A6A;width:24px;height:24px;vertical-align:middle;mso-line-height-rule:exactly;'>
+                  <p class='MsoNormal'
+                     style="margin:0;padding:0;line-height:24px;mso-line-height-rule:exactly;">
+                    <b><span style="font-size:10pt;font-family:'Segoe UI',sans-serif;color:#FFFFFF">{idx}</span></b>
+                  </p>
+                </td>
                 "<td width='8' style='font-size:0;line-height:0;height:24px;vertical-align:middle;'>&nbsp;</td>"
                 "<td valign='middle' style='vertical-align:middle;height:24px;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
