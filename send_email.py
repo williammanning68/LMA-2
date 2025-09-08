@@ -25,16 +25,6 @@ def _resolve_template_path() -> Path:
     candidates = [
         "email_template.html",
         "email_template.htm",
-        "email_template (1).html",
-        "email_template (1).htm",
-        "Hansard Monitor - Email Format - Version 3.htm",
-        "Hansard Monitor - Email Format - Version 3.html",
-        "templates/email_template.html",
-        "templates/email_template.htm",
-        "templates/email_template (1).html",
-        "templates/email_template (1).htm",
-        "templates/Hansard Monitor - Email Format - Version 3.htm",
-        "templates/Hansard Monitor - Email Format - Version 3.html",
     ]
     for name in candidates:
         p = script_dir / name
