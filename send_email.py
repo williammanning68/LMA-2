@@ -234,10 +234,10 @@ def _html_escape(s: str) -> str:
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     """
-    Highlight keywords using the same gold as the template (#C5A572).
+    Highlight keywords using the same gold as the template (#D4AF37).
     Avoid mso-highlight so Outlook on Windows renders the hex background correctly.
     """
-    GOLD = "#C5A572"
+    GOLDish = "#D4AF37"
 
     out = text_html
     # Highlight longer phrases first
@@ -249,8 +249,8 @@ def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
         out = pat.sub(
             lambda m: (
                 "<b><span style=\""
-                f"background:{GOLD};"
-                f"background-color:{GOLD};"
+                f"background:{GOLDish};"
+                f"background-color:{GOLDish};"
                 "color:#000000;\">"
                 f"{m.group(0)}"
                 "</span></b>"
