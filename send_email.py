@@ -6,21 +6,30 @@ import re
 import glob
 from pathlib import Path
 from datetime import datetime
+try:
+    # Python 3.9+ provides zoneinfo for time zone conversion
+    from zoneinfo import ZoneInfo  # type: ignore
+except Exception:
+    ZoneInfo = None  # fallback if zoneinfo is unavailable
 from bisect import bisect_right
-from zoneinfo import ZoneInfo  # AU timezone
 import yagmail
+
+# Additional imports used in helpers
+import re  # for normalizing excerpts
 
 # =============================================================================
 # Template resolution (robust)
 # =============================================================================
 
 def _resolve_template_path() -> Path:
+    # 1) Allow env override
     env_path = os.environ.get("TEMPLATE_HTML_PATH")
     if env_path:
         p = Path(env_path)
         if p.exists():
             return p
 
+    # 2) Common names (what you've used)
     script_dir = Path(__file__).resolve().parent
     candidates = [
         "email_template.html",
@@ -41,6 +50,7 @@ def _resolve_template_path() -> Path:
         if p.exists():
             return p
 
+    # 3) Fallback: find any plausible .htm(l)
     for pat in ("**/*.htm", "**/*.html"):
         for fp in script_dir.glob(pat):
             if any(k in fp.name.lower() for k in ("email", "template", "hansard", "format")):
@@ -90,12 +100,36 @@ def load_keywords():
     return []
 
 # =============================================================================
+# Excerpt normalization
+# =============================================================================
+
+def _normalize_excerpt_one_block(text: str) -> str:
+    """
+    Collapse paragraphs and line breaks into a single block of text.
+
+    Outlook's Word engine treats successive paragraph tags (<p>) as creating
+    additional spacing. To avoid uneven paragraph spacing in excerpts, this
+    helper strips any <p> or <br> tags and collapses multiple whitespace
+    characters into single spaces.  Existing highlight markup is preserved.
+
+    Args:
+        text: The HTML snippet for a match excerpt (may contain <br>, <p>, etc.).
+    Returns:
+        A cleaned HTML string with no structural paragraph breaks.
+    """
+    if not text:
+        return ""
+    # Remove paragraph tags and br tags, replacing them with spaces
+    cleaned = re.sub(r"(?is)</?p[^>]*>|<br\s*/?>", " ", text)
+    # Collapse newlines and whitespace
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    return cleaned
+
+# =============================================================================
 # Transcript segmentation (utterances)
 # =============================================================================
 
-import re as _re
-
-SPEAKER_HEADER_RE = _re.compile(
+SPEAKER_HEADER_RE = re.compile(
     r"""
     ^
     (?:
@@ -107,12 +141,12 @@ SPEAKER_HEADER_RE = _re.compile(
     (?:\s*\([^)]*\))?
     \s*(?::|[-–—]\s)
     """,
-    _re.VERBOSE,
+    re.VERBOSE,
 )
-CONTENT_COLON_RE   = _re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", _re.I)
-TIME_STAMP_RE      = _re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", _re.I)
-UPPER_HEADING_RE   = _re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
-INTERJECTION_RE    = _re.compile(r"^(Members interjecting\.|The House suspended .+)$", _re.I)
+CONTENT_COLON_RE   = re.compile(r"^(Then|There|And|But|So|If|When|Now|Finally|First|Second|Third)\b", re.I)
+TIME_STAMP_RE      = re.compile(r"^\[\d{1,2}\.\d{2}\s*(a|p)\.m\.\]$", re.I)
+UPPER_HEADING_RE   = re.compile(r"^[A-Z][A-Z\s’'—\-&,;:.()]+$")
+INTERJECTION_RE    = re.compile(r"^(Members interjecting\.|The House suspended .+)$", re.I)
 
 def _build_utterances(text: str):
     all_lines = text.splitlines()
@@ -128,8 +162,9 @@ def _build_utterances(text: str):
             offs.append(total)
             total += len(ln) + (1 if i < len(curr["lines"]) - 1 else 0)
 
+        # very simple sentence segmentation: split on punctuation + whitespace
         sents, start = [], 0
-        for m in _re.finditer(r"(?<=[\.!\?])\s+", joined):
+        for m in re.finditer(r"(?<=[\.!\?])\s+", joined):
             end = m.start()
             if end > start:
                 sents.append((start, end))
@@ -164,8 +199,7 @@ def _build_utterances(text: str):
     return utterances, all_lines
 
 def _line_for_char_offset(line_offsets, line_nums, pos):
-    from bisect import bisect_right as _br
-    i = _br(line_offsets, pos) - 1
+    i = bisect_right(line_offsets, pos) - 1
     i = max(0, min(i, len(line_nums) - 1))
     return line_nums[i]
 
@@ -176,7 +210,7 @@ def _line_for_char_offset(line_offsets, line_nums, pos):
 def _compile_kw_patterns(keywords):
     pats = []
     for kw in sorted(keywords, key=len, reverse=True):
-        pats.append((kw, _re.compile(_re.escape(kw) if " " in kw else rf"\b{_re.escape(kw)}\b", _re.I)))
+        pats.append((kw, re.compile(re.escape(kw) if " " in kw else rf"\b{re.escape(kw)}\b", re.I)))
     return pats
 
 def _collect_hits_in_utterance(utt, kw_pats):
@@ -236,15 +270,19 @@ def _html_escape(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
-    """Inline gold highlight that renders in Outlook (background color)."""
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
-        pat = _re.compile(_re.escape(_html_escape(kw)) if " " in kw else rf"\b{_re.escape(_html_escape(kw))}\b", _re.I)
-        out = pat.sub(lambda m: (
-            "<b><span style='background:#C5A572;color:#000;'>"
-            + m.group(0) +
-            "</span></b>"
-        ), out)
+        pat = re.compile(
+            re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b",
+            re.I,
+        )
+        # Use the same gold colour as the template for highlighting keywords.
+        # We still specify mso-highlight as 'yellow' so Outlook recognises the highlight,
+        # but the background colour will be gold (#C5A572) to match the design used in the template.
+        out = pat.sub(
+            lambda m: "<b><span style='background:#C5A572;mso-highlight:yellow'>" + m.group(0) + "</span></b>",
+            out,
+        )
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -254,10 +292,10 @@ def _excerpt_from_window_html(utt, win, keywords):
     a = sents[start][0]
     b = sents[end][1]
 
-    # Normalize newlines and collapse blank paragraphs -> single block
+    # Normalize newlines to avoid stacked <br>
     raw = joined[a:b]
-    raw = _re.sub(r"\r\n?", "\n", raw)
-    raw = _re.sub(r"\n{2,}", "\n", raw)
+    raw = re.sub(r"\r\n?", "\n", raw)   # unify CRLF/CR
+    raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
     raw = raw.strip()
 
     if len(raw) > MAX_SNIPPET_CHARS:
@@ -266,8 +304,8 @@ def _excerpt_from_window_html(utt, win, keywords):
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords)
     html = html.replace("\n", "<br>")
-    html = _re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)
-    html = _re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)
+    html = re.sub(r"(?:<br\s*/?>\s*){2,}", "<br>", html)                 # collapse runs
+    html = re.sub(r"^(?:<br\s*/?>\s*)+|(?:<br\s*/?>\s*)+$", "", html)    # trim leading/trailing
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
@@ -296,24 +334,30 @@ def extract_matches(text: str, keywords):
 # Outlook/Gmail whitespace fixes
 # =============================================================================
 
-_EMPTY_MSOP_RE = _re.compile(
+_EMPTY_MSOP_RE = re.compile(
     r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
     r"<o:p>\s*&nbsp;\s*</o:p>|"
     r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
-    _re.I,
+    re.I,
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
+    # 1) Remove empty Word/Outlook paragraphs (even if wrapped)
     html = _EMPTY_MSOP_RE.sub("", html)
-    html = _re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=_re.I)
-    html = _re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=_re.I | _re.S)
-    html = _re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=_re.I)
+    # 2) Collapse runs of <br> to a single <br>
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
+    # 3) Remove whitespace/comments between adjacent tables
+    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
+    # 4) Trim blank space just inside table cells
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
-    return _re.sub(r">\s+<", "><", html)
+    # Critical for Outlook: remove inter-tag newlines/indentation
+    return re.sub(r">\s+<", "><", html)
 
 def _inject_mso_css_reset(html: str) -> str:
+    # MSO conditional CSS to kill default MsoNormal margins/line-height
     mso_block = (
         "<!--[if mso]>"
         "<style>"
@@ -322,30 +366,56 @@ def _inject_mso_css_reset(html: str) -> str:
         "</style>"
         "<![endif]-->"
     )
-    if _re.search(r"</head\s*>", html, _re.I):
-        return _re.sub(r"</head\s*>", mso_block + "</head>", html, flags=_re.I, count=1)
+    # Insert before </head> if possible; else prepend
+    if re.search(r"</head\s*>", html, re.I):
+        return re.sub(r"</head\s*>", mso_block + "</head>", html, flags=re.I, count=1)
     return mso_block + html
 
 # =============================================================================
 # Template operations (summary & sections)
 # =============================================================================
 
-def _build_detection_row(kw, hoa, lc, tot) -> str:
-    # Uniform grey borders (inside & outside) to match the surrounding frame
+def _build_detection_row(kw: str, hoa: int, lc: int, tot: int) -> str:
+    """
+    Build a single row for the detection summary table with uniform grey
+    borders (#D8DCE0) on all internal and external lines.  Each cell uses
+    consistent padding and zero margins to match Outlook's Word rendering.
+
+    Args:
+        kw: Keyword text.
+        hoa: Hit count for House of Assembly.
+        lc: Hit count for Legislative Council.
+        tot: Total hit count (sum of hoa + lc).
+
+    Returns:
+        A string of HTML representing one <tr> with four cells.
+    """
+    # Escape keyword to avoid HTML injection
+    kw_html = _html_escape(kw)
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
-        f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        # First column: keyword (leftmost cell). Border-left on first cell
+        # ensures all vertical lines are consistent grey.
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;"
+        "border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
+        f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{kw_html}</span></b></p></td>"
+        # Second column: House of Assembly count
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;"
+        "border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        # Third column: Legislative Council count
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;"
+        "border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        # Fourth column: total count. Rightmost cell adds right border.
+        "<td width=\"16%\" style='border-top:none;border-left:solid #D8DCE0 1px;"
+        "border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
 
 def _replace_detection_rows_in_template(html, row_html):
+    # Find "Detection Match by Chamber" then the next inner table, keep header row, replace the rest.
     hdr = re.search(r"Detection\s+Match\s+by\s+Chamber", html, flags=re.I)
     if not hdr:
         return html
@@ -367,6 +437,7 @@ def _replace_detection_rows_in_template(html, row_html):
     return html[:tbl_start] + new_table + html[tbl_end:]
 
 def _strip_sample_section(html):
+    # Remove the sample block marked in the template
     pattern = re.compile(r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->", re.I | re.S)
     return re.sub(pattern, "", html)
 
@@ -385,7 +456,7 @@ def _inject_sections_after_detection(html, sections_html):
     return html[:insert_at] + sections_html + html[insert_at:]
 
 # =============================================================================
-# Per-file sections (“cards”) — Outlook-safe, vertically centered
+# Per-file sections (“cards”) — Outlook-safe, tight
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
@@ -395,14 +466,21 @@ def _build_file_section_html(filename: str, matches):
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
+        # Card header + body (top-aligned, pixel line-heights)
+
+        # Collapse paragraphs/line breaks within the excerpt to one block
+        collapsed_excerpt = _normalize_excerpt_one_block(excerpt_html)
+
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;"
-            "padding:9px 12px 9px 12px;font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
+            # Vertically centre the entire header row
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
+                # Make the number badge square and vertically centered
                 "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
@@ -423,14 +501,16 @@ def _build_file_section_html(filename: str, matches):
             "</tr>"
             "<tr>"
             "<td valign='middle' style='padding:8px 10px 9px 10px;vertical-align:middle;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
-              f"{excerpt_html}</div>"
+                "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
+              f"{collapsed_excerpt}</div>"
             "</td>"
             "</tr>"
             "</table>"
         )
         cards.append(card)
 
+    # 2px spacer BETWEEN cards (none after the last)
+    # Increase spacer height between cards for improved vertical rhythm
     spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
               "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>")
     cards_html = spacer.join(cards)
@@ -471,17 +551,23 @@ def build_digest_html(files: list[str], keywords: list[str]):
     except Exception:
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
-    # AU run date
-    run_date = datetime.now(ZoneInfo("Australia/Hobart")).strftime("%d %B %Y")
+    # Date & small font fix for section title
+    # Use Australia/Hobart timezone if available; fallback to system time
+    if ZoneInfo is not None:
+        try:
+            tz = ZoneInfo("Australia/Hobart")
+            run_date = datetime.now(tz).strftime("%d %B %Y")
+        except Exception:
+            run_date = datetime.now().strftime("%d %B %Y")
+    else:
+        run_date = datetime.now().strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
-
-    # Ensure font declaration for section title (safe)
     template_html = template_html.replace(
         '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
         '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
     )
 
-    # MSO reset
+    # Inject MSO CSS reset (safe for Outlook only)
     template_html = _inject_mso_css_reset(template_html)
 
     # Collect matches + counts
@@ -510,19 +596,24 @@ def build_digest_html(files: list[str], keywords: list[str]):
         det_rows.append(_build_detection_row(kw, hoa, lc, hoa + lc))
     detection_rows_html = "".join(det_rows)
 
-    # Replace detection rows
+    # Replace detection rows in template
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
 
-    # Remove sample section and inject our sections with a spacer
+    # Remove sample section, then inject ours after the detection table
     template_html = _strip_sample_section(template_html)
+    # Increase vertical space between detection table and first file section by adding a spacer
     sections_html = "".join(sections)
+    # Increase the vertical spacer between the detection table and the first file section
+    # from 12px to 16px to better separate the summary table from the transcript sections.
     spacer_before_sections = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
     )
-    template_html = _inject_sections_after_detection(template_html, spacer_before_sections + sections_html)
+    # Prepend the spacer before file sections
+    sections_with_spacer = spacer_before_sections + sections_html
+    template_html = _inject_sections_after_detection(template_html, sections_with_spacer)
 
-    # Final whitespace controls
+    # Final whitespace controls: scrub ghost paragraphs then minify inter-tag whitespace
     template_html = _tighten_outlook_whitespace(template_html)
     template_html = _minify_inter_tag_whitespace(template_html)
 
@@ -572,8 +663,7 @@ def main():
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
-    # AU date in subject
-    subject = f"{DEFAULT_TITLE} — {datetime.now(ZoneInfo('Australia/Hobart')).strftime('%d %b %Y')}"
+    subject = f"{DEFAULT_TITLE} — {datetime.now().strftime('%d %b %Y')}"
 
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
@@ -586,11 +676,12 @@ def main():
         smtp_ssl=SMTP_SSL,
     )
 
+    # IMPORTANT: pass ONE HTML string to avoid yagmail inserting extra <br>
     yag.send(
         to=to_list,
         subject=subject,
         contents=body_html,
-        attachments=files,
+        attachments=files,  # optional: attach transcripts
     )
 
     update_sent_log(files)
