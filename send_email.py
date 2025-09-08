@@ -388,89 +388,66 @@ def _inject_sections_after_detection(html, sections_html):
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
-    """
-    Build a single file section (card) containing all matches for that transcript.
-    Each match is rendered as a two‑row block: a grey header bar with the match number,
-    speaker name and line range, all vertically centred; followed by a white body row
-    containing the excerpt. Paragraph spacing is collapsed so excerpts appear as a
-    single block of text.
-    """
     esc = _html_escape
-    cards: list[str] = []
+    cards = []
 
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
-        # Normalize the excerpt into a single paragraph (remove <p>/<br> and collapse whitespace)
-        excerpt_norm = _normalize_excerpt_one_block(excerpt_html)
-        # Build a line label: either "line X" or "lines X, Y, ..."
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Build the card HTML.  We use valign="middle" and height/line-height of 24px for the badge
-        # so that the number, speaker and line labels all align vertically in Outlook/Word.
+        # Card header + body
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            <td valign='middle'
-    style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;
-           padding:9px 12px 9px 12px;font-size:0;line-height:0;
-           mso-line-height-rule:exactly;'>
-  <table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'
-         style='border-collapse:collapse;'>
-    <tr>
-      <td width='24' height='24' align='center' valign='middle'
-          style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>
-        <p class='MsoNormal' align='center'
-           style='margin:0;text-align:center;mso-line-height-rule:exactly;line-height:24px;'>
-          <b><span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#FFFFFF;'>{idx}</span></b>
-        </p>
-      </td>
-      <td width='8' style='font-size:0;line-height:0;'>&nbsp;</td>
-      <td valign='middle' style='vertical-align:middle;'>
-        <p class='MsoNormal'
-           style='margin:0;mso-line-height-rule:exactly;line-height:16px;'>
-          <b><span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#24313F;text-transform:uppercase;'>
-            {esc(speaker) if speaker else 'UNKNOWN'}
-          </span></b>
-        </p>
-      </td>
-      <td align='right' valign='middle' style='vertical-align:middle;'>
-        <p class='MsoNormal' align='right'
-           style='margin:0;text-align:right;mso-line-height-rule:exactly;line-height:16px;'>
-          <span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#6A7682;'>{line_txt}</span>
-        </p>
-      </td>
-    </tr>
-  </table>
-</td>
+            # The outer cell of the card header previously forced font-size and line-height to zero
+            # to collapse spacing, which caused vertical misalignment of the badge, speaker name
+            # and line numbers when rendered in Outlook on Windows.  Removing those properties
+            # and relying on equal top/bottom padding along with explicit vertical-align ensures
+            # the entire header content is centred vertically.  We retain the mso-line-height-rule
+            # for compatibility with Outlook.
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
+            "mso-line-height-rule:exactly;vertical-align:middle;'>"
+              "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+              "<tr style='height:24px;' valign='middle'>"
+                # Square number badge (24×24) and vertically centered content
+                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{idx}</div>"
+                "</td>"
+                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
+                "<td valign='middle' style='vertical-align:middle;'>"
+                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
+                  "line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
+                "</td>"
+                "<td align='right' valign='middle' style='vertical-align:middle;'>"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                  f"{line_txt}</div>"
+                "</td>"
+              "</tr>"
+              "</table>"
+            "</td>"
             "</tr>"
             "<tr>"
-            "<td style='padding:8px 10px 9px 10px;'>"  # excerpt cell
-              "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:17px;'>"
-              f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#1F2A36;'>{excerpt_norm}</span>"
-              "</p>"
+            "<td valign='middle' style='padding:8px 10px 9px 10px;vertical-align:middle;'>"
+              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
+              f"{excerpt_html}</div>"
             "</td>"
             "</tr>"
             "</table>"
         )
         cards.append(card)
 
-    # Spacer between cards (10px high)
-    if cards:
-        spacer = (
-            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-            "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>"
-        )
-        cards_html = spacer.join(cards)
-    else:
-        cards_html = ""
+    spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+              "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>")
+    cards_html = spacer.join(cards)
 
-    # Assemble the section with filename and match count
     section = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr>"
         "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-        f"<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:15px;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000000;'>{esc(filename)}</span></b></p>"
-        f"<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:15px;'><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000000;'>{len(matches)} match(es)</span></p>"
+        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
+        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
         "</td>"
         "</tr>"
         "<tr>"
