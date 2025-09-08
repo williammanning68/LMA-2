@@ -228,7 +228,8 @@ def _merge_windows_far_only(wins, gap_gt=MERGE_IF_GAP_GT):
     for s, e, kws, lines in wins[1:]:
         ps, pe, pk, pl = merged[-1]
         gap = s - pe
-        if gap > gap_gt:
+        # MERGE when the next window overlaps or is within <= gap_gt sentences
+        if gap <= gap_gt:
             merged[-1] = [ps, max(pe, e), pk | kws, pl | lines]
         else:
             merged.append([s, e, kws, lines])
@@ -270,7 +271,8 @@ def _excerpt_from_window_html(utt, win, keywords):
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
-    return html, sorted(lines), sorted(kws, key=str.lower), start_line, end_line
+    visible_lines = [n for n in sorted(lines) if start_line <= n <= end_line]
+    return html, visible_lines, sorted(kws, key=str.lower), start_line, end_line
 
 def extract_matches(text: str, keywords):
     utts, _all_lines = _build_utterances(text)
