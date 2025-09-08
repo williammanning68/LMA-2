@@ -410,29 +410,38 @@ def _build_file_section_html(filename: str, matches):
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"  # header cell
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;'>"
-              "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-              "<tr>"
-                "<td width='24' height='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
-                  "<p class='MsoNormal' align='center' style='margin:0;text-align:center;mso-line-height-rule:exactly;line-height:24px;'>"
-                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF;'>{idx}</span></b>"  # badge number
-                  "</p>"
-                "</td>"
-                "<td width='8' style='font-size:0;line-height:0;'>&nbsp;</td>"
-                "<td valign='middle' style='vertical-align:middle;'>"
-                  "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:16px;'>"
-                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#24313F;text-transform:uppercase;'>{esc(speaker) if speaker else 'UNKNOWN'}</span></b>"
-                  "</p>"
-                "</td>"
-                "<td align='right' valign='middle' style='vertical-align:middle;'>"
-                  "<p class='MsoNormal' align='right' style='margin:0;text-align:right;mso-line-height-rule:exactly;line-height:16px;'>"
-                  f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#6A7682;'>{line_txt}</span>"
-                  "</p>"
-                "</td>"
-              "</tr>"
-              "</table>"
-            "</td>"
+            <td valign='middle'
+    style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;
+           padding:9px 12px 9px 12px;font-size:0;line-height:0;
+           mso-line-height-rule:exactly;'>
+  <table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'
+         style='border-collapse:collapse;'>
+    <tr>
+      <td width='24' height='24' align='center' valign='middle'
+          style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>
+        <p class='MsoNormal' align='center'
+           style='margin:0;text-align:center;mso-line-height-rule:exactly;line-height:24px;'>
+          <b><span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#FFFFFF;'>{idx}</span></b>
+        </p>
+      </td>
+      <td width='8' style='font-size:0;line-height:0;'>&nbsp;</td>
+      <td valign='middle' style='vertical-align:middle;'>
+        <p class='MsoNormal'
+           style='margin:0;mso-line-height-rule:exactly;line-height:16px;'>
+          <b><span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#24313F;text-transform:uppercase;'>
+            {esc(speaker) if speaker else 'UNKNOWN'}
+          </span></b>
+        </p>
+      </td>
+      <td align='right' valign='middle' style='vertical-align:middle;'>
+        <p class='MsoNormal' align='right'
+           style='margin:0;text-align:right;mso-line-height-rule:exactly;line-height:16px;'>
+          <span style='font-size:10pt;font-family:"Segoe UI",sans-serif;color:#6A7682;'>{line_txt}</span>
+        </p>
+      </td>
+    </tr>
+  </table>
+</td>
             "</tr>"
             "<tr>"
             "<td style='padding:8px 10px 9px 10px;'>"  # excerpt cell
