@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 from datetime import datetime
 from bisect import bisect_right
-from zoneinfo import ZoneInfo  # AU timezone support
+from zoneinfo import ZoneInfo  # NEW: AU timezone
 import yagmail
 
 # =============================================================================
@@ -68,6 +68,11 @@ MAX_SNIPPET_CHARS = 800
 WINDOW_PAD_SENTENCES = 1
 FIRST_SENT_FOLLOWING = 2
 MERGE_IF_GAP_GT = 2
+
+# Brand colours (centralised)
+SLATE = "#4A5A6A"
+GOLD  = "#C5A572"
+GREY  = "#D8DCE0"
 
 # =============================================================================
 # Keyword loading
@@ -234,16 +239,12 @@ def _html_escape(s: str) -> str:
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     """
-    Outlook-safe inline highlight: use template gold (#f5eddc).
-    Adds mso-highlight:goldish for Word-based clients; the background hex keeps the colour exact elsewhere.
+    GOLD highlight to match brand. Outlook honours inline background colour.
     """
-    GOLDish = "#f5eddc"
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
         pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
-        out = pat.sub(lambda m: (
-            "<b><span style='background:%s;mso-highlight:goldish;color:#000000'>%s</span></b>" % (GOLDish, m.group(0))
-        ), out)
+        out = pat.sub(lambda m: "<b><span style='background:%s;color:#ffffff'>" % GOLD + m.group(0) + "</span></b>", out)
     return out
 
 def _excerpt_from_window_html(utt, win, keywords):
@@ -253,20 +254,19 @@ def _excerpt_from_window_html(utt, win, keywords):
     a = sents[start][0]
     b = sents[end][1]
 
-    # Normalize newlines and collapse to a *single block* (no paragraph spacing)
     raw = joined[a:b]
-    raw = re.sub(r"\r\n?", "\n", raw)       # unify CRLF/CR
-    raw = re.sub(r"\n{2,}", "\n", raw)      # collapse blank lines
+    raw = re.sub(r"\r\n?", "\n", raw)   # normalise
+    raw = re.sub(r"\n{2,}", "\n", raw)  # collapse blank lines
     raw = raw.strip()
 
     if len(raw) > MAX_SNIPPET_CHARS:
         raw = raw[:MAX_SNIPPET_CHARS].rstrip() + "…"
 
-    # HTML-escape and join all line breaks with single spaces to avoid paragraph gaps
+    # Outlook-friendly: present as ONE block of text (no paragraph spacing)
     html = _html_escape(raw)
     html = _highlight_keywords_html(html, keywords)
-    html = re.sub(r"\s*\n\s*", " ", html)          # join lines to one paragraph
-    html = re.sub(r"\s{2,}", " ", html).strip()    # compress whitespace
+    html = html.replace("\n", " ")
+    html = re.sub(r"\s{2,}", " ", html).strip()
 
     start_line = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], a)
     end_line   = _line_for_char_offset(utt["line_offsets"], utt["line_nums"], max(a, b - 1))
@@ -330,16 +330,19 @@ def _inject_mso_css_reset(html: str) -> str:
 # =============================================================================
 
 def _build_detection_row(kw, hoa, lc, tot) -> str:
-    # Grey lines inside the table match the outer frame colour (#D8DCE0)
+    """
+    Build one row for the summary table with consistent GREY borders
+    (internal + external) so nothing drops back to black in Outlook.
+    """
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
+        f"<td width=\"28%\" style='border-top:none;border-left:solid {GREY} 1px;border-bottom:solid {GREY} 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
+        f"<td width=\"28%\" style='border-left:solid {GREY} 1px;border-bottom:solid {GREY} 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"
+        f"<td width=\"28%\" style='border-left:solid {GREY} 1px;border-bottom:solid {GREY} 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
+        f"<td width=\"15%\" style='border-left:solid {GREY} 1px;border-bottom:solid {GREY} 1px;border-right:solid {GREY} 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
@@ -384,7 +387,7 @@ def _inject_sections_after_detection(html, sections_html):
     return html[:insert_at] + sections_html + html[insert_at:]
 
 # =============================================================================
-# Per-file sections (“cards”) — Outlook-safe, vertical-centred header
+# Per-file sections (“cards”) — Outlook-safe
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
@@ -394,34 +397,26 @@ def _build_file_section_html(filename: str, matches):
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Card header + body
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
-            "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
+            f"style='border-collapse:collapse;border:1px solid {GREY};'>"
             "<tr>"
-            # The outer cell of the card header previously forced font-size and line-height to zero
-            # to collapse spacing, which caused vertical misalignment of the badge, speaker name
-            # and line numbers when rendered in Outlook on Windows.  Removing those properties
-            # and relying on equal top/bottom padding along with explicit vertical-align ensures
-            # the entire header content is centred vertically.  We retain the mso-line-height-rule
-            # for compatibility with Outlook.
-            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
-            "mso-line-height-rule:exactly;vertical-align:middle;'>"
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px;"
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-              "<tr style='height:24px;' valign='middle'>"
-                # Square number badge (24×24) and vertically centered content
-                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
+              "<tr style='height:24px;'>"
+                f"<td width='24' align='center' valign='middle' style='background:{SLATE};border:0;height:24px;vertical-align:middle;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
                   f"{idx}</div>"
                 "</td>"
-                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
-                "<td valign='middle' style='vertical-align:middle;'>"
+                "<td width='8' style='font-size:0;line-height:0;height:24px;vertical-align:middle;'>&nbsp;</td>"
+                "<td valign='middle' style='vertical-align:middle;height:24px;'>"
                   "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
-                  "line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                  "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
                 "</td>"
-                "<td align='right' valign='middle' style='vertical-align:middle;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
+                "<td align='right' valign='middle' style='vertical-align:middle;height:24px;'>"
+                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
                   f"{line_txt}</div>"
                 "</td>"
               "</tr>"
@@ -445,13 +440,13 @@ def _build_file_section_html(filename: str, matches):
     section = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr>"
-        "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
+        f"<td style='border-left:3px solid {GOLD};background:#F7F9FA;padding:6px 10px;'>"
         f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
         f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
         "</td>"
         "</tr>"
         "<tr>"
-        "<td style='border:1px solid #D8DCE0;border-top:none;background:#FFFFFF;padding:6px 8px;'>"
+        f"<td style='border:1px solid {GREY};border-top:none;background:#FFFFFF;padding:6px 8px;'>"
         f"{cards_html}"
         "</td>"
         "</tr>"
@@ -478,19 +473,16 @@ def build_digest_html(files: list[str], keywords: list[str]):
     except Exception:
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
-    # AU run date
-    aus_tz = os.environ.get("AUS_TZ", "Australia/Hobart")
-    now_au = datetime.now(ZoneInfo(aus_tz))
-    run_date = now_au.strftime("%d %B %Y")
-    template_html = template_html.replace("[DATE]", run_date)
+    # Program run date in AU (Tasmania)
+    au_now = datetime.now(ZoneInfo("Australia/Hobart"))
+    run_date = au_now.strftime("%d %B %Y")
 
-    # Keep the heading font consistent
+    template_html = template_html.replace("[DATE]", run_date)
     template_html = template_html.replace(
         '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
         '<span style="font-size:12.0pt;font-family:\'Segoe UI\',sans-serif;color:black">Detection Match by Chamber</span>',
     )
 
-    # Outlook-only CSS reset
     template_html = _inject_mso_css_reset(template_html)
 
     # Collect matches + counts
@@ -511,7 +503,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
                     counts[kw][chamber] += 1
         sections.append(_build_file_section_html(Path(f).name, matches))
 
-    # Detection rows (internal lines match the outer frame)
+    # Detection rows
     det_rows = []
     for kw in keywords:
         hoa = counts.get(kw, {}).get("House of Assembly", 0)
@@ -521,8 +513,9 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
 
-    # Remove sample section and inject our sections with a clear spacer
     template_html = _strip_sample_section(template_html)
+
+    # Spacer between detection table and first file section (visual separation)
     spacer_before_sections = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
@@ -530,7 +523,6 @@ def build_digest_html(files: list[str], keywords: list[str]):
     sections_html = spacer_before_sections + "".join(sections)
     template_html = _inject_sections_after_detection(template_html, sections_html)
 
-    # Final whitespace controls
     template_html = _tighten_outlook_whitespace(template_html)
     template_html = _minify_inter_tag_whitespace(template_html)
 
@@ -581,10 +573,8 @@ def main():
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
 
-    # AU date in subject too
-    aus_tz = os.environ.get("AUS_TZ", "Australia/Hobart")
-    now_au = datetime.now(ZoneInfo(aus_tz))
-    subject = f"{DEFAULT_TITLE} — {now_au.strftime('%d %b %Y')}"
+    au_now = datetime.now(ZoneInfo("Australia/Hobart"))
+    subject = f"{DEFAULT_TITLE} — {au_now.strftime('%d %b %Y')}"
 
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
