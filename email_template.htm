@@ -34,38 +34,30 @@
         <td style="padding:12.0pt 12.0pt 12.0pt 12.0pt">
          <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="background:white;border:solid #D8DCE0 1.0pt;border-collapse:collapse;">
           <tr>
-           <td style="border-bottom:solid #C5A572 2.25pt;padding:12.0pt 16.0pt 6.0pt 16.0pt">
+           <!-- GOLD underline under the title -->
+           <td style="border-bottom:solid #C5A572 2.25pt;padding:12.0pt 16.0pt 12.0pt 16.0pt">
             <p class="MsoNormal" align="center" style="text-align:center"><b><span style="font-size:12.0pt;font-family:'Segoe UI',sans-serif;color:black">Detection Match by Chamber</span></b></p>
            </td>
           </tr>
           <tr>
            <td style="padding:10.0pt 12.0pt 10.0pt 12.0pt">
-            <!--
-              The inner table under the "Detection Match by Chamber" heading originally relied on the
-              deprecated HTML `border` attribute alone, which rendered black rules in some email
-              clients.  To ensure all horizontal and vertical rules – both inside and around the
-              table – render in the same soft grey as the outer frame (#D8DCE0), we explicitly
-              set a border colour on the table itself and then allow collapsed borders to adopt
-              that colour.  This prevents mismatched black lines in Outlook on Windows.
-            -->
-            <table class="MsoNormalTable" border="1" bordercolor="#D8DCE0" cellspacing="0" cellpadding="0" width="100%" style="background:white;border-collapse:collapse;">
+            <!-- IMPORTANT: no `border="1"` so we fully control colour; internal + external lines are the same grey -->
+            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="background:white;border-left:solid #D8DCE0 1.0pt;border-right:solid #D8DCE0 1.0pt;border-bottom:solid #D8DCE0 1.0pt;border-collapse:collapse;">
              <tr>
-              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt;border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;">
+              <td width="28%" style="background:#4A5A6A;border-left:solid #D8DCE0 1.0pt;border-right:none;border-bottom:solid #D8DCE0 1.0pt;padding:8.0pt 10.0pt 8.0pt 10.0pt">
                 <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Keyword</span></b></p>
               </td>
-              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt;border-bottom:solid #D8DCE0 1px;border-right:none;">
+              <td width="28%" style="background:#4A5A6A;border-left:solid #D8DCE0 1.0pt;border-right:none;border-bottom:solid #D8DCE0 1.0pt;padding:8.0pt 10.0pt 8.0pt 10.0pt">
                 <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">House of Assembly</span></b></p>
               </td>
-              <td width="28%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt;border-bottom:solid #D8DCE0 1px;border-right:none;">
+              <td width="28%" style="background:#4A5A6A;border-left:solid #D8DCE0 1.0pt;border-right:none;border-bottom:solid #D8DCE0 1.0pt;padding:8.0pt 10.0pt 8.0pt 10.0pt">
                 <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Legislative Council</span></b></p>
               </td>
-              <td width="15%" style="background:#4A5A6A;padding:8.0pt 10.0pt 8.0pt 10.0pt;border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;">
+              <td width="15%" style="background:#4A5A6A;border-left:solid #D8DCE0 1.0pt;border-right:solid #D8DCE0 1.0pt;border-bottom:solid #D8DCE0 1.0pt;padding:8.0pt 10.0pt 8.0pt 10.0pt">
                 <p class="MsoNormal" align="center" style="text-align:center;margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">Total</span></b></p>
               </td>
              </tr>
-
-             <!-- Python will replace detail rows here -->
-
+             <!-- Data rows are injected by send_email.py, with all borders in #D8DCE0 -->
             </table>
            </td>
           </tr>
@@ -89,7 +81,30 @@
        </tr>
        <tr>
         <td style="border:solid #D8DCE0 1.0pt;border-top:none;background:white;padding:9.0pt 10.5pt 9.0pt 10.5pt">
-         <!-- Python injects cards here -->
+         <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="border:solid #D8DCE0 1.0pt;border-collapse:collapse;">
+          <tr>
+           <td style="border:none;border-bottom:solid #D8DCE0 1.0pt;background:#ECF0F1;padding:7.5pt 9.0pt 7.5pt 9.0pt">
+            <table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="100%" style="border-collapse:collapse;">
+             <tr style="height:24.0pt">
+              <td width="32" style="background:#4A5A6A;height:24.0pt;border:0;mso-border-alt:none;line-height:24.0pt;">
+                <p class="MsoNormal" align="center" style="text-align:center;margin:0;line-height:24.0pt;mso-line-height-rule:exactly;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;color:white">1</span></b></p>
+              </td>
+              <td style="padding:0 0 0 9.0pt;height:24.0pt">
+                <p class="MsoNormal" style="margin:0;"><b><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif;text-transform:uppercase;">Speaker</span></b></p>
+              </td>
+              <td style="height:24.0pt" align="right">
+                <p class="MsoNormal" style="text-align:right;margin:0;"><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif">line 1</span></p>
+              </td>
+             </tr>
+            </table>
+           </td>
+          </tr>
+          <tr>
+           <td style="padding:12.0pt 12.0pt 12.0pt 12.0pt">
+            <p class="MsoNormal" style="margin:0;"><span style="font-size:10.0pt;font-family:'Segoe UI',sans-serif">Excerpt with <b><span style="background:#C5A572;color:#ffffff">keyword</span></b>.</span></p>
+           </td>
+          </tr>
+         </table>
         </td>
        </tr>
       </table>
@@ -120,6 +135,3 @@
 </div>
 </body>
 </html>
-
-
-
