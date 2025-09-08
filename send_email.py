@@ -234,15 +234,15 @@ def _html_escape(s: str) -> str:
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
     """
-    Outlook-safe inline highlight: use template gold (#C5A572).
-    Adds mso-highlight:gold for Word-based clients; the background hex keeps the colour exact elsewhere.
+    Outlook-safe inline highlight: use template gold (#f5eddc).
+    Adds mso-highlight:goldish for Word-based clients; the background hex keeps the colour exact elsewhere.
     """
-    GOLD = "#C5A572"
+    GOLDish = "#f5eddc"
     out = text_html
     for kw in sorted(keywords, key=len, reverse=True):
         pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
         out = pat.sub(lambda m: (
-            "<b><span style='background:%s;mso-highlight:gold;color:#000000'>%s</span></b>" % (GOLD, m.group(0))
+            "<b><span style='background:%s;mso-highlight:goldish;color:#000000'>%s</span></b>" % (GOLDish, m.group(0))
         ), out)
     return out
 
