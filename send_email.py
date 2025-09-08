@@ -7,6 +7,7 @@ import glob
 from pathlib import Path
 from datetime import datetime
 from bisect import bisect_right
+from zoneinfo import ZoneInfo  # ensure Australian timezone support
 import yagmail
 
 # =============================================================================
@@ -236,13 +237,33 @@ def _html_escape(s: str) -> str:
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 def _highlight_keywords_html(text_html: str, keywords: list[str]) -> str:
+    """
+    Highlight keywords with the gold accent colour used elsewhere in the template.
+    Uses inline background and mso-highlight so Outlook honours the colour.
+    """
     out = text_html
+    # Sort by length to avoid nested replacements (longer first)
     for kw in sorted(keywords, key=len, reverse=True):
-        pat = re.compile(re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b", re.I)
-        # Use a pale yellow highlight to match the template colour. The mso-highlight value
-        # of 'yellow' ensures Outlook honours the highlight colour.
-        out = pat.sub(lambda m: "<b><span style='background:#fff0a6;mso-highlight:yellow'>" + m.group(0) + "</span></b>", out)
+        # Escape HTML within keyword
+        pattern = re.escape(_html_escape(kw)) if " " in kw else rf"\b{re.escape(_html_escape(kw))}\b"
+        pat = re.compile(pattern, re.I)
+        out = pat.sub(lambda m: (
+            "<b><span style='background:#C5A572;mso-highlight:#C5A572'>" + m.group(0) + "</span></b>"
+        ), out)
     return out
+
+def _normalize_excerpt_one_block(text: str) -> str:
+    """
+    Outlook-safe: collapse paragraph breaks into single spaces so excerpts render as
+    one continuous block (no extra paragraph spacing). Also strips extraneous tags.
+    """
+    if not text:
+        return ""
+    # Remove paragraph and line-break tags, replacing with a single space
+    text = re.sub(r"(?is)</?p[^>]*>|<br\s*/?>", " ", text)
+    # Collapse multiple whitespace characters into a single space
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
 
 def _excerpt_from_window_html(utt, win, keywords):
     sents  = utt["sents"]
@@ -335,16 +356,29 @@ def _inject_mso_css_reset(html: str) -> str:
 # =============================================================================
 
 def _build_detection_row(kw, hoa, lc, tot) -> str:
-    # Use pixel paddings; margin:0 paragraphs
+    """
+    Build a single data row for the detection summary table.  All grid lines use
+    the same light grey colour (#D8DCE0) to match the outer border.  Paragraph
+    margins are zero to avoid extra spacing in Outlook.  We use pixel paddings
+    for consistent rendering across email clients.
+    """
+    # All cells use the same light grey grid lines (#D8DCE0) for both horizontal and
+    # vertical borders, so the interior lines match the left/right borders.  Each
+    # cell sets border-left except the first (handled separately) and border-right
+    # for the last cell.
     return (
         "<tr>"
-        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"  # unify bottom border colour with the left border
+        # Keyword cell: left border and bottom border (no right border)
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal style='margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{_html_escape(kw)}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"  # use grey border consistent with template
+        # House of Assembly cell: left border to match interior grid, bottom border
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{hoa}</span></b></p></td>"
-        "<td width=\"28%\" style='border-bottom:solid #D8DCE0 1px;padding:8px 10px;'>"  # use grey border consistent with template
+        # Legislative Council cell: interior left border, bottom border
+        "<td width=\"28%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:none;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{lc}</span></b></p></td>"
-        "<td width=\"15%\" style='border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"  # unify bottom border colour
+        # Total cell: interior left border, right border to close the grid, bottom border
+        "<td width=\"16%\" style='border-top:none;border-left:solid #D8DCE0 1px;border-bottom:solid #D8DCE0 1px;border-right:solid #D8DCE0 1px;padding:8px 10px;'>"
         f"<p class=MsoNormal align=center style='text-align:center;margin:0;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:black'>{tot}</span></b></p></td>"
         "</tr>"
     )
@@ -395,63 +429,80 @@ def _inject_sections_after_detection(html, sections_html):
 # =============================================================================
 
 def _build_file_section_html(filename: str, matches):
+    """
+    Build a single file section (card) containing all matches for that transcript.
+    Each match is rendered as a two‑row block: a grey header bar with the match number,
+    speaker name and line range, all vertically centred; followed by a white body row
+    containing the excerpt. Paragraph spacing is collapsed so excerpts appear as a
+    single block of text.
+    """
     esc = _html_escape
-    cards = []
+    cards: list[str] = []
 
     for idx, (_kw_set, excerpt_html, speaker, line_list, _s, _e) in enumerate(matches, 1):
+        # Normalize the excerpt into a single paragraph (remove <p>/<br> and collapse whitespace)
+        excerpt_norm = _normalize_excerpt_one_block(excerpt_html)
+        # Build a line label: either "line X" or "lines X, Y, ..."
         line_txt = f"line {line_list[0]}" if len(line_list) == 1 else "lines " + ", ".join(str(n) for n in line_list)
 
-        # Card header + body (top-aligned, pixel line-heights)
+        # Build the card HTML.  We use valign="middle" and height/line-height of 24px for the badge
+        # so that the number, speaker and line labels all align vertically in Outlook/Word.
         card = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' "
             "style='border-collapse:collapse;border:1px solid #D8DCE0;'>"
             "<tr>"
-            # Vertically centre the entire header row
-            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"
-            "font-size:0;line-height:0;mso-line-height-rule:exactly;vertical-align:middle;'>"
+            "<td valign='middle' style='background:#ECF0F1;border-bottom:1px solid #D8DCE0;padding:9px 12px 9px 12px;"  # header cell
+            "font-size:0;line-height:0;mso-line-height-rule:exactly;'>"
               "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
               "<tr>"
-                # Make the number badge square and vertically centered
-                "<td width='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#FFFFFF;line-height:24px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{idx}</div>"
+                "<td width='24' height='24' align='center' valign='middle' style='background:#4A5A6A;border:0;height:24px;vertical-align:middle;'>"
+                  "<p class='MsoNormal' align='center' style='margin:0;text-align:center;mso-line-height-rule:exactly;line-height:24px;'>"
+                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#FFFFFF;'>{idx}</span></b>"  # badge number
+                  "</p>"
                 "</td>"
-                "<td width='8' style='font-size:0;line-height:0;vertical-align:middle;'>&nbsp;</td>"
+                "<td width='8' style='font-size:0;line-height:0;'>&nbsp;</td>"
                 "<td valign='middle' style='vertical-align:middle;'>"
-                  "<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#24313F;text-transform:uppercase;"
-                  "line-height:16px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{esc(speaker) if speaker else 'UNKNOWN'}</div>"
+                  "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:16px;'>"
+                  f"<b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#24313F;text-transform:uppercase;'>{esc(speaker) if speaker else 'UNKNOWN'}</span></b>"
+                  "</p>"
                 "</td>"
                 "<td align='right' valign='middle' style='vertical-align:middle;'>"
-                  "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#6A7682;line-height:16px;mso-line-height-rule:exactly;display:block;\">"
-                  f"{line_txt}</div>"
+                  "<p class='MsoNormal' align='right' style='margin:0;text-align:right;mso-line-height-rule:exactly;line-height:16px;'>"
+                  f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#6A7682;'>{line_txt}</span>"
+                  "</p>"
                 "</td>"
               "</tr>"
               "</table>"
             "</td>"
             "</tr>"
             "<tr>"
-            "<td valign='middle' style='padding:8px 10px 9px 10px;vertical-align:middle;'>"
-              "<div style=\"font:10pt 'Segoe UI',sans-serif;color:#1F2A36;margin:0;line-height:17px;mso-line-height-rule:exactly;display:block;\">"
-              f"{excerpt_html}</div>"
+            "<td style='padding:8px 10px 9px 10px;'>"  # excerpt cell
+              "<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:17px;'>"
+              f"<span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#1F2A36;'>{excerpt_norm}</span>"
+              "</p>"
             "</td>"
             "</tr>"
             "</table>"
         )
         cards.append(card)
 
-    # 2px spacer BETWEEN cards (none after the last)
-    # Increase spacer height between cards for improved vertical rhythm
-    spacer = ("<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
-              "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>")
-    cards_html = spacer.join(cards)
+    # Spacer between cards (10px high)
+    if cards:
+        spacer = (
+            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0'>"
+            "<tr><td style='height:10px;line-height:10px;font-size:0;'>&nbsp;</td></tr></table>"
+        )
+        cards_html = spacer.join(cards)
+    else:
+        cards_html = ""
 
+    # Assemble the section with filename and match count
     section = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr>"
         "<td style='border-left:3px solid #C5A572;background:#F7F9FA;padding:6px 10px;'>"
-        f"<div style=\"font:bold 10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{esc(filename)}</div>"
-        f"<div style=\"font:10pt 'Segoe UI',sans-serif;color:#000;line-height:15px;mso-line-height-rule:exactly;display:block;\">{len(matches)} match(es)</div>"
+        f"<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:15px;'><b><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000000;'>{esc(filename)}</span></b></p>"
+        f"<p class='MsoNormal' style='margin:0;mso-line-height-rule:exactly;line-height:15px;'><span style='font-size:10pt;font-family:\"Segoe UI\",sans-serif;color:#000000;'>{len(matches)} match(es)</span></p>"
         "</td>"
         "</tr>"
         "<tr>"
@@ -483,7 +534,8 @@ def build_digest_html(files: list[str], keywords: list[str]):
         template_html = TEMPLATE_HTML_PATH.read_text(encoding="utf-8", errors="ignore")
 
     # Date & small font fix for section title
-    run_date = datetime.now().strftime("%d %B %Y")
+    # Use Australia/Hobart timezone for program run date so the digest reflects the user's locale
+    run_date = datetime.now(ZoneInfo('Australia/Hobart')).strftime("%d %B %Y")
     template_html = template_html.replace("[DATE]", run_date)
     template_html = template_html.replace(
         '<span style="font-size:12.0pt;color:black">Detection Match by Chamber</span>',
@@ -524,17 +576,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     # Remove sample section, then inject ours after the detection table
     template_html = _strip_sample_section(template_html)
-    # Increase vertical space between detection table and first file section by adding a spacer
-    sections_html = "".join(sections)
-    # Increase the vertical spacer between the detection table and the first file section
-    # from 12px to 16px to better separate the summary table from the transcript sections.
-    spacer_before_sections = (
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-        "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
-    )
-    # Prepend the spacer before file sections
-    sections_with_spacer = spacer_before_sections + sections_html
-    template_html = _inject_sections_after_detection(template_html, sections_with_spacer)
+    template_html = _inject_sections_after_detection(template_html, "".join(sections))
 
     # Final whitespace controls: scrub ghost paragraphs then minify inter-tag whitespace
     template_html = _tighten_outlook_whitespace(template_html)
@@ -586,7 +628,8 @@ def main():
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
-    subject = f"{DEFAULT_TITLE} — {datetime.now().strftime('%d %b %Y')}"
+    # Use Australia/Hobart timezone for the subject date as well
+    subject = f"{DEFAULT_TITLE} — {datetime.now(ZoneInfo('Australia/Hobart')).strftime('%d %b %Y')}"
 
     to_list = [addr.strip() for addr in re.split(r"[,\s]+", EMAIL_TO) if addr.strip()]
 
