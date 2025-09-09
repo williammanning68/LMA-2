@@ -538,6 +538,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
     template_html = _strip_sample_section(template_html)
 
     # Spacer between detection table and first file section (visual separation)
+if sections:
     spacer_before_sections = (
         "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
         "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
