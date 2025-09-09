@@ -299,6 +299,13 @@ def _tighten_outlook_whitespace(html: str) -> str:
     html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
     html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+    html = re.sub(
+        r"(?:\s*<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+        r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>|<o:p>.*?</o:p>)*</p>)+\s*(?=</body>)",
+        "",
+        html,
+        flags=re.I | re.S,
+    )
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
