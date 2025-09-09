@@ -298,12 +298,12 @@ _EMPTY_MSOP_RE = re.compile(
 
 def _tighten_outlook_whitespace(html: str) -> str:
     # Kill Outlook's "downlevel-revealed" line-break block entirely
-    html = re.sub(
-        r"<!\[\s*if\s*!supportLineBreakNewLine\s*\]>\s*<br[^>]*>\s*<!\[\s*endif\s*\]>",
-        "",
-        html,
-        flags=re.I,
-    )
+html = re.sub(
+    r"(</div>\s*)(?:<p\b[^>]*class=['\"]?MsoNormal['\"]?[^>]*>\s*(?:&nbsp;|\s|<br[^>]*>|<!\[\s*if\s*!supportLineBreakNewLine\s*\]><br[^>]*><!\[\s*endif\s*\]>|<o:p>.*?</o:p>)+\s*</p>\s*)(?=</div>\s*</body>)",
+    r"\1",
+    html,
+    flags=re.I | re.S,
+)
     # Remove empty Word/Outlook paragraphs (o:p, &nbsp;, spans, br, etc.)
     html = _EMPTY_MSOP_RE.sub("", html)
     # Collapse redundant <br>
