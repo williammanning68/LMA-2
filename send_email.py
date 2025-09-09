@@ -7,7 +7,7 @@ import glob
 from pathlib import Path
 from datetime import datetime
 from bisect import bisect_right
-from zoneinfo import ZoneInfo  # NEW: AU timezone
+from zoneinfo import ZoneInfo
 import yagmail
 
 # =============================================================================
@@ -335,6 +335,14 @@ def _remove_bottom_spacer_before_footer(html: str) -> str:
         flags=re.I | re.S,
     )
 
+# NEW: Ensure no trailing whitespace/line after the footer (before </body>)
+def _strip_trailing_after_footer(html: str) -> str:
+    """
+    Remove any trailing whitespace or <br> just before </body>, so nothing
+    renders as a 'line' below the footer in picky clients.
+    """
+    return re.sub(r"(?:\s|&nbsp;|<br[^>]*>)+(?=\s*</body>)", "", html, flags=re.I | re.S)
+
 # =============================================================================
 # Template operations (summary & sections)
 # =============================================================================
@@ -376,7 +384,7 @@ def _replace_detection_rows_in_template(html, row_html):
         return html
     before = table_html[:m_header_row.end()]
     new_table = before + row_html + "</table>"
-    return html[:tbl_start] + new_table + html[tbl_end:]
+    return html[:tbl_start] + new_table + html[tpl_end:] if False else html[:tbl_start] + new_table + html[tbl_end:]
 
 def _strip_sample_section(html):
     pattern = re.compile(r"<!--\s*Sample section to be replaced\s*-->.*?<!--\s*End sample section\s*-->", re.I | re.S)
@@ -527,7 +535,7 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     template_html = _strip_sample_section(template_html)
 
-    # Spacer between detection table and first file section (visual separation) — ONLY if sections exist
+    # Spacer between detection table and first file section — ONLY if sections exist
     if sections:
         spacer_before_sections = (
             "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
@@ -538,6 +546,9 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     # Remove the spacer immediately above the footer if the template still has one
     template_html = _remove_bottom_spacer_before_footer(template_html)
+
+    # NEW: ensure absolutely nothing trails after the footer (no <br> or spaces)
+    template_html = _strip_trailing_after_footer(template_html)
 
     # Final tidy/minify
     template_html = _tighten_outlook_whitespace(template_html)
