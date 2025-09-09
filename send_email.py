@@ -288,10 +288,14 @@ def extract_matches(text: str, keywords):
 # =============================================================================
 
 _EMPTY_MSOP_RE = re.compile(
-    r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
-    r"<o:p>\s*&nbsp;\s*</o:p>|"
-    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
-    re.I,
+    r"<p\b[^>]*>"
+    r"(?:\s|&nbsp;|<br[^>]*>|"
+    r"<!--\[if.*?endif\]-->|"                 # NEW: MSO conditional comments
+    r"<o:p>.*?</o:p>|"                        # existing <o:p> wrapper
+    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|<!--\[if.*?endif\]-->|<o:p>.*?</o:p>)*</span>"
+    r")*"
+    r"</p>",
+    re.I | re.S,
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
@@ -300,8 +304,7 @@ def _tighten_outlook_whitespace(html: str) -> str:
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
     html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
     html = re.sub(
-        r"(?:\s*<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
-        r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>|<o:p>.*?</o:p>)*</p>)+\s*(?=</body>)",
+        r"(?:\s|&nbsp;|<br[^>]*>|<!--\[if.*?endif\]-->|<o:p>.*?</o:p>)+\s*(?=</body>)",
         "",
         html,
         flags=re.I | re.S,
@@ -316,6 +319,8 @@ def _inject_mso_css_reset(html: str) -> str:
         "<!--[if mso]>"
         "<style>"
         "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
+        "p.MsoNormal br{display:none !important;}"      /* NEW: nuke ghost <br> rows */
+        "o\\:p{display:none !important;}"              /* NEW: hide <o:p> artifacts  */
         "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
         "</style>"
         "<![endif]-->"
