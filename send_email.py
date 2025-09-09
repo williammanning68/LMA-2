@@ -297,22 +297,65 @@ _EMPTY_MSOP_RE = re.compile(
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
-    # Kill Outlook's "downlevel-revealed" line-break block entirely
+    """
+    Remove Outlook/Word 'ghost' whitespace so the email doesn't scroll past the last container.
+    Safe for all clients; strict for Outlook on Windows.
+    """
+
+    # 1) Kill Outlook's "downlevel-revealed" line-break block entirely
     html = re.sub(
-        r"(</div>\s*)(?:<p\b[^>]*class=['\"]?MsoNormal['\"]?[^>]*>\s*(?:&nbsp;|\s|&#160;|<br[^>]*>|<!\[\s*if\s*!supportLineBreakNewLine\s*\]><br[^>]*><!\[\s*endif\s*\]>|<o:p>.*?</o:p>)+\s*</p>\s*)(?=</div>\s*</body>)",
+        r"<!\[\s*if\s*!supportLineBreakNewLine\s*\]>\s*<br[^>]*>\s*<!\[\s*endif\s*\]>",
+        "",
+        html,
+        flags=re.I,
+    )
+
+    # 2) Remove empty Word/Outlook paragraphs (inline compile for self-containment)
+    EMPTY_MSOP_RE = re.compile(
+        r"<p\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|"
+        r"<!\[\s*if\s*!supportLineBreakNewLine\s*\]><br[^>]*><!\[\s*endif\s*\]>|"
+        r"<o:p>(?:\s|&nbsp;|&#160;)*</o:p>|"
+        r"<span\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>)*</span>"
+        r")*</p>",
+        re.I | re.S,
+    )
+    html = EMPTY_MSOP_RE.sub("", html)
+
+    # 3) Collapse redundant <br>
+    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
+
+    # 4) Close-up table-to-table gaps
+    html = re.sub(
+        r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)",
         r"\1",
         html,
         flags=re.I | re.S,
     )
-    # Remove empty Word/Outlook paragraphs (o:p, &nbsp;, spans, br, etc.)
-    html = _EMPTY_MSOP_RE.sub("", html)
-    # Collapse redundant <br>
-    html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
-    # Close-up table-to-table gaps
-    html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    # Trim junk inside empty cells
-    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
+
+    # 5) Trim junk inside empty cells
+    html = re.sub(
+        r">\s*(?:&nbsp;|&#160;|<br[^>]*>|\s)+</td>",
+        "></td>",
+        html,
+        flags=re.I,
+    )
+
+    # 6) FINAL TAIL NUKE (wrapper-agnostic):
+    #    Strip any stack of empty MsoNormal <p> blocks near the end,
+    #    even if there are wrapper closes between them and </body>.
+    html = re.sub(
+        r"(?:\s*<p\b[^>]*class=['\"]?MsoNormal['\"]?[^>]*>"
+        r"(?:\s|&nbsp;|&#160;|<br[^>]*>|<!--\[if.*?endif\]-->|<!\[if.*?endif\]>|<o:p>.*?</o:p>|"
+        r"<span\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|<!--\[if.*?endif\]-->|<!\[if.*?endif\]>|<o:p>.*?</o:p>)*</span>)*"
+        r"</p>\s*)+"
+        r"(?=(?:\s*</(?:div|table|center)[^>]*>)*\s*</body>)",
+        "",
+        html,
+        flags=re.I | re.S,
+    )
+
     return html
+
 
 def _minify_inter_tag_whitespace(html: str) -> str:
     return re.sub(r">\s+<", "><", html)
