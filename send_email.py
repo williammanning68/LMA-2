@@ -290,8 +290,8 @@ def extract_matches(text: str, keywords):
 _EMPTY_MSOP_RE = re.compile(
     r"<p\b[^>]*>"
     r"(?:\s|&nbsp;|<br[^>]*>|"
-    r"<!--\[if.*?endif\]-->|"                 # NEW: MSO conditional comments
-    r"<o:p>.*?</o:p>|"                        # existing <o:p> wrapper
+    r"<!--\[if.*?endif\]-->|"                 # MSO conditional comments
+    r"<o:p>.*?</o:p>|"
     r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|<!--\[if.*?endif\]-->|<o:p>.*?</o:p>)*</span>"
     r")*"
     r"</p>",
@@ -319,8 +319,8 @@ def _inject_mso_css_reset(html: str) -> str:
         "<!--[if mso]>"
         "<style>"
         "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
-        "p.MsoNormal br{display:none !important;}"      /* NEW: nuke ghost <br> rows */
-        "o\\:p{display:none !important;}"              /* NEW: hide <o:p> artifacts  */
+        "p.MsoNormal br{display:none !important;}"
+        "o\\:p{display:none !important;}"
         "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
         "</style>"
         "<![endif]-->"
