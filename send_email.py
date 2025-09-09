@@ -288,43 +288,24 @@ def extract_matches(text: str, keywords):
 # =============================================================================
 
 _EMPTY_MSOP_RE = re.compile(
-    r"<p\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|"
-    r"<o:p>.*?</o:p>|"
-    r"<span\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|<o:p>.*?</o:p>)*</span>|"
-    r"<!\[\s*if[^>]*\]>.*?<!\[\s*endif\s*\]>"
-    r")*</p>",
-    re.I | re.S,
+    r"<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+    r"<o:p>\s*&nbsp;\s*</o:p>|"
+    r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>)*</p>",
+    re.I,
 )
 
 def _tighten_outlook_whitespace(html: str) -> str:
-    # 1) Kill both forms of the MSO "linebreak" block anywhere
-    html = re.sub(
-        r"<!--\[\s*if\s*!supportLineBreakNewLine\s*\]>\s*<br[^>]*>\s*<!\[\s*endif\s*\]-->",
-        "", html, flags=re.I)
-    html = re.sub(
-        r"<!\[\s*if\s*!supportLineBreakNewLine\s*\]>\s*<br[^>]*>\s*<!\[\s*endif\s*\]>",
-        "", html, flags=re.I)
-
-    # 2) Remove empty Word/Outlook paragraphs (use the SINGLE global regex; don't redeclare it)
     html = _EMPTY_MSOP_RE.sub("", html)
-
-    # 3) Collapse redundant <br> stacks
     html = re.sub(r"(?:\s*<br[^>]*>\s*){2,}", "<br>", html, flags=re.I)
-
-    # 4) Close up table→table gaps and empty cells (unchanged from yours)
     html = re.sub(r"(</table>)\s+(?=(?:<!--.*?-->\s*)*<table\b)", r"\1", html, flags=re.I | re.S)
-    html = re.sub(r">\s*(?:&nbsp;|&#160;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
-
-    # 5) FINAL TAIL NUKE:
-    #    Strip any stack of "empty" <p> blocks even if wrappers like </div> sit before </body>.
+    html = re.sub(r">\s*(?:&nbsp;|<br[^>]*>|\s)+</td>", "></td>", html, flags=re.I)
     html = re.sub(
-        r"(?:\s*<p\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|<o:p>.*?</o:p>|"
-        r"<span\b[^>]*>(?:\s|&nbsp;|&#160;|<br[^>]*>|<o:p>.*?</o:p>)*</span>|"
-        r"<!\[\s*if[^>]*\]>.*?<!\[\s*endif\s*\]>"
-        r")*</p>\s*)+(?=(?:\s*</(?:div|table|center)[^>]*>)*\s*</body>)",
-        "", html, flags=re.I | re.S
+        r"(?:\s*<p\b[^>]*>(?:\s|&nbsp;|<br[^>]*>|"
+        r"<span\b[^>]*>(?:\s|&nbsp;|<br[^>]*>)*</span>|<o:p>.*?</o:p>)*</p>)+\s*(?=</body>)",
+        "",
+        html,
+        flags=re.I | re.S,
     )
-
     return html
 
 def _minify_inter_tag_whitespace(html: str) -> str:
@@ -335,8 +316,6 @@ def _inject_mso_css_reset(html: str) -> str:
         "<!--[if mso]>"
         "<style>"
         "p.MsoNormal,div.MsoNormal,li.MsoNormal{margin:0 !important;line-height:normal !important;}"
-        "p.MsoNormal br{display:none !important;}"
-        "o\\:p{display:none !important;}"
         "table,td{mso-table-lspace:0pt !important;mso-table-rspace:0pt !important;mso-line-height-rule:exactly !important;}"
         "</style>"
         "<![endif]-->"
@@ -344,6 +323,17 @@ def _inject_mso_css_reset(html: str) -> str:
     if re.search(r"</head\s*>", html, re.I):
         return re.sub(r"</head\s*>", mso_block + "</head>", html, flags=re.I, count=1)
     return mso_block + html
+
+# Targeted sanitizer: remove the spacer table that sits immediately before the FOOTER block
+def _remove_bottom_spacer_before_footer(html: str) -> str:
+    return re.sub(
+        r"(<!--\s*SPACER\s*-->\s*)"
+        r"<table[^>]*>\s*<tr>\s*<td[^>]*>(?:&nbsp;|\s*)</td>\s*</tr>\s*</table>\s*"
+        r"(?=\s*<!--\s*FOOTER\s*-->)",
+        "",
+        html,
+        flags=re.I | re.S,
+    )
 
 # =============================================================================
 # Template operations (summary & sections)
@@ -537,15 +527,19 @@ def build_digest_html(files: list[str], keywords: list[str]):
 
     template_html = _strip_sample_section(template_html)
 
-    # Spacer between detection table and first file section (visual separation)
-if sections:
-    spacer_before_sections = (
-        "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
-        "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
-    )
-    sections_html = spacer_before_sections + "".join(sections)
-    template_html = _inject_sections_after_detection(template_html, sections_html)
+    # Spacer between detection table and first file section (visual separation) — ONLY if sections exist
+    if sections:
+        spacer_before_sections = (
+            "<table role='presentation' width='100%' cellpadding='0' cellspacing='0' border='0' style='border-collapse:collapse;'>"
+            "<tr><td style='height:16px;line-height:16px;font-size:0;'>&nbsp;</td></tr></table>"
+        )
+        sections_html = spacer_before_sections + "".join(sections)
+        template_html = _inject_sections_after_detection(template_html, sections_html)
 
+    # Remove the spacer immediately above the footer if the template still has one
+    template_html = _remove_bottom_spacer_before_footer(template_html)
+
+    # Final tidy/minify
     template_html = _tighten_outlook_whitespace(template_html)
     template_html = _minify_inter_tag_whitespace(template_html)
 
