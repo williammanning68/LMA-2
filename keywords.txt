@@ -1,17 +1,10 @@
-
-
-Evans Street
-Hotel
-Hunter Street
-Cableway
-
 Specific Phrases (Exact)
-
 "Accommodation"
 "AHA"
 "Amy Hills"
 "Australian Hotel Association"
 "Built Heritage"
+“Cableway”
 "Cashless"
 "Cashless Cards"
 "Cashless Gaming"
@@ -20,6 +13,7 @@ Specific Phrases (Exact)
 "Chamber Of Commerce"
 "Country Club"
 "Daniel Hanna"
+“Evans Street”
 "Facial"
 "Facial Recognition"
 "Facial Recognition Technology"
@@ -32,11 +26,12 @@ Specific Phrases (Exact)
 "Gaming Machines"
 "Greg Farrell"
 "Harm Minimisation"
-"Harm Minimisation Technology"
 "Henry Jones"
 "Heritage"
 "Hospitality"
 "Hospitality Tasmania"
+“Hotel”
+“Hunter Street”
 "Jenny Cranston"
 "Keno"
 "Mac One"
@@ -69,3 +64,4 @@ Specific Phrases (Exact)
 "Tourism Industry Council Tasmania"
 "Vantage Group"
 "Wrest Point"
+
