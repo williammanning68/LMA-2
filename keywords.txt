@@ -57,7 +57,6 @@
 "Tourism Industry Council Tasmania"
 "Amy Hills"
 "Accommodation"
-"Stadium"
 "Hospitality"
 "Tourism"
 "Vantage Group"
