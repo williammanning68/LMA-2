@@ -602,6 +602,7 @@ def main():
         return
 
      total_hits, _counts = build_digest_html(files, keywords)
+
     if total_hits == 0:
         print("No keyword matches found — no email will be sent.")
         return
