@@ -528,7 +528,9 @@ def build_digest_html(files: list[str], keywords: list[str]):
     for kw in keywords:
         hoa = counts.get(kw, {}).get("House of Assembly", 0)
         lc  = counts.get(kw, {}).get("Legislative Council", 0)
-        det_rows.append(_build_detection_row(kw, hoa, lc, hoa + lc))
+        total = hoa + lc
+        if total > 0:  # only include if there was at least one hit
+            det_rows.append(_build_detection_row(kw, hoa, lc, total))
     detection_rows_html = "".join(det_rows)
 
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
@@ -600,6 +602,9 @@ def main():
         return
 
     body_html, total_hits, _counts = build_digest_html(files, keywords)
+    if total_hits == 0:
+    print("No keyword matches found — no email will be sent.")
+    return
 
     au_now = datetime.now(ZoneInfo("Australia/Hobart"))
     subject = f"{DEFAULT_TITLE} — {au_now.strftime('%d %b %Y')}"
