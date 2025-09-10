@@ -578,6 +578,7 @@ def update_sent_log(files: list[str]):
 # =============================================================================
 
 def main():
+def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO   = os.environ["EMAIL_TO"]
@@ -601,7 +602,7 @@ def main():
         print("No new transcripts to email.")
         return
 
-     total_hits, _counts = build_digest_html(files, keywords)
+    body_html, total_hits, _counts = build_digest_html(files, keywords)
 
     if total_hits == 0:
         print("No keyword matches found — no email will be sent.")
@@ -630,6 +631,7 @@ def main():
 
     update_sent_log(files)
     print(f"✅ Email sent to {EMAIL_TO} with {len(files)} file(s), {total_hits} match(es).")
+
 
 if __name__ == "__main__":
     main()
