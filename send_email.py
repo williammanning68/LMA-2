@@ -601,10 +601,10 @@ def main():
         print("No new transcripts to email.")
         return
 
-    body_html, total_hits, _counts = build_digest_html(files, keywords)
+     total_hits, _counts = build_digest_html(files, keywords)
     if total_hits == 0:
-    print("No keyword matches found — no email will be sent.")
-    return
+        print("No keyword matches found — no email will be sent.")
+        return
 
     au_now = datetime.now(ZoneInfo("Australia/Hobart"))
     subject = f"{DEFAULT_TITLE} — {au_now.strftime('%d %b %Y')}"
