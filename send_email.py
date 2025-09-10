@@ -516,20 +516,21 @@ def build_digest_html(files: list[str], keywords: list[str]):
             continue
         total_matches += len(matches)
         chamber = _parse_chamber_from_filename(Path(f).name)
-for kw_set, _, _, _, _, _ in matches:
-    # sort keywords by length (longest first)
-    sorted_kws = sorted(kw_set, key=len, reverse=True)
-    kept = []
 
-    for kw in sorted_kws:
-        # only keep if it's not a substring of an already kept (longer) keyword
-        if not any(kw.lower() in longer.lower() for longer in kept):
-            kept.append(kw)
+        for kw_set, _, _, _, _, _ in matches:
+            # sort keywords by length (longest first)
+            sorted_kws = sorted(kw_set, key=len, reverse=True)
+            kept = []
+            for kw in sorted_kws:
+                # only keep if it's not a substring of an already kept (longer) keyword
+                if not any(kw.lower() in longer.lower() for longer in kept):
+                    kept.append(kw)
+            for kw in kept:
+                counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
+                if chamber in counts[kw]:
+                    counts[kw][chamber] += 1
 
-    for kw in kept:
-        counts.setdefault(kw, {"House of Assembly": 0, "Legislative Council": 0})
-        if chamber in counts[kw]:
-            counts[kw][chamber] += 1
+        sections.append(_build_file_section_html(Path(f).name, matches))
 
     # Detection rows
     det_rows = []
@@ -542,7 +543,6 @@ for kw_set, _, _, _, _, _ in matches:
     detection_rows_html = "".join(det_rows)
 
     template_html = _replace_detection_rows_in_template(template_html, detection_rows_html)
-
     template_html = _strip_sample_section(template_html)
 
     # Spacer between detection table and first file section — ONLY if sections exist
