@@ -57,7 +57,8 @@ Hospitality
 Tourism
 Vantage Group
 Federal Hospitality
-
+Built heritage
+heritage
 
 # specific phrases (exact)
 "cashless gaming"
