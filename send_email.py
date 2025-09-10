@@ -54,7 +54,7 @@ LOG_FILE = Path("sent.log")
 DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
 
 # excerpt/windowing
-MAX_SNIPPET_CHARS = 800
+MAX_SNIPPET_CHARS = 1800
 WINDOW_PAD_SENTENCES = 1
 FIRST_SENT_FOLLOWING = 2
 MERGE_IF_GAP_GT = 2
