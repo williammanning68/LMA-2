@@ -3,9 +3,9 @@ name: Scan new Hansard transcripts (by current year)
 on:
   # Run manually when you want to test
   workflow_dispatch: {}
-  # Run daily 5pm Hobart (AEST=UTC+10 → 07:00 UTC). Adjust as needed.
+  # Run hourly between 9am-5pm Hobart (AEST=UTC+10 → 23:00-07:00 UTC). Adjust as needed.
   schedule:
-    - cron: "0 7 * * *"
+    - cron: "0 23,0-7 * * *"
 
 permissions:
   contents: write
