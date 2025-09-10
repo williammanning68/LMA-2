@@ -1,5 +1,7 @@
 # general
-
+hotel
+Evans Street
+Hunter Street
 
 # specific phrases (exact)
 "cashless gaming"
