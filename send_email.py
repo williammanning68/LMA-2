@@ -578,7 +578,6 @@ def update_sent_log(files: list[str]):
 # =============================================================================
 
 def main():
-def main():
     EMAIL_USER = os.environ["EMAIL_USER"]
     EMAIL_PASS = os.environ["EMAIL_PASS"]
     EMAIL_TO   = os.environ["EMAIL_TO"]
