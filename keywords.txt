@@ -21,6 +21,7 @@ Specific Phrases (Exact)
 "CSL"
 "Daniel Hanna"
 "Daniel Hannah"
+"Deloitte Report"
 "Donation Law"
 "Evan Street"
 “Evans Street”
