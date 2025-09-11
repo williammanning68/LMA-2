@@ -51,7 +51,7 @@ TEMPLATE_HTML_PATH = _resolve_template_path()
 # =============================================================================
 
 LOG_FILE = Path("sent.log")
-DEFAULT_TITLE = "Hansard Monitor – BETA Version 18.3"
+DEFAULT_TITLE = "Hansard Monitor – BETA"
 
 # excerpt/windowing
 MAX_SNIPPET_CHARS = 1800
