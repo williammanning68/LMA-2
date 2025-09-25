@@ -1,0 +1,1119 @@
+﻿
+Title: Legislative Council Wednesday 24 September 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: Legislative Council
+Character Count: 124546
+Characters with Spaces Count: 148720
+Company: Parliament of Tasmania
+Creation Date: Wed, 24 Sep 2025 10:00:00 AM (UTC)
+Keywords: 2025
+Last Printed: Wed, 24 Sep 2025 10:00:00 AM (UTC)
+Last Saved Date: Wed, 24 Sep 2025 10:07:00 AM (UTC)
+Line Count: 2485
+Links Dirty: false
+Links Up To Date: false
+Page Count: 2
+Paragraphs Count: 539
+Revision: 3
+Scale Crop: false
+Security: 0
+Shared Document: false
+Subject: Hansard
+Template: Hansard debates May 2025
+Total Editing Time: 1
+Typist: Karen Cuzzucoli
+Word Count: 24644
+isys:SubType: Word 2007
+
+PARLIAMENT OF TASMANIA 
+DEBATES OF THE LEGISLATIVE COUNCIL
+ 
+ 
+ 
+ 
+DAILY HANSARD 
+ 
+ 
+Wednesday 24 September 2025
+Preliminary Transcript 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+This draft transcript of debates is issued in advance of the final Hansard for the use of the members of the Legislative Council and copies made from this may not be protected by parliamentary privilege. 
+ 
+
+
+
+
+
+
+Wednesday 24 September 2025
+
+The President, Mr Farrell, took the Chair at 11 a.m., acknowledged the Traditional People and read Prayers.
+
+
+PETITIONS
+
+Macquarie Point Stadium - Planning Commission Process
+
+[11.00 a.m.]
+Ms O'CONNOR (Hobart) - Mr President, I have the honour to present a petition from 1291 residents and citizens and an e-petition from 5096 residents and citizens of Tasmania who draw the Council's attention to the government's improper attempt to bypass the independent planning process and have parliament pass enabling legislation to approve the proposed Macquarie Point Stadium. They also request the Council to:
+
+Support the completion of the Project of State Significance [POSS] process to allow MLCs to assess conclusions drawn by eminent appointed experts after they examine all evidence presented.
+
+Reject the improper attempt to discredit independent evidence and bypass due process through special enabling legislation.
+
+Call on the Rockliff government to renegotiate the terms with the AFL to ensure Tasmania and the 200,000 plus signed-up Devils members retain the AFL and AFLW teams we have earned.
+
+Petition received.
+
+LEAVE OF ABSENCE
+
+Member for Rumney - Ms Lovell
+
+[11.06 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That the honourable member for Rumney, Ms Lovell, be granted leave of absence from the service of the Council for today's sitting.
+
+Motion agreed to.
+
+
+SUSPENSION OF SITTING
+
+[11.07 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That the sitting be suspended until the ringing of the division bells.
+
+This for the purpose of the continuation of this morning's briefings.
+
+Sitting suspended from 11.07 a.m. to 12.25 p.m.
+
+
+SUSPENSION OF SESSIONAL ORDER
+
+Afternoon Break
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council)(by leave) - Mr President I move - 
+
+That so much of Sessional Orders relating to the 4 p.m. break be suspended so as to enable the Council to sit beyond 4 p.m. for today's sitting. 
+
+Motion agreed to.
+
+
+JUSTICE AND RELATED LEGISLATION (MISCELLANEOUS AMENDMENTS) BILL 2025 (No. 38)
+
+Second Reading
+
+[11.26 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move - 
+
+That the bill be now read the second time.
+
+This bill contains amendments that update, clarify and improve four different acts, three of which are within the portfolio of the Minister for Justice, Corrections and Rehabilitation, and one that falls under the responsibility of the Minister for Housing, Planning and Consumer Affairs. 
+
+In September last year, the minister for Justice informed the other place he was obtaining advice on the avenues available to family members to access coronial records. One of the amendments in this bill is made in response to that advice. 
+
+I take this opportunity to acknowledge the Westbrook family and their continued efforts to advocate for an improved coronial system in Tasmania. Their advocacy was born out of the tragic loss of Eden Westbrook. It is recognised they provide a unique perspective on coronial processes in Tasmania. Heartfelt condolences remain with the Westbrook family, and those condolences are extended to all families who have advocated for improvements to our coronial system.
+
+The Coronial Division of the Magistrates Court has an important role to play in Tasmania's justice system. The remaining amendments in the bill arise from the request from the Tasmanian Civil and Administrative Tribunal, the Director of Public Prosecutions, and WorkSafe Tasmania within the Department of Justice.
+
+I will now outline in turn the reasons for each of the proposed amendments to the Coroners Act 1995. 
+
+This bill amends the Coroners Act to insert Section 58C that requires coronial records to be provided to the senior next-of-kin in certain circumstances. The Coroners Act specifies that the senior next-of-kin is the first available person in a list, contained in Section 3A of the act, commencing with the deceased's current spouse. 
+
+Section 3 of the act defines spouse as including the other party to a significant relationship within the meaning of the Relationships Act 2003. The act sets out the procedures for investigations and inquests by coroners, and in doing so, allocates various rights to the senior next-of-kin. It is therefore appropriate to extend the amendment to this person.
+
+Under general principles of law, the right of a senior next-of-kin can also be exercised by their nominated person or agent. This means a senior next-of-kin does not personally have to receive the records if they prefer another person, such as a trusted friend or adviser, to make the request and receive the record on their behalf.
+
+The amendment also does not prohibit the senior next-of-kin sharing the record with other people, for example other family members, an independent expert, or a legal representative.
+
+Some senior next-of-kin may wish to obtain a record without wishing to view it themselves, in order to provide it to another person. This can be dealt with administratively, for example by the senior next-of-kin receiving a sealed envelope or electronic files in such a way they do not have to view the records themselves. I note that other persons may still apply for access to coronial records under rule 26 of the Coroners Rules 2006. Under the proposed section 58C, the senior next-of-kin may apply in writing for a coronial record.
+
+Under the Coroners Act, the definition of a coronial record is any record held by the court in relation to an investigation of a death and includes a postmortem report, a document on the court's file and a transcript or recording of oral evidence given to the court. This definition includes all evidentiary material held by the court in relation to a coronial investigation of a death, including documents, photographs and other material of evidentiary value.
+
+The definition also includes such records that can be lawfully provided to the court under this or any other act. That ensures that the court can obtain relevant information that it may not currently hold on the file to disclose to the senior next-of-kin. For example, this might include autopsy photographs held by the pathologist, which informed the written report but are not on the court file. A coronial authority may not refuse a request unless satisfied on reasonable grounds that release of the coronial record is prohibited by the Coroners Act or another act, such as section 57 of the act, which says:
+
+57. Restriction on publication of reports
+
+ [Bookmark: GS57@Gs1@EN] (1)  A coroner may order that a report of an inquest or a report of any part of the proceedings of, or any evidence given at, an inquest not be published if the coroner reasonably believes that – [Bookmark: GS57@Gs1@Hpa@EN] 
+
+(a) it would be likely to prejudice the fair trial of a person; or
+
+ [Bookmark: GS57@Gs1@Hpb@EN] (b) it would be contrary to the administration of justice, national security or personal security; or
+
+ [Bookmark: GS57@Gs1@Hpc@EN] (c) it would involve the disclosure of details of sensitive personal matters including, if the senior next of kin of the deceased has so requested, the name of the deceased.
+
+For example, it may be that certain information cannot be disclosed until related criminal proceedings are concluded. In the event that release of the record would be refused on these grounds, the coronial authority may redact the record to the extent necessary to enable the record to be released.
+
+The draft bill that was released for public consultation proposed an additional ground based on the impact to the health and wellbeing of the senior next of kin in receiving a coronial record, the draft proposed to refer a copy of the coronial record to a medical practitioner nominated by the senior next of kin. The intended purpose of this was to facilitate a discussion between the senior next of kin and a medical practitioner about the record and provide an opportunity to discuss any medical terminology used.
+
+After the discussion, if the senior next-of-kin still wished to have a copy of the record, the medical practitioner could release it to them. The bill before the parliament has been amended to remove this ground, based on the feedback from Mr and Mrs Westbrook and consideration of submissions and approaches in other jurisdictions. This recognises that the question of whether to seek medical advice or counselling before viewing the records provided, is ultimately a matter for the senior next-of-kin and not appropriate to mandate in this bill.
+
+The bill was also amended based on their feedback and with consideration of submissions and other jurisdictions to require the coronial authority to apply to all coronial records, not just postmortem reports.
+
+The minister for Justice has personally met with Jason and Amanda Westbrook [checked] and is grateful for the information they shared with him and for the time that they took to provide feedback on these amendments.
+
+The bill also includes amendments which the minister for Justice moved on the floor of the other place on 6 May 2025 to ensure the rights of the senior next-of-kin to appropriate records are promoted.
+
+These are the amendments:
+
+replace the power to impose conditions on the use or release of the record with a power only to order that the record not be published, ensuring that use of these records by senior next-of-kin is not subject to other kinds of restrictions.
+
+insert a ground to refuse a request for a record if the coroner is satisfied on reasonable grounds that it be contrary to the public interest to release the record due to the release having an unreasonable intrusion on the privacy of another person, other than the deceased person to which the request relates.
+
+The record can still be released in redacted form and insert an appeal provision to either the Chief Magistrate or the Supreme Court. So, a senior next of kin has a clearer process for review of a coroner's decision.
+
+These amendments passed the other place unopposed. The minister thanks the members who participated in that vote for their support and collaborative approach.
+
+The minister has continued to consider these issues. He advises the bill contains a further amendment that was not included in its previous iteration before the previous parliament. This amendment requires the coronial record to be provided within 28 days after the request is made, or such longer time as is agreed with the senior next-of-kin, and an avenue for review if there is a failure to comply with that timeline. This will ensure the timely provision of coronial records.
+
+The amendments to the Coroners Act provide for a clear and direct right of access by senior next-of-kin to coronial records. This is essential in the spirit of open justice to ensure transparency, accountability, and public confidence in our justice system. I also hope that the provision of this material can provide some amount of closure to families following an investigation into a death.
+
+The minister would like to express his appreciation for the hard work of the Chief Coroner, the coroners, and the Coronial Division, and many others involved in this jurisdiction. They do a great service to the community with over 1,000 reportable deaths investigated in 2023-2024, and 31 inquests that year. They have worked to facilitate access to records under their current practices and rules and provide support to family members every day.
+
+The minister particularly noted the great initiative of a dedicated coronial liaison officer who assists family members understand the coronial process and come to terms with the grief and trauma of losing loved ones. There have been understandable concerns in the community that the right balance of access to records has not been clearly provided in the legislation to date.
+
+The bill gets the balance right to ensure access to these records by senior next of kin, acknowledging the sensitive and private nature of these records. I am pleased that this bill provides certainty and clarity to the law, for the community and the court.
+
+There are amendments to the Corrections Act 1997. Part 3 of the bill makes minor technical amendments to update sections 68 and 69 of the Corrections Act. These amendments reflect the repeal of section 19 of the Sentencing Act 1997 and commencement of its replacement, section 7 of the Dangerous Criminals and High Risk Offenders Act 2021. 
+
+Amendments to the Tasmanian Civil and Administrative Tribunal Act 2020 (TASCAT Act), in section 98, are about representation of a party to proceedings. It says that a party to proceedings before TASCAT is entitled to appear personally, be represented by a lawyer, or with leave of TASCAT, be represented by another representative. These were at the request of TASCAT. The bill amends section 98(3)(c) to allow a lawyer subject to disciplinary proceedings under the Legal Profession Act 2007 or corresponding law in another state or territory to appear as a representative.
+
+This prohibition is proposed to be removed on the basis that disciplinary proceedings are not necessarily an indicator of wrongdoing, and it presupposes a finding of guilt before proceedings are resolved. Frivolous or vexatious disciplinary proceedings brought by third parties may unfairly impact upon lawyers, preventing them from appearing before TASCAT. Under the Legal Profession Act, the Legal Professions Board of Tasmania may suspend lawyers practising certificate if they are subject to disciplinary proceedings. In those circumstances, a lawyer will not be eligible to appear under section 98(3)(a) of the TASCAT act. This remains unchanged.
+
+There are amendments to the Workers Rehabilitation and Compensation Act of 1988. Currently, under the Workers Rehabilitation and Compensation Act, a workers' compensation certificate must be signed by a medical practitioner. The amendment to this act inserts section 77I, which provides that in certain circumstances, a nurse practitioner may also sign a workers' compensation certificate.
+
+A nurse practitioner may issue a certificate if they are employed in an emergency department of a hospital or other prescribed circumstances, or for a prescribed purpose and in issuing the certificate they are acting in accordance with that employment.
+
+The bill also requires that the issue of any certificate be in accordance with the certificate protocol. A certificate protocol must be prepared by the Department of Health and approved by the Secretary of the Department of Health and WorkCover Board. It will outline the circumstances or conditions under which a nurse practitioner may issue a certificate, for example, that a certificate be time-limited or relate to new injuries that have not been previously treated.
+
+A certificate protocol will come into force seven days after it has been approved and must be published on the Department of Health's website. This provides time for nurse practitioners to be notified.
+
+Nurse practitioners are advanced practice nurses educated to a master's level in their specific specialty of practice. Nurse practitioners can assess and treat patients, order diagnostic tests and write prescriptions.
+
+This amendment will reduce duplication and service costs and result in a more efficient health system, as patients will no longer require reassessment by a medical practitioner for the purpose of a workers' compensation certificate. It will also improve the patient experience, as an injured worker will not will no longer have to wait to see a doctor for that important piece of paper.
+
+The minister thanks the members of the public who provided comments on this bill, as well as other justice stakeholders who were consulted during the drafting of the bill. The feedback was carefully considered and valued, and it ensures that Tasmania's legislation is fit for purpose.
+
+I commend the bill to the House.
+
+[12.43 p.m.]
+Mr GAFFNEY (Mersey) - Mr President, I will make several comments on the bill in relation to the proposed amendments to the Coroners Act 1995.
+
+I am supportive of the amendments to the other acts in this Justice and Related Legislation (Miscellaneous Amendments) Bill.
+I commend the Attorney-General and others for assisting the Westbrook family in their attempts to get answers to the unresolved questions surrounding Eden's tragic death in 2015. Timely access to coronial records by senior next-of-kin and their authorised representatives is a critical issue. I also thank the Attorney-General for the further amendments to the bill, which require the coroner's office to provide the requested coronial record within 28 days, and provides an appeal mechanism in the event of the non-provision of the records within the required time frame.
+
+I also take this opportunity to thank the Attorney-General for his acknowledgement in parliament of my efforts in seeking the 28-day amendment.
+
+Jason and Amanda Westbrook have fought for over 10 years now to get to the truth of this matter. They will be seeking an independent inquest into Eden's death once they have the necessary and critical information - the autopsy photos. I also thank the Westbrook family for allowing me to detail the information in this speech.
+
+I appreciate the importance of the coronial function and the hard work of all those working in that area. It is a particular challenging and demanding role in a justice system with limited resources.
+
+Unfortunately, the Westbrooks have been stymied in more recent years by the refusal of the coronial authority, including the Chief Magistrate, to release Eden's autopsy photos to an independent forensic pathologist: Dr Byron Collins. Dr Collins has reviewed the available forensics and has considered issues such as the manner and cause of death, and the possible time of death. The Westbrooks believe that Eden died on 18 February 2015 and not on 17 February 2015, considering information about CCTV footage provided to them by a police officer within days of Eden's death that meant she was alive at 2 a.m. on 18 February 2015, and a Facebook post by a person of interest. Considering new and significant evidence, the Westbrooks and others firmly believe that Eden did not commit suicide.
+
+Dr Collins was specifically asked by the Westbrooks to determine whether there are any injuries to Eden inconsistent with the suicide by hanging or indicative of a possible homicide. There is evidence from Eden's older sisters that Eden may have suffered blunt force trauma to her face and neck, and that she had shattered teeth, which they had noticed while applying makeup to Eden's face at the Funeral Home. There are also some suggestions given the questions by police to a key witness, the woman who first found Eden's hanging body, that Eden's wrists had been tied behind her back.
+
+Requests by the Westbrooks, Dr Collins and Senator Lambie to the Coronial Authority for the release of the autopsy photos have been refused, essentially on the basis that there was no legal proceeding on foot pertaining to the investigation and it was not appropriate for any third party to receive those photos. It seems that earlier requests to the Coroner's Office did not include disclosure of the autopsy photos as they were never on the court's coronial file. The content of the autopsy photos and the final expert opinion from Dr Collins are critical to the Westbrooks determining whether they should apply under section 58 of the Corners Act 1995 for a reopening of the investigation. 
+
+When the photos were not forthcoming for a year or so, Dr Collins prepared a preliminary report based on the disclosed coronial file, including the written autopsy report and the crime scene photos. His preliminary qualified report as outlined on the Our Little Edey [checked] podcast in April 2025 found evidence of possible blunt force trauma to Eden and a second injury to the voice box or lower neck, not consistent with the hanging, and of the type that should have rung alarm bells.
+
+Dr Collins advised that based on the materials available for his review, he was considerably ill at ease - to put it at its very best - concerning the adequacy, the completeness of the police investigation and autopsy report. I understand the Chief Magistrate and the Attorney-General have been provided a copy of Dr Collins's preliminary report by the Westbrooks. Dr Collins is apparently frustrated and dismayed by the impasse in relation to the autopsy photos. He advised in writing in 2024 that he was unable to recollect such a denial of access to autopsy photos during his 50 years as a practising forensic pathologist.
+
+The Westbrooks have endured more than enough over too long a period. It is now over 10 years since Eden's untimely death. The Westbrooks struggle to understand how the coronial system can be so adversarial. The Westbrooks have to be admired for their resilience and determination. They were touched by the respect that they and some of their family members were shown by the Attorney-General and members in the lower House earlier this month.
+
+It is hoped that the prompt passage and enactment of this legislation will result in long - awaited answers for the Westbrooks and their family. It will also assist other family members of deceased persons who are seeking autopsy photos and questioning the adequacy of coronial investigations. I am aware of another case in St Helens, around the time of Eden's death, where there were concerns over the manner and cause of the death and Coronial Authority is also refusing to release the autopsy photos to the sister of the deceased.
+
+I am pleased with the definition of the coronial record as proposed by section 58C(1), as it clearly picks up the autopsy photos not held on the coronial court file but held by the Statewide Forensic Medical Services on behalf of the pathologist. However, I did have some concerns regarding the definition of coronial record. Was it adequate in that there is no definition provided of 'record'? I was concerned that the current bill, for instance, allowed for the release of provision on microscopic slides, prepared as part of the autopsy, or any video recording which might occur in the future of an autopsy.
+
+I contacted the Attorney-General's office. I wish to thank Jim Dunham and those who provided the following timely advice from the department. I will read in that advice: [tbc]
+
+We appreciate you seeking clarification ahead of the second reading of the bill in the Council to avoid any delay to its passage. We have received advice from the department on your query. In general, 'record' is used in the new part in the sense of the dictionary meaning of records in the legal context. That is, records mean things such as documents, photographs and recordings, including records containing evidentiary material. For example, it includes photographs of samples taken from the deceased person or crime scene, but not the samples themselves. The section lists the records that can be applied for.
+
+As you say, document already has a broad meeting under the Acts Interpretation Act of 1931, but the provision was expressed broadly as including reports and any other record or document including any photograph so it could be would be clear to the reader of the breadth of evidentiary records is covered, while not being exhaustive.
+
+Audio and video recordings can be captured as the Acts Interpretation Act. Definitions of document include a disc, tape or any other article from which sounds, images, writing or messages are capable of being reproduced.
+
+That is, recordings would be captured if they exist of evidentiary material from the investigation or made under the act in relation to the investigation or death or made as part of an autopsy.
+
+Under these changes, the Westbrooks would be entitled to apply for such things as photographs, recordings or other written material about the microscopic slides, but not the slides themselves. It would be very difficult to have a scheme where actual evidence held by a coroner could be compelled to be provided to a next of kin, for example, that would compromise any reopening of the case in the future. However, the bill does give a clear right to a very broad range of colonial records.
+
+I thank the department for that fulsome response.
+
+I have some other questions. I have a question as to cost. Is it expected that grieving senior next-of-kin with the limited financial resources must fork out hundreds or even thousands of dollars to acquire copies of photos and files? Perhaps fees should apply when the application is particularly demanding or voluminous. In the case of the Westbrooks, just over $800 has already been paid for disclosed records. This was fortunately paid for by Channel 9 in preparation for its Under Investigation program, which aired in mid-2024.
+
+The Westbrooks did have most of the coronial file released to them in early 2024, but the conditions imposed require them to keep the documents in their possession and control. They are also not permitted to copy, reproduce, broadcast or publish the material. Does this mean that they will again have to apply for the coronial file once the legislation is enacted at another significant cost to ensure that the file is free from such strict conditions?
+
+I am also seeking advice on where the actual power of the coroner exists to impose such conditions on the already disclosed file, given that section 57 (Restriction on publication of reports) of the Coroners Act 1995, only relates to records of an inquest. If the Leader could provide answers to these questions, it would be appreciated. I did previously raise these issues with those briefing members on the bill.
+
+I would like to put on the record that I have the highest regard for our hard-working police and both the work and efforts of those involved with the justice and coronial system. The coronial system can occasionally get things wrong. This was demonstrated by the case of a woman who was found hanging in the garage of her home in Blackmans Bay in 2010. As in Eden's place, Tasmanian police quickly treated the matter as a suicide. In November 2024, after further police investigation, which is to be commended, Coroner Robert Webster found that the death was possibly a murder staged to look like a suicide. He held that the initial police investigation was inadequate and that it should have been treated as suspicious until conclusively established otherwise.
+
+Sadly, Eden's death was treated as a suicide within hours. Minimal forensics were undertaken. On the evidence available under RTI. The only police evidence was a set of 10 fingerprints taken from Eden.
+
+I am advised, that RTI disclosures undertaken by Senator Lambie revealed no records of the rope have been seized by the police as an exhibit. There are some very real issues about the origin of the rope used in Eden's hanging and the police investigation or lack thereof, investigating the supposed source.
+
+I once again commend the Attorney-General for these proposed amendments to the Coroners Act and for also initiating or referring a review of the outdated Coroners Act 1995 to the Tasmanian Law Reform Institute. We must ensure that the system is even more responsive to the legitimate needs of families deeply affected by the tragic deaths of their loved ones.
+
+Our coronial system needs to treat senior next-of-kin and other stakeholders with dignity, compassion and respect.
+
+I must add that the Westbrooks were particularly concerned about the central involvement of Senior Sergeant Paul Reynolds as the coroner's associate in the investigation of Eden's death. The coroner, in delivering her three pages of findings without inquest, dated 30 September 2016, stated that Senior Sergeant Reynolds had provided regular oversight and direction to the investigation.
+
+Section 13(1) of the Coroners Act 1995 states:
+
+(1)	Subject to any direction given by the Chief Magistrate, a coroner may delegate to a coroner's associate any functional power of a coroner other than this power of delegation or a power prescribed by the regulations.
+
+What powers, if any, were delegated by the coroner to Senior Sergeant Reynolds, in Eden's and other cases? This is surely a matter of concern. It is concerning to think that Senior Sergeant Reynolds may have been exercising significant powers on behalf of the coroner. This issue was not dealt with in the Weiss review in 2024. One hopes that Senior Sergeant Reynolds had no role in drafting the three pages of findings in Eden's case, which failed to list the forensic and autopsy evidence considered in determining suicide over a possible homicide, and which failed to outline the reasons for determining that Eden's death occurred on 17 rather than 18 February 2025.
+
+The findings also state there was no available evidence as to the origin of the rope, clearly contradicting police investigation findings, which were never followed up or confirmed. The police investigation documents from the first day of the investigation say that Amanda Westbrook stated that the rope used to hang Eden was from one of the craypots at their home. I'm advised that this statement is denied by Mrs Westbrook. There was no attempt by police to even follow up on whether a rope was missing from the Westbrook home, and whether the craypot rope matched the rope used in the hanging. The rope is a critical exhibit in any apparent hanging. Police investigation documents obtained by federal senator Jacqui Lambie under RTI, including under internal review, indicate that the rope was never seized by police as an exhibit. Contrary to this, the coroners office advised in writing that the rope was believed to have been destroyed because of a disposal order under section 61 of the Coroners Act.
+
+Which account is accurate? When the Westbrooks asked to be provided with the copy of the section 61 disposal order concerning the rope, they were advised via email by the Coroner's Office on 25 February 2025 that the Court would not be providing any further information or responding to any further queries on an ongoing basis, when the Westbrooks had already been provided full disclosure of the evidence in circumstances where they had not made an application to reopen the investigation. At that stage, they had not been provided with the autopsy photos, despite numerous requests.
+
+It is an essential part of the coronial system that coronial records be made available in appropriate circumstances and in a timely way to senior next-of-kin, their legal advisers and independent experts, particularly when there has been no inquest, and that others with a significant personal professional interest in the matter are accorded appropriate access.
+
+I was very pleased to see the terms of reference for the Coroners Act 1995 review given the wide-ranging and possibly systemic issues involved in Eden's case, including the quality and adequacy of the police investigation, crime scene forensics, and autopsy examination reporting. On top of this, there is the of both the Tasmanian police's forensic services, which are involved in crime scene investigations and other police-related activities and are different to Forensic Science Service Tasmania - and the mortuary autopsy services within the hospital and forensic medicine environments in Tasmania, have a concerning lack of the NATA accreditation that is required as part of endorsed national pathology standards.
+
+I've been advised that Tasmania is behind its interstate colleagues when it comes to adopting and following accredited best practice in forensic science and medicine, particularly around accreditation. We do not want to experience the current issues surrounding DNA testing in Queensland, which are crippling and eroding trust in the criminal justice system. The independence and impartiality of our forensic services is also a paramount consideration.
+
+I understand that one of the core themes for the upcoming Asia Pacific Coroners Society conference in Melbourne in October of this year is 'Perspectives on compassion'. Indeed, I note that a Tasmanian coroner is attending the conference and will open the session on wellbeing through coronial investigation, role clarity, compassion and purpose. The Tasmanian coroners' office clearly appreciates the need for such qualities.
+
+Sitting suspended from 1.00 p.m. to 2.30 p.m.
+
+
+STATEMENT FROM PRESIDENT
+
+Questions
+
+Mr PRESIDENT - Honourable members, before I call on Question Time, I remind you, as we've all been away for a long time, to keep questions and answers in order. I know we keep it fairly free, but we do break into chat-time sometimes. Please be aware that there may be others who wish to ask questions. Try to keep it a little tight.
+
+
+QUESTIONS
+
+King Island Port of Grassy Upgrade
+
+Ms FORREST question to MINISTER for INFRASTRUCTURE and TRANSPORT, Mr VINCENT
+
+With regard to the government commitment to undertake a feasibility study of expansion or renewal of the Port of Grassy on King Island, can you please:
+
+Provide an update on the progress of this study; and
+
+What are the next steps after the completion of the study?
+
+ANSWER
+
+Mr President, I thank the member for the question. I will seek advice.
+
+We're expecting that report anytime now over the next month to six weeks. There have been different things put in place and in my conversations with the CEO of TasPorts. He has also shown a willingness to go over there himself and talk to any of the local people, whenever I need, to make sure that everything's done.
+
+We have committed $150,000 to revisit and do the study. Once we know what's in that report we can program it to be done as quickly as possible during 2026. Some of the things have already started to be worked through. At this point I haven't received the report.
+
+
+Multi-School Organisations
+
+Ms O'CONNOR question to MINISTER for EDUCATION, Ms PALMER
+
+[2.33 p.m.]
+My question is very topical in the school communities right now. The introduction of multi-school organisations has outpaced the buy-in of Tasmanian schools and teachers and the Australian Education Union. The Independent Review of Education stated: (tbc 2.33)
+
+A one-size-fits-all model or statewide mandate is unlikely to be the solution on how to best resource and provide learning opportunities for students. Any new models trialed in Tasmania should be done in partnership with the local communities.
+
+The review also said there should be tripartisanship.
+
+Minister, the train seems to have left the station without all its passengers. How do you plan to partner with local communities, including teachers, principals, unions, families, and students to progress your reforms, considering concerns about the lack of consultation on the rollout of multi-school organisations?
+
+ANSWER
+
+Mr President, I thank the member for the question. This is a very bold and an innovative statewide education reform. At the absolute heart of it is that we are wanting to see better outcomes for every child in every school in Tasmania.
+
+We heard from the Independent Review of Education that we needed to rethink education service delivery. We have more teachers than we've ever had before, more teacher assistants than we've ever had before. We have never seen so much funding in our schools as we are now with the Better and Fairer Schools Agreement (BFSA) funding. We have seen some great reforms rolled out, certainly in phonics and in the area of lifting literacy.
+
+However, teacher and principal wellbeing are not where they should be. We still do not have the educational outcomes where we need them to be. Our teachers can't work any harder, our kids are brilliant, and it's not a money problem, so then you have to look at the service delivery model. We have to look at our agency.
+
+Ms O'Connor - We also have to look at the evidence. We can't find it. 
+
+Ms PALMER - We had the opportunity to go to the United Kingdom through the Susan McKinnon Foundation and the Grattan Institute, [both checked] through a body of work that they had been doing. We found that the voice of teachers and principals, and indeed the union, was very much at the front of all of the solutions that we were seeing through this new model of service delivery of education.
+
+For the Chamber, we're talking about a family of schools with a really tight alignment across teaching, curriculum and operations. When we returned, we had the work of Vicki Baylis[checked] in the independent review saying that Tasmania should rethink education service delivery. 
+
+The first thing we did was hit the ground and start consulting and communicating. On 11 December we organised an opportunity for external stakeholders to meet with the Grattan Institute, McKinnon Foundation and myself. That was the TPA, the AEU, and the University of Tasmania. We went straight to the then-shadow Education minister, Sarah Lovell MLC, and to Vica Bayley MP, who was then the Greens spokesperson for education.
+
+In January, we had Vicki Baylis in Tasmania and got her to speak again about the education review. All of those unions and education stakeholders were in the room. She again addressed that we should seriously be considering a trial of multi-school organisations (MSOs). 
+
+In February we had Matt Hood[checked] over from the UK again. We also met with the TPA, the AAU, Sarah Lovell, the interim Commissioner for Children, Vica Bayley again, the Australian Council for Educational Leaders, the DEC[tbc] leadership group and some highly accomplished lead teachers, UTAS, and then we had another meeting with the TPA. Then you stepped in as the Greens education spokesperson and we made sure that you were briefed as quickly as possible.
+
+Then, of course, the department had a number of briefings around MSOs, which included bringing the Tasmanian Association of State School Organisations (TASSO) into the conversation, which was really well received. Then we had other briefings with union representatives. Then we went to an election.
+
+We had mapped out quite carefully a consultation plan that unfortunately got hijacked by the election, and we lost a solid two months of being able to talk about MSOs.
+
+Ms O'Connor - But then you just announced that it was going ahead for next year. 
+
+Ms PALMER - Since that time, we have sent another team through the Grattan Institute and the Susan McKinnon Foundation to the United Kingdom, which included three principals from Risdon Vale, New Town and Moonah, who came back so overwhelmed with what they saw and so incredibly keen to be part of a trial for the MSO model. 
+
+This trial is being rolled out over five years. This is not something that is going to be in all schools for next year. We are starting with our first MSO, which is those three schools, and working really closely with those principals. 
+
+Because of the time we lost with the election, I certainly did everything I could to hit the ground running and went and spent time with the southern principals' briefing that the department held, then went to the north of the state along with my secretary and briefed northern principals as well. 
+
+I absolutely accept, and I have apologised to principals, that the timeline for communicating this was put out by the election. It was my call that this was not to become a part of the election. I did not want this to be a Liberal Party thing. We'd worked hard to make sure the shadow education spokespeople were briefed along the journey. Then, of course, as soon as Mr Willie said he was going to be the new spokesperson for the Labor Party, we made sure he was briefed immediately as well.
+
+I accept that it hasn't been the rollout I would have liked. I didn't want it to become an election commitment. That was my call, and I knew that there would be consequences to that. I am very happy with the decision I made, and we've certainly done everything that we can to take people on the journey since then.
+
+I am disappointed with the AEU coming out in the way that they have. My first phone call when I got back from the UK was to David Genford [checked] to tell him what I'd learned and that the MSO model deals with everything he'd told me about teacher workload. That is, that it removes all that admin and other work that sits outside of teaching, so our teachers and principals can focus on what they love doing and what they're trained to do, with that support sitting in an executive outside of them.
+
+I accept it hasn't been the rollout we wanted it to be. It was my call that I did not want this to become political. I didn't want it to be a conversation during the election. I've certainly done everything I can since that point to engage at every point.
+
+
+State Budget
+
+Ms FORREST question to LEADER for GOVERNMENT BUSINESS in the LEGISLATIVE COUNCIL, Ms RATTRAY
+
+[2.42 p.m.]
+Regarding the state Budget to be introduced on 6 November,
+
+Please provide a copy of the Treasurer's detailed internal budget.
+
+Will the Appropriation Bills No. 1 and No. 2 be accompanied by a full set of budget papers?
+
+	(3)	Will three budget paper volumes, namely Budget Paper No. 1, Budget Paper No. 2 volume 1 and Budget Paper No. 2 volume 2 be tabled with the Appropriation Bills No. 1 and No. 2? If so, will these provide the level of detail that is usually included in these budget papers? If not, why not, and what level of detail will be provided?
+
+ANSWER
+
+Mr President, before I answer, I'd just like to welcome Jake Stebbins[tbc], who is sitting up in the Leaders Reserve, to the Chamber. Jake has joined the Leader's office to assist functions of the office and he's the person who put your questions on your seats today. He is helping Mandy in the office. Welcome Jake.
+
+The answer to the question is:
+
+Provided in Appendix 1 is the note, 'The timeline is subject to change based on circumstances.'
+
+Appropriation Bills No. 1 and No. 2 will be accompanied by a set of budget papers, prepared in accordance with the requirements of the Financial Management Act 2016.
+
+Yes, the 2025-26 budget papers will be provided considerable detail relative to previous budget papers and, given the short timeframe for preparation of the budget papers and as flagged by the government on 7 September 2025, the budget papers will be presented in a streamlined format.
+
+I do have an Appendix 1.
+
+Mr President, I seek leave that it be tabled and incorporated into Hansard.
+
+Leave granted; document tabled and incorporated.
+
+See Appendix 1 (page xx).
+
+
+King Island Ambulance Station
+Ms FORREST question to LEADER for GOVERNMENT BUSINESS in the LEGISLATIVE COUNCIL, Ms RATTRAY
+
+[2.44 p.m.]
+Has work commenced on the new ambulance facilities on King Island?
+
+If not, why not, and when is the new expected commencement date, seeing as the original commencement date has passed?
+
+Can you provide an update on the progress of the development and recruitment of community paramedics?
+
+ANSWER
+
+Mr President, I know that the member has a very strong focus on her island community. The answer is:
+
+Planning for the new King Island Ambulance Station commenced in April 2024 following the government's commitment to build four new stations at King Island, Legana, Snug and Cygnet. Members of the public were invited to view designs at the King Island Council offices from the 3 June to 27 June. Detailed design of the station is now complete, and the development application for the new station was submitted to the King Island Council on 10 September 2025.
+
+The construction of a new station will commence once relevant approvals have been received and a tender for construction is awarded.
+
+The formal appointment of the King Island Community Paramedic remains a priority and advised the development of the model is currently subject to consultation with key stakeholders. Given the unique location and operational requirements for King Island, extensive consultation is required prior to the recruitment and implementation.
+
+
+Multi-School Organisation Trial
+
+Ms WEBB question to MINISTER for EDUCATION, Ms PALMER.
+
+[2.46 p.m.]
+This question follows the answer provided to the member for Hobart. It also aligns with the questions I had planned.
+
+It's on the multi-school organisation trial. In relation to consultation, the minister provided a fairly long list of instances of people who were contacted. It is important to distinguish between consultation and briefings - or consultation and information provided, or consultation and engagement in co-developing something - and just telling people what's happening.
+
+With that proviso, my question is: in terms of consultation on the multi-school organisation trial, was there a proposal developed and described - in, say, an issues paper or a background paper - and put out for consultation with the relevant groups, many of whom were listed in that previous answer, but specifically teachers, principals, the AEU, the Tasmanian Association of State School Parents? For example, was a multi-school organisation trial a definite model put to them? Were their thoughts gathered and considered before we arrived at the proposal that's now being taken forward under a trial? Did that form of consultation occur, or were there just meetings and briefings along the way?
+
+ANSWER
+
+Mr President, I thank the member for the question. I need advice about what the department distributed in a written form. The briefings I was involved with were very much question and answers. We had the Grattan Institute come and do presentations, then we had Matt Hood [checked] come here, who is an MSO expert from the United Kingdom. We made sure that he had the opportunity to have those formal and informal discussions with stakeholders to take them on the journey.
+
+We did all that we could to ensure the shadow education spokespeople had the opportunity to ask questions in one-on-one set-ups, and to ensure there was an opportunity for there to be lots of questions asked as part of the presentation. It certainly wasn't someone up the front saying, 'This is what we're going to do'. It was very much an interactive engagement with all of those stakeholders, certainly in the ones I was involved with.
+
+I know the department is now having sessions set up where principals can come online and ask questions, whether that be of the secretary and looking at ensuring they can ask questions of our three amazing principals, who are so enthusiastic, having seen in the UK about the advantages to this model.
+
+We have done everything we can to make sure that has been interactive. That consultation will need to continue all the way through the five-year trial. We are just starting with our preschools for five years. That will need to continue through the five years. We will be beginning the evaluation of this program up front. We would like to engage a number of these education stakeholders in that evaluation process so that they are not just part of it right now - learning about it and consulting on it - but they are part of that evaluation the whole way through. We think that's really important.
+
+
+Multi-School Organisations - Consultation Process
+
+Ms WEBB question to MINISTER for EDUCATION, Ms PALMER
+
+[2.50 p.m.]
+Following on from that, just to be clear, it sounds very laudable to be providing information in a whole range of ways, and I'm not taking away from what was done, but consultation isn't providing information and being able to answer questions. Consultation is inviting people to have input into something being developed. So, my specific question was, and I'd like to, if I may, ask for the provision of actual documentary information, either here in the Chamber, or separately to me directly, but I think shared publicly would be good.
+
+Was there in fact a documented consultation process for people to share their views and input, thoughts or questions, concerns, or additional suggestions, into the development of this model? Everything described so far doesn't sound like that. It sounds like providing information and answering questions. That's not consultation in the sense that we fully understand it.
+
+Like, there would be on an exposure draft bill, for example; put the bill out, people make submissions, things may get tweaked as a result, but we're getting an ultimate bill. In this sort of trial, was there something put in writing that people were able to respond to in writing to provide consultation into the space prior to the decision being made to fully and finally go ahead with it? Is that available and can you make it available to us?
+
+ANSWER
+
+Mr President, I will take that on notice and get that information? I will also say that we set up a steering committee at the very beginning of this process. On that steering committee, we had one of the researchers from the Grattan Institute. We have a former principal, a retired principal, and another of other very senior educators who went on to the steering committee that was established right up front and they have been quite integral in feeding advice into what this could look like and how this could work for Tasmania. Let me go and get that information for you and I will bring that back to the Chamber.
+
+
+Structure of Multi-School Organisations
+
+Ms O'CONNOR question to MINISTER for EDUCATION, Ms PALMER
+
+[2.52 p.m.]
+Your department is advertising for multiple executive leaders. Are they to lead these multi-school organisations? If not, what roles are they to fulfil? We know about the pilot grouping of New Town, Risdon Vale, and Moonah Primary schools. What other school groupings are these recruitments potentially for, and what other schools do you expect to roll into the MSO model next year?
+
+ANSWER
+
+Mr President, the member might have to remind me of those questions. With regard to schools going into it next year, there are three schools. They are the only schools that are part of the trial for next year. Evaluation starts straight away. Then the following year we look at the next step, which could be a new MSO, an MSO 2, and then what schools could possibly be added into those families. So, that is in answer to the first question - just those three schools for next year with evaluation on it starting straight up front.
+
+With regard to the role of the two new executive leads, we have advertised for the role of CEO. That position will report to the Secretary, who is responsible for the strategic direction, operational development, and overall performance of the MSO. That will also provide direct line management to our school principals. Staff will continue to be employed and managed according to existing frameworks, and this certainly is not about corporatising the education system. This is a senior executive leadership position with significant operational autonomy and high accountability for learner performance improvement and stakeholder engagement.
+
+Now, a teaching requirement is considered an essential requirement for that CEO. Then the other role you're talking about is the Head of Operations role. The Head of Operations reports to the CEO, and they will be responsible for leading the optimisation of resource use, including finance, human and physical resources, compliance, communication and risk management. 
+
+The Head of Operations is responsible for designing and delivering that operational backbone of the family of schools, the MSO school. The teachers and the school can have an absolute clear focus on delivering and teaching without all of that admin that we have placed on the shoulders of teachers and principals, which they are constantly saying is the biggest issue that they face in schools. They want to have one-on-one engagement with students. They don't want to be sitting in offices writing risk assessments and all the admin that we have put on their shoulders over time. It's taking all of that responsibility out, sitting it with the executive lead. For the first MSO, we will have these two positions. 
+
+Ms O'Connor - By way of interjection, my understanding is that there have been multiple roles advertised by the Department for Education, Children and Young People (DECYP) for executive leads.
+
+Ms PALMER - As part of the trial, we're not saying, 'If you're not in the MSO, those three schools, you're out - you've got nothing to do with it'. Rather, we are listening to feedback from teachers, principals and unions about teacher workload. We're saying, 'What can we be doing in that space as part of the MSO trial that will manage some of these significant issues that we have?' We are losing teachers and principals, because we're not managing their workload. 
+
+Schools that are not part of the MSO will be grouped together into 11 proposed groupings, and that will happen in 2026. Schools have been consulted on the groupings, and their feedback has actually helped to refine that model. Now, each one of those groupings will have an executive lead who will be responsible for performance and improvement of student outcomes within that grouping. The role will provide strategic direction, operational oversight and professional supports to principals. 
+
+When I talk about that really tight alignment that we will see in a family of schools in MSO 1, I believe a great way of describing it is that close alignment, that tight alignment across teaching operations curriculum - that dial will be up to eight in an MSO. In a grouping, it might be about a three. That will be part of the evaluation as we go through. Are the groupings of schools working so well in setting them up for possible inclusion in an MSO? If they want more and a tighter alignment, we will be able to give that to them. I believe they're the positions that you're talking about. 
+
+
+Difference Between MSO Concept and Previous Strategies
+
+Ms WEBB question to MINISTER for EDUCATION, Ms PALMER - 
+
+[2.58 p.m.]
+I'm interested to understand how the model that's being proposed for the MSOs differs from the model trialled in Tasmanian schools around 2011, where we had learning federations formed in what seems like a very similar way. I'm wondering, has that previous experience fed into, have we learned from it, was it evaluated, has it been considered in light of the MSOs? I'm particularly interested to know what differentiates the MSO concept from the previously trialled learning federations.
+
+ANSWER
+
+Mr President, I'm not as familiar with that model from 2011. I'm happy to make myself familiar with that. I don't know that I can comment on that. What we've done is that we had seen the issues that our schools are facing and as I say, teachers can't work any harder. Our kids are brilliant; we're resourcing them. We have an incredible infrastructure spend in our schools.
+
+We have done some amazing reforms around literacy and phonics, but still the Report on Government Services (RoGS) data and the National Assessment Program – Literacy and Numeracy (NAPLAN) data come out and it's not where we want it to be. Our state has problems with literacy right across our age groups. If we're looking at amazing reforms, great resourcing, amazing staff, you have to look at the service delivery. I know one of the criticisms that has been fed back to me in the 18 months I've been Education minister is that in our schools, they feel there's a disconnect from what's happening with that service delivery with the agency and what's actually happening on the ground. A common complaint is - I don't know who to call or I call eight people before I find the person in this enormous agency who can actually help me with my problem. This is taking the agency and saying you have to be closer to our schools and that's where we see the grouping of schools and then the dial up around that tight alignment with MSO1.
+
+Ms Webb - For clarity, Mr President: minister, you're not aware we had a previous iteration 15 years ago called Learning Federations that is quite similar.
+
+Ms PALMER - I have certainly heard of it, but I don't have intimate knowledge of it.
+
+
+JUSTICE AND RELATED LEGISLATION
+(MISCELLANEOUS AMENDMENTS) BILL 2025 (No. 38)
+
+Second Reading
+
+Resumed from above (page xxx).
+
+Mr GAFFNEY (Mersey) - Mr President, I have only a couple more minutes to go.
+
+The Tasmanian Coroner's Office clearly appreciates the need for such qualities in a coronial system. Coronial systems and models elsewhere in Australia that have undergone significant research and reform will be of value to Tasmania. For example, the Victoria Coroners Act 2008 is the result of significant consultation reform over the years.
+
+I believe that our 30-year-old Coroner's Act needs to be reviewed holistically and comprehensively to ensure it is fit for purpose, responsive, fair and efficient. It needs to have a strong preventative focus. The system also needs to be appropriately funded and resourced. The coroner's role is a particularly challenging one.
+
+I express my sincere condolences to the Westbooks and their family and hope that this amendment will bring some comfort and possible closure to them and other grieving and concerned families.
+
+As occurred in the lower House, I thank them for their tenacity and resilience and for their service to the Tasmanian community in pursuing reform.
+
+I had the chance to meet Eden's younger siblings, Dontay and Sky[tbc], in June this year in this place when the previous bill was about to come on for debate; such wonderful young people. That debate did not occur due to the prorogation of the parliament. There were further months of delay to endure due to the election. The Westbrooks were particularly touched when only weeks ago on the front page, the Mercury referred to this amendment as 'Eden's Law'. That name would certainly be a touching tribute to the memory of Eden.
+
+The coronial function has an important role to play in the relations public health, safety and the administration of justice.
+
+The amendments before us demonstrate compassion, dignity and respect to senior next-of-kin, ensure open justice, transparency and accountability, and increase public trust and confidence in our justice system. Is hoped they will ensure the time and provision of the autopsy failures and related material to the Westbrook family and independent forensic pathologist Dr Byron Collins.[checked]
+
+I would hope that steps taken to ensure the smooth and timely passage of this bill through Parliament and early commencement date.
+
+I support the legislation. I thank the minister, Ms Munroe [tbc 3.03.54], and those from the department at the Office of Parliamentary Counsel involved with this legislation.
+
+[3.04 p.m.]
+Ms ARMITAGE (Launceston) - Mr President, I thank the Leader for bringing forward this bill. I rise to offer a few remarks.
+
+As mentioned by the Leader, some of the legislative changes this bill makes have arisen out of the tragic circumstances faced by the Westbrook family. I acknowledge them, their efforts and the loss their family has suffered and continues to suffer. The passing of this bill into law, I hope, will improve the administration of coronial laws in Tasmania, due in no small part to the Westbrooks tireless work and advocacy on the matters contained in this bill.
+
+Essentially, this bill will amend the Coroners Act to insert section 58C that requires coronial records be provided to the senior next-of-kin in certain circumstances. The Coroners Act, as it currently stands, already specifies how a senior next-of-kin is identified, sets our procedures for investigations and inquests by coroners, and endows the senior next-of-kin with certain rights.
+
+The passing of this bill will provide the right of that senior next-of-kin to obtain access to certain information by way of records.
+
+Section 58C, which this bill seeks to insert into the act, will enable the senior next-of-kin to apply in writing for a coronial record. The definition of a coronial record is wide in scope but also clear on what might be accessible. It includes all evidentiary material held by the court in relation to coronial investigation of a death, including documents, photographs and other material of evidentiary value.
+
+The provision ensures that the court can also obtain relevant information it may not currently hold on the file to disclose to the senior next-of-kin. The Leader used an example of autopsy photographs, which might be held by the pathologist, and which might have informed the written report, but which are not actually on the court file.
+
+The bill also specifies grounds of which a request may be refused, including where it's prohibited by the act or another act which, when appropriate, restricts publication of reports or proceedings, would be contrary to national security or personal security, or would prejudice the investigation of breaches of the law, administration of the law, or a fair trial of a person. It does provide the option for parts of a record to be redacted to enable parts of it to potentially be released.
+
+Material related to coronial investigation is almost certain to be extremely unpleasant, triggering and upsetting. It is one thing for records to inform a clinical analysis of a person's death and the circumstances they're in, but it's quite another thing for a next-of-kin, a loved one, a friend. It must never be lost in us that coronial investigations are to determine the unexpected, unnatural or violent death of a person, and that deceased person has people who love and miss them, and who want to understand why they aren't around anymore.
+
+I take this opportunity to note my utmost respect for our coroners and their support staff. Their job is extremely difficult. They work often in very distressing situations and are exposed to material on a regular basis that's just not ordinarily seen by people in the community. They try to provide answers and explanations for very difficult questions and, where appropriate, make recommendations to try to avoid similar such deaths or circumstances occurring to anyone else.
+
+They possess eminent minds and provide an important service to our community and to the legal system, and any legislation which affects their role should be to support them in this endeavour.
+
+Ultimately, this bill seeks to promote transparency and accountability in our legal system, especially where investigations take place. Our community needs to have faith that when an unexpected, unnatural or sudden death occurs, there will be a proper and adequate investigation that takes place, which is backed up by evidence. As the Leader mentioned, there's a balance to be struck between this type of transparency and the private, personal, and likely distressing nature of the records that are being sought. Currently, this bill fairly strikes that balance.
+
+I note this bill also makes amendments to the Corrections Act, the Tasmanian Civil and Administrative Tribunal Act and the Worker  Rehabilitation and Compensation Act.
+
+To the TASCAT amendments, the bill seeks to amend section 98(3)(c) to allow a lawyer subject to disciplinary proceedings under the Legal Profession Act 2007 to appear as a representative. This is intended to uphold the presumption of innocence, as merely the bringing of disciplinary of action which has not yet concluded does not confirm wrongdoing. A lawyer in those circumstances should retain the right to appear as a representative in the meantime.
+
+What this bill does not seek to do, as the Leader pointed out, is to change the ability for the Legal Profession Board of Tasmania to suspend a legal practitioner's practising certificate if they are subject to disciplinary proceedings. In those circumstances, a lawyer will not be eligible to appear under section 98(3)(a). The Legal Profession Board is a board of experts and are adequately mandated to exercise their powers as they currently stand.
+
+Finally, this bill seeks to amend the Workers Rehabilitation and Compensation Act, which currently states that a compensation certificate must be signed by a medical practitioner. This bill seeks to allow, in certain circumstances, such a certificate to be signed by a nurse practitioner. The objective of this provision is to reduce duplication and service costs, and result in a more efficient health system, as patients will no longer require a reassessment by a medical practitioner for the purposes of a workers' compensation certificate. I understand that the bill provides that nurse practitioners who are able to sign these certificates must have reached a masters level in their specific specialty of practice and be employed in the emergency department of a hospital or other prescribed circumstances or for prescribed purpose. Taken at face value, this appears to be good step, freeing up doctors' time.
+
+I thank the Leader again for bringing forward these important legislative changes and wish to again acknowledge the Westbrook family's loss and their hard work in advocating for important changes to Tasmanian law.
+
+[3.10 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I'd like to acknowledge the support from the House for this important piece of legislation, and the member for Mersey, who gave a really extensive overview of a very difficult journey in his contribution. Thank you.
+
+I have some answers to the questions that were put forward by the member for Mersey.
+
+How is the issue of cost to be dealt with? There is no fee associated with making an application under the amendment. Fees can only be imposed on matters under the Coroners act if included in regulations recommended by the government to the governor. It is not intended to prescribe a fee for these applications. The regulation making process in Tasmania is comprehensive and requires stakeholder consultation and an assessment of any burden, costs or disadvantage to any sector of the public. As we know, regulations must be approved by the minister and recommended to the governor, but the subordinate legislation committee scrutinises the regulations as well.
+
+Do the Westbrooks have to apply again? The coroner exercised the existing power under the rules to provide the Westbrooks with any coronial records under the current scheme and subject to restrictions such as limits on the use of the records. Similarly, applicants from other families in the past may be given records subject to these restrictions. These amendments were, therefore, created to create the ability for senior next of kin to apply for documents without such restrictions. Again, as mentioned, there will be no costs associated with that application.
+
+Where in the Coroners Act is the coronial authority given the power to impose conditions on the release of records where there has been no inquest? Rule 26 of the Coroners Rules 2006 currently governs access to coronial records. The coroners rules are made under section 15AE of the Magistrates Court Act 1987, and section 69A of the Coroners Act notes the section does not limit the power of the Magistrates Rules Committee. Section 15AE provides that the rules may 'regulate the practice and procedure of the court or division of those proceedings.' This is a broad authorising power, and the rules represent the current practice and procedure of the coronial division for the release of records under any conditions. The bill previously tabled included a power for the coronial authority to impose conditions on the release of records to the senior next-of-kin. This has been removed.
+
+The coronial authority could only impose a non-publication order to any release under the amendment, and a rule or regulation cannot be made that is inconsistent with an act of parliament. Therefore, the current rules can operate but not limit the operation of the bill's amendments to the act.
+
+I trust that that assists the member for Mersey in response to his questions.
+
+Mr Gaffney - There was one question about what powers, if any, the coroner delegated to Senior Sergeant Reynolds in Eden's case and other cases. That was on page 5 of my response.
+
+Ms RATTRAY - I need to take some advice. My apologies, honourable member. The question wasn't noted by the advisers at the time it was asked. If you have a copy of that question, I will make sure that we have an answer through the committee stage for you.
+
+Bill read the second time.
+
+
+JUSTICE AND RELATED LEGISLATION (MISCLLANEOUS AMENDMENTS) BILL 2025 (No. 38)
+
+In Committee
+
+Clauses 1 to 3 agreed to.
+
+Clause 4 agreed to.
+
+Clause 5 agreed to.
+
+Clauses 6 to 8 agreed to.
+
+Clauses 9 and 10 agreed to.
+
+Clauses 11 to 13 agreed to.
+
+Title agreed to.
+
+Bill reported without amendment.
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move - 
+
+That the third reading of the bill be made an order of the day for tomorrow.
+
+Motion agreed to.
+
+
+GOVERNMENT BUSINESS GOVERNANCE REFORMS BILL 2025 (No. 36)
+
+Second Reading
+
+[3.20 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That the bill be now read the second time.
+
+This bill is the first of two tranches of legislative reform to ensure Tasmanian government-owned businesses act in the best long-term interest of Tasmanians. Government business governance reform is of paramount importance to the government and the future prosperity of all Tasmanians. A key priority of the government's Strong Plan for Tasmania's Future is growing the economy, creating jobs and creating opportunities for future Tasmanians and their families as well as a competitive environment for business to invest.
+
+In recent years, significant challenges have been faced due to failings in government business governance. That is why the government is undertaking the most comprehensive reform of government business enterprises and state-owned companies in recent years. The government is not just making minor adjustments but a holistic approach to reform. The goal is to create a governance framework that is integrated, cost effective, transparent and above all, responsive to the needs of Tasmanians. The reforms the government is implementing will support a more coordinated approach to investment decisions made by government businesses that drive economic growth, improves service delivery of essential services that underpin our economy and community, maximise economic gains and efficiency improvements - a sustainable future for government-owned businesses. The government is intending to create a framework that can best serve the needs of Tasmanians in years to come. 
+
+Mr President, this bill takes into consideration the feedback received on the proposed reforms included in the Government Business Governance Reform Draft Plan that was released on the 3 November 2024. Forty-eight submissions were received on the draft plan from business, industry and community stakeholders. The government engaged business and industry leaders to drive and deliver these important reforms. The bill takes into account the feedback received from consultation on the draft bill. The bill has also been developed taking into consideration feedback received from the Government Business Reform Industry Reference Group and the government businesses.
+
+At the core of the reforms is ensuring that government businesses are making decisions that are in the long-term interest of their owners, the Tasmanian community.
+
+For government businesses, putting Tasmanians long-term interest first means that businesses will be making the right decisions through contemporary governance and competent and accountable boards and senior executives.
+
+Secondly, aligning the business corporate strategy, where appropriate, to the strategic interests of the state, as outlined, by shareholding ministers and delivering on any community service obligations assigned to it by government. These legislative reforms are just one step in the government's broader reform package of the government businesses.
+
+In addition to this bill, the government will implement a suite of reforms, including further amendments to legislation and updates to other elements of the governance framework, such as formal policies and guidelines. The governance reforms are being guided by the following principles:
+
+Ensuring that all government businesses place the interest of Tasmania first and are accountable for doing so;
+
+Improving governance for government businesses to ensure it is effective, contemporary, fit for purpose, transparent and provides for appropriate oversight;
+
+Expanding the range of performance monitoring options available to shareholding ministers;
+
+
+Incorporating appropriate levers in the governance framework to manage or rectify poor performance of government businesses, if required, including in relation to major capital projects.
+
+This bill is focused on the first two principles, accountability for placing Tasmania first and improving governance. The commitment to ensuring that government businesses are putting the long-term interest of Tasmania first will be delivered through the new joint legislative direction power for shareholding ministers included in this bill. This will be supported by an enhanced and more transparent framework when government requires a business to undertake community service obligations, a reform to be included in the second bill. 
+
+These reforms, combined with the existing ability for shareholding ministers to set out expectations in the Ministerial Charter and Statement of Expectations, will provide the ability for shareholding ministers to clearly and transparently articulate what it expects from each government business. All government businesses will need to demonstrate that they are putting Tasmanians first through the performance targets set and reported against in the annual Statement of Corporate Intent (SCI).
+
+The bill includes the approval process and expectations in relation to the Statement of Corporate Intent, including the requirement that it be made public on the website of the government business. The bill also includes a requirement for all government businesses to publicly release half-yearly progress report. This report will be required to be released on the website of the government business by the 28 February each year. 
+
+This bill makes it clear that the government expects that shareholding ministers will be kept appropriately informed by the board of a government business if there are adverse circumstances impacting it. This is to ensure that the shareholding ministers can more meaningfully fulfil their role as representative of the owners on behalf of the Tasmanian community and take appropriate action if necessary. The bill includes a requirement that the two shareholder minister roles cannot be undertaken by the same person, with an exception allowed for the Tasmanian Public Finance Corporation. This is already a legislative requirement for some state-owned companies and is an important element of the governance model.
+
+Under the current framework, all government businesses, except the Tasmanian Public Finance Corporation, are required to have two shareholding ministers, the treasurer and the portfolio minister. This is because the Government Business Enterprises Act currently defines the portfolio minister as the minister to whom the administration of that enactment or part is assigned through an administrative arrangements order. This bill requires that if the treasurer and portfolio minister are the same person, the treasurer must nominate another minister as portfolio minister, and for the Tasmanian Public Finance Corporation, the treasurer may nominate another minister as portfolio minister. 
+
+We know from a governance perspective that the board set the tone from the top and can influence the culture of the entire organisation. We, therefore, need to ensure that we have the right board for each government business. I look at the honourable member for Launceston when I say that. To ensure that there is an appropriate board renewal, this bill includes a limit of two full terms for directors and chairs of government businesses unless approved due to exceptional circumstances. Any additional terms approved beyond the limit will need to be made transparent, including a requirement to table a notice in both Houses of parliament within seven sitting days, including the reasons for the extension. 
+
+The bill does not prevent the Chair being appointed for another term; it will just require an additional layer of transparency when this occurs. As part of the reforms, the board selection processes and guidelines will also be updated to ensure that there is more focus on appointing directors who understand the business needs in a Tasmanian context.
+
+Going forward, there will be reforms to the board performance evaluation framework for government businesses. In this regard, the government sought independent expert advice on best practice board evaluation, including the evaluation approach. What should be covered in an evaluation, the frequency of evaluations and benchmarks for assessing and comparing board performance. This advice will form the basis of the new Government Business Board Performance Evaluation Framework to ensure Tasmania has a nation leading board evaluation framework for our government businesses.
+
+The bill also includes a requirement for all government businesses to establish and publicly release a sponsorship framework that complies with the Treasurer's instructions and any regulations issued. The reforms will also provide more options to shareholding ministers to monitor performance and, if there are any concerns, the ability for shareholding ministers to request further advice from independent experts, or to implement other measures to support a business to get back on track. It is intended these are measures that would only be invoked if there are concerns or exceptional circumstances.
+
+The legislative elements of these reforms will be included in the next bill. The government recognises that these are only the start of the reforms to the governance framework for government businesses. The government is intending to release the second tranche of legislation for consultation in the coming months to provide the opportunity for stakeholders to provide feedback.
+
+Collectively, the government business portfolio constitutes a significant portion of the Tasmanian economy. Government businesses employ over 5200 people and in 2023-2024 contributed more than $374 million in returns to government, representing 4.4 per cent of state revenue.
+
+Government businesses also directly provide some of the state's most important economic infrastructure and deliver essential services to the Tasmanian community. They manage assets valued at more than $27 billion and are forecasting an investment of $7.5 billion into infrastructure projects over the four years from 2025-2026.
+
+The strategic directions and investment by these businesses also support private sector investment in the state and play a fundamental role in its economic development and job creation. The performance and accountability of the government businesses is, therefore, critical. These reforms are about ensuring that government businesses are making decisions that are in the long-term interests of its owners, the Tasmanian community. A more robust framework is needed, but at the same time, it needs to be agile to ensure it can adapt to the opportunities and challenges that are over the horizon for our government businesses.
+
+Mr President, I commend the bill to the House.
+
+[3.33 p.m.]
+Ms FORREST (Murchison) - Mr President, in speaking about the Government Business Governance Reforms Bill 2025, I acknowledge the intention of the government, as outlined in the second reading speech, to modernise oversight and reporting for government business entities to increase transparency, accountability and ensure boards are more responsive.
+
+We all know why we're here. There have been some appalling failures in governance. Sitting right alongside that is appalling culture within some of these businesses that has enabled this to thrive and to become the modus operandi. If anyone wants to see how appalling behaviour and culture can be, I direct them back to 2023 in December when TasPorts appeared before Government Business Scrutiny Committee A in the worst performance I have ever seen by a government business, and I have been here and seen a lot in my living memory.
+
+In fact, I wondered if it was just me. I am sad the member for Rumney is not here today for health reasons. We tried really hard to be reasonable, proactive and constructive. What we faced was belligerence, a refusal to answer questions and an arrogance that defied belief, to the point that I asked the minister to intervene, reminding him that these people sitting at the table - the CEO and the Chair - actually worked for him. They worked for him on behalf of all of us, and they were refusing to answer simple questions. This is a major infrastructure company, which we rely on as an island state, refusing to answer questions about their maintenance schedule because they didn't know what I meant.
+
+I thought maybe I was being unreasonable, I thought maybe there's a different way to frame the question. I tried several attempts. I asked the minister to instruct his CEO and his Chair to take their hands off their folders, open them and look what was inside.
+
+I don't know what was inside. There was paper in there that I could see. In the end, they agreed to take my question, after saying, 'Oh, well, we've got a lot of assets.'
+
+I asked them to start with one of the ports. Let's start with Hobart port, shall we? Or even Burnie port, where they had problems coming out their ears at the time, with Berth 4 crumbling into the sea, and the Strait Link vessel that was pulling alongside unable to use the deck all the way along the northern side because it wasn't safe to do so. Yes, it's an old asset, we all know that, but they have an obligation to maintain it. The fact that they might not have had enough money to do that, isn't that something they could have raised? 
+
+They basically said they didn't know what I was asking for, they didn't have the information, and they'd have to take it on notice. When we got something on notice, from memory - about 100 double-sided pages in landscape of numbers, picking up every tiny little asset from a screw on the deck of a wharf right through to their biggest assets in the in the organisation. We didn't know which was which. How would we know?
+
+That is the level of poor culture that saw them brought back before GAA. Then we had another early election and so that was put off.
+
+I was so disgruntled by that performance by these two that I asked a couple of other members of our community, who understand what good governance looks like, to go back and view the recording, because you have to see it to believe it. They shared my view.
+
+Here we are. That's just one. Then we could look at the monumental failures of TT-Line.
+
+However, it's not just the companies who are at fault here. The government had a role to play here and failed to act. Fixing this problem doesn't mean we are going to fix all the problems that are there. I know this is a first bill of a tranche of two, and there's more to come, but I believe these are quite modest changes, and that changes are incremental. I will keep my powder dry on what might be to come, because we don't know. We've had some indication of the areas we're going to, and I appreciate the briefing and the information that was provided in that, but these changes will not do a lot to change the culture, and if you don't change the cutlure, we will continue to see poor governance.
+
+If you want to see another example, just read the Auditor-General's report today. That wasn't a GBE or a state-owned company. No, who was that? That was the Department of State Growth, and a minister who was probably sitting as the responsible shareholder minister on these companies.
+
+We have more than a problem with our GBEs and SOCs in this state. We have problems of governance that have become so ingrained in the modus operandi of this government it's truly worrying.
+
+There are a few questions I want to ask. I hope the Leader can provide some responses. I also acknowledge the questions other members asked in the briefings. I hope someone touches on them and puts their questions to the Leader as well because they are relevant.
+
+Whilst the bill is fairly thick with many pages, it is very repetitive. The Government Business Enterprises Act 1995 covers all government businesses and that requires amendments to that one act, but every other statutory state-owned company has its own statute and basically requires the same provision inserted into the acts that govern those state-owned companies.
+
+I note that there will be a requirement now that, and some of these already had this provision, all GBEs and state-owned companies have the Treasurer and a portfolio minister. If it happens to be the same person, they have to appoint another. That is already the case for some, so in some cases there'll be no change, but it's consistent now.
+
+I remember asking that very question a number of years ago, I can't think which bill it was in now, but the Treasurer was also the relevant portfolio minister. How would they deal with that? There is a conflict. I was assured, don't worry, it will be managed. That's gone well, hasn't it?
+
+I asked a question in the briefing about when directions are made. This bill provides consistent powers to make directions to the government business or state-owned company that one assumes they are to be made jointly. I'll get the letter to confirm that in the GBE act  there's a provision that the ministers act jointly. It's not stated as such in the other provisions that relate to the state-owned companies but there are two members, and it is presumed that they will act jointly. I would like the leader to confirm that that is how they are to operate. You could read that into it, but we do need to be clear about these things, particularly in issues as serious as issuing directions to these companies.
+
+I also note that the companies have to be informed when they're about to get a direction and the nature of that direction, which is one of the matters that was requested during the consultation period by some or all of the government businesses and state-owned companies. That's fine. It's helpful for them to know what's coming and maybe they may have a view that could be expressed to address the problem, but you would hope that it wouldn't come to that. You'd hope that if they're having regular meetings, as I'm led to believe they are, that things wouldn't get to this point, that problems would already be -
+
+Ms O'Connor - That's what's so baffling about TasPorts and TT-Line -
+
+Ms FORREST - I know. Why do we need these provisions? It's basic good governance.
+
+Ms O'Connor - How did the situation get where it did if there's regular communication between the minister and the heads of the GBEs?
+
+Ms FORREST - That's right. And they do have regular meetings, apparently.
+
+Ms O'Connor - At least fortnightly.
+
+Ms FORREST - Who knows what they talk about then? Maybe the weather and the football. I don't know. I wouldn't think so.
+
+To me, it's surprising that we need to legislate to this degree to make people behave properly in a governance sense when these people are governing these companies on our behalf.
+
+Also, I note there's a provision for the companies to object to such directions. That's probably appropriate. If you're going to issue directions, they need to be able to object. If we have a purely political direction - you might say that would never happen, I'm not so sure, on recent form, that directions that have a political element wouldn't be issued. One would hope they're used for good. One assumes they will be used for good. The company can object, however, and those directions and any amendments or revocations of those directions must be published and tabled in parliament within the prescribed time. That's the transparency piece.
+
+It should be a no-brainer that if you reach the point where a minister needs to issue a direction to a company, that's our company, that works on our behalf, that they would be transparent and open about that with the people of Tasmania through the parliament. Anyway, it's good to see that it's there and that it has to be disclosed.
+
+As to the statement of corporate intent and reporting, I note that each company must prepare a statement of corporate intent before the financial year, covering the company and its subsidiaries or any subsidiaries that particular company has. That's a helpful inclusion. The progress reports must be prepared and made public. Hallelujah! Hallelujah. If they were a private company, the shareholders would expect nothing less than quarterly reports. We're finally going to get - I sat across the table many times in the Public Accounts Committee and Government Business Scrutiny and in GAA, asking for half-yearly reports on their financial performance and things like that. 'No, no, we don't do that. We don't have that information.' Rubbish. Of course, they have that information - they're reporting it to the minister. They just don't want to show it to the people. Now they will be required to.
+
+It will be interesting to see what - It seems that the requirements around this will be formed through Treasurer's instructions, and they never see parliament's approval. They're issued by the Treasurer, with consultation, I accept, but there is no opportunity for the parliament to look at them. In many respects, they're a bit like regulations. They guide how government businesses and departments go about their business. There is a regulation-making power in this act and, based on past history, it may have been more helpful to have these made by regulations that actually come through the parliament and there is a degree of scrutiny over them.
+
+I'm happy to be proven correct in that the Treasurer's instructions will adequately deal with this and that we won't see an attempt to circumvent the full meaning of what this is intended to do: to enable transparent reporting of our state-owned companies and government businesses' performance, financially and hopefully in other ways, during the year. Particularly, where these infrastructure-heavy companies - and we have a few and they hold enormous levels of debt on behalf of the state - on how they're delivering on their capital programs, for example.
+
+I look forward to these midyear reports that are made public. I imagine if there's something that looks a bit odd in them that we will be able to note them in the parliament and bring them on for a debate or a relevant committee could pull that company in to find out more about what's going on there.
+
+Surprisingly - it shouldn't be - boards now have duties to notify members of adverse circumstances which may affect the company's objectives or financial viability. One would have thought that would have been something you would discuss at those meetings. I'm interested if the Leader could perhaps provide a little bit more clarity on what would be the trigger for that requirement. How bad must it get before that trigger sets off that requirement? What is the bar to satisfy a test of 'significantly affect the financial viability of a company or of a subsidiary company'?
+
+Do we have to be trading insolvently? That's rubbish, if that's the case - or on the verge of trading insolvently - because the government owns these companies. They're not going to see them trade insolvently.
+
+I am just trying to understand here: how bad does it need to get before this trigger of notifying the members, the ministers, the Treasurer and minister, of the circumstances which may significantly affect the financial viability of a company or subsidiary company.
+
+There are other provisions related to direct appointments, and these include new constraints on directorships, including limits on serving multiple terms unless exceptional circumstances are shown.
+
+There's no definition of exceptional circumstances and we heard in the briefing it will be on a case-by-case basis, but I think we do need to be, and I hope the Leader can provide some information here in her response about what would be an exceptional circumstance. If they are a chair or director that has a history with a particular minister, they don't want to be shafted off the board, so they find it an exceptional circumstance.
+
+We did have this discussion in the briefing, and I hope the Leader has some more information on this when it talks about two full terms. What and how long could this go on? I understand in the next tranche of legislation there's going to be work to the Constitution of these companies to make more consistent terms for board members up to three years.
+
+But if you're appointed for a one-year term, does that mean you can only do two of those and then you're out?
+
+In many other organisations it would be a limit on number of years served on a particular board, because that's more relevant. Some people do come in on a casual vacancy at times but that's not counted. You could come on in a casual vacancy right at the beginning of the three-year term but that doesn't count. So, you can go and have two more three-year terms before there would be even consideration of exceptional circumstance.
+
+I think we do need to be clear about that. I understand it was a policy decision. The Leader has been able to understand that policy position on behalf of the government that she's representing here, because I think it is a murky area and it's absolutely not clear as to what that might mean in practise.
+
+Time versus terms.
+
+There are also provisions for the parliamentary tabling of notices when a former chief executive is appointed as a director under, again, exceptional circumstances. Again, what would be an exceptional circumstance that would require that? Because they're certainly not an independent director at that point if you already have a couple of other executive directors, then you suddenly have more executive directors than non-executive directors.
+
+There needs to be some real clear expectation of what an exceptional circumstance would be that would see a CEO appointed to the board or, as a bonafide board member not just reporting to the board as the CEO. Can they hold both positions? Can I hold the CEO position and be a member of the board in this arrangement?
+
+It has been referred to, basically transparency provisions, and these include the publication requirements for the statements of corporate intent, which I've mentioned, and the reports on progress. They are positive things. These sorts of documents should be public anyway. It's a shame we have to prescribe it, but it's good that it's there and there's no argument then, and the requirements on member directions to also be disclosed publicly.
+
+There are other operational minister reforms, including the sponsorship framework that is to be mandated. Well, that's good news. This will guide to some degree, how come that managed sponsorships? [TBC]. 
+
+I know it was mentioned in the briefing. I will ask the Leader to reiterate in her reply to the debate whether the expectation is that this framework will require the dollar amount of sponsorships to be disclosed, because if it's not, it's a bit of a weak proposal.
+
+This is public taxpayers' money, even when it sits in a GBE. I know the long fight the Public Accounts Committee had - and other committees - maybe Estimates or GBEs - to understand the North Melbourne being (and for self-disclosure being a fully paid-up North Melbourne football club member. The girls are amazing. They haven't lost a game for so long. The boys are not so good.) We tried for years to see that contract -
+
+Ms O'Connor - So did we downstairs. Estimates after Estimates for years. 
+
+Ms FORREST - Well, PAC got it in the end, the fully unredacted agreement. However, we shouldn't have to fight like that. This sort of thing should be much more open and transparent. This is money being paid from the taxpayer's purse to support a company. I think it was the member for Elwick who mentioned how sometimes this is on top of other government funding. We have a right to know which clubs - sporting clubs or whatever other entity - are getting money from the public purse through our GBEs, which is often buried, or has been to date.
+
+I hope the dollar amount is in that, and I'll seek clarity on that.
+
+With regard to the Treasurer's instructions that are going to guide some of this, I ask the Leader if she can give us a summary and outline of what new Treasurer's instructions are contemplated here, because that is really important, and why the decision has been made to utilise Treasurer's instructions - which seems to be for pretty much everything that needs to be done with regard to this - rather than regulation, even though the regulation-making power is in the bill, or in the relevant legislation too. 
+
+While these are positive formal amendments in many ways, there are several reasons to believe that without further steps, the bill will not bring a strong shift in governance culture. As the next tranche is being developed, I hope there's a real focus on that. I've been looking at what measures we can put in place here to really drive a change in culture. 
+
+I still hear from members of the community, who work in some of these big companies that we own, of a not very pleasant workplace culture. If their workplace culture is experienced negatively in the middle-management levels, and certainly down below that as well, then it, no doubt, is also at the higher levels, because the culture starts from the top.
+
+There has been a couple of questions raised with me in regard to this, and this goes back to the directions from the members - the Treasurer and Minister acting jointly - but it also provides the companies, as I've said, the ability to object in writing. The ability to object, while useful in theory, may in practice discourage robust board independence. I'm not sure if that was contemplated during the consultation, but where you've got the ability to object, is there any risk there to the independence of the board? I really want to know if that was contemplated, and whether there's a risk of that.
+
+There's also a bit in the bill about consequences if the boards do not meaningfully challenge a bad or ill-considered direction. Previously, I mentioned where there could be a political overlay to a direction that's issued, and the board doesn't really want to challenge it - they know it's political but don't want to challenge it. The direction will be published, but if the board doesn't challenge it, that's the end of it, so it will be up to the parliament to consider if this is a reasonable thing or if it is a politically loaded direction. Any direction would be tabled in the parliament, which hopefully is a rare event one would think and hope, that it could be brought on for debate in the Chamber by any one of us.
+
+I will be interested to see the content of these mid-year reports, including the statement of corporate intent. There has been an absence of some of that information in the public realm and do hope it is meaningful and it's not just a box-ticking exercise. There is always a risk of that, but hopefully that won't be the case.
+
+Regarding a bill matter in the second reading speech, the Leader said that as part of the reform to the board selection processes, guidelines will also be updated to ensure there's more focus on appointing directors who understand the business needs in the Tasmanian context. How is that assessed? Are these Tasmanian directors? Do they require a history in Tasmania? Would they be expected to have had some business interests in Tasmania? How will they be assessed to understand the business needs and Tasmanian context? It's hard to assess someone's understanding of something unless you do a test, like an exam that has a pass or a fail. How will you assess that? I am not saying it's a bad thing, just wondering how you're going to assess it. It's a little bit difficult in some respects.
+
+I am obviously not opposed to the bill. There are a few questions that do need answering, but I want to wrap up. There are a lot of positive things in this bill. There are a few unanswered questions, which I hope the Leader can assist with. There's a second tranche coming, but what this bill doesn't provide is a strong mechanism for cultural change. Governance culture is shaped not just by legal obligations, but by norms, expectations, incentives, resourcing, transparency and leadership.
+
+The bill makes few provisions to strengthen training, performance evaluation of boards - which may be coming - conflict of interest norms, stakeholder engagement, or public accountability beyond reports alone. There's no requirement for external or independent auditing at this stage as to whether these new obligations are being adhered to and whether boards are actually resisting improper direction.
+
+Again, maybe some of these matters will be picked up in that second tranche. Many of the obligations are as soon as practicable or subject to the Treasurer's instructions or subject to publishing on websites maintained by or on behalf of the company. Such language can allow variations in how quickly and completely disclosures are made. I hope the companies take this seriously and publish in a really timely manner, and that the relevant minister tables these in a timely manner. I know the Minister for Infrastructure and Transport has a few under his belt and the other minister has a couple under his also.
+
+Given my comments, this is what I believe will probably happen or possibly will not happen if the bill passes. I acknowledge there will be more work to do, but boards will have a more formal requirement to document planning of corporate intent, disclose some risks, receive ministerial directions - I'm hoping not too often - and publish those directions or their objections to them. This will provide paper trails and basic transparency. That's good. I am not saying it's bad. I'm just saying that's what will happen. Companies may adjust internal policies to ensure compliance, more regular reporting, and upgraded sponsorship frameworks, which are all welcome. Written direction processes and perhaps greater attention to definitions and formalities. However, the deeper culture of a strong, independent oversight, robust board challenges to ministers or members when directors are inappropriate, full and timely transparency around influence and decision making may remain largely unchanged[tbc]. This is why the culture change is critical.
+
+There is a risk these reforms could be seen as symbolically progressive reforms to check boxes rather than transformative change as to how government businesses operate day to day. Unless there is strong leadership enforcement, oversight by parliament or potentially external bodies and stakeholder pressure, many of these obligations may be compliant within the form but not in the spirit. The minister for infrastructure and transport won't accept that, but he can't rely on a particular minister's capability here and their intention with this to ensure it happens.
+
+We do need to see more work done. I acknowledge there is more work going on. I hope some of the matters have been raised with regard to this bill will be picked up and perhaps progressed in the second tranche. We do need to ensure there is a real and genuine focus on building a culture where transparency is the norm, where boards don't simply follow direction unquestioningly and where the public can have confidence that decisions are actually being made in the public interest. 
+
+With that I will resume my seat and look forward to other members contributions on this start of an important process.
+
+[4.06 p.m.]
+Ms O'CONNOR (Hobart) - Mr President, I thank you to the member for Murchison for laying out so clearly some of the history here and the foundation of the bill we're here debating today. As we've been in briefings - and I want to thank the department who gave us the briefings today - and in thinking about this legislation, it is surprising that some of the provisions within this bill are not already long-standing practices of our government businesses and state-owned companies.
+
+As the member for Murchison said, a lot of this comes back to culture. The amendments we debate and will no doubt pass today are not going to do too much to deal with a culture of - this is not uniform across our government businesses and state-owned companies - but there are some notable GBEs where there has been a culture of secrecy and arrogance. Culture and history are deeply connected. It wasn't that long ago the Hydro Electric Commission effectively ran Tasmania, where it had such a hold on the politics of this state that it was able to effectively direct ministers and governments of the day. It had extraordinary powers, but that cultural problem is not just with Hydro.
+
+When I was in the other place as the member for Clark, we had the same experience that the member for Murchison had trying to get to the bottom of the North Melbourne sponsorship deal with the TT-Line. It was across three years of Estimates and certainly, engagements and GBE hearings, engagements with the then CEO of the TT-Line as well as the shareholder minister. At one period, a shareholder minister who was answering questions here was Mr Ferguson. At another period it was Mr Gutwein.
+
+Despite the fact that we were talking about a government business, that is, a business owned by the people of Tasmania, that had paid a certain sum of money for sponsorship of the North Melbourne football deal we were fobbed off, question after question, year after year, under the dubious umbrella of commercial in confidence. That's what we were told that Tasmanians couldn't know what the quantum of sponsorship funding TT-Line had paid to North Melbourne because it was a commercial in confidence issue. Now, whichever way you think about it, it's really hard to understand how a sponsorship arrangement with an AFL club when there's a connection between the two entities, which is the GBE and the football club - an exclusive connection presumably - could be a matter of commercial in confidence.
+
+Our questions were treated with disdain. We were made to feel it was almost offensive for us to be asking these questions over and over again, as we did. About the same time, the government had re-signed the Hawthorn sponsorship arrangement. From recall, this was something like $15 million over five years. The government had to be and was open about the level of sponsorship with Hawthorn and yet the TT-Line refused and had to have it extracted from them almost by parliamentary force in the end. Once the figures were released it was sort of a big yawn really and you had to wonder why all the fuss. It was cultural.
+
+Then we had the deeply frustrating unedifying episode during the Tasmanian Forest Agreement process, where Forestry Tasmania then run by Bob Gordon, aided and abetted by former ABC journalist Ken Jefferies, ran constant interference against the Tasmanian Forest Agreement, which was a policy of government. The government of the day had said - we are committed to a process of negotiation, compromise and resolution on native forest logging. Had invited industry and the conservation movement to the table and it felt like every second week, FT would be out there running interference for some of the most obdurate characters in the native forest logging and burning industry, working counter to the policy of the government of the day and unarguably, in my view, working counter to the public interest.
+
+Similarly, at GBE hearings four or five years ago now, when the Greens in the other place were trying to get to the bottom of tokenistic efforts to protect the habitat of the critically endangered Swift parrot. We had officers from Forestry Tasmania, wilfully misleading. I won't name anyone, but we were repeatedly told the government was listening to the science and it had set aside 10,000 hectares of habitat not to be logged because it was prime Swift parrot breeding and foraging habitat. Well, it turned out because we've been provided with factual information, it was only 9300 hectares.
+
+Our government business at an estimates table where you take an oath to tell the truth, added another 700 magical hectares to land that they said they'd set aside to protect the parrot from logging. It was just dishonest.
+
+And again, for a long time here, our Forestry Tasmania, the Forests Corporation, after Hydro's influence diminished somewhat, Forestry Tasmania became a real heavyweight and able to exert significant influence on the government of the day and its policy.
+
+Another TT-Line issue after the tragic events that saw the deaths of multiple polo ponies on the Spirit of Tasmania, whenever we tried to extract any information out of the senior management of TT-Line about how those horses died, we were repeatedly shown a brick wall.
+
+In the Leader's second reading speech, I noted quite a bold assertion that these amendments will lead to a certainty that our GBEs and state-owned companies will make the right decisions. Would it were that simple. These amendments won't stop bad decisions being made if they're endorsed by the government of the day. These amendments are not a catch-all. I acknowledge that there's a two-tranche process here, but they don't address poor decisions, or decisions that are against the state's interests or the public's interests, if those decisions are endorsed by a shareholder minister.
+
+I note that the amendments institute a requirement that if two shareholder ministers are the same person, another minister is selected as the second minister, with the exception of TASCORP. I remember when we were in government seeing amusing letters from the premier of the day to the treasurer of the day, when the premier was in fact the treasurer. Then, the treasurer would write back to the premier agreeing to the premier's request, when they were one and the same person. Of course, some of those situations may be unavoidable, but it's always better when your premier and treasurer are two distinct people because you do need someone to have a tight rein on finances, but you also need a premier who can push the envelope and argue for funding where it's needed.
+
+In the amendments, when our ministers issue directions to GBEs and state-owned companies, the directions have to be tabled unless the board requests otherwise on grounds of damage to the company, provision of unreasonable advantage, prejudicing an investigation or that it would be a breach of confidentiality. In such events, a statement that a direction has been given must still be tabled. The board must advise the shareholder ministers of progress against a direction at set intervals.
+
+There is a requirement in this bill for GBEs and state-owned companies to develop a statement of corporate intent for each financial year. Again, you would have thought that was just good corporate governance, and it is surprising that this is not already standard practice.
+
+The amendments institute a requirement to make a report to shareholder ministers on the first six months of each financial year. The report must also be published online. This is a very welcome transparency change, although it also has the same exceptions as are listed in respective directions.
+
+There is a requirement to notify shareholder ministers of adverse circumstances. I echo the question put by the member for Murchison about what the threshold is for a GBE to make that notification to shareholder ministers. Without raking over old coals, it's a matter of some public confusion - it's certainly confusing to me - that the TasPorts, TT-Line debacle came to be what it was.
+
+When I say that these issues with GBEs and state-owned companies are cultural and historical, they've been part of the culture and the problem for a very long time. The difference on this occasion, was that a Liberal government minister fell on his sword, was made the fall guy, or was ultimately responsible, which under the Westminster system of government, he of course was. However, it still baffles me that the minister could have an ongoing dialogue with the CEOs of GBEs for which he was responsible and not have been notified earlier that there was what you might call an adverse circumstance relating to the Devonport wharf or a breakdown in relations between the two GBEs. I still don't know exactly what it was, but every minister has weekly meetings with their departmental secretaries and officers. I'm not sure - because I was never responsible for a government business or state-owned company - I'm not sure what the timing is on briefings between GBEs and shareholder ministers, but I would be staggered if it was any less than once a month and I would think it would be once a fortnight.
+
+Ms Forrest - PAC was told monthly.
+
+Ms O'CONNOR - You were told monthly? With a GBE that's not unreasonable. There were many months with briefings between the previous minister and the CEOs of those two GBEs at which this looming problem wasn't raised, or was raised in such an obtuse way that the minister and his advisers didn't fully appreciated the extent of the problem. The amendment that will require shareholder ministers to be notified of adverse circumstances will, hopefully, make sure there is not another situation like that again.
+
+The bill institutes a requirement to develop and make public sponsorship frameworks in accordance with the Treasurer's instructions. I know this came up in the briefing that we had today, but could the Leader for Government Business clarify, on the record, what is likely to be in the Treasurer's instructions that provides guidance on sponsorship? Will there be an acknowledgement that not all sponsorship is necessarily good sponsorship? That there may be some entities that approach GBE for sponsorship for whom that sponsorship could potentially damage their brand. Can we have an indicator of what is likely to be in the Treasurer's instructions about protecting GBEs brands, as well as the values and the reputation of our GBEs and state-owned companies to demonstrate to these organisations and the people of Tasmania that there is an actual benefit or value of this sponsorship arrangement? The classic example is the TT-Line and North Melbourne Football Club sponsorship arrangement. However, there's no room for opacity here. We're talking about publicly owned companies spending public money, for all intents and purposes.
+
+There will also be a prohibition on a person being appointed as a director if they've served two terms or previously served as CEO, except in exceptional circumstances. Again, I echo the question put by the member for Murchison and also in the briefing today, can we have some clarity on the record about what those exceptional circumstances might be?
+
+In the second reading speech we were told that for government businesses putting Tasmanians' long-term interests first, means that businesses will be:[tbc]
+
+making the right decisions through corporate governance and competent and accountable boards and senior executives.
+
+We can certainly hope so.
+
+aligning the businesses corporate strategy where appropriate to the strategic interests of the state as outlined by shareholding ministers.
+
+delivering on any community service obligations assigned to it by government.
+
+These are the foundational principles of the governance reforms which, as we know, are a two-tranche reform process that:
+
+ensuring all Government Businesses place the interests of Tasmania first and are accountable for doing so.
+
+I observe there that it's a very subjective test. What, for example, the Treasurer believes is in the best interests of Tasmania and what any member of this place or any ordinary person on the street believes is in the best interest of Tasmania will vary widely. You can have a very clear, informed and accurate observation about Stadiums Tasmania and the Macquarie Point Development Corporation and whether or not they are placing the interests of Tasmanians first, given the findings of the Tasmanian Planning Commission report about the unaffordability, the unsuitable scale, the costs outweighing the benefits of the proposed Macquarie Point Stadium. However, obviously the Premier holds a different view of where the public interest is served there. 
+
+I see these sorts of principles as in some ways just verbiage. Hydro Tasmania has been compelled in the past by government ministers to engage in loss-making power supply contracts. Was that in the best interests of Tasmania? I'm not sure, and we don't know because there's no transparency in any substantive way about those contracts. 
+
+I would argue that it is not in the best interests of Tasmania for Forestry Tasmania to continue to fell and burn and send off to the chipper, in many instances, our beautiful native forests. It is in the best interests of Tasmania to be open and transparent about the impact of your business, for example, on the climate. You can't get any information out of Forestry Tasmania about their emissions because they don't even count the emissions from burning forests, and if they do, they won't tell us what that information is. 
+
+I heard an interesting bit of information not long ago. I understand that people who work for Forestry Tasmania, which is its company name, or Sustainable Timbers Tasmania, if you want to buy the spin, have been given a 5 per cent pay rise, which is well above the pay rise that's been granted to state servants. If that's true, is that in the best interests of Tasmania and the Tasmanian people? How do we make them accountable for that? 
+
+The other following principle is to improve governance for Government Businesses to ensure its effective, contemporary, fit for purpose, transparent and provides for appropriate oversight. Again, this goes to culture, because there hasn't been a culture of transparency or openness to oversight from all our Government Businesses and state-owned companies. One of the principles is to expand the range of performance monitoring options available to shareholding ministers. Good. It's very important that ministers have a line of sight to the performance of the GBEs and state-owned companies for which they're responsible.
+
+Another underlying principle is incorporating appropriate levers in the governance framework to manage or rectify poor performance of Government Businesses, if required, including in relation to major capital projects. Perhaps, the Leader for Government could - and this is on page 3 of the second reading speech - flesh out what that principle actually means in the real world.
+
+Incorporating appropriate levers in the governance framework to manage or rectify poor performance of Government Businesses including in relation to major capital projects.
+
+If we go back to the TasPorts and TT-Line debacle, does that mean a shareholder minister could, at the point of becoming aware of an adverse set of circumstances, step in and place a stop on those works?
+
+What does that mean? It would be very helpful.
+
+We are quite comfortable supporting this bill, these governance reforms. The only surprise is that it's taken so long and our minister losing his portfolio. However, the reforms they are overdue.
+
+We look forward to the next set of reforms and just in closing, I want to acknowledge that for all our frustrations as Greens with some of our government businesses and state-owned companies, we recognise and appreciate the enormous economic and social contribution that they've made to the state of Tasmania. In some ways it's a privilege for us to have publicly owned corporations that are working to the benefit of the state. In theory, sometimes and usually in practise, but I think overwhelmingly Tasmanians do appreciate the value that our GBEs and state owned companies bring to the state, which is why when it was announced that there'd be an examination of privatisation options, there was such a visceral public reaction because of the pride that Tasmanians take in these companies and the recognition of their contribution to our wealth and our society.
+
+It is a brave or foolish government that treads carelessly into this space and sends a signal that it might be selling off the family jewels. Obviously, we will also be supporting the next bill when it comes through this place, more likely tomorrow.
+
+With those few words, yes, we are happy to support this bill.
+
+[4.33 p.m.]
+Ms THOMAS (Elwick) - Mr President, I rise briefly in support of the bill. I thank other honourable members for their more comprehensive contributions and thank the Leader's office for the briefing this morning as well.
+
+As other members have mentioned, the sponsorship matter is one that I had questions on. Obviously, the bill requires that all government businesses establish and release a sponsorship framework that complies with the Treasurer's instruction and any regulations issue.
+
+One of the questions I have is: how sponsorship is defined or how will it be defined in the Treasurer's instruction?
+
+If it is defined in that place, is a financial threshold expected to be outlined in the Treasurer's instruction or regulations and/or the sponsorship framework of the government business itself?
+
+Another question I have is: will the Treasurer's instruction prescribe what is considered appropriate sponsorship? This bill has partly come about because there is a question about whether the government considers it reasonable for government businesses to use what is effectively taxpayer funds to sponsor organisations that already receive direct sponsorship from the government itself. There could be a perception that organisations receiving sponsorship from both sources are double dipping into the taxpayer purse. I expect and I think Tasmanians can rightly expect the Treasurer's instruction and regulations and the sponsorship framework -or a combination of those tools - to contemplate and explain this, so it is clear for Tasmanians what the expectation is in terms of where their taxpayer dollar is going and why. The government needs to be clear on its position on this. We heard that this requirement came about from feedback from private business. I've also heard feedback from grassroots sporting organisations that when government businesses are supporting the big guns in town, there's less sponsorship revenue going into the grassroots community organisations. I've put that concern on the record in this place a number of times in relation to government sponsorship more broadly and support for developing infrastructure for what effectively operate as commercial businesses, particularly when we're talking about sport. 
+
+Something that needs to be contemplated in this sponsorship framework is sponsorship for community organisations, and whether that ought to be a priority over sponsorship for commercial organisations, and how that's reflected. We know that the public purse through state government agency funding for supporting community grassroots sporting organisations is limited. It has not been increased significantly for a very long time.
+
+During recent times, government funding to commercially run sporting entities has increased, and whilst I've been clear that I support that to a point, my support for it is contingent on the government adequately investing in community sport. At this point, I don't see that occurring. We're seeing kids missing out on playing sport and that's not ok, because there's not enough facilities for them to play in. Volunteers work to the bone because there's just not enough funding for grassroots administration. I want to be clear about the government's position on this.
+
+The other question that I have is in relation to the terms. The bill includes a limit of two full terms for directors and chairs. My questions are:
+
+Are terms equal across government businesses? 
+
+What are they? 
+
+If they're not equal, how will it be clear what two full terms means?
+
+Rather than specifying a number of terms, was consideration given to specifying the number of years that a director or chair could serve on a board instead, and why was the decision taken to go with specifying a number of terms rather than a specific number of years?
+
+That is the extent of my questions. I look forward to the Leader's response.
+
+[4.38 p.m.]
+Ms ARMITAGE (Launceston) - Mr President, I thank the Leader for the briefings this morning. They were very informative. It is correct that I have often had a great interest in the board and the compilation.
+
+I have a reasonably short speech, given the comprehensive undertaking by the member for Murchison, which was really good and which I really appreciate, and by other members as well.
+
+I thank the Leader for bringing this forward. It's an interesting and important bill. There's quite a lot of content on which one could comment. Many Tasmanians rightly believe some of our government businesses aren't performing the way they should be, that they might not appear to be as accountable, responsible and transparent as they should be, and find that there's usually quite a lot of back and forth about who's to blame and where the buck stops when something goes wrong.
+
+Some of this has been born out very publicly, and, frankly, in rather embarrassingly informal settings. I have family in Western Australia, and they have mentioned some of the recent things that have been happening with our GBEs. I didn't really think young people would care about that. They don't say too much about the stadium or the football, but they've mentioned, 'Gosh, there's that ship over there we can see just coming to Fremantle', which is pretty sad.
+
+Unfortunately, we've had a few things go wrong in the past few years. Being taxpayer-funded, the community is correct in believing that the government's governance processes of these organisations should be robust, and that when things do go wrong, we could quickly identify what went wrong, when it went wrong and hold the proper person or people responsible and accountable.
+
+Amongst other things, the Leader stated the governance reforms in this bill being guided by principles such as placing the interests of Tasmania first, improving governance to ensure that it's effective, contemporary, fit for purpose, transparent and has appropriate oversight, expanding performance monitoring options available to shareholding ministers and incorporating levers to manage and rectify poor performance of government businesses.
+
+These are things that I feel should have already and always been in place for our government businesses. It is disappointing to see that these changes have only come about as a result of significant and expensive failings in some of our government businesses and their projects.
+
+This bill coming before us now implies to me that these principles weren't there already, or, if they were, had no formal or practical application to government businesses, their boards or their executives. It indicates that there was no proactive approach to management of government businesses. It is also really prudent to remember that when things do go wrong, the buck entirely stops with the shareholding minister and, if necessary, the government of the day.
+
+I understand this bill is about allocating risks and responsibilities between the government, shareholding ministers and government business boards, but a lot of this has come far too late.
+
+Costly, significant and frankly, embarrassing failures have already come out and it's only now occurring to the government that perhaps there should be some formal oversight and strategic planning put in place. In the interest of being fair and wanting to ensure these sorts of failures are never to be repeated, we now can point to something that we've done in response to them.
+
+Firstly, implementing a requirement that the two shareholding minister roles can't be undertaken by the same person, with an exception for the Public Finance Corporation, is a good step. There does need to be a degree of competition between ministers for resourcing and this can be lost if there's one minister who's the shareholder minister for more than one government business.
+
+I note in the bill there's a limit of two full terms for directors and chairs of government businesses unless approved due to exceptional circumstances, with any additional terms approved beyond the limits needing a notice to be tabled in both Houses of Parliament within 17 days and including the reasons for the extension.
+
+I would also like to know whether the terms are one year, three years or five years?
+
+Ms Rattray - Three years.
+
+Ms ARMITAGE - It's been indicated that there will be three-year terms, thank you.
+
+The Leader said the bill does not prevent the chair be appointed for another term. It would just require an additional layer of transparency when this occurs. What sort of scrutiny could therefore be applied to these sorts of extensions and decisions. If this does occur in the future, is it then a matter of questioning the shareholder ministers about them? I am just conscious that transparency here doesn't necessarily equate to scrutiny. I don't know if there are any avenues to challenge such decision-making.
+
+While there are GBEs and state-owned companies that operate quite well, I certainly don't want to make it sound that every GBE -
+
+Ms Rattray - You don't want to put them all in the one basket.
+
+Ms ARMITAGE - No, I don't. I don't want to say that every GBE or state-owned company has problems, because there are some that operate very well.
+
+I understand the selection of boards and board members is also being reformed by this bill. The leader said board selection processes and guidelines will also be updated to ensure there is more focus on appointing directors who understand the business needs in a Tasmanian context. If the Leader could expand on what this actually means and how it will be applied in practice? How will a person's ability to understand the business needs in a Tasmanian context actually be assessed and by whom?
+
+The Leader also went on to say that the government has sought independent expert advice on best practice board evaluation, including the evaluation approach, what should be covered in an evaluation, the frequency of evaluations and benchmarks for assessing and comparing board performance. Again, can additional details on who will be carrying out these performances be provided? At what point is this sort of advice binding? If a board or board member is assessed as being underperforming, what are the next steps? Are they automatically removed? Is there recourse for them to be reassessed? Can a shareholding minister simply ignore the assessments? Will the results of these assessments be made public?
+
+As I'm sure many of you are aware, I have for a very long time been monitoring the number of Tasmanian-based board members. I have consistently been collecting and retaining data on the number of board members and where they're based. Many members of Tasmania's boards, beyond just those of our GBEs and state-owned companies are based interstate. This is why I focused on understanding the business needs in the Tasmanian context earlier. The bill seems to stop short of actually ensuring there are formal measures or benchmarks to ensure that a minimum number of regionally based, or even Tasmanian-based board members are appointed to our government businesses.
+
+Only back in November 2024, the Premier issued a media release pertaining to the proposed merger of TasPorts, TT-Line and TasRail that also stated the proposed merger was one part of a wider plan to fix government businesses with governance reforms, including a minimum of 50 per cent of board members being Tasmanian.
+
+I would be really grateful if the Leader could let me know if this is still the plan and I don't mean the proposed merger. Will there also be efforts made to ensure we have regional representation on Tasmanian boards? It would be necessary, for example, to have a board member based in the north-west of the state to sit on the TasPorts board. As of June 2024, of the five board members of TasPorts, one was based in the south, one was based in the north and three were from interstate. None was based in the north-west.
+
+Ms Forrest - Not because there are not good people up there, let me assure you of that.
+
+Ms ARMITAGE - I absolutely agree with you, member for Murchison.
+
+Ms Forrest - Capable, competent.
+
+Ms ARMITAGE - I may even add that in my speech. I believe it's written in there somewhere. Anyway, I believe this is symptomatic of the problem. Our boards have been outsourced to such a large degree and have been governed by people who might not perhaps feel like they've got much of a stake in the businesses they're managing because they are not from here and consequently don't really have an understanding of the business needs in a Tasmanian context.
+
+It's clear that quite a lot has gone wrong with some of our boards and some of the projects which have been undertaken and managed. The buck stops with ministers, and some of them have not been immune to the accountability and responsibility that's expected of them when things go wrong. For some of the significant failures that have occurred with some of our government businesses in the past few years, yes, this bill and the reforms it contains come far too late.
+
+That being said, we need to make sure it doesn't happen again. We can't assume that these patterns won't repeat themselves and giving shareholder ministers and the parliament and people to whom they're accountable greater oversight and scrutiny powers is therefore necessary and important.
+
+While I accept there's sometimes a need for interstate representation on a board, I wonder if this bill goes far enough. I have already stated it's necessary to closely examine the possibility of having a minimum number of Tasmanian-based board members sitting not just on our GBE and state-owned company boards, but the boards of all public entities. We have so many talented, passionate and community-minded people who would do such a fantastic job but are overlooked in favour of people who don't even live here.
+
+I do understand this is only the first tranche of reforms in government business governance, but there's still much more to do. This is a good first step, but I have many questions which I hope can be answered so I can make a better-informed decision and have a better understanding of how Tasmanian government boards will be managed going into the future.
+
+[4.50 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I acknowledge the contributions that have been put forward today. I can understand why quite a bit of the text had been put forward. We all know what's brought about these government business governance reforms.
+
+There are a lot of answers to members' questions. Some of the answers will overlap questions from more members than just the member for Murchison - the members for Elwick, Launceston and Hobart, some of them overlap.
+
+I'll start with how sponsorship will be defined. This will need to be considered in development of the Treasurer's instructions and guidelines. There will be consultation with government businesses as these are developed. Overall, there is an intention for the new requirements to increase transparency around sponsorship being provided by government businesses and ensuring there is clarity regarding the objectives of sponsorship. This will be considered when establishing the definition of what is to be included within the framework.
+
+There was a question from the member for Hobart about whether it's a good thing for Tasmania and how subjective that is. I expect that that part of how sponsorship will be defined is something that will be considered in the development of the Treasurer's instructions and guidelines.
+
+Continuing on, there's expected to be new Treasurer's instructions and guidelines on the sponsorship framework, and this is expected to indicate a definition of sponsorship, the principles that the government expects the sponsorship framework to be consistent with, the reporting requirements, and that ministers expect to be consulted on sponsorship arrangements before they're approved by the board.
+
+I can confirm that the intention is for government businesses to report the amount of sponsorship provided in the annual report. I'm assuming that that also means the quantum, the amount, it's not just the number, it's the quantum as well. I'm getting a nod.
+
+It's also intended that the principles will include the requirement for any sponsorship arrangements to align with the values and purposes of the government business. Government businesses will also be expected to consider any risks and conflicts related to a sponsorship arrangement, including reputational risk and actual, perceived, and potential conflicts of interest. It's a fairly lengthy response around that matter.
+
+Another one of the really important questions - they're all important, but I found this one very interesting as well, is how long a director's term is. For government business enterprises, a director may be appointed for up to three years. The instrument of appointment will specify the date that the term expires. For state-owned companies, the constitution specifies the maximum allowable term. In most cases this is until the third annual general meeting after their appointment, unless they are filling a casual vacancy, except for Tasmanian Irrigation, where a director can be appointed for up to five years. However, as we heard in the briefing, when the constitutions are updated, as is required by the legislation, this difference for Tasmanian Irrigation will be removed. The instrument of appointment does not specify a specific date for the expiry of the term of a state-owned company director, as the annual general meeting does not occur on the same day each year, but it is required to be held by the end of November of each year unless it is resolved to be held later. It must be held before the end of December of each year.
+
+If a director resigns before the term for which they were originally appointed has expired, this will count as a term for the purposes of the provisions. I trust that is very clear.
+
+Why are the provisions linked to terms and not the number of years? That was raised by the member for Elwick and the member for Launceston. The option of setting a maximum number of years was considered, but the government decided to link the limit to the number of terms. This approach provides flexibility to support board succession planning, if for example, there's a need to stagger the terms. It also deals with the arrangements for the term of appointment for the directions of a state-owned company being linked to the timing of the annual general meeting. This may, for example, result in a director being on the board for two terms, but in total this being six years and two weeks, just due to the date of the annual general meeting.
+
+There was a question of what is considered to be 'exceptional circumstances'. The bill does not include a definition of exceptional circumstances. It will be a matter to be considered by the shareholding ministers on a case-by-case basis. Circumstances that have previously arisen that have resulted in a director serving more than two terms are:
+
+If a person has served as a director for one term and then been appointed as the chair. In this instance they may have served one term as a director and then two terms as a chair.
+
+If a board has had some early resignations combined with regular turnover. In this instance, it may be relevant to consider continuity, and consider reappointing an experienced board member for another term.
+
+If there is a need for specific specialist expertise, or if a business is partway through a major transition or capital project. In this instance, it may be appropriate to extend that tenure.
+
+In relation to whether the CEO can be on the board, this is allowed subject to the guidelines for Tasmanian government businesses on appointing the CEO as a member of the board.
+
+Regarding the question of why some changes refer to members and some refer specifically to Treasurer and portfolio minister, there is a difference between the terminology used in the bill in relation to the role of shareholding ministers due to the different governance frameworks for government business enterprises and state-owned companies.
+
+As state-owned companies are incorporated under the Corporations Act 2001, the ministers are referred to as members. The act then defines who are the members. This is the Treasurer and portfolio minister or another minister if the Treasurer and the portfolio minister are the same person. For government business enterprises, the Government Business Enterprises Act 1995 establishes the owner-representatives as being the Treasurer and portfolio minister. Therefore, there are no members for government business enterprises. I can confirm that both the Treasurer and portfolio ministers must issue directions jointly.
+
+In summing up, section 13 of the GBE act currently requires that:[checked]
+
+A Board must notify the Treasurer and Portfolio Minister of any development which, in the opinion of the Board, may -
+
+prevent or significantly affect the achievement of the financial performance objectives under the corporate plan by the Government Business Enterprise or its subsidiaries; or
+significantly affect the financial viability or operating ability of the Government Business Enterprise, any subsidiary or any partnership, trust, joint venture or arrangement for the sharing of profits in which the Government Business Enterprise participates; or
+ [Bookmark: GS13@Gs1@Hpc@EN] otherwise significantly affect the Government Business Enterprise in any manner.
+
+The bill includes a requirement that continuous disclosure includes disclosure around compliance with directors. The bill also replicates these provisions for the state-owned companies.
+
+As for the guidelines for Government Businesses, reporting provide that a Government Business is to immediately advise the shareholding minister in writing of any information that a reasonable person would expect may have a material effect on the value of the Government Business or its subsidiaries, and this may include information that may significantly affect the achievement of financial targets or key performance objectives in the corporate plan and the statement of intent, and may have a material impact on financial returns to government in the context of the operating environment of business, and may influence decisions by the shareholding ministers or relates to an issue, financial or otherwise, which the government may be required to comment.
+
+The trigger for this disclosure will be a judgement for the board, however the six-monthly reporting period will also provide a further check and balance and greater disclosure and transparency in terms of assessing whether a potential director has an understanding of the Tasmanian context in which the business operates within. This is a matter that will need to be assessed during the board recruitment process and through continuous performance.
+
+The power to object to a direction by the board is already included in the GBE act in relation to community service obligations and will ensure that any specific requirements to be contained in a direction can actually be implemented and to enable concerns regarding the impact of a potential direction on the business to be raised. This does not impact the independence of the board; it allows the directors to independently object.
+
+The amendments provide a best practise framework and the government recognises there is more work to do, and members recognise that as well in their contributions. There will be an increased focus on best board performance and evaluation, such as the requirement for three yearly independent reviews of the performance of boards. These new requirements, as well as additional guidance for boards, will be included in the new guidelines and Treasurer's instructions. Levers to manage and/or rectify poor performance will include amending current legislation to establish mechanisms to provide shareholding ministers with options to manage and intervene in instances of poor performance, giving ministers greater oversight on board performance as well as the ability to request the board to prepare an improvement plan, as well as the ability of the government to appoint an independent person to undertake an assurance review or a performance review to be undertaken by the Auditor-General. There are also some committees of parliament.
+
+There is no legislative requirement relating to the number of Tasmanians on boards and the proposal for 50 per cent of Tasmanian membership on boards was not included in the legislation, as there is continuation on the prioritisation of skills and experience in board selection and 50 per cent will remain a target and is one element of diversity on boards that will be referenced in the board appointment guidelines. So, watch this space.
+
+I trust that that has answered the questions that were put forward. I very much appreciate the advisers working very quickly on those. I certainly appreciate members' contributions.
+
+Given that we have committed to a 5 p.m. finish, can I move that the debate stand adjourned?
+
+Mr PRESIDENT - Yes, you can if you so wish.
+
+Ms RATTRAY - Mr President, I move -
+
+That the debate be now adjourned.
+
+This is because we made a very important commitment earlier in the day.
+
+Debate adjourned.
+
+
+MESSAGES FROM THE HOUSE OF ASSEMBLY
+
+Committee Appointments and Schedules
+
+[5.05 p.m.]
+Mr PRESIDENT - I have a message from the House of Assembly. 
+
+The House of Assembly, having taken into consideration the message of the Legislative Council dated 23 September 2025 regarding the appointment of a Joint Sessional Committee on Gender and Equality, agrees to Monday 13 October 2025 at 10 a.m. as the time and Committee Room 1 as the place for holding the first meeting of the committee, and further informs the Council, it has appointed Ms Brown, Mr George, Ms Rosol and Mr Vermey to serve on the Joint Sessional Committee on the part of the House of Assembly.
+
+Jacquie Petrusma
+Speaker
+House of Assembly
+24 September 2025
+
+A further message from the House of Assembly:
+
+Mr President, the House of Assembly, having taken into consideration the message of the Legislative Council dated 23 September 2025 regarding the appointment of a Joint Standing Committee on Electoral Matters, agrees to the amendments proposed by the Legislative Council to the resolution, and Wednesday 8 October 2025 at 12.00 p.m. as the time and Committee Room 1 as the place for holding the first meeting of the committee. Further, it informs the Council it has appointed Mr Bayley, Mr Ferguson, Ms Haddad and Ms Johnston to serve on the Joint Sessional Committee on the part of the House of Assembly.
+
+Jacquie Petrusma
+Speaker
+House of Assembly
+24 September 2025
+
+The final letter from the House of Assembly:
+
+The House of Assembly, having taken into consideration the message of the Legislative Council dated 23 September 2025 regarding the appointment of a Joint Sessional Committee on Workplace Culture Oversight, agrees to the amendments proposed by the Legislative Council to the resolution and on Thursday 25 September 2025 at 1.15 p.m. as the time and Committee Room 1 as the place for holding the first meeting of the committee. Further, it informs the Council it has resolved that the Speaker, the Premier, Mr Willie and Dr Woodruff be appointed to serve on the Joint Sessional Committee on the part of the House of Assembly.
+
+Jacquie Petrusma
+Speaker
+House of Assembly
+24 September 2025.
+
+
+ADJOURNMENT
+
+[5.08 p.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I move -
+
+That the Council, at its rising, adjourn until 11 a.m. on Thursday 24 September 2025.
+
+Motion agreed to.
+
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - I remind members of the briefings for tomorrow morning. We have the first one at 9.30 a.m., which is the departmental briefing in regard to Commissions of Inquiry Amendment (Private Sessions Information) Bill 2025, and we also have a briefing on the Sentencing Amendment (Aggravating Factors) Bill at 10 a.m. with Professor Nicole Asquith, Aimen Jafri, Rodney Croome and Vaughn Bennison. Then at 10.30 a.m., there's a departmental briefing.
+
+I ask members if they wouldn't mind staying behind for five minutes after we adjourn at the request of the member for Mersey.
+
+Mr President, I move - 
+
+That the Council do now adjourn.
+
+The Council adjourned at 5.09 p.m.
+
+
+
+DRAFT
+
+
+DRAFT
+UNCORRECTED PROOF
+
+	1	Wednesday 24 September 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]
