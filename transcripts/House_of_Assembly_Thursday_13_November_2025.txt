@@ -1,0 +1,885 @@
+﻿
+Title: House of Assembly Thursday 13 November 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: House of Assembly
+Character Count: 61875
+Characters with Spaces Count: 73956
+Company: Parliament of Tasmania
+Creation Date: Thu, 13 Nov 2025 3:38:00 AM (UTC)
+Keywords: 2025
+Last Printed: Thu, 13 Nov 2025 3:37:00 AM (UTC)
+Last Saved Date: Thu, 13 Nov 2025 3:42:00 AM (UTC)
+Line Count: 1482
+Links Dirty: false
+Links Up To Date: false
+Page Count: 4
+Paragraphs Count: 411
+Revision: 3
+Scale Crop: false
+Security: 0
+Shared Document: false
+Subject: Hansard
+Template: Hansard debates September 2025
+Total Editing Time: 1
+Typist: Karen Cuzzucoli
+Word Count: 12415
+isys:SubType: Word 2007
+
+PARLIAMENT OF TASMANIA 
+DEBATES OF THE HOUSE OF ASSEMBLY 
+ 
+ 
+ 
+ 
+DAILY HANSARD 
+ 
+ 
+Thursday 13 November 2025
+Preliminary Transcript 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+This draft transcript of debates is issued in advance of the final Hansard for the use of the members of the House of Assembly and copies made from this may not be protected by parliamentary privilege. 
+ 
+
+
+
+
+
+
+Thursday 13 Nov 2025
+
+The Speaker, Mrs Petrusma, took the Chair at 10.00 a.m., acknowledged the Traditional People, and read Prayers.
+
+
+STATEMENT BY SPEAKER
+
+Standing Orders 144 and 127
+
+The SPEAKER - As I indicated yesterday, this morning I will make a statement to the House in relation to the practice of Standing Orders 144 and 127. Standing Order 144 applies to offensive or unbecoming words in reference to a member of the House. The practice of the House is that where a member takes personal offence to such words, the Speaker may direct that the member who made the comment is to withdraw the words. What constitutes offensive language needs to take into account both the nature and context of the words spoken. 
+
+Criticism or commentary of a member's political or policy positions is not something that is regarded as offending Standing Order 144, as such an approach would mean that a significant number of contributions made by all members in this House would offend this Standing Order. Such comments are instead open to debate, and members have the ability to put alternative views on the record during the debate or through using other forms of the House.
+
+Standing Order 127, on the other hand, enables a member to make a personal explanation, usually when the member has some objection to make or some explanation to give. Such a claim is most often made on the basis that the member has been misrepresented or misquoted. There is, therefore, a difference between offensive language or imputing unbecoming motive that would require a withdrawal under Standing Order 144, and a member claiming that they have been misrepresented or misquoted, which falls within the operation of Standing Order 127. Providing a personal explanation under Standing Order 127 also gives the member the opportunity to rebut the comments made by the other member and to put their position on the record. It does not require that the member who made the comment needs to withdraw it.
+
+During the Leader of the Greens' contribution to the appropriation bill yesterday, the Leader of the Opposition indicated that he was personally offended by the following comments made by the Leader of the Greens, Dr Woodruff:
+
+As the Leader of the Opposition has said time and again, since Labor backflipped on its original opposition to a stadium, they will give their unconditional support to the Liberals and they will back it, whatever the cost.
+
+The Leader of the Opposition, Mr Willie, then said:
+
+I've never said that. 
+
+And shortly after:
+
+Point of order, personal offence. I haven't actually said any of those.
+
+I then provided the opportunity to the Leader of the Opposition to make a personal explanation to address these comments at the end of the conclusion of the item of business. This is because the basis of the honourable Leader of the Opposition's objection to the words was that he had not said any of those comments. He has met the criteria for Standing Order 127 that the honourable Leader of the Opposition had been misrepresented or misquoted, therefore he could provide a personal explanation. As is the practice of the House, I did not enable the personal explanation to be made immediately but gave the Leader of the Opposition the call when the Leader of the Greens had concluded her contribution so as not to interrupt the business before the House.
+
+As the Leader of the Opposition asked for the words to be withdrawn, I subsequently asked the Leader of the Greens to withdraw the comments until such time as I could review the Hansard. Having now read the Hansard. Having now read the Hansard, I wish to clarify for the House that on this occasion, these comments did not need to be withdrawn by Dr Woodruff as they were commentary on the member's political or policy position, rather than something that could be regarded as personally offensive words.
+
+To summarise, enabling the honourable Leader of the Opposition to provide a personal explanation, as was provided yesterday, was appropriate under Standing Order 127, not Standing Order 144, and Dr Woodruff did not need to withdraw her words. This approach in relation to the operation of Standing Order 127 and 144 will continue to be adopted.
+
+
+QUESTIONS
+
+TT-Line - Insolvency
+
+Mr WILLIE question to PREMIER, Mr ROCKLIFF
+
+[10.06 a.m.]
+You told this House that the government was informed of the Auditor-General's determination regarding TT-Line on 21 July. Then on 26 July, an increase to TT-Line's borrowing limit was approved after informing the opposition, yet we weren't told about the Auditor-General's findings. Did you cover up the knowledge of how serious TT-Line's financial troubles were to avoid undermining your efforts to do a deal with the Greens and Independents to secure government?
+
+ANSWER
+
+No.
+
+Supplementary Question
+
+Mr WILLIE - A supplementary question, Speaker? 
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr WILLIE - Why wasn't the opposition informed in caretaker of the real situation? What were they covering up?
+
+The SPEAKER - Honourable Premier.
+
+Mr ROCKLIFF - Emphatically: no. As I understand it, the Auditor-General hadn't reported it to the Australian Securities and Investments Commission (ASIC) at that time. but I might say as well -
+
+A member - It's been reported to ASIC? Interesting.
+
+The SPEAKER - Order. As I outlined to the House yesterday, if there are continual disruptions, I will now have no hesitation to issue warnings, and they can be in quick succession. I am sure nobody wants to be suspended from the House today. I ask that the honourable Premier be heard in silence and that you ask alternative questions or otherwise raise it in other forms of the House.
+
+Mr ROCKLIFF - Further to that, and I'm running out of time, but I'm satisfied with the arrangements when it comes to solvency because the shareholder ministers are satisfied.
+
+Yesterday the shareholder ministers, minister Vincent and Treasurer Abetz, were briefed by TT-Line's independent external advisers and remain comfortable with both the board's opinion of the solvency of the company and the work being undertaken to determine the long-term financial options -
+
+The SPEAKER - The Premier's time has expired.
+
+
+TT-Line - Borrowings
+
+Mr WILLIE question to PREMIER, Mr ROCKLIFF 
+
+[10.08 a.m.]
+I think I just heard the Premier saying that the Auditor-General had reported this matter to ASIC, which we will be following up next week in Estimates.
+
+Premier, you continue to refer to TT-Line's $400 million of additional borrowings as a temporary extension. The Auditor-General has determined that TT-Line would not be able to meet its longer term debts that fall after August 2026 and it's insolvent. The current ships are worth less than $100 million each. How will it be temporary unless there's another huge bailout from Tasmanian taxpayers?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for his question and continued, incessant negativity on what is an extraordinarily positive opportunity for Tasmania and Tasmanians. I know the honourable member has to make hay while the sun shines, so to speak, because he knows that in 12 months' time, of course, the brand-new ships will be going up the Mersey River, out into Bass Strait, into Geelong. Along with it will be not only passengers but the wonderful produce that Tasmanians are producing. There will be more capacity for our primary producers and also bringing people here to add value to our $3.5 billion visitor economy, where the yield per tourist appears to be increasing, or at least that's the advice I had as Tourism minister, which is fantastic. Record people are coming to Tasmania through airports -
+
+Mr WILLIE - Point of order, Speaker, Standing Order 45, relevance. The question was how could it be a temporary increase in the loan facility unless there's a massive bailout from Tasmanian taxpayers?
+
+The SPEAKER - I draw the Premier to the question, please.
+
+Mr ROCKLIFF - It is important to note that in July 2025, the Tasmanian Public Finance Corporation (TASCORP) approved a temporary increase to the vessel replacement borrowing facility from $990 million to $1.4 billion until 31 October 2026, plus the maintenance of the company's $45 million working capital  [Bookmark: Phr2_O=30.3_D=28.2_C=0.84] facility. The then treasurer provided a guarantee to TASCORP that the maximum amount guaranteed by the state for TT-Line is increased to $1.45 billion. 
+
+
+Macquarie Point Stadium - Cost
+
+Dr WOODRUFF question to PREMIER, Mr ROCKLIFF
+
+[10.11 a.m.]
+Once upon a time you promised the stadium would cost $715 million. You stood in this place day after day and insisted the project would be delivered on that budget.  [Bookmark: Phr3_O=58.8_D=29.9_C=0.82] You even mocked the Greens for suggesting it would cost a billion dollars. Yet here we are today with the cost for the project already blown out by $400 million and it's passed that billion-dollar figure. Every time more detail has been added to the stadium design the price tag has gone up. First it went up to $775 million, then when the project was 50 per cent designed it went up to $945 million. Now it's 70 per cent designed and the cost is $1.13 billion. Once upon a time [Bookmark: Phr4_O=88.8_D=13.3_C=0.83]  you promised there would be no cost blowouts. Will you repeat that today? Will you promise that $1.13 billion is the final price, or will you be honest and admit the cost is likely to soar further? 
+
+ANSWER
+
+ [Bookmark: Phr5_O=105.1_D=7.2_C=0.56] Honourable Speaker, I thank the honourable member for her question. If I do, you will support it - is that right? [Bookmark: Phr6_O=114.4_D=1.5_C=0.87] 
+
+ [Bookmark: Phr7_O=119.0_D=6.1_C=0.86] Dr Woodruff - This is about honesty to Tasmanians. We represent Tasmanians and they want the truth.
+
+Mr ROCKLIFF - So do I. I represent opportunity and aspiration.  [Bookmark: Phr8_O=126.9_D=6.3_C=0.80] That's why we've driven this project so very, very hard, listening to Tasmanians, travelling around Tasmania a [Bookmark: Phr9_O=134.3_D=17.4_C=0.86] nd speaking with Tasmanians to ensure they get a greater understanding of what is a significant state investment and federal investment, of course. The opportunity before us, whether it is $1.13 billion -
+
+ [Bookmark: Phr10_O=153.1_D=1.5_C=0.44] Mr Bayley - It is two billion now.
+
+ [Bookmark: Phr11_O=156.5_D=8.3_C=0.67] Mr ROCKLIFF - It's two now?
+
+The SPEAKER - Order, interjections will cease. The honourable Premier is the only one who has the call. 
+
+Mr ROCKLIFF -  [Bookmark: Phr12_O=165.9_D=3.6_C=0.82] I might add that when you  [Bookmark: Phr13_O=170.2_D=24.1_C=0.81] oppose this, you really have to think long and hard about what you are opposing. You are opposing the establishment of a decades-old dream of the Tasmanian Devils, which is going gangbusters. 
+
+Dr Woodruff - Point of order, Speaker, Standing Order 45, relevance. This is about the cost of the stadium and whether the Premier will be honest and tell them what the figure will finally be.
+
+ [Bookmark: Phr14_O=195.7_D=3.3_C=0.68] Mr ROCKLIFF - We have updated  [Bookmark: Phr15_O=199.4_D=29.9_C=0.85] Tasmanians on the increase in costs. Of course, I can't be beholden to the $1.13 billion, but, of course, this project will be no doubt scrutinised - it already has been - within an inch of its life and will continue to be, so there is great incentive to bring it within budget. But you will be saying no to $240 million of federal government funding,  [Bookmark: Phr16_O=229.3_D=26.7_C=0.82] $360 million of AFL investment into Tasmania; $600 million you will be saying no to on behalf of Tasmanians. 
+
+Dare I say that it's not just about you. It's about the young people of Tasmania who deserve a future in this state. People talk about those opposite, and I thank them for the bipartisan support,  [Bookmark: Phr17_O=256.7_D=3.1_C=0.82] about young people leaving Tasmania. We want our young people  [Bookmark: Phr18_O=260.3_D=25.0_C=0.86] staying in Tasmania and providing them with opportunity, like every other state has. I was speaking to a person in the construction industry the other day who has great insight into where all the construction machinery is heading right now. Unfortunately, it's all going to Queensland. We want that opportunity  [Bookmark: Phr19_O=286.1_D=3.0_C=0.76] and those jobs here. That is why we are committed to this project.
+
+Supplementary Question
+
+Dr WOODRUFF - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+ [Bookmark: Phr20_O=289.9_D=14.6_C=0.82] Dr WOODRUFF - The Premier said that he can't be beholden to the $1.13 billion. Is there an upper limit that his government will pay for this stadium?
+
+The SPEAKER - It is related to the answer.
+
+Mr ROCKLIFF - When you consider the investment that we're making, we need to ensure that we look after every single dollar and that be scrutinised. We also need to make this the best possible opportunity and ensure that this stadia is iconic. To do so we need to have the right investment and of course make it truly Tasmanian stadia infrastructure that we can be very proud of, as other states are.
+
+When it comes to the budget, yes, that will be scrutinised. This is the most scrutinised project in the history of the world.
+
+Dr Woodruff - Is this a blank cheque?
+
+The SPEAKER - Order, Dr Woodruff.
+
+Mr ROCKLIFF - We haven't even turned first sod yet, for heaven's sake. We will make sure that this investment is value for money, but most importantly, an investment that Tasmanians will be extraordinarily proud of, like other stadia infrastructure across the country.
+
+Dr Woodruff - Not 'one red cent more than $375 million.' Now it's a blank cheque.
+
+The SPEAKER - The honourable Premier's time has expired. Dr Woodruff, I appreciate that today is going to be a very passionate day. I caution the member to minimise and stop the interjections, because there's an important debate later on today.
+———————————————————
+Recognition of Visitors
+
+The SPEAKER - like us all to please welcome year nine students from the Hutchins School. Welcome to parliament.
+
+Members - Hear, hear.
+———————————————————
+Macquarie Point Stadium - Economic Modelling
+
+Ms JOHNSTON question to TREASURER, Mr ABETZ
+
+[[10.18 a.m.]
+Yesterday you said that you didn't think it was possible to model how much money might flow directly into state coffers from the stadium's economic activity, yet later in question time your advisers found some modelling; something showing that the AFL's payroll in Tasmania would bring in about $2 million per year in payroll tax. Leaving aside that pitiful contribution to reducing state debt and servicing stadium costs, clearly modelling is possible. Is there more such modelling? If so, will you make it public? If there is no more modelling, will you instruct Treasury to do it and make it public? If not, why not?
+
+ANSWER
+
+Honourable Speaker, yes, I did compliment the member for Clark yesterday on her acknowledgement that the stadium would ensure that there was greater economic activity than currently exists as a result of the stadium. I thanked her for that acknowledgement. What I indicated was that that would then have a spin-off for state coffers. 
+
+I was asked about modelling. No modelling has been done in relation to the AFL contribution. The AFL itself has said that with its operations, given what they know, they will have a payroll of $44 million. From that, off the top of my head, I thought the payroll tax on that would be about $2 million. I was corrected, and corrected the record later to say it was in fact $2.6 million, even a little bit more if that is the payroll of the AFL.
+
+Will I ask Treasury to engage in such modelling? I don't think so, but I can make enquiries as to whether that is a reasonable and possible thing to do, given all the vagaries and a lot of imponderables in relation to how much will actually go into payroll tax or stamp duty. What we do know is that they will be an influx of personnel. Just think about this: here we have the opportunity of a business that will have a payroll of $44 million that does not exist today, and there are members in this place who want to vote against that opportunity. I, for one, will not be voting against that opportunity. I'm going to be voting for it because I want aspiration and ambition for our people. 
+
+Might I add, it's not only in the area of the craft of AFL. The intellectual nerds, if I can call them that, the computer people - which I have no understanding about - they will be getting jobs. The waiters, the cooks, the chefs, a whole host of people will have job opportunities in this area, which I don't want to seek to deny them. Let's look at the opportunities, let's fulfil the ambitions and this will provide opportunities for a whole host of people, not only in the sporting arena - physiotherapy, medical, accounting, the list goes on. This is a $44 million payroll that you would seek to deny Tasmanians.
+
+Supplementary Question
+
+Ms JOHNSTON - A supplementary question, honourable Speaker.
+
+The SPEAKER - I will hear the supplementary question.
+
+Ms JOHNSTON - This is a very important question that goes to the heart of affordability. The Treasurer has just said in his response that no modelling has been done on the actual amount of money that will go from the economic activity into government coffers to pay not only for the debt-servicing costs, but, as the Treasurer keeps repeating, to pay for health, housing and schools in the future. Treasurer, how can you possibly continue to say that the stadium will pay for health, housing and schools in the future if you don't know and you won't model the actual revenue that will come back into state government coffers?
+
+The SPEAKER - Honourable Treasurer.
+
+Mr ABETZ - There's a pretty basic economic assumption and that is, as the economy grows - and this will be an economic enabler, so we will see the economy growing - you then get more money coming in, from the federal point of view: income tax, company tax, state revenue, stamp duty, payroll tax. It just stands to reason. It is Economics 101, with respect. I don't think any further explanation is required.
+
+If we have a growing economy, we have a growing base from which to get a tax revenue, which will assist in the future funding of matters - health, education, or wherever else that expenditure should be provided, courtesy of the vote of this House.
+
+
+Salmon Industry - Regulatory Changes
+
+Mr GEORGE question to PREMIER, Mr ROCKLIFF
+
+[10.22 a.m.]
+Yesterday, we learned that yet another farmed salmon company, Huon, is using the new antibiotic florfenicol in our waterways to treat diseased pens, an indication of what may yet prove to be another summer of mass mortalities. Your own government report reveals so many shortcomings in dealing with the crisis that occurred last summer that coastal communities have every right to be sceptical of reassurances that everything's under control. It's simply not good enough to keep repeating that everything is improving when clearly it is not. Will you tell this House what changes to regulatory procedures, and what real changes, have been implemented to deal with another summer of antibiotics and mortalities almost upon us?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for the question and concern on behalf of yourself and your constituents. Can I say that all Tasmanians, irrespective of location or view on the aquaculture industry, do not want a repeat of last summer. That's why the report was done, in terms of the findings and learnings from that. I've spoken a number of times about the continuous improvement needed for the aquaculture industry - increased penalties in a range of areas, increased monitoring in a range of areas as well.
+
+On florfenicol, of course, a very important and effective and safe antibiotic to use: the Director of Public Health has confirmed there is no evidence of harm to human health from consuming traces of florfenicol. It is safe to swim and safe to eat the fish. That needs to be very clear. That's why it's being permitted and regulated by the federal institution, if I can put it that way.
+
+Over the last 11 years, we've seen the industry regulation evolve as the industry has grown. I know it's helpful to characterise foreign companies, but if there wasn't foreign investment in Tasmania, this place would dry up. We need foreign investment. I've lived with foreign investment all my life as a farmer - McCain, Simplot, and all sorts of agricultural companies and suppliers. It's important -
+
+Mr GEORGE - Honourable Speaker, Standing Order 45, relevance. I asked the Premier quite a clear question. Will he tell the House what changes in regulatory procedures have been implemented to deal with another summer of antibiotics and mass mortalities? We don't need a lecture.
+
+The SPEAKER - That's all you need to do. Point of order, relevance. Premier.
+
+Mr ROCKLIFF - I thank the honourable member, but you took licence in your question, I can take licence in my answer - provided the good Speaker allows me to do so. 
+
+The SPEAKER - I do remind the Premier of relevance.
+
+Mr ROCKLIFF - Measures progressed by NRE (The Department of Natural Resources and Environment Tasmania) include: increasing veterinary and bio-security compliance capability with three additional staff, and I believe I've mentioned these before; implementation of the Salmonid Biosecurity Quality Certification Program; planning and implementation for a 2025-26 biosecurity compliance audit programme and a marine aquaculture compliance strategy; increasing multi-regulator land- and water-based compliance assessment activities; the Centre for Aquatic Animal Vaccine Health progressing specific diagnostic tests.
+
+The SPEAKER - The honourable Premier's time has expired.
+
+Supplementary Question
+
+Mr GEORGE - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr GEORGE - The Premier says that these procedures are being put into place. I'm asking what is being done now? What is in place already to prevent and to deal with another mass-mortality outbreak this summer?
+
+The SPEAKER - That was in the original question, Premier.
+
+Mr ROCKLIFF - My understanding is that additional work which is being progressed by the Environment Protection Authority (EPA) includes: the process of varying marine environmental licences to add new conditions around detection, containment and removal of dead fish within a specified timeframe and keeping the records to demonstrate compliance; reviewing reporting templates used by industry including the mortality weight reporting to ensure that all relevant data is provided in a consistent manner by the companies; and liaising with NRE, Tasmanian Biosecurity, Tasmanian Marine Resources and the Department of Health so that regulatory requirements are better aligned to establish data-sharing arrangements.
+
+In addition to the measures detailed in the report, industry has advised the government that it has been proactively implementing measures to reduce the risk of another mortality event. Efforts include advancing selective breeding programs, refining feeding practices and pioneering risk-mitigation technologies, such as the innovative jellyfish bubble curtain system, notably -
+
+The SPEAKER - The Premier's time has expired.
+
+
+Homes Tasmania - Underperformance
+
+Mr O'BYRNE question to TREASURER, Mr ABETZ
+
+One of the core pillars of your budget reform strategy is increasing the productivity of government expenditure. In the last financial year, Homes Tasmania received $129 million in government funding, which is an increase of $40 million compared to the previous year. Despite this increase in funding, we've seen very little in the way of increased productivity, which is exemplified by the Huntingfield disgrace and the waitlist for housing, which continues to grow. If you are serious about improving productivity, how can you justify the persistent underperformance of Homes Tasmania?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for the question, which is more correctly, if I might suggest, directed to the Minister for Housing and Planning, who has been at this lectern previously indicating that there is a need for some change to take place, to get things moving, and the honourable minister has done exactly that, as I understand it.
+
+I just drove past the new signs indicating that there were blocks now finally for sale at Huntingfield. Things are happening. If the honourable member wants to get me on board that there needs to be an increase in productivity in every single department, guess what? I'm on board in relation to Homes Tasmania and housing. The minister might give me a nod if I've recalled this correctly, but I think we've allocated $600 million in this budget to housing. I will correct that figure if my recollection is incorrect. I didn't get the nod I was hoping for, so I better check that figure. 
+
+If there is a request and a desire for increased productivity, then I'm all on board, and we as a government, of course, have the Efficiency and Productivity Unit (EPU) which will we will set to work to go through not only Homes Tasmania but each and every aspect of government endeavours to ensure that the long-suffering taxpayers of Tasmania get the best value for the dollar they provide to government for us to expend on their behalf. 
+
+
+TasInsure - Election Promise
+
+Mr WILLIE question to PREMIER, Mr ROCKLIFF
+
+[10.30 a.m.]
+You promised to introduce legislation to establish TasInsure in your first 100 days. Unless you table a bill today, you are going to miss the deadline. TasInsure was your signature election policy. You literally wore it with pride. If you are prepared to break your promise on TasInsure, you're prepared to break your word on everything. Will you be tabling legislation today to establish TasInsure, or will you admit that you misled Tasmanians during the election?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for his question. We are committed to TasInsure. Of course, we are, because as we travel around Tasmania, not only through the election campaign but for the last two years, people have been raising the high cost of insurance premiums, of which, breathtakingly, you're against supporting Tasmanian's -
+
+Members interjecting
+
+Mr Willie - Your policy response to it - it's a serious issue.
+
+The SPEAKER - Order. Honourable members of the opposition, you have asked a question. The Premier still has two minutes and 33 seconds to go. I ask that the honourable Premier is allowed to make his contribution in peace. You could then ask a supplementary or further questions.
+
+Mr ROCKLIFF - airer and cheaper insurance premiums. I don't know why you're against it. I'm sure you travel the state as I do, and all members do. We are looking forward to Tasmania and ensuring Tasmanians have fairer and cheaper insurance. I don't know why those opposite are supporting an industry across Australia that's reaping $6 billion of profit. I don't know why that is, but as I have my ear to the ground, Tasmanians are being hit hard by ever-increasing insurance premiums.
+
+Members interjecting.
+
+Mr Mitchell - You are all talk. 
+
+The SPEAKER - The honourable member for Lyons just made three interjections, basically within three seconds. This is your first warning.
+
+Ms Butler - Which one?
+
+The SPEAKER - Mr Mitchell, I appreciate the both of you together, but you only made one while he made three.
+
+Mr ROCKLIFF - I'm looking forward to tabling the legislation prior to the end of the year, thank you very much. 
+
+We're going to continue consulting with industry, consulting with Tasmanians, listening to Tasmanians, and the whole of government and the whole of community when it comes to providing Tasmanians with cheaper, fairer insurance. This is a problem nationwide which we will address. It was a very important policy at the last election. You had the opportunity to either match it or come up with your own ideas, and you refused to do so.
+
+
+Macquarie Point Stadium - Cost
+
+Dr WOODRUFF question to PREMIER, Mr ROCKLIFF
+
+[10.34 a.m.]
+At the 2024 election, you promised Tasmanians you'd cap taxpayer spending on the stadium at $375 million. You famously said 'not a red cent more' of public money would be spent. However, costs have grown, and private investment has been abandoned. It's obvious this promise has been broken. You've absurdly claimed it hasn't and keep trying to move the goalposts. The last ridiculous pretence was that the extra money being spent on the stadium somehow wasn't taxpayer money; it was borrowings from Macquarie Point Development Corporation (MPDC). However, the budget papers show even that argument is false. On the stadium costs above the $375 million, it says, 'The remaining costs will be partially funded through equity contributions from the finance general.' That's a big extra chunk of taxpayer money that would be spent on the stadium. Will you finally admit the $375 million cap is dishonest and designed to deceive?
+
+The SPEAKER - The honourable member's time has expired.
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for the question. Of course, we always said there'd have to be equity contributions. 
+
+To the question from the honourable member, Ms Johnston, to the Treasurer about the growth of the economy. This will attract private investment on Macquarie Point precinct: hotels, visitor economy establishments, all employing many Tasmanians, generating economic activity within the community.
+
+This has been a long journey for a long time. In fact, I have to give credit to the honourable member for Franklin, David O'Byrne, who was the Infrastructure minister, along with the federal minister, Anthony Albanese, in 2012 with that capital injection of some $50 million to realise a vision for the Macquarie Point precinct. No-one has come up with an alternative -
+
+Mr Bayley - Yes, they have. You had one. You contracted it.
+
+Dr Woodruff - We sure have. So many.
+
+Mr Bayley - You paid out Melbourne developers not to build it. A billion dollars. He is completely misrepresenting reality.
+
+The SPEAKER - Members of the Greens.
+
+Mr ROCKLIFF - Your big greenhouses higher than the stadium?
+
+The SPEAKER - Through the Chair, Premier.
+
+Mr ROCKLIFF - There will be investments when it comes to the visitor economy and a whole new industry of young people, particularly. I look at the young people in the gallery today. That's why we're doing this: for the opportunity of our young people and future generations. If you oppose this and this does not go ahead, given the journey we've been through since 2012 and before, I can guarantee you that in 2035, if the stadium is not built, that place will still be an industrial wasteland.
+
+Supplementary Question 
+
+Dr WOODRUFF - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Dr WOODRUFF - On the original question about honesty to Tasmanians about the cost, Premier, give it up. It's in the Budget Papers in black and white. The Macquarie Point Development Corporation has $490 million on its books. Your general government papers have $375 million of taxpayers' money. Will you be honest about the fact that both of those sums are sums of money that Tasmanians will pay? Will you tell people the truth that we will be paying through the nose over $375 million to fund a stadium that we don't need, borrowing to service it for 30 years.
+
+The SPEAKER - Borrowings and everything was at the heart of the original question.
+
+Mr ROCKLIFF - We are transparent when it comes to these matters and have always been open when it comes to the investment required. You can point to matters within the Budget Papers in full transparency, but this is an opportunity that -
+
+Mr Bayley - Recommended against.
+
+The SPEAKER - Mr Bayley.
+
+Mr ROCKLIFF - we must fight for and must not lose as a state. If we lose this opportunity, it's a once-in-a-lifetime opportunity, with investment from the AFL -
+
+Dr WOODRUFF - Point of order, Standing Order 45, relevance. I'm not asking about the opportunity. I'm asking about the figures and your promise to Tasmanians of $375 million. Will you let go of that and be honest about the fact it's going to cost far more than that - at least $490 million more than that.
+
+Mr ROCKLIFF - It's $375 million investment from the Tasmanian government as stated in the Budget Papers.
+
+
+TasInsure - Election Promise
+
+Mr WILLIE question to PREMIER, Mr ROCKLIFF
+
+[10.39 a.m.]
+The Budget Papers make zero reference to your government insurance business, TasInsure. Your signature election policy was not mentioned once in your Treasurer's 7500-word Budget speech. There is no legislation to establish TasInsure, no business case, no financial modelling or financial advice. The shopfront has disappeared and you've stopped wearing the jacket. Will you finally admit once and for all that TasInsure was nothing more than a cruel election hoax?
+
+ANSWER
+
+Honourable member, I know it's painful, but you could have come up with your own opportunity to address the insurance crisis. When it comes to community groups, when it comes to mums and dads and small businesses in particular, we will deliver TasInsure and consult with the community. 
+
+I still have the TasInsure jacket and I look forward to wearing in the not-too-distant future. You have the hat - where did you get that from? If you tell me, I will give you a stubbie holder.
+
+We are committed to it. It's a serious issue so let's work together on it. We're consulting. Come up with your own ideas when it comes to addressing this problem, and be part of the solution.
+
+Supplementary Question
+
+Mr WILLIE - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+ [Bookmark: Phr3_O=23.8_D=7.2_C=0.58] Mr WILLIE - If it was his signature policy at the election, why did he make no mention of it in his budget reply or previous speeches? It has disappeared.
+
+ [Bookmark: Phr4_O=32.1_D=2.6_C=0.81] The SPEAKER - Premier, that was in the original question.
+
+ [Bookmark: Phr5_O=37.4_D=18.6_C=0.83] Mr ROCKLIFF - You say it has disappeared; it hasn't. It's very much part of our agenda, very clearly, and we are very committed to that.  [Bookmark: Phr6_O=57.7_D=1.7_C=0.84] I was interested, however, [Bookmark: Phr7_O=61.0_D=1.8_C=0.79]  in the Young Labor conference the other day.  [Bookmark: Phr8_O=65.2_D=3.2_C=0.83] When they said -
+
+Members interjecting.
+
+ [Bookmark: Phr9_O=70.4_D=0.3_C=0.41] The SPEAKER - Order.
+ 
+Mr WILLIE - Point of order, Speaker, Standing Order 45, relevance.  [Bookmark: Phr10_O=74.2_D=16.0_C=0.71] My question was about TasInsure not being mentioned in the Treasury - 
+
+Mr ROCKLIFF - You mentioned the word 'disappear' and I want to say something about that, because in the Young Labor -
+
+Members interjecting.
+
+The SPEAKER - Order. Premier, I hope you don't have a prop in your hand there.
+
+Mr Willie - Just running down the clock.
+
+
+Macquarie Point Stadium - Impact on Cenotaph
+
+Mr BAYLEY question to MINISTER for VETERANS' AFFAIRS, Mr PEARCE 
+
+[10.42 a.m.]
+RSL Tasmania has long opposed your Mac Point stadium because of the confirmed negative impacts on the values of the Cenotaph. This is Australia's oldest war memorial and a sacred shrine. Last year the RSL said it had been 'disrespected and misled at every turn' by your government about the stadium. Earlier this year, the RSL congress reconfirmed its opposition to the stadium; an overwhelming majority of  [Bookmark: Phr15_O=138.0_D=30.0_C=0.77] sub-branches voted to oppose it. Yesterday the new president rearticulated the RSL's opposition in a letter to members of the Legislative Council. He says: 
+
+The Cenotaph stands as Tasmania's most sacred place of remembrance. It deserves nothing less than your unwavering protection. No mitigation can offset the harm the proposed stadium would inflict on the Cenotaph. [tbc]
+
+Just days after the sombre ceremony for Remembrance Day, why are you so willing to sacrifice the values of the Cenotaph and continue to disrespect  [Bookmark: Phr16_O=168.2_D=4.1_C=0.76] the RSL and its members? 
+
+ANSWER
+
+ [Bookmark: Phr17_O=178.0_D=11.2_C=0.86] Honourable Speaker, I thank the honourable member. I think that is a genuine question that comes from a genuine place, a real place. I certainly appreciate your thoughts and your position on that. I also come from a place that is founded with that respect and that background. Might I say that no place is more significant to me than a cenotaph, particularly that particular cenotaph.  [Bookmark: Phr19_O=206.3_D=6.8_C=0.92] Might I also say that I come from a place that, when it comes to remembrance, it's done not just one day a year,  [Bookmark: Phr20_O=213.9_D=18.3_C=0.76] but every day. It's done every waking moment. I will take you back to a typical day for a soldier, sailor, or aviator in the military. Their day starts at 0730 hours, where they parade and then do PT.  [Bookmark: Phr21_O=233.5_D=12.4_C=0.80] They do physical sport, they play team games. It encourages unity, teamwork, courage, respect. They learn to respect their fellow team members.
+
+ [Bookmark: Phr22_O=247.6_D=9.3_C=0.68] That embodiment of sport is integral to all of our defence forces and instils and inculcates in them a sense of teamwork  [Bookmark: Phr23_O=259.0_D=1.4_C=0.88] embodied in that sport.  [Bookmark: Phr24_O=261.5_D=27.6_C=0.84] My point, why I tell you this, is because that every time we go to recognise a game of sport, we also glance and remember those who have fallen and protected our country. I think that is important. I think that is a different aspect to place onto this. I believe in no way will that diminish the significance of our great war memorials, or in fact the service that beholds our nation.
+
+
+Beauty Point Tourist Park - Long-Term Residents' Rights
+
+ [Bookmark: Phr25_O=289.8_D=2.6_C=0.40]  [Bookmark: Phr26_O=300.1_D=4.9_C=0.78] Prof RAZAY question to ATTORNEY-GENERAL, Mr BARNETT
+
+[10.45 a.m.]
+My question relates to the Beauty Point Tourist Park Residents Association and the existing rights of long-term residents. On 17 October 2025, you said in a media release that the government had a clear legislative commitment to ensure that the rights of long-term caravan park residents are protected. Can you please outline what progress has been made by government to protect the existing residential use and long-term rights of residents at the Beauty Point Tourist Park and other Tasmanian caravan parks? 
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for his question and his special interest in this matter on behalf of his constituents, particularly in that part of the world. I also acknowledge other members of parliament across the Chamber who've been strong advocates for clarity with respect to the rights of long-term residents in caravan parks. I wanted to recognise that upfront.
+
+Certainly, I have heard the concerns of the long-term residents of caravan parks and you've rightly noted that in my capacity as Attorney-General I've intervened in a Supreme Court matter for and on behalf of myself as Attorney-General, but with the ambition to ensure that there is greater clarity - that there is a removal of confusion - with respect to the rights of long-term residents in caravan parks. You've made the point and I take it very seriously. I took it so seriously that, as Attorney-General, I've intervened in that Supreme Court matter which is before us. I won't speak much about that Supreme Court matter. It is on the public record, but I've taken action and I'm delivering on that. 
+
+I've also made it clear that the concerns of those rights of long-term residents are not well understood and therefore there is a risk of them being treated unfairly, so I have acted on that. Additionally, I'm getting on with the job on behalf of the government, consistent with the announcements during the election and the good work of the former minister, Felix Ellis, and others with respect to delivering important legislation to provide greater clarity. That legislation will be released in draft for public consultation in December consistent with our election commitment. We will then introduce that legislation in the first part of next year following public feedback and comment. 
+
+Of course, it has been delayed because of that commitment earlier in the year from the former minister, because we had an unnecessary election forced on us by the Labor Party and the Greens opposite. That is the reason for the delay, but we've acted on this. It's a very complex matter, as you can understand, and we're getting on with the job. In December I will release that draft legislation. There will be public comment and feedback. I look forward to that through my department. We will then deliver that legislation in the first part of next year. 
+
+
+TasInsure - Establishment
+
+Mr WILLIE question to PREMIER, Mr ROCKLIFF
+
+[10.49 a.m.]
+The Auditor-General has warned that the Motor Accidents Insurance Board's (MAIB) balance sheet is deteriorating and has weakened over the past five years. In that context, establishing TasInsure as a government-owned business is reckless. Isn't it completely irresponsible to ignore the Auditor-General again and jeopardise the future of a strong, stable public insurer by setting up your dodgy insurance company that has no business case, no modelling, and no Treasury advice behind it?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for his question. The MAIB's operating profit in 2024 was $115.9 million before tax and $83.4 million after tax, up from $95.7 million in 2023-24. MAIB also had a net investment gain, as I understand it, of $177.9 million, representing a net return of some 8.5 per cent. 
+
+Don't characterise as the insurance and the idea and TasInsure in that way, because you're dismissing the concerns of Tasmanians who are - well, come up with your alternative -
+
+Mr Willie - That is not true.
+
+Ms Finlay - That is not true. You're preying on the pain points of Tasmanians.
+
+The SPEAKER - Order. Deputy Leader of the Opposition, I ask that your interjections cease.
+
+Mr ROCKLIFF - because it's important that if you're in the space of an alternative government - you were in the space a couple of days ago, just waiting and waiting and waiting.
+
+Ms Finlay - We're in the space of honesty.
+
+The SPEAKER - This is the honourable Deputy Leader of the Opposition's first warning.
+
+Mr ROCKLIFF - You have to be proactive. This is a very key policy issue for Tasmanian people in terms of addressing their concerns. Not big business, but mums and dads. Small businesses, community groups, events.
+
+Mr WILLIE - Point of order, Speaker, Standing Order 45 relevance. The question was about the Auditor-General's recent report and MAIB's deteriorating balance sheet, and the recklessness of establishing TasInsure in that context. I'd ask if he could address the question.
+
+The SPEAKER - That was the original question, Premier.
+
+Mr ROCKLIFF - I have provided information which points to the strength of MAIB and operating profit. I commend MAIB on their due diligence and the very good work that they do in operating their insurance company on behalf of all Tasmanians.
+
+What have we got here? Oh dear - a Labor Party financial document. It does claim that you were going to take a special dividend from MAIB. $50 million. Actually, no - $100 million.
+
+Members interjecting.
+
+The SPEAKER - Order. Honourable Premier, you're using that as a prop. I will ask that -
+
+Mr ROCKLIFF - I was referencing it, honourable Speaker.
+
+Ms HADDAD - Point of order, Speaker, Standing Order 45, relevance. The question was about the Auditor-General's recent report, not about past election commitments.
+
+The SPEAKER - MAIB was mentioned in the original question, but I draw the Premier back to relevance to the question.
+
+
+Supplementary Question
+
+Mr WILLIE - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr WILLIE - You know the Premier's under pressure when he can't answer the question and he's using distractions. The supplementary is: why would he gamble with MAIB's future with his reckless TasInsure policy?
+
+The SPEAKER - Honourable Premier.
+
+Mr ROCKLIFF - I thank the member for his supplementary. This is an alternative, when you've got $100 million of dividends coming out of the MAIB. You speak of disappearing, but this has now disappeared from the website, as I understand, as well. I'm happy to do further research on that.
+
+Ms Finlay - That's right. You know you're in trouble.
+
+The SPEAKER - Deputy Leader of the Opposition.
+
+Mr ROCKLIFF - We are committed to TasInsure and working with Tasmanians to provide the best possible opportunity when it comes to fairer insurance for Tasmanians. That's why the policy resonated and that's why we will deliver.
+———————————————————
+Recognition of Visitors
+
+The SPEAKER - I believe we may have a second cohort of year nine students from the Hutchins School, there. They've definitely changed positions, anyways. Welcome to parliament. Thank you.
+
+Members - Hear, hear.
+———————————————————
+Macquarie Point Stadium - Project Financial Management
+
+Ms BURNET question to PREMIER, Mr ROCKLIFF
+
+[10.54 a.m.]
+Your government has completely mismanaged the replacement of the Spirits to the point that, as you said today, TT-Line has been referred to ASIC. It's been costly decision after costly decision. Unlike the stadium, the ferries are vital for Tasmanians. The Gruen report on the stadium was clear: the project is already displaying the hallmarks of mismanagement. 
+
+Today, this House will be deciding on Tasmania's biggest-ever infrastructure project. Your government has already sent TT-Line to the brink. Now, you look set to bankrupt the state. How can you persuade anyone - particularly your biggest Spirits critics, the so-called 'opposition' - that your government could competently manage the Mac Point stadium project?
+
+ANSWER
+
+Honourable Speaker, I thank honourable member for her question. However, I don't agree with the characterisation contained in the question of taking companies to the brink and the like. I have enormous confidence in the leadership of TT-Line to work through some significant matters. The ships are nearly here. The wharf is well under construction. 
+
+As I travelled to Hobart on the weekend, I travelled over the Bridgewater Bridge; an $800 million project delivered on time and within budget, as I understand it. We can be very proud of that, Dean, can't we? 
+
+We can deliver this. You've seen the enormous amount of work when it's come into the stadia infrastructure. It is going to bring enormous opportunity. It is to be built on an industrial wasteland, ripe for opportunity. This is not a pulp mill, that you were debating in about 2007 or 2008 or whenever the time was; this is an opportunity to create and enhance our visitor economy, and to build opportunity for young Tasmanians - I see them in the Gallery today. I don't agree with your characterisation within your question. This project has been scrutinised to the nth degree, and will continue to be scrutinised, which will keep the government, our government, accountable to its delivery. 
+
+Ms BURNET - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Ms BURNET - Premier, you made those points that Spirits will be arriving, but they haven't arrived, and it just symbolises all of the stuff-ups along the way with that project which your government has been responsible for. You also talk about the expenses with the stadium, and that is an intergenerational debt. Given your history, your government's history, how on Earth can Tasmania's MPs and MLCs believe you? 
+
+The SPEAKER - The member's time has expired. I just want to remind members that you've only got 30 seconds. It's not an opportunity for you to make a statement to the House, and 30 seconds does go by very fast. I encourage you, as I said a number of times, to use your supplementary to refer back to your original question or to the Premier's answer, but it's not a time to make a statement, so if the Premier has anything further to add to his original comment, because I appreciate the member didn't really get to a question.
+
+
+TasInsure - Absence from State Budget
+
+Mr WILLIE question to TREASURER, Mr ABETZ.
+
+[10.58 a.m.]
+Saul Eslake described your government state-owned insurance business as a thought bubble and just about the worst idea to come out of a major political party in Tasmania that he could remember. Your Budget does not include one single reference to TasInsure. We know there's no business case, no Treasury advice or financial modelling for TasInsure, and you did not mention TasInsure once in your 20-minute Budget speech. Treasurer, why did you airbrush your premier signature policy from your budget?
+
+ANSWER
+
+Honourable Speaker, no matter how the Leader of the Opposition characterises it, at least we do think, so we do have 'thought bubbles', unlike those opposite, who never think about policy. I'm also so terribly, terribly disappointed that the Leader of the Opposition thought my budget speech went for only 20 minutes. I'm told it went for 32 minutes and five seconds, so he missed out on 12 minutes and 5 seconds, and I would encourage him to read - 
+
+Members interjecting.
+
+The SPEAKER - Order. The honourable Treasurer, I do ask you to stop inciting interjections. Honourable members of the opposition, I ask you to allow the Treasurer to finish, because you still have another question to go and a supplementary question.
+
+Mr ABETZ - I didn't realise the opposition were that sensitive, Speaker, so I will be very careful with my comments. 
+
+As the Premier has made very clear, TasInsure is the government's policy; it is being pursued. It is currently with experts who are considering the scope and how we might be able to deliver that for the best value for the Tasmanian people. Once we know that, then we will be including the details of that in the Budget. Until we are informed of that information we can't put figures into the Budget. 
+
+What I would say to the honourable gentleman  [Bookmark: Phr2_O=30.2_D=18.2_C=0.78] is, yet again - and I just met with a small business owner from the north-west coast yesterday who was complaining that in a period of four years without having had a single insurance claim, his insurance went from $8000 to $20,000.  [Bookmark: Phr3_O=50.2_D=10.8_C=0.83] There are small businesses genuinely struggling in relation to their insurance premiums - tourism industries, households. That is why the Premier  [Bookmark: Phr4_O=61.3_D=30.0_C=0.84] determined on a policy to seek to deal with that issue for and on behalf of the people of Tasmania. Until we land on an exact model and know the full financial details, of course it will not be included in the Budget, but I do compliment the Leader of the Opposition for noting and realising that we on this side do have thoughts and we do put them forward as genuine policies, unlike the policy-free zone of t [Bookmark: Phr5_O=91.4_D=0.6_C=0.27] he opposition.
+
+ [Bookmark: Phr6_O=94.4_D=7.6_C=0.78] Supplementary Question
+
+Mr WILLIE - A supplementary question, Speaker? 
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr WILLIE - The Treasurer in his answer then has just admitted that there are no details, so will he finally admit it was an election hoax and a thought bubble?
+
+ [Bookmark: Phr7_O=104.1_D=9.3_C=0.50] Ms Haddad - You were just promising for the election, you've got no intention of delivering. 
+
+MR Willie - You said there's no details, that's why it's not in the Budget.
+
+The SPEAKER - Honourable member for Clark, Ms Haddad, this is your first warning, because you have made a few interjections today. Honourable Treasurer.
+
+ [Bookmark: Phr8_O=116.5_D=23.6_C=0.86] Mr ABETZ - The government's position on this is clear and I understand that the Premier will have more to say in relation to this in the next few days, but I thank the opposition for building up the anticipation in relation to this and thank him for the question.
+
+
+Budget - Letters Postponing of Election Commitments
+
+ [Bookmark: Phr9_O=142.8_D=1.8_C=0.69] Mr WILLIE question to PREMIER, Mr ROCKLIFF
+
+[11.03 a.m.]
+ [Bookmark: Phr10_O=148.1_D=23.5_C=0.83] It's come to our attention that you wrote letters to community organisations last week explaining that their election commitments could not be accommodated in this year's Budget and would be considered as part of the 2026-27 budget process. Tasmanians working in the salmon and racing industries know that letters from you aren't worth the paper they're written on.  [Bookmark: Phr11_O=172.2_D=14.4_C=0.77] How many community organisations did you write to last week about their election commitments and why did some organisations receive letters but not others? Will you table the letters? 
+
+Mr Mitchell - Find them on the fiction section of the library.
+
+Mr Rockliff - What was that, Brian?
+
+Mr Mitchell - Do you want me to answer, Speaker?
+
+The SPEAKER - The honourable member for Lyons. He shouldn't be using your first name either.
+
+ANSWER 
+
+ [Bookmark: Phr12_O=190.9_D=0.8_C=0.71]  [Bookmark: Phr13_O=194.3_D=22.8_C=0.69] Anyway, I thank the honourable member for the question. We are committed to our election commitments and those we've written to, community organisations. I believe our Treasurer has explained this in this or other forums and we look forward to delivering on those commitments. 
+
+The honourable member has mentioned disappearing,  [Bookmark: Phr14_O=218.5_D=29.1_C=0.83] whitewashing and all those types of things. He mentioned the greyhound industry as well. I'm happy to seek some advice. 
+
+Members interjecting.
+
+The SPEAKER - Order. I remind members that there's a very significant and important debate today. It is my job to maintain order in this House. We will have respectful silence when ministers or the Premier are making contributions. I expect the government to likewise show respect to members of the opposition [Bookmark: Phr15_O=247.7_D=30.0_C=0.79] , the crossbench and the Greens when they make their contributions today too. I ask that the Premier is heard. Members can ask a supplementary question and there are other forms of the House if they dispute the words being said. 
+
+Mr ROCKLIFF - I appreciate that and I appreciate the community organisations and the work they do and I spoke at length at that in my contribution on the Budget. I look forward to delivering on those commitments to the hardworking community organisations. The honourable member mentions all this language about d [Bookmark: Phr16_O=277.8_D=12.0_C=0.74] isappearing and whitewashing and all those types of things. He mentioned the greyhound racing industry. I was interested in Young Labor's policy on the greyhound racing industry. This is important.
+
+Members interjecting.
+
+Mr WILLIE - Point of order, Speaker -
+
+ [Bookmark: Phr17_O=292.6_D=11.7_C=0.73] The SPEAKER - Order, silence. The honourable member has made a point of order. 
+
+Mr WILLIE - Standing Order 45, relevance. The question was about how many community groups he'd written to and whether he'd table the letters.
+
+The SPEAKER - That was in the question.
+
+Mr ROCKLIFF - It is very relevant. I commend Young Labor. I was a Young Liberal at a point in time -
+
+Ms Haddad - They aren't a community organisation.
+
+The SPEAKER - Ms Haddad, this is your second warning.
+
+Mr ROCKLIFF - and Young Libs didn't always agree with the adults, and I'm sure they still don't, but I was interested in the greyhound policy of Young Labor.
+
+Ms HADDAD - Point of order, Speaker, Standing Order 45, relevance. Young Labor is not a community organisation getting letters from the Premier. The question was how many organisations did he write to and will he table those letters?
+
+The SPEAKER - Honourable Premier, relevance.
+
+Mr ROCKLIFF - I'm happy to table the letters and seek some advice, but we passed motions to end public funding for greyhound racing. That's what they believe in. That was at 6.59 p.m., until Mr Winter got hold of them, and at 8.48 p.m., it wasn't, 'We passed motions to end public funding for greyhound racing', it was, 'We passed motions on greyhound racing.' A nice little bit of editing history there from the Young Labor movement. I'm sure Dean was on the phone, who has some history when it comes to editing -
+
+The SPEAKER - The Premier's time has expired.
+
+Supplementary Question
+
+Mr WILLIE - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr WILLIE - Why did some community groups get letters from the Premier and others did not?
+
+The SPEAKER - That was at the heart of the original question, Premier.
+
+Mr ROCKLIFF - I'm happy to table the letters and seek some advice on the supplementary.
+
+
+Risk of Algal Bloom in Tasmania
+
+Mr GARLAND question to MINISTER for PRIMARY INDUSTRIES and WATER, Mr PEARCE
+
+[11.07 a.m.]
+We looked on in horror at the scenes that unfolded in South Australia over summer as they experienced one of the worst algal blooms in our country's history. On Wednesday, a Senate committee looking into the disaster released its report. While there was no silver bullet solution identified, a marine heatwave, high nutrient load in the oceans from finfish farming, climate change and pollution were all identified as contributing factors. What the committee did identify was the lack of research, monitoring or preparedness for this sort of event. They also concluded that by the time the toxic algae was detected, it was too late to do anything about it. All the factors present in South Australia last summer will be here this summer. Algal blooms are almost an annual event now in Tasmania. What research has your government done on algal blooms in our marine environment and what preventative steps has your government taken to reduce the risk of a toxic algal bloom occurring in Tasmania over summer.
+
+ANSWERS
+
+Honourable Speaker, I thank the member for his question and ongoing interest in our oceans. In a recent meeting of the agriculture ministers from around the country, that was certainly front and centre for South Australia and it did impact them significantly. It's been linked to a number of factors including a sustained marine heatwave combined with significant upwelling of ocean nutrients.
+
+Tasmania has a comprehensive monitoring program in place that goes back 20 years that can detect harmful algal blooms, including those caused by new species. We've also recently convened a series of workshops with the seafood industry focused on, as you rightly point out, harmful algal bloom preparedness. In recognition of the dynamic nature of our marine environment, we also released the Marine Heatwave Response Plan. The plan outlines current and future steps for Tasmanians, not only government but industries and communities, to prepare for and respond to marine heatwave events.
+
+The other thing that the member would obviously be aware of is the effect on the seafood industries. Harmful algal blooms in Tasmania have occurred in the past and are likely to occur in the future, and I think the member knows that. No-one wants to see these events occur, no government, no industry and certainly no community. As we've seen in South Australia, when harmful algal blooms occur they can pose threats to the marine ecosystem and also public health. National guidelines prescribe the thresholds for closing fishing harvesting operations and initiating biotoxin meat testing. In this regard, Tasmania has established a comprehensive biotoxin monitoring program, which monitors the presence of biotoxins associated with such algal blooms. The program has been in place for over 20 years. It has been modified, it has been updated, and it has all the rigour that science can apply, and the results are made available on a weekly basis on the NRE Tasmania website. 
+
+There's also, if I have time, reports of the red tide, and I'm sure members are aware of that. What they're talking about there is Noctiluca, which is a bloom on the east coast and that is present at the minute. I'm advised that these blooms are of an algal species which appear as a red slick on top of the surface. They're not unusual to occur from time to time along the east and south-east coast of Tasmania. Our scientists are monitoring them. They are not reason for concern, and Noctiluca blooms are not harmful to humans.
+
+Supplementary Question
+
+Mr GARLAND - A supplementary question, Speaker?
+
+The SPEAKER - I will hear the supplementary question.
+
+Mr GARLAND - You've spoken about response. What preventative measures have you taken?
+
+The SPEAKER - That was part of the original question.
+
+Mr PEARCE - I don't understand the question. In terms of preventing the algal bloom from reaching Tasmanian shores? I don't understand what you're saying.
+
+Mr GARLAND - What I'm saying is that we had an algal event in South Australia. We've got all the same conditions here. What preventative measures have you taken, if any, to stop this from happening? 
+
+Mr PEARCE - In terms of preventing the tide from bringing the algal bloom to Tasmania, then that is well outside the realms of any human being. What I'm detailing to you is the preventative measures, the proactive steps that we've taken should such a bloom reach our shores and affect our marine environment. That's what we've put our effort into. Unfortunately when it comes to sea tides and moving algal blooms, I'm sorry, but we can't affect that.
+
+
+Sewerage Systems - Outdated Systems
+
+Mr Di FALCO question to PREMIER, Mr ROCKLIFF.
+
+[11.12 p.m.]
+Communities have again raised concerns about outdated water and sewage systems that are struggling to meet population growth. Can you outline how the government will support councils and TasWater to address these long-term infrastructure challenges?
+
+ANSWER
+
+Honourable Speaker, I thank the honourable member for his question and interest in this matter. There is significant work being done by TasWater, as I understand it. While I don't have direct responsibility with TasWater, enormous investment when it comes to working with councils and addressing some of those needs, particularly when it comes to overflow and the like, which damages the aquaculture industry and oyster industry, as has done in the past.
+
+TasWater's financial 2026-2030 corporate plan in fact outlines some investment of $2 billion in water and sewage infrastructure over the next five years. Of this spend, $1.2 billion is to meet compliance requirements relating to drinking water, the environment and dams, and commitments, of course, to government. The years 2027 onwards are subject to the outcomes of the Pricing and Services Plan 5 submission with the Tasmanian Economic Regulator.
+
+Can I also say, for interest, honourable member, that this level of investment is required, and I've spoken about that, to enable TasWater to meet a number of its regulatory obligations and to deliver on customer expectations - which I believe is where the heart of the question is coming from, quite rightly - for reliability with an ageing asset base. The financial projections show gearing will reach some 48.3 per cent in 2029-30, well below TasWater's 55 per cent target. 
+
+Approximately 48 per cent of the capital program is driven by compliance, with 27 per cent renewal, 17 per cent growth and 8 per cent improvement, largely in the ICT area. The most recent example that I can speak of is when I was on Flinders Island a few years ago. Honourable member for Bass, Michael Ferguson, was there as well, and Mrs Archer. That's a very good example of TasWater working with the local council, to your question, and not only creating that opportunity for safe water on the island, but also investing for the future, because that investment will, again, enable the tourism and the visitor economy on the island. Also, to have that confidence and security of water supply.
+
+That's a very good example of councils and TasWater working together. There are many other examples around the state. There's also a great deal of need, particularly in those high-pressure areas around the state - namely the East Coast, for example - and other areas where we need to ensure that good water and sewerage meets visitor expectations and community expectations as well, in terms of safety compliance and the environment.
+
+Time expired.
+
+
+CONSTITUENCY QUESTIONS
+
+ANZAC Day March - Fees
+
+Mr BAYLEY question to MINISTER for VETERANS' AFFAIRS, Mr PEARCE
+
+[11.16 a.m.]
+One of my constituents in a local RSL branch is concerned that their ANZAC Day march is under some doubt because of the introduction of expensive new fees for their small branch for police support for a dawn march. Why are small community groups being burdened with red tape and new costs for a cultural event which has strong support for the community and very low risk? So many community groups are burdened in this way, particularly local RSL branches. What can your government do to fix this situation, and will you do it?
+
+
+Best Practice for Blood Donation LGBTQIA+ Community 
+
+Ms HADDAD question to MINISTER for HEALTH, MENTAL HEALTH and WELLBEING, Mrs ARCHER
+
+My question is from members of the LGBTQIA+ community. The Red Cross Lifeblood service has removed the abstinence requirement for blood plasma donations from gay and bisexual men and transgender women, which is a very welcome move. Lifeblood has indicated it will extend this reform to whole blood donations, but no timeframe has been provided for this change. The proposed screening questions for whole blood donations fall short of global best practice, and lack the clarity and consistency seen in the UK, US and Canada. This will potentially discourage eligible donors.
+
+Given the critical need to maximise safe whole-blood donations, has the minister consulted with medical and community stakeholders before endorsing this approach? Will the minister seek a clear timeframe for implementing this reform, and ensure the screening process reflects international best practice to maximise the opportunity for much-needed blood donation?
+
+
+Florfenicol - Fast-Tracked Approval
+
+Mr GEORGE question to PREMIER, Mr ROCKLIFF
+
+My question is from constituent Cassandra Faux of Geeveston, a small business owner with a Masters in clinical microbiology. She says: I'm deeply concerned by the government's fast-tracked approval to use the antibiotic florfenicol in diseased salmon pens without public consultation, transparent risk-assessment, or environmental accountability. As a small business operator, I ask why the multi-million dollar salmon industry appears to receive shortcuts and exemptions from the level of scrutiny, compliance, and community consultation that is required of small-scale food producers, tourism and hospitality businesses. 
+
+Will the Premier explain on what basis approval was granted to use the antibiotic for florfenicol, and how it aligns with Tasmania's stated commitment to science-based regulation, environmental protection, and a clean, sustainable brand reputation built over decades?
+
+
+UTAS Stadium - Completion Date
+
+Mr FAIRS question to MINISTER for SPORT, Mr DUIGAN
+
+My question is from Steven of West Launceston. Upgrades work is under way at UTAS Stadium, but he's keen to know how the project is progressing and what the expected completion date is.
+
+
+Public Transport on the Tasman and Forestier Peninsulas
+
+Mr MITCHELL question to MINISTER for INFRASTRUCTURE and TRANSPORT, Mr VINCENT
+
+I've been contacted by members of the Nubeena township on the Tasman Peninsula who are deeply concerned about the lack of bus services. The Tasman Peninsula population includes many older people who do not have ready access to private transport and who require regular trips to Hobart for medical appointments. What steps are you taking to improve public transport for people living on the Tasman and Forestier Peninsulas? When can people expect to see an improvement?
+
+
+Florfenicol Warnings at Beaches - Question out of Order
+
+Mr GARLAND question to MINISTER for PRIMARY INDUSTRIES and WATER, Mr PEARCE 
+
+My question is from Drew from Koonya. Australians, and in particular, Tasmanians, have a strong connection culture to the coast. From fishing, swimming and surfing, we rely on the ocean as a place of respite from the troubles of the land. With Tasmanians heading to the coast and their local beach this spring/summer, how can families be expected to know if their local swimming hole is loaded with antibiotics which could potentially cause stinging, irritation of the eyes, affect external cuts or abrasions? Worse, there are serious concerns that this antibiotic will also have reproductive toxicity and also link to organ damage. Are we expected to change our lifestyle and shift our culture so that multinational corporations can continue to make more profits?
+
+ [Bookmark: Phr2_O=16.1_D=17.7_C=0.80] Mr ABETZ - Speaker, on a point of order, if I may, briefly.
+
+The SPEAKER - Mr Garland, you're supposed to be asking a constituent question from constituents in your own electorate. You're asking a question on behalf of somebody in Koonya, which is in the electorate of Lyons because it's down the Tasman Peninsula.
+
+Mr Garland - Right.
+
+The SPEAKER -  [Bookmark: Phr3_O=39.4_D=22.0_C=0.72] It is out of order. We will withdraw that question. That will allow somebody else to make a question. Your constituents do have to live in your electorate. You're not a senator. [Bookmark: Phr4_O=63.6_D=2.4_C=0.69] 
+
+
+Primary Produce Safety (Horticulture Produce) Regulations 2025
+
+Mr Di FALCO question to MINISTER FOR PRIMARY INDUSTRIES AND WATER, Mr PEARCE
+
+I've been contacted by a constituent concerned about claims suggesting that the draft Primary Produce Safety (Horticulture Produce) Regulations  [Bookmark: Phr6_O=81.1_D=30.0_C=0.83] 2025 will implement new national health standards which will stop people from selling or sharing fruit and vegetables grown in their own backyards. Can you confirm that these regulations are not intended to apply to backyard growers, hobby gardeners or neighbours who sell or share small amounts of produce directly to locals or from a roadside stalls, that is, people not operating as a business or supplying retailers or  [Bookmark: Phr7_O=111.2_D=9.2_C=0.80] wholesalers? And that these small local exchanges within communities will remain unaffected by the proposed changes? 
+ [Bookmark: Phr8_O=122.2_D=11.8_C=0.80] 
+
+Tannery Road Fuel Stop Site
+
+Ms BUTLER question to MINISTER for INFRASTRUCTURE and TRANSPORT, Mr VINCENT
+
+State Growth has developed a traffic management strategy for the proposed Lowes BP fuel stop site on Tannery Road, Longford. I'm advised it is dangerous and not compliant with Australian guidelines. A planning permit should never have been signed off. It is not supported by the community and not conducive to truck drivers having to mitigate sharp turning areas for refuelling. The site location  [Bookmark: Phr11_O=171.5_D=28.7_C=0.79] is inappropriate. 
+
+Even though the fuel site is privately owned, State Growth are building and paying for an entry/exit point on Tannery Road to accommodate B-double trucks for a private business. It is our understanding that cancelling the fuel stop planning permit could lead to litigation by the developer against State Growth. What is the current status of the fuel stop build? Why should the taxpayer have to foot the estimated $3 million to $5 million to pay for yet another infrastructure stuff-up?
+
+
+Florfenicol Warnings at Beaches
+
+Ms BADGER question to MINISTER for PRIMARY INDUSTRIES and WATER, Mr PEARCE 
+
+ [Bookmark: Phr12_O=200.3_D=9.7_C=0.64] My question is from my constituent Drew in Koonya.
+
+Members interjecting.
+
+Ms BADGER -  [Bookmark: Phr13_O=214.9_D=17.1_C=0.84] Australians, and in particular, Tasmanians, have a strong connection and culture to the coast. From fishing, swimming and surfing, we rely on the ocean as a place of respite from the troubles of the land. With Tasmanians heading to the coast and their local beaches this spring and summer, how can families be expected to know if their local swimming hole is loaded with antibiotics  [Bookmark: Phr14_O=232.3_D=20.6_C=0.83] that could potentially cause stinging, irritation of the eyes and affect external cuts or abrasions? Worse, there are serious concerns that this antibiotic also has reproductive toxicity and also link to organ damage. Are we expected to change our lifestyle and shift our culture so that the multinational corporations can make more profits? [Bookmark: Phr15_O=255.4_D=7.2_C=0.48] 
+
+
+MESSAGES FROM THE LEGISLATIVE COUNCIL
+
+Assent to Bills
+
+The SPEAKER - I am in receipt of a message from the Legislative Council:
+
+Honourable Speaker, 
+
+The Legislative Council has this day agreed without amendment to a bill intituled A Bill for an Act to Amend the Dangerous Criminals and High Risk Offenders Act 2021.
+
+C Farrell,
+President,
+Legislative Council,
+13 November 2025.
+
+The SPEAKER - I am in receipt of a further message from the Legislative Council:
+
+Honourable Speaker, 
+
+The Legislative Council has this day agreed without amendment to a bill intituled A Bill for an Act to Amend the Registration to Work With Vulnerable People Act 2023.
+
+C Farrell,
+President,
+Legislative Council,
+13 November 2025.
+
+
+SITTING DATES
+
+[11.27 a.m.]
+Mr ABETZ (Franklin - Leader of the House)(by leave) - Honourable Speaker, I move - 
+
+That the House at its rising adjourn till Tuesday 2 December next at 10.00 a.m.
+
+Motion agreed to.
+
+
+SUSPENSION OF STANDING ORDERS
+
+Debate Motion Forthwith
+
+[11.27 a.m.]
+Mr BAYLEY (Clark) - Honourable Speaker, I move - 
+
+That upon Notice of Motion No. 29 being debated by the House and the debate having closed but before the Speaker puts the Question to the House, that the House resolve itself into a Committee of the whole House for the purpose of considering the State Policies and Projects (Macquarie Point Precinct) Order 2025 (Statutory Rules 2025, No. 49) made on 21 October 2025.
+
+(2)	That the Committee consider each clause and schedule in the following manner:-
+
+the Chair is to call on each clause or schedule, and ask if any Member has any question thereon;
+
+if no questions are asked, or a question or questions having been asked, no further questions are asked, the Chair shall declare that the clause or schedule has been considered, without question being put;
+
+the Report of the Committee of the whole House be limited to ‘The Committee has considered the State Policies and Projects (Macquarie Point Precinct) Order 2025 (Statutory Rules 2025, No. 49)’; and
+
+for the avoidance of doubt, the Committee of the whole is not empowered to
+amend any clause or schedule of the Order.
+
+(3)	That upon the Report of the Committee of the whole House being brought up, the Speaker shall immediately put the Question proposed by the Motion. 
+
+This motion is fundamentally about scrutiny. It's about giving us, as parliamentarians, the opportunity to do our job properly, to do our job with the time, process and ability to properly interrogate the content of what we are passing so that issues can be explored, answers sought and information put on the public record, on Hansard, for all to see for all time.
+
+What we are debating today is the future of the largest infrastructure project this state has seen for a very long time, if ever. It's not only large in bulk and negative impact on our city; it's large in terms of the impact on the budget and the debt burden we would lay at the feet of future generations.
+
+What we are debating today is not just a 50-word motion moved by the Minister for Macquarie Point Urban Renewal. What we are debating is the passage of an order, a 157-page approval of the Macquarie Point Stadium and the myriad conditions drafted to oversee its construction and operation. That order deserves scrutiny. Within that order since the detail that would drive this slow-moving train wreck: the delays, the cost blowouts, the ongoing alienation of key stakeholders and the deepening division of the Tasmanian community. As with any piece of legislation, that order deserves a committee process to allow us, as members, the chance to work through it clause by clause and to scrutinise it.
+
+This motion acknowledges that the order cannot be amended. It is within our powers only to approve or reject. While we will reject it, that should not be an excuse to deny us the opportunity to scrutinise because this order is an extraordinary document. It approves the development against all objective independent expert advice, stakeholder and community perspectives and unaffordability at the time of extreme budgetary stress and increasingly harsh austerity. It delivers unprecedented powers to the secretary of State Growth, whoever they
+
+
+
+
+
+DRAFT
+
+
+DRAFT
+uncorrected proof
+
+	1	Thursday 13 November 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]
