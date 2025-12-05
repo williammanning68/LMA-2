@@ -1,0 +1,907 @@
+﻿
+Title: Legislative Council Thursday 4 December 2025
+App Version: 16.0000
+AppName: Microsoft Office Word
+Author: Legislative Council
+Character Count: 66592
+Characters with Spaces Count: 79394
+Creation Date: Thu, 4 Dec 2025 6:05:00 AM (UTC)
+Last Printed: Thu, 4 Dec 2025 6:04:00 AM (UTC)
+Last Saved Date: Thu, 4 Dec 2025 6:05:00 AM (UTC)
+Line Count: 1707
+Links Dirty: false
+Links Up To Date: false
+Page Count: 33
+Paragraphs Count: 596
+Revision: 2
+Scale Crop: false
+Security: 0
+Shared Document: false
+Template: Hansard debates September 2025
+Total Editing Time: 1
+Typist: Karen Cuzzucoli
+Word Count: 13398
+isys:SubType: Word 2007
+
+PARLIAMENT OF TASMANIA 
+DEBATES OF THE LEGISLATIVE COUNCIL
+ 
+ 
+ 
+ 
+DAILY HANSARD 
+ 
+ 
+Thursday 4 December 2025
+Preliminary Transcript 
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+This draft transcript of debates is issued in advance of the final Hansard for the use of the members of the Legislative Council and copies made from this may not be protected by parliamentary privilege. 
+ 
+
+
+
+
+
+
+Thursday 4 December 2025
+
+The President, Mr Farrell, took the Chair at 11.00 a.m., acknowledged the Traditional People and read Prayers.
+
+
+TABLED PAPERS
+
+Legislative Council Estimates Committee A
+
+[11.02 a.m.]
+Ms FORREST (Murchison) - Mr President, I have the honour to represent the report to the Legislative Council Select Committee Estimates A, on the Estimates of:
+
+Treasurer,
+Minister for Macquarie Point Urban Renewal,
+Minister for Arts and Heritage,
+Minister for Community and Multicultural Affairs,
+Minister for Innovation, Science and the Digital Economy,
+Minister for Environment,
+Minister for Energy and Renewables,
+Minister for Sport,
+Minister for Parks,
+Minister for Health, Mental Health and Wellbeing,
+Minister for Ageing,
+Minister for Aboriginal Affairs,
+Minister for Infrastructure and Transport,
+Minister for Housing and Planning, and
+Minister for Local Government.
+
+Mr President, I move -
+
+That the reports be received.
+
+Reports received.
+
+Mr President, I move -
+
+That the reports be printed.
+
+Reports printed.
+
+
+Estimates Committee B
+
+[11.03 a.m.]
+Ms ARMITAGE (Launceston) - Mr President, I have the honour to represent the report to the Legislative Council Select Committee Estimates B, on the Estimates of:
+
+Premier,
+Attorney-General,
+Minister for Justice, Corrections and Rehabilitation,
+Minister for Small Business, Trade and Consumer Affairs,
+Minister for Primary Industries and Water,
+Minister for Veterans' Affairs,
+Minister for Racing,
+Minister for Tourism, Hospitality and Events,
+Minister for Women and the Prevention of Family Violence,
+Minister for Police, Fire and Emergency Management,
+Minister for Skills and Jobs,
+Minister for Business, Industry and Resources,
+Minister for Education,
+Minister for Children and Youth, and
+Minister for Disability Services.
+
+Mr President, I move -
+
+That the reports be received.
+
+Reports received.
+
+Mr President, I move -
+
+That the reports be printed.
+
+Reports printed.
+
+
+LEAVE OF ABSENCE
+
+Member for Prosser - Kerry Vincent
+
+[11.04 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) (by leave) - Mr President, I move -
+
+That the member for Prosser, Mr Vincent, be granted leave of absence from the service of the Council for this day's sitting.
+
+Motion agreed to.
+
+
+MOTION
+
+State Policies and Projects (Macquarie Point Precinct) Order 2025
+
+[11.05 a.m.]
+Ms RATTRAY (McIntyre - Leader for the Government in the Legislative Council) - Mr President, I sincerely thank honourable members for their contributions to this significant order and especially acknowledge last night's and this morning's marathon effort to each and every one of you.
+
+I opened the debate by acknowledging that this is a matter of considerable importance to many Tasmanians, and one that has prompted strong views both within this Chamber and in the broader community. This was clearly demonstrated in the views expressed in the Chamber during the debate.
+
+I again thank honourable members for, by and large, the very respectful and constructive way that this debate has progressed. There is nothing more important in a healthy democracy than its leaders being willing and able to debate matters of importance to the community, even when there are passionate views on both sides.
+
+As elected representatives, it is up to us to consider the facts, to share our perspectives and to make an informed decision on the appropriate way forward. I thank members for their diligence and hard work in preparing for this debate - regardless of members' opposition or support - and for putting those views forward and explaining the reasoning behind the conclusion each of us have come to.
+
+This is the role of the Legislative Council and our responsibility as MLCs, but we all know it's not easy. As members know, we have a committee process to undertake, and there are matters from members' contributions which I will seek to address on behalf of the government. We have certainly had a variety of matters raised by members, and if there's anything that hasn't been covered in this contribution, obviously the Committee process stage will be the place to continue to raise matters and ask questions. I will do my best to give the responses required.
+
+Regarding the project budget, and not surprisingly multiple members raised this matter, the project budget has been developed through the design process. It has been informed by users and operators to ensure it will be fit for purpose, and provide a modern, compliant and accessible facility for both users and patrons. The project includes contingencies and escalation in the total estimate of $1.13 billion. The government doesn't publish the amount allowed for each contingency or escalation; as you would expect, this will tip off the market when they respond to the tender when it occurs.
+
+In construction, contingencies are a tool to mitigate the risk of project cost overruns and manage the cost of unforeseen risks. This includes unanticipated discoveries, site-related conditions, price fluctuations in the market, and unexpected delays such as unsuitable weather or relevant construction activities.
+
+The inclusion of a client contingency reflects best practice. The client contingency has been determined through a quantitative risk assessment, the QRA. A QRA considers, identifies and assesses a range of risk related to the whole project and its delivery and then qualifies these based on the likelihood and impact. 
+
+This process is how the P90 cost is determined. The P90 cost estimate represents the expected cost plus the possible additional costs that could arise through the realisation of identified risks. It represents a 90 per cent confidence level, which means with the additional risk allocation there is a 90 per cent chance that the project will be delivered at or within the estimated cost.
+
+The client contingency when combined with the construction contingency represents the total construction and commission risk allocation identified through the quantitative risk assessment. The budget also includes escalation. The project is not based on today's prices. It considers the future cost of construction and labour when the project starts and finishes, which change over time.
+
+In relation to the AFL taskforce - and there were questions about that - the proposal for a roofed stadium originated from the Tasmanian government's AFL Licence Taskforce in 2019. The taskforce's recommendations formed the basis of negotiations with the AFL, culminating in the club funding and development agreement, which was signed in May 2023.
+
+One of the most touched on areas is the roof of the proposed stadium. The roof design of the Macquarie Point multipurpose stadium is what would make it a truly world-class all-weather venue. It guarantees events can take place no matter the weather, supports a fan-first experience, and enables year-round events - supporting both event and patron attraction in every season. The roof also enables the stadium to host a variety of events, not only cricket and AFL, but also rugby, NRL, football, concerts and community events, regardless of rain, wind or season. It is acknowledged that the stadium's roof will be the most visually prominent element of the stadium. That's why it has been carefully designed in a way to minimise its visual impact while maximising functionality.
+
+Another matter raised by members in their contributions was the sand. The sand for use in concrete requires a particular size grain. I learnt something over this journey. Recent developments in the south have had an impact on supply in the immediate area, however Tasmania continues to have a strong supply on-island, particularly in northern Tasmania - probably McGrath's sand. The recent report summarises known sand supply available, and it is not the first time this has been identified. Importantly, the cost plan of the stadium has been informed by engaging with local suppliers and sourcing sand from outside the immediate area does not impact the existing project budget.
+
+Another important area raised was the disposal of contaminated soil, and I note the concerns about the disposal of contaminated soil. As advised by the MPDC during budget Estimates, around 130,000 cubic metres of historic fill will need to be excavated from the site to build the stadium -
+
+Mr PRESIDENT - Point of order?
+
+Ms O'CONNOR - I seek to draw the Leader's attention to the facts.
+
+Mr Duigan - What's the point of order?
+
+Ms O'CONNOR - Excuse me, I'm entitled to say -
+
+Mr PRESIDENT - Order. Let the honourable member raise the point of order.
+
+Ms O'CONNOR - Thank you. I draw the Leader's attention to the fact that the Environment Protection Authority confirmed the volume is up to 220,000 cubic metres later in that day of Estimates hearings.
+
+Mr PRESIDENT - This is something that should be debated in the Committee stage, once we go into that process. That's where that debate can be held.
+
+Ms RATTRAY - Mr President, I'm getting to the next line. The EPA used the figure of 220,000 tonnes, which is the same. One is a measure by volume; the other provides the equivalent measurement by weight. I trust that provides some response to the honourable member's point of order.
+
+Both the MPDC and EPA are confident that this can be managed within existing capacity at disposal sites. Testing indicates that around 10 per cent or 13,000 cubic metres needs disposal at Copping and this is well within the facility's annual capacity of 45,000 tonnes.
+
+The matters that were raised around the Cenotaph are not lost on anyone. The government, together with all Tasmanians, has deep respect for the Cenotaph and it's significant value as a place of commemoration for the sacrifice of life in war. That is why the order prohibits construction on commemorative days and requires the event management plans to include protocols for managing and coordinating events at the Cenotaph and the multipurpose stadium. The Cenotaph and surrounding Royal Hobart Regatta Grounds have historically been a place that brings the community together for events and celebrations, which is entirely consistent with the purpose of the multipurpose stadium.
+
+There were a couple of questions asked by the member for Montgomery, who we know loves figures. It was suggested - and this is not related to figures but we know you love them - that transparency is built into the project and that any relevant document that is approved with a condition under this order must be made publicly available with a few exceptions. These are to be kept on a register and tabled to parliament quarterly. The requirement to keep a register and to table this register to parliament is provided at condition A4.
+
+The next question was about schedule 1, page 21, clause 10. A9 that requires the establishment of a design quality and integrity review panel with various experiences and how will the integrity and independence of this be controlled? The suggestion was also made that it seems that this panel only has an advisory role and at any time can be overridden by the secretary and they have to give a reason but the extent of the reason is not given. How can we, and certainly the member for Montgomery, be sure that this will not be abused? The Design Quality and Integrity Review Panel, which will include the Strategic Architectural and Urban Design Adviser, will be established in accordance with order condition A9 and comprise three to five members including a state servant engaged to provide strategic advice on architecture or urban design, a person nominated by Heritage Tasmania with expertise in historic cultural heritage and a person with expertise in landscape architecture.
+
+The Design, Quality and Integrity Review Panel will review the architectural, landscaping and urban design solutions from the project. The role of the panel is to engage and provide advice on the finalisation of the project design and plan documentation to maintain the integrity of the design as presented. It is not to restart, prosecute or change the design approach as given effect by the order.
+
+The engagement with the panel is expected to be dynamic and regular to support genuine engagement and feedback. The resulting formal feedback of the panel will be provided in writing with the MPDC required to make publicly available advice on any proposed changes and whether the change is to be made.
+
+The next question: if a project stage makes changes to public footpaths and the Hobart City Council must consent to those changes before the works, what if the Hobart City Council does not agree to the changes? The Tasmanian government and the Hobart City Council are working closely on this project and will have continued dialogue on matters that interest both parties. If there are issues, these will be escalated within the appropriate organisations in order to resolve issues.
+
+Another question: it was good to ensure that there is a requirement the project is completed to its entirety, including ensuring all landscaping and transport plans, and works are in place; all lighting and signage is installed; and the car park, waste management and pedestrian and cycling infrastructure is complete. These are done to the satisfaction of the secretary.
+
+The member for Montgomery would like to know how this final decision is reflected in the governance plan. Is this a decision that will be elevated, perhaps? Before the stadium is used for events, a number of arrangements need to be in place. The proponent or the operator will need to ensure these arrangements are in place, and the secretary must be satisfied they meet the requirements of the plan - for example, transport.
+
+A next question relates to page 57, schedule 1, part 40. D6(e). It doesn't state required under condition D11 like the others. Can this difference be explained, please?
+
+The Operational Transport Management Plan is a defined term of the order. On page 5 of the order, it states that the Operational Transport Management Plan means the plan required to be prepared under condition D11. The plans listed at D6 are not defined terms, so they are referenced back to the relevant condition.
+
+The question of it doesen't mention safety at all is related to page 63 of schedule 1, part 6, clause 45 D11. The only reference to the word 'safety' in D11 is reference to navigational safety and with respect to the sightlines from the port control tower of D11(2)(n).
+
+However, while not specifically called out, safety is an important element and inherent to the activities required for the plan. For example, there is reference to traffic management, traffic controls, barriers or additional staffing, strategies and operational tactics to be used to manage traffic flow, pedestrian access, taxi and rideshare access, public transport services, and cyclists. Not forgetting pathways that are sufficient for patron numbers and that potential hazards to patrons are minimised.
+
+A question in relation to page 72, schedule 1, part 6, clause 47 D13(1)(b). The member said I know that we hope that there will be sporting events there, but if there are none over the summer, how will this condition be met? Based on Stadiums Tasmania's events calendar, the Tasmanian Government is confident that this condition of the order can be met.
+
+Will a report of the review under page 74, schedule 1, part 6, clause 47 D13(3) be released to the public even if the secretary is satisfied under clause 4(b), and will the report under subclause (6) be made public? It is not intended for the review to be made public. However, all changes to the plans will be made available through the register of decisions A9. In addition, if the secretary is satisfied that recommendations should not or are unable to be implemented, the secretary will make a publicly available statement for reasons why the recommendation is not to be implemented.
+
+A question on page 141, if the Hobart City Council doesn't approve multiple areas - for example, on page 145. The proponent and the council will work together throughout this process, like with all significant development. The MPDC's work plan requires early engagement with key bodies including the Hobart City Council. This collaborative approach will ensure that the project's development is well understood by each party and ensure issues can be addressed quickly. The proponent is confident that it can work to the work program and achieve the relevant approvals as they arise. 
+
+Again, the honourable member for Montgomery, if additional funds are required, it would need to be appropriated and that would occur in an appropriation bill or a supplementary appropriation bill.
+
+Additional funds would need to be appropriated for the interest on additional borrowings or for any additional equity injection. The government has given a commitment to limit its contribution to the stadium to the current $875 million. Costs above the total project of $1.13 billion will be addressed through value-management or requesting additional contributions from funding partners.
+
+The members for Elwick and Huon obviously gave some information yesterday through their contributions. As members know, the government has considered the formal request from those two members and those members have outlined their request and the government's response.
+
+I will not detail those commitments in full during this summing-up. The member for Huon has tabled his own letter and the government response, and the member for Elwick has tabled a letter but not the government's response. I will seek leave to table the government's response to the member for Elwick. 
+
+Mr President, I seek leave to table the correspondence with the member for Elwick and have it incorporated into Hansard.
+
+Ms Forrest - Can I just clarify whether it was actually read into - or did the member for Elwick table that?
+
+Ms RATTRAY - No, the honourable member for Elwick tabled her letter and this is the response to that letter.
+
+Mr PRESIDENT - You only need to table it, Leader, unless you want it specifically incorporated. It will come up as a tabled paper.
+
+Leave granted.
+
+Ms RATTRAY - Again, in closing, I thank all honourable members for their valuable contributions to the debate on this matter of importance to the Tasmanian community, acknowledging that there remains a way to go to conclude this process. I'm certainly not saying that it's done.
+
+Before I resume my seat, it's only right and proper that on behalf of not only myself but the government, I acknowledge the Legislative Council staff and our parliamentary staff and thank them sincerely. I also want to add that acknowledgement and thanks to the departmental staff, some who stayed the journey, and it goes without saying, the Leader's staff. I sincerely thank them for their efforts and support.
+
+I also acknowledge the former member for Hobart, the honourable Rob Valentine, who stayed the course until the early hours as well.
+
+As I said when I first commenced, that is what I have thus far. The Committee process, obviously, will unfold and I will endeavour to provide as much information to honourable members as I possibly can. 
+
+Mr President, I commend the motion.
+
+Mr PRESIDENT - Honourable members, the debate having closed as ordered on 3 December 2025, the Council will now resolve itself into a Committee of the Whole Council to consider the State Policies and Projects (Macquarie Point Precinct) Order 2025. I will leave the Chair.
+
+
+STATE POLICIES AND PROJECTS (MACQUARIE POINT PRECINCT) ORDER 2025 (No. 49)
+
+In Committee
+
+Madam CHAIR - Honurable members, while the Leader is getting herself and her team organised there, I wish to make a brief statement about the way this Committee of the Whole is to run, to assist the important process to run smoothly because it is a little bit different, obviously, from a Committee stage of a bill.
+
+The resolution of the Council for 30 December 2025 empowers this committee to consider each clause, schedule, and item in the State Policies and Projects (Macquarie Point Precinct) Order 2025. The extent of the Committee's powers are as provided for by that resolution. 
+
+The normal conventions of the Committee of the Whole will apply. This is not an opportunity to revisit broader arguments already made in the substantive debate on this order, or to introduce issues unrelated to the clause or item under consideration. 
+
+I remind members that debate in Committee of the Whole is not a grievance-type debate. Questions asked on individual clauses or items should be specifically relevant to the clause or item under consideration.
+
+The order is made up of 10 clauses and eight schedules. Six of the schedules, in turn, contain a number of further clauses, such as schedules 2 and 8, which contain a number of items. The Deputy Clerk will call the individual clauses and items, as would occur in the Committee of the Whole when it's considering a bill. Members will be familiar with that process. 
+
+Depending on the number of questions being asked, I may direct the Deputy Clerk to move through multiple clauses or items in one call. In such cases, members should indicate which clause or item they wish to ask questions on. 
+
+As each clause or item is called, I will ask the question: 'Any questions?' The normal Standing Orders apply with members having three opportunities to speak on each clause or item, with the exception of the Leader who may speak as many times as is required.
+
+To be clear, as was contained in the Council's resolution, there is no scope for this Committee to amend any part of the order. This includes by disagreeing with individual parts. The order has already been made by the Governor under section 26(9) of the State Policies and Projects Act 1993. It provides that the role of the Council is to either approve or not the order. This Committee of the Whole simply provides members the opportunity to ask questions of the Leader regarding the order's individual clauses and items. 
+
+As provided by the resolution of the Council, once all members have asked questions on an individual clause or item, I will declare - or the Chair, if it is not me - will declare the clause or item has been considered.
+
+This is a declaration that does not involve a question being put. As such, there is no vote and, as a consequence, is not open for any member to call a division on individual clauses or items. 
+
+Once all clauses, schedules, and items of the order have been declared as considered, the Chair is to be directed to report back to the Council. As provided for by the Council's resolution, the Committee of the Whole report is to be limited to:
+
+The Committee has considered the State Policies and Projects (Macquarie Point Precinct) Order 2025 (No. 49).
+
+This Committee of the Whole has the potential to be a lengthy process. As such, I ask members to listen carefully as the Deputy Clerk moves through the clauses and items and seek the call where appropriate. 
+
+If there are no further questions and the Leader is ready to proceed, I will ask the Deputy Clerk to commence.
+
+Clause 1 considered.
+
+Clauses 2 and 3 -
+
+Madam CHAIR - Member for Hobart, which one?
+
+Ms O'CONNOR - This is in the Interpretation section -
+
+Madam CHAIR - That's clause 3. The Deputy Clerk called clauses 2 and 3. We need to deal with clause 2 first.
+
+Clause 2 considered.
+
+Clause 3 - 
+Interpretation
+
+Ms O'CONNOR - Madam Chair, this is the Interpretation section of the order. I have questions pertaining to the relevant regulator. In the order, it says: 
+
+... in relation to a condition specified in this order, means the agency responsible for enforcing the condition. 
+
+I seek to better understand the intersection between the secretary of the Department of State Growth, the Environment Protection Authority, and also Hobart City Council as the planning authority for Hobart. Is the Leader for the government able to clarify that intersection as regulators and planning authorities between council, which is the planning authority, and the Department of State Growth, where we have the secretary for the department able to approve conditions?
+
+Ms RATTRAY - Madam Chair, there will be a draft MOU with the Hobart City Council. The Hobart City Council and the EPA will have their normal powers that they would normally have under the LUPA act. However, they may also ask the Department of State Growth to have a person available delegated to be part of that process.
+
+Ms O'CONNOR - As I understand it, the MOU is well developed that the Department of State Growth seeks to sign with Hobart City Council. Can the Leader provide some clarity on where liability lies under the relevant regulator provision of the Interpretation section of the order? Also, given that we're outsourcing the compliance work to the developers but council can't transfer liability to the Department of State Growth if they don't enforce conditions, where does liability lie should someone take issue or there has been a breach of conditions? Can the Leader confirm it lies with Hobart City Council?
+
+Ms RATTRAY - Issues of liability don't change. They stay with the relevant contractor, proponent, whoever that might be. That doesn't change.
+
+Ms O'Connor - And ultimately council.
+
+Ms RATTRAY - Also, in regard to - there will be a consideration of making the MOU public. That may assist the member.
+
+Ms O'Connor - It doesn't answer the liability question, through you, Madam Chair.
+
+Ms RATTRAY - If there is a dispute around liability, that will be determined by the court.
+
+Ms O'Connor - The law is the law; that's right.
+
+CHAIR - Member for Hobart, third call.
+
+Ms O'CONNOR - Thank you, Madam Chair. Given that this is my third call, I will simply note that my last question wasn't adequately answered. It would appear that while State Growth's secretary will be making decisions, council will retain liability for problems. 
+
+I go now to the Interpretation section that relates to the site environmental management plan. Can the Leader confirm when the site environmental management plan is likely to be complete? Can the Leader confirm that it will not be Appendix LL, which was provided by Macquarie Point Development Corporation to the Tasmanian Planning Commission, which contains a four-year-old environmental management plan?
+
+Ms RATTRAY - I will seek some advice, thank you, Madam Chair. 
+
+There is an existing site environmental management plan. It is a dynamic document and will be regularly updated. It was last updated on 1 December 2025.
+
+Ms WEBB - I wanted to follow up on the other questions that the member for Hobart had put in relation to the MOU and the Hobart City Council. To clarify: liability still stays with the council as the body responsible. However, for example, if under the MOU, DSG in some sense has taken on responsibility, and then there are some compliance issues which then incur legal proceedings and legal costs, is it going to be Hobart City Council that bears those costs as it plays out potentially in courts, or is it going to be DSG who stumps up to defend what it may have been at fault in relation to?
+
+Ms RATTRAY - Under the MOU, responsibility for enforcement in some circumstances will be delegated to State Growth. In these circumstances, State Growth will bear the cost of enforcement. As I previously said, if there's any dispute, then the court will determine those disputes.
+
+Ms WEBB - Of course, the court will determine disputes. I'm wondering about the position that the council is left in. Ultimately, it's responsible, even if under the MOU something has been delegated. That sounds potentially precarious.
+
+In terms of the MOU, does it have any particular legal status or weight of that kind, or is it something that's really just a bit of an agreement on paper between the two agencies? Will the court attend to it, for example?
+
+Ms RATTRAY - I will just clarify something.
+
+The MOU is an agreement between the two parties. The council is a planning authority and always carries some risk. The MOU is not legally binding, but delegations under LUPAA is a statutory authorisation and carries legal weight.
+
+Ms THOMAS - My first question is in relation to the definition of 'project', where it says.
+
+Project means the use and development of Project land for:
+
+(a)	the Stadium; and
+
+(b)	the relocation of the Goods Shed within Project land;
+
+(c)	a concourse and plaza surrounding the Stadium; and
+
+(d)	associated works including but not limited to, access, parking, landscaping and signage.
+
+What else could possibly be included in scope where there is reference to 'but not limited to'? Could this include transport infrastructure, the northern access road, and housing? Is there anything else that could possibly be included?
+
+Ms RATTRAY - In answer to the honourable member's question: it's limited to the project land which captures the stadium footprint and surrounding access and plazas onsite.
+
+Ms Thomas - Could you just repeat that, sorry, it's limited to - 
+
+Ms RATTRAY - It's limited to the project land, which captures the stadium footprint and surrounding access and plazas onsite.
+
+Ms THOMAS - My next question is in relation to the definition of 'Secretary'. In the Interpretation section, it says:
+
+Secretary means the Secretary of the Department; 
+
+Page 157 of the order says the order is administered in the Department of State Growth, which suggests that this reference to secretary is referring to the secretary of State Growth. 
+
+Can the Leader clarify that? If so, how does that intersect with the commitment that I have received from the government that to reduce any perception of conflict between the secretary of the Department of State Growth and ongoing oversight of the Macquarie Point Development Corporation, the administrative oversight of the Macquarie Point Development Corporation Act 2012 will be moved to the Department of Premier and Cabinet?
+
+Ms RATTRAY - Yes, it is the secretary of DSG. Changing of the act as committed to does not change the order. However, the change as committed means that the DPAC secretary becomes the primary adviser to the minister for the MPDC.
+
+Ms THOMAS - Thank you for clarifying that so effectively. I have a bunch of related questions here - 
+
+Madam CHAIR - Put them all in together as this is your last call.
+
+Ms THOMAS - Effectively that is avoiding any conflict between - well, it's avoiding having the one secretary reporting through the - I don't know how I am going to frame this.  
+
+The secretary of State Growth and the secretary of the Department of Premier and Cabinet both having oversight of the project is effectively what it provides for, is my understanding. 
+
+Further to that, there are 24 references to conditions or variations being approved by the secretary of State Growth, as you've just clarified in the order. Can you confirm that in each and every case, the secretary of Department of State Growth will be required to consult with the secretary of the Department of Premier and Cabinet, as per the commitment I've received from the government that the secretary of the Department of State Growth will consult with the head of the State Service before making any decisions on any conditions set out in the order? 
+
+Can you confirm that in each and every of those 24 conditions or variations referred to in the order, and any others if I have missed any, in each and every case, the Department of State Growth secretary will be required to consult with the secretary of DPAC? If so, how will the secretary of DPAC ensure that this consultation occurs. Will this consultation be documented and reported to the Public Accounts Committee?
+
+Ms RATTRAY - The minister for Mac Point can issue directions to the MPDC, and DPAC will provide advice on directions, and DSG - the Department of State Growth - will consider and approve plans under the order. The secretary of State Growth has agreed to consult with the secretary of DPAC on all decisions. The secretary of State Growth and the secretary of DPAC will be available to answer questions and report to the PAC.
+
+Ms WEBB - Madam Chair, I'm following up on a question from the member for Elwick around the definition of 'Project' and 'Project land', because they intersect together. 
+
+I wanted to clarify: 'Project land' as defined here doesn't include any TasPorts land; because, of course, in the government's response, there's the imputation that there will be TasPorts land made available and rolled into this precinct in some fashion, although no detail about that. Does this order contemplate that? What will occur if there is TasPorts land that is made available for the project and there is some crossover into land outside of what's described here in 'Project land'?
+
+Ms RATTRAY - No, it does not include any TasPorts' land because the stadium will not be developed on TasPorts' land. The project -
+
+Ms Webb - It was suggested to be part of the precinct. Is it just the stadium or the precinct? It's in the government's response. I just referred to that.
+
+Ms RATTRAY - The project does not include the northern access road. The project is also defined by the plans in schedule 2 and associated works are works directly relevant to the construction of the stadium. Furthermore, TasPorts and the MPDC are currently working on plans for the activation of both MPDC land and the TasPorts commercial zone as part of the broader precinct plan. I trust that clarifies.
+
+Clause 3 considered.
+
+Clause 4 considered.
+
+Clause 5 -
+General conditions
+
+[12.01 a.m.]
+Ms O'CONNOR - Madam Chair, this is the clause that relates to general conditions and I'm seeking some clarity here about the government's oversight and assurance framework as it relates to these general conditions, noting that the government has announced the establishment of the Macquarie Point Urban Renewal Oversight Committee and committed to the honourable member for Elwick to have a probity adviser in place.
+
+Can the Leader explain what the intersection is between that framework and the details of the contract signed with the AFL itself, which under schedule 11, Governance Protocol, clause 4, establishes a steering committee. That steering committee, which has on it representatives of government, as well as the commonwealth and the AFL, is responsible to the minister for state development, construction, and housing for ensuring that the projects are delivered to a specified budget and within determined timeframes. It provides strategic leadership and oversight for each project and provides a forum for interested parties to have input into the decision-making process.
+
+My question to the Leader is: there's no mention in the AFL contract of the Macquarie Point Urban Renewal Oversight Committee or the probity adviser, but there are very clear provisions here about who's making the decisions, who's providing the advice, and who's calling the shots. It's neither of those newly established entities. Whose advice prevails in this instance? That would be very helpful to understand.
+
+Ms RATTRAY - The probity adviser will provide assurances that the decisions under the order are made with due process. The Oversight Committee supports the provision of advice to the Cabinet Committee on whether the project is being delivered within agreed parameters. The Steering Committee manages risks within the project. Furthermore, the project governance includes internal governance, including the board, the Project Steering Committee as set out in the agreement, and additional oversight by the state. This includes the Oversight Committee -
+
+Ms O'Connor - Which one, sorry?
+
+Ms RATTRAY - The Oversight Committee and the Committee of Cabinet and PAC, and the Oversight Committee has been in place for over a year. The Project Steering Committee is not a decision-making forum.
+
+Ms O'CONNOR - Madam Chair, what a tangled web has been woven here. We've got a Steering Committee under the contract and a project coordination group under the contract, both agreed contractually, that are a key provider of advice on the project and then you've set up this other bureaucratic architecture over here.
+
+Can the Leader for government confirm that, when it comes to the core source of advice, of input into decision making around this project, it will be the Steering Committee that's established - which has a member of the AFL and the Commonwealth, Stadiums Tasmania, MPDC, the Department of Premier and Cabinet, Department of Treasury and Finance, Department of State Growth and the secretary of State Growth on it - and the project coordination group are in fact the contractual entities that will have the most authority to have input into the projects?
+
+And that, in fact, the probity adviser position, which the government has in its desperation promised, will have no connection with the steering committee or the project coordination group?
+
+Ms RATTRAY - The Project Steering Committee is not a decision-making forum, which I've already said.
+
+Ms O'Connor - Nor is the Oversight Committee or the probity adviser. That's not the question, with respect.
+
+Ms RATTRAY - This is a layered governance that builds confidence in the oversight of the project, and all groups have clearly defined roles and responsibilities, and the MPDC board is ultimately accountable for the project. The Oversight Committee provides additional oversight and guidance from a state perspective, and it considers risks and delivery and provides advice to Cabinet to inform decision making.
+
+Ms O'CONNOR - Leader, it's obviously a governance mess that has been set up here because the government's made it up as they go along.
+
+What is the membership by position of the Macquarie Point Urban Renewal Oversight Committee? Can the Leader confirm that, in some cases, bureaucrats who are on the Steering Committee under the AFL contract or the project coordination group will also be on that Macquarie Point Urban Renewal Oversight Committee? You will have these multiple bodies, stuffed full of bureaucrats, who are talking to themselves in many ways, in a completely messy governance framework. How on earth do you expect this to work and instil any faith that this layered governance process won't just become a complete dog's breakfast?
+
+More importantly, who is on the Macquarie Point Urban Renewal Oversight Committee? Can you confirm a number of those members will be on the Steering Committee and the project coordination group, which are requirements under the AFL contract?
+
+Ms RATTRAY - The committee coordinates across all program-level activities for Macquarie Point Urban Renewal under delegation from the Cabinet committee.
+
+The Oversight Committee is comprised of the following members - and I'm happy to provide this to the member at a later time:
+
+the secretary of the Department of Premier and Cabinet, who is the chair,
+the secretary of Department of Treasury and Finance, who is the deputy chair, and
+the secretary of the Department of State Growth -
+
+Ms O'Connor - Amazing. They're also all on the Steering Committee.
+
+Ms RATTRAY - And the Crown Solicitor from the Office of the Crown Solicitor is an advisory member.
+
+The officials from relevant agencies and entities are to attend as required and at the discretion of the chair. This may include government agency representatives and project delivery representatives from the MPDC, Stadiums Tasmania, and TasPorts. Cricket Tasmania and the Tasmania Devils may also be invited to attend for relevant agenda items.
+
+Clause 5 considered.
+
+Clause 6 -
+Planning Conditions
+
+Ms O'CONNOR - This is the clause that relates to planning conditions. Can the Leader explain why the word 'generally' was inserted into this clause? It says:
+
+(1)	The Project must be carried out, generally, in accordance with the approved plans and documentation specified in Schedule 2, unless otherwise modified in accordance with this order.
+
+Why would you insert 'generally' into a planning provision in this order? Wouldn't we want the project to be compliant, not generally, but routinely? 
+
+Given we've now established that the Hobart City Council will retain civil liability for this project in the main, as the planning body responsible for that beautiful waterfront you're about to desecrate, can we see the MOU that has been prepared for signing between the Department of State Growth and the Hobart City Council? 
+
+Can the Leader for government outline any concerns which have been expressed by Hobart City Council to government about the provisions within that MOU and whether or not, for example, they contain sufficient protections for the public interest and sufficient preventions to protect Hobart City Council for having to answer for the mistakes of this project in court?
+
+Ms RATTRAY - In regard to your question about 'generally,' the project must have flexibility to modify plans to address issues as they arise. That's the reason why 'generally' is there. 
+
+The order sets out the arrangements for the planned finalisation and development of the operational plans. Those documents will become part of the order. This clause avoids conflict in those documents. Further, the Hobart City Council has not raised concerns with the clauses of the MOU, and State Growth will be authorised to enforce some aspects of the order limiting the responsibilities of the Hobart City Council. Furthermore, the MOU is in the council agenda, so it is public. It's not signed or final as yet because the Hobart City Council has deferred that to mid-December. It must be on their agenda for mid-December, which is not far away.
+
+Ms O'CONNOR - Madam Chair, given that we've established the same bureaucrats who will be on the contractually required steering committee and the project coordination group - and for the benefit of councillors who are listening - the contractually required steering committee has on it the secretary of the Department of State Growth; a nominee from State Growth; a nominee from Treasury and Finance; and a nominee from Premier and Cabinet. We've got similar, in fact, the same membership, in significant part, on the Macquarie Point Urban Renewal Oversight Committee. Same bureaucrats talking to and advising each other, presumably.
+
+Can the government see here that there's a serious potential for conflict of interest? For ideas not being sufficiently tested or challenged? Of various arms of government being part of this project, just affirming all its processes and decision-making? Isn't there clearly here a conflict of interest between those DSG officers who are part of these governance and oversight arrangements?
+
+As we know, DSG is supposed to be the entity that's taking action on breaches of conditions. It puts them in a difficult position because they are state employees working on a state project. The history here in Tasmania is that public servants sometimes feel unable to speak freely and give frank and fearless advice.
+
+How is government proposing that those multiple layers of conflict of interest will not only be managed, but that they won't be allowed to lead to bad decision-making, misallocation of funds, failure to enforce conditions and the like?
+
+Ms RATTRAY - The only overlap in the two committees as currently constituted is the secretary of State Growth. The transfer of the MPDC Act to DPAC means that chairing responsibility for the steering committee also needs to change. Further, the government will be engaging with the AFL to agree to this change to the club development and funding agreement.
+
+Ms O'Connor - You can renegotiate parts of a contract. Who would have thought?
+
+Madam CHAIR - Order. You have another call, so let her finish her answer.
+
+Ms RATTRAY - Furthermore, the secretary of DPAC will not chair the steering committee -
+
+Ms O'Connor - Currently in the contract, through you, Madam Chair, the secretary does.
+
+Was that my last call, Chair? 
+
+Madam CHAIR - You've got one more if you want to use it.
+
+Ms O'CONNOR - I guess this is just a global question. Given that we've established the governance and oversight framework is - one kind way of putting it is that it's 'layered'; another is that it's chaotic and fraught with risk. When things go wrong on site, whether it's with the treatment and disposal of all that contaminated soil, or construction methods that are not safe and proved to be not safe, who ultimately bears responsibility and liability for any failings, any public health risk, any danger to people, of this project? Who is it?
+
+Ms RATTRAY - In response to your question about 'ultimately accountable'. In regard to the management of funds the MPDC is the accountable authority.
+
+Ms O'Connor - The minister is, ultimately, actually, but that wasn't the question. Through you, Madam Chair, the question was one of civil liability, ultimately, and where responsibility lies when things go wrong. The Council has not been given a satisfactory answer.
+
+Madam CHAIR - It's up to the Leader to choose how she answers, but I do accept that was the question you put.
+
+Ms RATTRAY - Again, the response is it's the Macquarie Point Development Corporation.
+
+Ms O'Connor - Can be sued, should things go wrong? 
+
+Ms RATTRAY - That's who is accountable.
+
+Ms O'Connor - Can you ask your advisers please to provide better advice on that? 
+
+Ms WEBB - I'm going to reiterate that question, noting that my colleague has run out of her calls. It isn't a clear enough answer. It would be helpful if you could provide a clearer answer on that, I believe, about the legal responsibility. Who will be held accountable in that way? Is it the Macquarie Point Development Corporation? Who is it? Accountable is a different concept.
+
+Ms RATTRAY - The Macquarie Point Development Corporation is a legal entity and can be sued.
+
+Ms Webb - Right, thank you.
+
+Ms THOMAS - In relation to the governance, I'm wondering if you can confirm the role of the independent probity adviser in overseeing the decision-making of the government, relevant secretaries, Macquarie Point Development Corporation and Stadiums Tasmania in monitoring the process from project approval, making sure it's fair and equitable and legally compliant. Just that the independent probity adviser will oversee the government and the Macquarie Point Development Corporation decision-making and what that will look like.
+
+Ms RATTRAY - The probity adviser will monitor all decisions of all regulators and entities engaged in decisions made under the order.
+
+Ms THOMAS - Will the independent probity adviser report through to the Public Accounts Committee?
+
+Ms RATTRAY - I've been advised that if requested by the Public Accounts Committee, then yes, they will present.
+
+Ms WEBB - In terms of the oversight, the monitoring of decision-making that the probity adviser will do, in what timeliness will that occur? For example, as decisions are made by each of the relevant groups or committees, or whoever they are that are being monitored, I take it that there'd be a number of monitoring tasks to be done. Decisions are made, I presume say in a meeting, and what timeliness is there then the monitoring done and in terms of reporting, it sounded like you said that the probity adviser would only be interacting with PAC on behalf of the parliament when called, but is there a regular way that the probity adviser, in a publicly accountable way, reports on their findings as they monitor decision-making? 
+
+There must be public transparency about that, and reporting on it. I'd like to understand how and with what frequency, and how it will be transparent that that is done.
+
+Ms RATTRAY - I'm advised there will be a detailed probity plan that will include timeframes and reporting arrangements, and this plan can be made available to the Public Accounts Committee.
+
+CHAIR - Member for Nelson, third call.
+
+Ms WEBB - That doesn't answer my question. Why wouldn't the Public Accounts Committee be consulted on the development of that probity plan rather than presented with it as a completed item? 
+
+In terms of presenting it to the Public Accounts Committee, I assume that means it will be done in a public way, so it becomes a public parliamentary document that others can access too. I'd like confirmation on that. I still haven't had an answer to my earlier question which related to the timeliness of monitoring of decision-making. Your answer to me might be, 'That will be in the plan,' but I would like to understand what the thinking is now. 
+
+There must be thinking now on how this will work. This probity adviser, do they immediately get minutes of meetings post-meeting, for example, to be able to monitor ongoing decision-making? Do they get a monthly update from the various entities they're monitoring, for example? I don't want the answer to be, 'That will be in the probity plan.' I'd like to understand the thinking right now about how this might look, given that it has been presented to us as a mechanism to deliver confidence as we are considering this order, and we have not yet had our final vote on it.
+
+Ms RATTRAY - I have some responses here. The probity advisers monitor compliance with process, and they prepare reports on such processes. The probity advisers are usually present in relevant meetings. Decisions made and plans approved under the order will be published, and the probity plan will be one of these. The probity plan will be public. In regard to -
+
+Madam CHAIR - Could the honourable leader turn around a bit? The microphone is right behind you and you're making it difficult for Hansard, and you are addressing the Chair as well. I appreciate that it's challenging in that position. Keep going, but just remember where your microphone is.
+
+Ms RATTRAY - Apologies. It's always hard when you've got your back to the honourable member who's asked the question. Thank you. I'm quite new at this. 
+
+Madam CHAIR - It wasn't a criticism. 
+
+Ms RATTRAY - I know it wasn't a criticism, just for those people who might think, 'Shouldn't she know that?' 
+
+It's hard to give a definitive timeframe because it depends on the status of the project and the relevant decision. It's just not possible to give that definitive timeframe. Again, be assured that the probity plan will be public.
+
+Madam CHAIR - Member for Elwick, third call.
+
+Ms THOMAS - Madam Chair, can the Leader confirm that, as per the government's oversight and assurance framework, the probity adviser will operate independently of the project team and also report directly to the Macquarie Point Urban Renewal Oversight Committee? Would it be reasonable to expect that the probity adviser would report to each formal meeting of the Macquarie Point Urban Renewal Oversight Committee?
+
+Ms RATTRAY - Madam Chair, yes, they can report to the oversight committee, and they can attend those meetings as well.
+
+Ms Thomas - It is the intention that they will?
+
+Ms RATTRAY - Yes, that's correct.
+
+Mr GAFFNEY - A point of clarification: if the probity adviser is monitoring the decision, will the probity adviser have access to all the information that informs that decision?
+
+Ms RATTRAY - The answer is a definite yes.
+
+Clause 6 considered.
+
+Clause 7 -
+Aboriginal heritage conditions
+
+Mr GAFFNEY - A point of clarification for understanding, and it's not specific to this: because this is an interesting project and for those listening on from the outside, it's very - I'm not going to say complicated, but it is different to how we usually operate -
+
+Madam CHAIR - I did explain that exactly in my overarching comments.
+
+Mr GAFFNEY - I heard that. What my question is: if I think I've got a question to do with this point - it might be the TSO, and the TSO comes up here, I might have to stand up here and say, 'Is this the right time for me to raise that point?' You might have to say, 'No, you've got to raise it down here.' 
+
+Madam CHAIR - Which is what we do. 
+
+Mr GAFFNEY - What I'm asking is: if we miss the call on something because of the nature of this document, what flexibility is there to go back and address that? How do you want that to operate?
+
+Madam CHAIR - It is up to members to be aware of where their questions sit.
+
+Mr GAFFNEY - I appreciate that. In normal bills we would. However, in this one, it's complicated. When bringing up issues - you're not quite certain whether that signage issue is to do with the plan, or that signage issue is to do with something further along in the draft. 
+
+Madam CHAIR - The deliberation in this stage is to consider the clause as it's read there. If the question relates to matters that are referred to in the clause, then it's a fair question.
+
+Mr GAFFNEY - Yes.
+
+Madam CHAIR - I reiterate the point that it is up to members to ask the questions where they feel they fit. If there was a real issue that was raised later on in this process, there is the process that's possible of the recommittal. We would have to get leave to do that and we'd have to go back to the whole Council to get that approved. 
+
+There is a process there. It is incumbent on members. It is not up to me to tell you exactly where the questions need to be asked. You need to ask the questions where they fall.
+
+Mr GAFFNEY - I'll give an example of what -
+
+Madam CHAIR - This is the third stand for you on this, too.
+
+Mr GAFFNEY - With 7. A6 talks about noise and vibration to do with -
+
+Madam CHAIR -No. We're in clause 7.
+
+Mr GAFFNEY - Yes, I'm asking for some clarification about how this is going to work. I am giving an example because I want to understand so I don't miss the call.
+
+With 7. A6 mentions noise and vibration to do with -
+
+Madam CHAIR - Can you direct to where you're talking about?
+
+Mr GAFFNEY - Page 19, 7.A6. It mentions here noise and vibration with about six or seven different groups. I know the TSO comes up further down the track. Am I to raise my questions concerning the TSO here, or do I raise them further down the track when there's a greater volume of questions to do with the TSO? I just want to know where.
+
+Madam CHAIR - If the question relates to the matters in that clause, that's a matter for you. I preside over the the proceedings here. I don't make decisions for members.
+
+Mr Gaffney - It was a procedural measure.
+
+Madam CHAIR - If the Leader thinks there's a better place for the question, she could direct, but it's not my job to do that.
+
+Mr Gaffney - Thank you, Madam Chair.  That's what I wanted to know, that if I'm raising something in the wrong section, will the Leader say we'll deal with that later?
+
+Madam CHAIR - That's up to the Leader and how she responds to the questions.
+
+Ms RATTRAY - I can advise, Madam Chair, that if something belongs in a schedule, for instance, as the member has indicated, then I certainly will, on the advice of these very wise people here, ask the member to use that particular area.
+
+Mr Gaffney - Thank you, Leader.
+
+Ms O'CONNOR - This is the clause that relates to the, as yet, unwritten and unknown Aboriginal heritage conditions for the project. Noting that Tasmanian Aboriginal people were promised a truth and reconciliation art park and found out in the front page of the Mercury that they wouldn't be getting that. Instead, they'd be getting an Aboriginal culturally informed zone, which is not described in any design documents, where there has been no apparent preliminary work. Certainly not funded.
+
+That move was described by Professor Greg Lehman as 'Black-cladding', and he said that on behalf of the Palawa people. It was described by Lynn Mason, AM, who's on the Tasmanian Planning Commission panel, as tokenism. That is, the Macquarie Point Development Corporation's consultation with Aboriginal people had been tokenistic.
+
+I would like to understand, Leader, what you can share with Council about the process of attempted consultation with Tasmanian Aboriginal people to date, why it has been apparently so half-hearted and unsuccessful. I would also like Council to be given the opportunity to understand the significance and the extent of the Aboriginal heritage on the site, and some information about who the Macquarie Point Development Corporation, on behalf of the government, intends to consult with in the development of Aboriginal heritage provisions.
+
+Ms RATTRAY - The development of the Aboriginal culturally informed zone is part of the broader precinct and not part of this project.
+
+There is a document called the Macquarie Point Multipurpose Stadium Public Hearing Technical Note that is published on the TPC website, as provided during the public hearing process. That is available and that relates to the Aboriginal community consultation and engagement. It's dated 14 July 2025.
+
+Ms O'CONNOR - Madam Chair, the question was not answered satisfactorily. I requested some information for the Council on the significance and the extent of Aboriginal heritage on site. That information was not provided and it's not good enough to refer members of this place to some website. That information should be put on the public record. I ask that the Leader for the government do that.
+
+I go now to the agreement between the honourable member for Elwick and the government, which, with respect, is not worth the paper it's written on. It provides no guarantees of anything. It also has a request in here under a number of alleged safeguards around design. It requires that the final design be agreed by the Design Quality and Integrity Review Panel, with particular reference given to visually respecting Sullivans Cove, the Cenotaph corridor, and Mount Wellington sightline. 
+
+I will pause at this minute to respectfully say the first and true name of the mountain is Kunanyi and it shows respect to the Palawa people of Tasmania to describe the mountain by its first and true name. 
+
+Will the Tasmanian Aboriginal community be consulted, for example, given the site is of such heritage significance, on the design of the project, in order to perhaps visually, at least, respect the sight line to Kunanyi?
+
+Ms RATTRAY - Madam Chair, the corporation has engaged with the Tasmanian Aboriginal organisations to seek initial guidance on the types of activities and development that they would like to see in the Aboriginal culturally informed zone and the multipurpose stadium. This consultation will help inform the master planning to ensure the proposed planning settings support these visions and consider options to support delivery. 
+
+I can add that the Aboriginal culturally -
+
+Ms O'Connor - Can you translate that into English for us please, honourable Leader?
+
+Ms RATTRAY - It looks pretty much English to me, honourable member. I can repeat it, but in the interest -
+
+Ms O'Connor - Could you, please?
+
+Ms RATTRAY - The corporation has engaged with Tasmanian Aboriginal organisations to seek initial guidance on the types of activity and development they would like to see in the Aboriginal culturally informed zone and the multipurpose stadium. This consultation will help inform master planning to ensure the proposed planning settings support these visions and consider options to support delivery. 
+
+I was going to add the Aboriginal culturally informed zone remains a critical part of Macquarie Point. The MPDC has worked with a range of Tasmanian Aboriginal people, groups, and consultants, including Aboriginal heritage officers, to help learn about the history of the site and to develop a culturally informed design. 
+
+I may have something else to add. The cultural assessment and the work to date is documented in the Project of State Significance application. I certainly can take on notice to table these documents, and I can seek leave to table the public hearing technical note right here and now if the honourable member wishes me to do so. I am happy to do so.
+
+Madam Chair, I seek leave to table the Macquarie Point Multipurpose Stadium Public Hearing Technical Note.
+
+Leave granted.
+
+Ms O'CONNOR - Madam Chair, thank you. Now I'm quite confused. Did I mishear you, honourable Leader, when you initially said the Aboriginal culturally informed zone is not part of the project, and then a short time ago I heard you say it's a critical part. Which one is it?
+
+Ms RATTRAY - It's certainly a critical part, but the zone will be delivered in stage 2 of the precinct redevelopment following the stadium construction.
+
+Ms WEBB - Following up on the answer there about the meetings and the consultations with the Tasmanian Aboriginal community, it sounded like that might have happened some time ago - if it's detailed in the application for the POSS process, if that's where we're to look for the detail of that. I want to understand if there has been any recent interactions and ongoing work in that space. Perhaps something could be provided that outlines the dates and scheduling of that interaction, and then if there are plans now in place for ongoing interaction henceforth, could that be shared with us too?
+
+Ms RATTRAY - Madam Chair, the last significant round of consultation was outlined in the Project of State Significance (POSS) application. As I've already said, the zone will be delivered in stage 2 of the site development. Discussions with the Aboriginal people and consultants have occurred on a more ad hoc basis since that consultation round. I can assure honourable members that consultation will continue.
+
+Ms WEBB - We all like a good assurance, but I also like dates. Since the publicly reported one in that application, and it might not be that you can bring it to us now, but I'd like a commitment to table it while we are still sitting as parliament: dates subsequent to that last public reporting of interactions, and then plans for dates going forward or what the timing would be. 
+
+In relation to this, noting what you said about the Aboriginal culturally informed zone not being part of the stadium project itself as stage 1, I'm reflecting on the fact that when we spoke to the TPC panel members in a hearing last week, we were told that it's actually quite poor practice to corral First Nations input and involvement in a project into a particular area, and that it's more standard practice - not even best practice, just standard practice, was the way it was described - to have it integrated into the whole development in some fashion. 
+
+What I would like to know is, with this stage 1 of the project, the stadium itself, what interactions are being had with the Tasmanian Aboriginal community to incorporate the stories, the impact, the presence of the Tasmanian Aboriginal community, the First Nations, here into this stadium project, or confirm that is not occurring?
+
+Ms RATTRAY - A series of questions there. I certainly want to be able to provide that information. I commit to doing the best I can to provide as much information with regard to those questions as soon as I possibly can.
+
+Ms Webb - That second question was not hard. Is it being incorporated into this project planning? Is there interaction on this?
+
+Ms RATTRAY - I've already said it's part of stage 2.
+
+Ms WEBB - No, my question -
+
+Madam CHAIR - Restate your question while the Leader's on her feet.
+
+Ms WEBB - My question related to the fact that in stage 1 we know best practice, in fact standard practice, is to incorporate interaction with First Nations people and their input into a whole project, not a corralled area. My question is, are we doing that? Is there any interaction with the Tasmanian Aboriginal community into the design and the planning of this stadium?
+
+Madam CHAIR - Thank you. That's fairly clear.
+
+Ms WEBB - It's a very clear question. It's a yes or no in fact.
+
+Ms RATTRAY - I actually have more than a yes, no.
+
+Ms Webb - Great.
+
+Ms RATTRAY - I will present what I have, Madam Chair, and if it's not sufficient, I will commit to endeavour to get more information.
+
+Consultation with the Aboriginal community, as noted, was at the whole of the site level and consultants who have supported the project include the Palawa people to provide advice to guide the stadium design and the master plan.
+
+Furthermore, with regard to the Aboriginal cultural values and landscape, in its third representation, the MPDC notes that the following reports have been provided for assessment:
+
+the Draft Macquarie Point Multipurpose Stadium Project of State Significance Stadium Cultural and Landscape Values Assessment and prepared by Southern Archaeology, Colin Hughes, Caleb Pedder and Sarah Wilcox and that was dated the 28 August 2024;
+the draft proposed multi-purpose stadium at Macquarie Point, Lutrawita, Tasmania; 
+the Aboriginal Heritage Assessment Report, which is referred to as the AHAR was 30 January 2025 and prepared again by Southern Archaeology, Colin Hughes, Caleb Pedder and Sarah Wilcox. 
+there's also an Appendix M in the Macquarie Point Stadium Historical Archaeological Sensitivity Report and Archaeological Method Statement and the draft IAR notes an assessment of the impact the project will have on cultural landscape values was not provided by MPDC in its final form. It does however acknowledge MPDC provided a draft Aboriginal Heritage Assessment Report, again 30 January 2025 which provides a statement of cultural significance by Colin Hughes, a registered Aboriginal heritage officer and in its third representation. The MPDC notes that the assessment remains in draft form due to the importance of ongoing consultation. 
+
+Again, I will give that undertaking that if there is further information required, I will endeavour to provide that as soon as I possibly can.
+
+Ms WEBB - Thank you, Leader. I didn't ask about Aboriginal heritage assessments. I'm talking about design input into the stadium.
+
+Madam CHAIR - The clause is considered.
+
+Ms WEBB - Do I have another call?
+
+Madam CHAIR - You do, member for Nelson, last call.
+
+Ms WEBB - None of my questions were about Aboriginal heritage assessments. It's a separate issue to having First Nations - 
+
+The sitting suspended from 1.00 p.m. to 2.30 p.m.
+
+
+QUESTIONS
+
+People First Stadium - Advice regarding AFL Decision
+
+Ms O'CONNOR question to MINISTER for SPORT, Mr DUIGAN
+
+[2.31 p.m.]
+You will recall that I asked you the day before yesterday about the AFL's decision in Queensland to walk away from the People First Stadium, which has become a massive loss-making venture for the AFL. You came back in here yesterday and indicated that your advice from Stadiums Tasmania was that the AFL had walked away from the People First Stadium at the request of Stadiums Queensland in preparation for the Brisbane Olympics in 2032. The Brisbane Olympics is seven years away.
+
+I want to test the quality and veracity of the advice that you got from Stadiums Tasmania about the reasons that the AFL has walked away from the People First Stadium. It is our understanding that the AFL has basically handed the keys back to Stadiums Queensland because their investment in that stadium is a loss-maker for them.
+
+ANSWER
+
+Mr President, I thank the member for her question. It is probably a question for the Queensland Government. It's not a level of -
+
+Ms O'Connor - No, it's not, because you've given an answer in here that has drawn Stadiums Tasmania into it.
+
+Mr DUIGAN - As I have said, I have provided the information as I have been advised by Stadiums Tasmania. I don't have further information to add to that.
+
+
+People First Stadium - Advice regarding AFL Decision
+
+Ms O'CONNOR question to MINISTER for SPORT, Mr DUIGAN
+
+[2.32 p.m]
+Mr President, with respect, that's simply not good enough. You made the decision to provide advice to this Council that was provided to you by Stadiums Tasmania. That advice, if that's what it is, kind of fails the pub test because we're talking about the Brisbane Olympics, which are seven years away, and you have apparently been advised by Stadiums Tasmania that the AFL was asked by Stadiums Queensland to get out of the People First Stadium.
+
+This is a question of integrity. Don't point us to Stadiums Queensland. We need to understand from you whether the advice that Stadiums Tasmania provided to you is true and honest advice - and if you believe it is, to stand up there and say that.
+
+We will make some further inquiries, because it's important, minister - I'm sure you agree - that we are are honest in here. So, will you confirm?
+
+Mr Duigan - Will I confirm what?
+Ms O'CONNOR - Will you confirm that Stadiums Tasmania's advice to you is honest and accurate advice? It is different from the information that we have, and this goes to your integrity as a minister.
+
+Mr Duigan - No, it doesn't. What a load of nonsense.
+
+Ms O'CONNOR - It does! You can't get up in here -
+
+Mr PRESIDENT - Order.
+
+ANSWER
+
+Mr President, I point to the answer I gave yesterday, which was advice provided to me as minister from Stadiums Tasmania. My understanding is that they checked it with the AFL as well.
+
+
+King Island Golf & Bowling Club
+			
+Ms FORREST question to MINISTER for SPORT, Mr DUIGAN
+
+[2.34 p.m.]
+The King Island Golf & Bowling Club was promised a grant of $300,000 in order to lay a synthetic green. However, in recent months, the person at the club who has been trying to advance this project has been unable to get any response from the government as to where these funds are. The company responsible for installing the green has recently been working in Tasmania installing greens, and I'm led to believe were granted funding about the same time as the King Island Golf Club. Our concern is that this commitment may suffer the same fate as the North Launceston Football Club. Can you give an update as to the recent developments regarding this funding and how the grant is progressing?
+
+ANSWER
+
+Mr President. I'm just going to seek some advice. 
+
+My understanding is the issue has been around the budget cycle. The allocation was there in the May budget. That did not pass. It is subsequently back in the interim budget, which did pass downstairs. It was passed downstairs -
+
+Ms Forrest - No, they're not here yet.
+
+Mr DUIGAN - And they should expect to see their funding in a timely fashion post the budget passing.
+
+
+People First Stadium - Advice regarding AFL Decision
+
+Ms O'CONNOR question to MINISTER for SPORT and EVENTS, Mr DUIGAN
+
+[2.36 p.m.]
+It's our clear understanding that the AFL withheld the news of its decision to walk away from the People First Stadium, fearing the optics ahead of this vote today. You have said that Stadiums Tasmania apparently sought some information from the AFL before providing you with the answer you gave in here yesterday - the answer that fails the pub test.
+
+Will you, as minister responsible for sport and events, make some inquiries, for example, with the AFL itself about why it made the decision to walk away from that stadium? It is our understanding that they have walked away from it because the business case did not stack up for it and that's making a massive loss for them as this stadium will here, for the people of Tasmania.
+
+ANSWER
+
+Mr President, as I say, I provided an answer to the member. I don't have any further advice in front of me-
+
+Ms O'Connor - That wasn't my question; will you get some more information?
+
+Mr DUIGAN - And I will let the record speak.
+
+
+Lindisfarne North - Capital Works Funding
+
+Mr EDMUNDS question to MINISTER for EDUCATION, Ms PALMER
+
+[2.37 p.m.]
+I note in the infrastructure line items for Education that the funding pipeline for Lindisfarne North has been pushed out. I was wondering if the minister could outline the reasons for that and what work the department is doing to make sure that is delivered?
+
+ANSWER
+
+Mr President, the 2025-26 capital works budget for the Education portfolio includes over $294 million over four years, with the remaining balances of any outstanding commitments scheduled beyond the forward Estimates. The expenditure profile in the 2025-26 budget reflects updated project delivery times and emerging industry capacity constraints. The projects have been prioritised based on advice from the Department for Education, Children and Young People, which considers building conditions, school capacity and expected future demand. 
+
+I understand the department then considered the available funding envelope across the forward Estimates to land on its recommended order of works. The timing of capital project funding as detailed in the 2025-26 interim Budget papers do not provide really a true reflection of specific start and completion times. Prior to construction there is extensive consultation. There's site master planning and design processes and then following completion of construction works, there is a 12-month defect period for all projects.
+I can advise the member that with regard to Lindisfarne that construction is scheduled to begin in 2030. Obviously that preliminary work is under way and with Clarence there's been no change to when construction will start. We're still looking at 2026, but of course, the planning also is under way on that.
+
+
+North Launceston Football Club
+
+Ms ARMITAGE question to MINISTER for SPORT, Mr DUIGAN
+
+[2.41 p.m.]
+With changes to UTAS Stadium and apparent displacement of the North Launceston Football Club, what assistance can the government provide to assist them to secure a permanent home?
+
+ANSWER
+
+Mr President, the government has always been and continues to be a strong supporter of the North Launceston Football Club. I recognise their long association and history at UTAS Stadium and that's why the government initiated a working group earlier this year with Stadiums Tasmania, the NTFA, AFL Tasmania and the City of Launceston to work through the future of the Inveresk precinct.
+
+The government has always maintained that the North Launceston Bombers will have a long-term home. Certainly, that was my message when I met president Adrian Hall on site last week for an update on the discussions he's been having with the working group. Representatives from the NTFA and Stadiums Tas were also present to explore options within the precinct.
+
+I'm aware the North Launceston Football Club is due to hold its AGM Wednesday next, where the board will be asked to consider future planning for the club. I expect this will include consideration of alternative club rooms in the Inveresk Precinct.
+
+Stadiums Tasmania, as the venue owner and operator of UTAS Stadium, remains committed to providing North Launceston with ongoing access to UTAS Stadium as their home ground for games regardless of where their future club rooms are ultimately located. It was good to be on site with them the other day to have a look at how that would work in practice. There is a quite a good outcome there. They will also have access to all key spaces within the stadium that are available for hire through venue hire agreements as required.
+
+Mr Hall has indicated to me he intends for the club to write to me and the government to advise of the board's decision and its preferred pathway forward regarding its club rooms. We recognise that this is a significant decision for the club and its members and acknowledge they're asked for the opportunity for this meeting to occur before decisions about alternative are finalised.
+
+
+Project Marinus - Caretaker Period
+
+Mr GAFFNEY question to MINISTER for ENERGY and RENEWABLES, Mr DUIGAN
+
+[2.43 p.m.]
+With regard to the contract agreements concerning Project Marinus:
+
+(1)	The Tasmanian people do not know what the contract agreement was that you signed binding Tasmania to Project Marinus during the 2025 caretaker period. 
+
+(a)	can you please provide the name and title page of the contract that you signed at that time; and 
+
+(b)	can you please disclose the date and provide the execution page on which you signed the contract agreement.
+
+(2)	Will you also commit to immediately release to the public just the title page and execution page of each contract that was signed concerning all Marinus agreements or, if these contain any confidential information that cannot be disclosed, can you provide redacted copies of all Project Marinus agreements that at a minimum, show the name, the title and signature of the party representing Tasmania in each of these contracts?
+
+Will you also commit to publicly release redacted versions of the full Project Marinus contract documents at the earliest opportunity?
+
+ANSWER
+
+Mr President, I thank the member for the question. There was a number of documents executed as part of the Project Marinus final investment decision, including an updated shareholders agreement. I would need to seek advice as to whether these can be released in part or in full, including to the Energy Matters committee, given the need for confidentiality should that be required. I will endeavour to come back to the member next week with a response.
+
+
+Surf Life Saving Tasmania - Funding
+
+Ms ARMITAGE question to MINISTER for SPORT, Mr DUIGAN
+
+[2.45 p.m.]
+With regard to Surf Life Saving Tasmania, can you please advise:
+
+(1)	whether funding of $250,000, which I believe was originally allocated to surf life saving clubs Tamar Sea Rescue, Wynyard and Kingborough, was recently redirected to other rescue groups? If so, which rescue groups are now receiving this funding?
+
+(2)	why was the decision made?
+(3)	how does the government intend to assist Tamar Sea Rescue, the Wynyard and Kingborough surf life saving clubs to keep their equipment up to date?
+
+ANSWER
+
+Mr President, I thank the member for the question. There's a bit of history and context around this. Following the decision by four of the state's volunteer marine rescue (VMR) units to establish themselves under a newly-created organisation known as Volunteer Marine Rescue Tasmania (VMRT), the government has reviewed the way funding is distributed to these organisations. The new structure means that units from Freycinet, St Helens, Sea Rescue Tasmania, and Ulverstone come under the newly-created VMRT body, while the remaining three VMR units, Kingborough, Wynyard, and Tamar, remain affiliated to Surf Life Saving Tasmania.
+
+The government is committed to supporting VMRs in Tasmania, but it is important clubs meet clearly-defined governance criteria and the funding remains equitable. We are developing a model to use existing funding to support VMRT for an additional three years. As a result, the remaining $250,000 from a capital funding commitment, originally allocated for volunteer marine rescue vehicle and vessel purchases, will be repurposed to fund VMRT operations for the next three years. This approach ensures operational funding for Surf Life Saving Tasmania remains unaffected.
+
+Under the existing grant deed KPIs with Surf Life Saving Tasmania, the organisation is required to provide funding of $20,000 per year per VMR unit. With seven VMRs, this would have equated to $140,000 annually. Under the new structure, this means $80,000 of this funding would sit with VMRT. It's important to remember that Surf Life Saving Tasmania has had an increase in its operational funding from $650,000 to $850,000 annually. For 2025-26, Surf Life Saving Tasmania will receive $1.35 million. 
+
+Surf Life Saving Tasmania will certainly not be worse off under these changes. I met representatives from Surf Life Saving Tasmania last week to discuss the repurposing of funding and reiterated the government's commitment to their important work. I understand they've had recent further discussions with Active Tasmania as they finalise the grant deed which will set out those KPIs for coming years. Essentially there are now a split number of VMRs; the seven VMRs remain. There is a global pot of money needed to fund them all.
+
+
+STATE POLICIES AND PROJECTS (MACQUARIE POINT PRECINCT) ORDER 2025 (No. 49)
+
+In Committee
+
+Resumed from above. page (xx)
+
+
+
+
+
+
+
+
+
+
+
+
+DRAFTuncorrected proof
+
+
+
+
+
+
+
+	1	Thursday 4 December 2025
+[Footnotes: 
+
+][Endnotes: 
+
+]
